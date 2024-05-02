@@ -1,4 +1,4 @@
 package enums;
 
-public class MainMenuCommands {
+public enum MainMenuCommands {
 }
