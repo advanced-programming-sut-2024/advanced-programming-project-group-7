@@ -1,4 +1,4 @@
 package enums;
 
-public class LoginMenuCommands {
+public enum LoginMenuCommands {
 }
