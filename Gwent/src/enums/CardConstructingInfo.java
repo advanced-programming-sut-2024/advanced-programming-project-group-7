@@ -14,3 +14,4 @@ public enum CardConstructingInfo {
     }
     public void newCardConstructor(String info){}
 }
+
