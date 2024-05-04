@@ -16,5 +16,4 @@ public class ProfileMenuController {
     }
     public static void GameHistory(Matcher matcher) {
     }
-
 }

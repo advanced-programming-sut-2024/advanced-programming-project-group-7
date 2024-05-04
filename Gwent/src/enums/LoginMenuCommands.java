@@ -4,12 +4,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum LoginMenuCommands {
-    registerCommand("register -u (?<username>\\S+) -p (?<password>\\S+) (?<passwordConfirm>\\S+) -n (?<nickname>\\S+) -e (?<email>\\S+)"),
-    pickQuestionCommand("pick question -q (?<questionNumber>\\d+) -a (?<answer>\\.*) -c (?<answerConfirm>\\.*)"),
-    loginCommand("login -u (?<username>\\S+) -p (?<password>\\S+) –stay-logged-in"),
-    forgotPasswordCommand("forget password -u <username>"),
-    answerQuestionForForgotPasswordCommand("answer -q (?<questionNumber>\\d+) -a (?<answer>\\.*)"),
-    setNewPasswordCommand("set password -p (?<password>\\S+)"),
+    RegisterCommand("register -u (?<username>\\S+) -p (?<password>\\S+) (?<passwordConfirm>\\S+) -n (?<nickname>\\S+) -e (?<email>\\S+)"),
+    PickQuestionCommand("pick question -q (?<questionNumber>\\d+) -a (?<answer>\\.*) -c (?<answerConfirm>\\.*)"),
+    LoginCommand("login -u (?<username>\\S+) -p (?<password>\\S+) –stay-logged-in"),
+    ForgotPasswordCommand("forget password -u <username>"),
+    AnswerQuestionForForgotPasswordCommand("answer -q (?<questionNumber>\\d+) -a (?<answer>\\.*)"),
+    ShowCurrentMenu("show menu"),
+    EnterRegisterMenu(""),
+    MenuExit("menu exit"),
+    SetNewPasswordCommand("set password -p (?<password>\\S+)"),
+    GoToMainMenu("")
         ;
     public final String regex;
     LoginMenuCommands(String regex) {

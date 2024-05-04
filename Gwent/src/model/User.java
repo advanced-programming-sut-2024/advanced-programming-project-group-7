@@ -24,6 +24,7 @@ public class User {
     static{
         securityQuestions.put(0, "");
     }
+    private String userCurrentMenu;
 
     public User(String username,String password,String nickname,String emailAddress,int securityQuestionNumber, String securityQuestionAnswer) {
         this.username=username;

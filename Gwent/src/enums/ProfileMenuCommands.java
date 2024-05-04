@@ -9,6 +9,8 @@ public enum ProfileMenuCommands {
     ChangeEmail("change email -e <email>"),
     ChangePassword("change password -p <new_password> -o <old_password>"),
     UserInfo("menu enter user info"),
+    ShowCurrentMenu("show menu"),
+    MenuExit("menu exit"),
     GameHistory("game history -n <n>");
 
     private final String pattern;
