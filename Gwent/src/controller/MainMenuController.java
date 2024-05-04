@@ -3,10 +3,7 @@ import java.util.regex.Matcher;
 
 public class MainMenuController{
 
-    public static void enterProfileMenu(Matcher matcher) {
-        //todo
-        System.out.println("Entering Profile Menu");
-    }
+    public static void enterProfileMenu(Matcher matcher) {}
 
         public static void enterGameMenu(Matcher matcher) {
         //todo
