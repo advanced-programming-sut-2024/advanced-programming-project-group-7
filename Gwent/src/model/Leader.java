@@ -14,7 +14,7 @@ public abstract class Leader {
 
     public abstract void generalAbility();
 
-    public abstract void specialAbility();
+    public abstract void specialAbility(User user);
 
     public class MonsterLeader extends Leader {
 
@@ -29,7 +29,7 @@ public abstract class Leader {
         }
 
         @Override
-        public void specialAbility(){
+        public void specialAbility(User user){
 
         }
     }
@@ -45,7 +45,7 @@ public abstract class Leader {
 
         }
         @Override
-        public void specialAbility(){
+        public void specialAbility(User user){
 
         }
     }
@@ -63,7 +63,7 @@ public abstract class Leader {
         }
         @Override
 
-        public void specialAbility(){
+        public void specialAbility(User user){
 
         }
     }
@@ -81,7 +81,7 @@ public abstract class Leader {
         }
         @Override
 
-        public void specialAbility(){
+        public void specialAbility(User user){
 
         }
     }
@@ -99,7 +99,7 @@ public abstract class Leader {
         }
         @Override
 
-        public void specialAbility(){
+        public void specialAbility(User user){
 
         }
     }

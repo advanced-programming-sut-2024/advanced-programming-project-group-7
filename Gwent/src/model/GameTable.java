@@ -12,15 +12,15 @@ public class GameTable {
     private Leader [] Leaders=new Leader[2];
     private boolean[] passState={false,false};
     private Integer[][] totalPoints={{0,0},{0,0},{0,0},{0,0}};
-    private String[]
-            players;
+    private String[] players;
+    private Deck[]gameDeck=new Deck[2];
+    private ArrayList<ArrayList<Card>>playerHand=new ArrayList<ArrayList<Card>>();
+    int turn;
 
 
 //todo constructor
     public void clearWeather(){}
-    public int calculator(Card card){//todo
-        return 0;
-    }
+
     public void setWeather(Card card){}
 
     public Card[] getWeather() {
@@ -58,4 +58,9 @@ public class GameTable {
 
     public Boolean haveBothPlayersPassed(GameTable gameTable) {return false;
     }
+
+    public int getTurn() {
+        return turn;
+    }
+    public void inclementTurn(){}
 }
