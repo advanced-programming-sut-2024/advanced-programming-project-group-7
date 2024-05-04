@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9e2b79a-4076-4ece-ad1b-8ac5d17158fa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ProfileMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/MainMenuCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/enums/MainMenuCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/ProfileMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,14 +34,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Koorosh&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/wishuwerehere/Documents/GitHub/advanced-programming-project-group-7/Gwent/src&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Koorosh",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/wishuwerehere/Documents/GitHub/advanced-programming-project-group-7/Gwent/src"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
