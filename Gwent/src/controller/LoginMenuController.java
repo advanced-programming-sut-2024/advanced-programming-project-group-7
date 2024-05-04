@@ -14,4 +14,5 @@ public class LoginMenuController {
     public static void pickARandomPassword(Matcher matcher){}
     public static void pickSecurityQuestion(Matcher matcher){}
 
+
 }

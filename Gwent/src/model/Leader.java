@@ -1,6 +1,6 @@
 package model;
 
-public class Leader {
+public abstract class Leader {
 
     private String leaderName;
 
@@ -12,17 +12,24 @@ public class Leader {
         return leaderName;
     }
 
+    public abstract void generalAbility();
+
+    public abstract void specialAbility(User user);
+
     public class MonsterLeader extends Leader {
 
 
         public MonsterLeader(String leaderName) {
             super(leaderName);
         }
-        @
+
+        @Override
         public void generalAbility(){
 
         }
-        public void specialAbility(){
+
+        @Override
+        public void specialAbility(User user){
 
         }
     }
@@ -33,10 +40,12 @@ public class Leader {
         public NilfgaardianLeader(String leaderName) {
             super(leaderName);
         }
+        @Override
         public void generalAbility(){
 
         }
-        public void specialAbility(){
+        @Override
+        public void specialAbility(User user){
 
         }
     }
@@ -47,10 +56,14 @@ public class Leader {
         public NilfgaardianLeaer(String leaderName) {
             super(leaderName);
         }
+        @Override
+
         public void generalAbility(){
 
         }
-        public void specialAbility(){
+        @Override
+
+        public void specialAbility(User user){
 
         }
     }
@@ -61,10 +74,14 @@ public class Leader {
         public NorthenRealmsLeader(String leaderName) {
             super(leaderName);
         }
+        @Override
+
         public void generalAbility(){
 
         }
-        public void specialAbility(){
+        @Override
+
+        public void specialAbility(User user){
 
         }
     }
@@ -75,10 +92,14 @@ public class Leader {
         public SkelligLeader(String leaderName) {
             super(leaderName);
         }
+        @Override
+
         public void generalAbility(){
 
         }
-        public void specialAbility(){
+        @Override
+
+        public void specialAbility(User user){
 
         }
     }

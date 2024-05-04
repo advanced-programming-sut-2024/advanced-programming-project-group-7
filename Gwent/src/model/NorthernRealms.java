@@ -1,6 +1,6 @@
 package model;
 
-public class Northern_Realms extends Faction{
+public class NorthernRealms extends Faction{
 
     private String[] leaderNames = {""};
 }
