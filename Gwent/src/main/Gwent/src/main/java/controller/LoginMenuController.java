@@ -1,9 +1,13 @@
 package controller;
 
+import javafx.scene.control.Alert;
+
 import java.util.regex.Matcher;
 
 public class LoginMenuController {
-    public static void userRegister(Matcher matcher){}
+    public static Alert userRegister(Matcher matcher){
+        return null;
+    }
     public static void userLogin(Matcher matcher){}
     public static boolean isUsernameDuplicate(Matcher matcher){}
     public static boolean isUsernameValid(Matcher matcher){}

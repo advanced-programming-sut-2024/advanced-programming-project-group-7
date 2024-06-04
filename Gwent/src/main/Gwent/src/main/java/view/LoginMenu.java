@@ -1,5 +1,6 @@
 package view;
 
+import controller.LoginMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,9 +29,7 @@ public class LoginMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        String musicPath = "/Sounds/Opeth-Bleak.mp3";
-        URL resource = getClass().getResource(musicPath);
-        Media music = new Media(resource.toExternalForm());
+        Media music = new Media(MainMenu.class.getResource("/Sounds/01 No Escape.mp3").toExternalForm());
         mediaPlayer = new MediaPlayer(music);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
@@ -44,27 +43,34 @@ public class LoginMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
-//    public void signUp(MouseEvent mouseEvent) {
-//        Alert alert;
-//        alert = AllMenusController.signUpControl(nameField.getText(), password.getText());
-//        if (alert == null) {
-//            MainMenu mainMenu = new MainMenu();
-//            try {
-//                mainMenu.start(LoginMenu.stage);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            alert.show();
-//        }
-//    }
-//
-//    public void startGameAsGuest(MouseEvent mouseEvent) {
-//        try {
-//            new GameLauncher(true).start(LoginMenu.stage);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void signUp(MouseEvent mouseEvent) {
+        Alert alert;
+        alert = LoginMenuController.userRegister(nameField.getText(), password.getText());
+        if (alert == null) {
+            MainMenu mainMenu = new MainMenu();
+            try {
+                mainMenu.start(LoginMenu.stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            alert.show();
+        }
+    }
+
+    public void login(MouseEvent mouseEvent) {
+        Alert alert;
+        alert = LoginMenuController.userLogin(nameField.getText(), password.getText());
+        if (alert == null) {
+            MainMenu mainMenu = new MainMenu();
+            try {
+                mainMenu.start(LoginMenu.stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            alert.show();
+        }
+    }
 }
 

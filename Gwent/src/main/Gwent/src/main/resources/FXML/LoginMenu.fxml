@@ -16,8 +16,8 @@
             <Label text="Password" />
             <TextField fx:id="password" promptText="1234" />
             <HBox alignment="CENTER" spacing="10">
-                <Button  text="Sign up" />
-                <Button  text="Login" />
+                <Button onMouseClicked="#signUp" text="Sign up" />
+                <Button onMouseClicked="#login" text="Login" />
             </HBox>
             <Button  text="Continue as guest" />
         </VBox>
