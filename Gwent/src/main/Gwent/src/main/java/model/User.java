@@ -164,4 +164,8 @@ public class User {
     public static ArrayList<User> getUsers() {
         return users;
     }
+    static{
+        securityQuestions.put(1,"");
+        //todo+
+    }
 }
