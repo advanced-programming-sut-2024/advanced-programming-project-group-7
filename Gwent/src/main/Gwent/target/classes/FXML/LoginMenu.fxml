@@ -7,7 +7,7 @@
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginMenu">
     <center>
         <VBox alignment="CENTER" maxWidth="300" spacing="10">
-            <Label text="Welcome Chosen One">
+            <Label text="Welcome To Gwent">
                 <font>
                     <Font name="Arabic Typesetting" size="24.0" />
                 </font></Label>
@@ -16,10 +16,10 @@
             <Label text="Password" />
             <TextField fx:id="password" promptText="1234" />
             <HBox alignment="CENTER" spacing="10">
-                <Button  text="Sign up" />
-                <Button  text="Login" />
+                <Button onMouseClicked="#signUp" text="Sign up" />
+                <Button onMouseClicked="#login" text="Login" />
             </HBox>
-            <Button  text="Continue as guest" />
+            <Button text="Continue as guest" />
         </VBox>
 
     </center>

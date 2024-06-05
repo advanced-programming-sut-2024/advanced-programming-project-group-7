@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuCommands {
-    CreateGame(""),
+    CreateGame("create game -p2 (?<player2_username>.+)"),
     ShowFactions(""),
     SelectFaction(""),
     ShowCard(""),

@@ -29,12 +29,12 @@ public class User {
     private String password;
     private String nickname;
     private String emailAddress;
-    private int highestScore;
+    private int highestScore=0;
     private int rank;
-    private int totalGame;
-    private int drawnGame;
-    private int wonGame;
-    private int lostGame;
+    private int totalGame=0;
+    private int drawnGame=0;
+    private int wonGame=0;
+    private int lostGame=0;
     private Faction currentFaction;
     private final int securityQuestionNumber;
     private final String securityQuestionAnswer;
@@ -53,6 +53,7 @@ public class User {
         this.emailAddress=emailAddress;
         this.securityQuestionNumber = securityQuestionNumber;
         this.securityQuestionAnswer = securityQuestionAnswer;
+        addUser(this);
     }
 
     public static void addUser(User user){
@@ -158,5 +159,9 @@ public class User {
 
     public void setLostGame(int lostGame) {
         this.lostGame = lostGame;
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
     }
 }

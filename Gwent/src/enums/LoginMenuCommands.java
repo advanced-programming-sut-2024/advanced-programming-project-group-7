@@ -16,9 +16,7 @@ public enum LoginMenuCommands {
     GoToMainMenu("")
         ;
     public final String regex;
-    LoginMenuCommands(String regex) {
-        this.regex = regex;
-    }
+    LoginMenuCommands(String regex) {this.regex = regex;}
     public Matcher getMatcher(String input) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
