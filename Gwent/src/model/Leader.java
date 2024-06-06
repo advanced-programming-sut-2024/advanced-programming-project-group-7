@@ -18,7 +18,7 @@ public class Leader {
         public MonsterLeader(String leaderName) {
             super(leaderName);
         }
-        @
+
         public void generalAbility(){
 
         }
