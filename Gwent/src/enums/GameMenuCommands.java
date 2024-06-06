@@ -4,6 +4,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuCommands {
+    CreateGame("create game -p2 (?<player2_username>.+)"),
+    ShowFactions(""),
+    SelectFaction(""),
+    ShowCard(""),
+    ShowDeck(""),
+    showCurrentUserInformation(""),
+    SaveDeck(""),
+    SaveDeckWithAddress(""),
+    LoadDeckWithAddress(""),
+    LoadDeckWithName(""),
+    ShowLeaders(""),
+    SelectLeader(""),
+    AddTODeck(""),
+    DeleteFromDeck(""),
+    ChangeTurn(""),
+    StartGame(""),
     VetoCard("veto card (?<card_number>\\d+"),
     HandInfo("in hand deck(?<card_number>-option \\d+)?"),
     RemainingCardsCount("remaining cards to play"),
@@ -21,7 +37,7 @@ public enum GameMenuCommands {
     ShowTotalRowScore("show total score of row (?<row_number>\\d)"),
     PassRound("pass round"),
     ShowCurrentMenu("show menu"),
-    Back("back");
+    MenuExit("menu exit");
     private final String pattern;
 
     GameMenuCommands(String pattern) {

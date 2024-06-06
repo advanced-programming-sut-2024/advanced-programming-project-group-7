@@ -5,7 +5,25 @@ import java.util.HashMap;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
-    private ArrayList<Card> deck=new ArrayList<>();
+
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
+    public void setDecks(ArrayList<Deck> decks) {
+        this.decks = decks;
+    }
+
+    public Deck getCurrentDeck() {
+        return currentDeck;
+    }
+
+    public void setCurrentDeck(Deck currentDeck) {
+        this.currentDeck = currentDeck;
+    }
+
+    private ArrayList<Deck> decks=new ArrayList<>();
+    private Leader currentLeader;
     private static User loggedInUser;
     private String username;
     private String password;
@@ -21,9 +39,11 @@ public class User {
     private final int securityQuestionNumber;
     private final String securityQuestionAnswer;
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
+    private Deck currentDeck;
     static{
         securityQuestions.put(0, "");
     }
+    private String userCurrentMenu;
 
     public User(String username,String password,String nickname,String emailAddress,int securityQuestionNumber, String securityQuestionAnswer) {
         this.username=username;
@@ -50,7 +70,7 @@ public class User {
     }
 
     public ArrayList<Card> getDeck() {
-        return deck;
+    return null;
     }
 
     public static User getLoggedInUser() {
@@ -68,9 +88,8 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
     public String getPassword() {
-        return password;
+        return null;
     }
 
     public void setPassword(String password) {
