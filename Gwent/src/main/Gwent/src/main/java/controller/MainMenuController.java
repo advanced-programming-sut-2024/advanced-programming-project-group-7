@@ -1,17 +1,15 @@
 package controller;
+import model.User;
+
 import java.util.regex.Matcher;
 
 public class MainMenuController{
 
-    public static void enterProfileMenu(Matcher matcher) {}
+    public static void enterProfileMenu() {}
 
-        public static void enterGameMenu(Matcher matcher) {
-        //todo
-        System.out.println("Entering Game Menu");
-    }
+    public static void enterGameMenu() {}
 
-        public static void logout(Matcher matcher) {
-        //todo
-        System.out.println("Logging out");
+    public static void logout() {
+        User.setLoggedInUser(null);
     }
 }

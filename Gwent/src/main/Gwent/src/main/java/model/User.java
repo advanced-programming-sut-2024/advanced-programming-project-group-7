@@ -36,18 +36,33 @@ public class User {
     private int wonGame=0;
     private int lostGame=0;
     private Faction currentFaction;
-    private final int securityQuestionNumber;
+    private  int securityQuestionNumber;//todo removed final
     private final String securityQuestionAnswer;
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
     private Deck currentDeck;
     static{
-        securityQuestions.put(0, "what is your father name?");
-        securityQuestions.put(1,"what is yoy mother name?");
+        securityQuestions.put(0, "what is your father's name?");
+        securityQuestions.put(1,"what is your mother's name?");
         securityQuestions.put(2,"how old are you?");
         securityQuestions.put(3,"what is your last teacher name?");
     }
-    public static String getSecurityQuestionsAnswer(int securityQuestionNumber){
-        return securityQuestions.get(securityQuestionNumber);
+    private String answerOfSecurityQuestion;
+//    public  String getSecurityQuestionsAnswer(int securityQuestionNumber){//made non static
+//        return securityQuestions.get(securityQuestionNumber);
+//    }
+
+
+
+    public void pickSecurityQuestion(int i){
+        this.securityQuestionNumber=i;
+    }
+
+    public void setAnswerOfSecurityQuestion(String answerOfSecurityQuestion) {
+        this.answerOfSecurityQuestion = answerOfSecurityQuestion;
+    }
+
+    public String getAnswerOfSecurityQuestion() {
+        return answerOfSecurityQuestion;
     }
 
     private String userCurrentMenu;

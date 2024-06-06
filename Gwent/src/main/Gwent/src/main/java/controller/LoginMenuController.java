@@ -10,37 +10,31 @@ import java.util.regex.Matcher;
 public class LoginMenuController {
     private static String additionalInformation;
     public static Alert userLogin( String username,String password) {
-        if (!isUsernameDuplicate(username)){
-            Alert alert=new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("you haven't registered");
-            return alert;
+        if (!isUsernameDuplicate(username)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("you haven't registered");return alert;
         }
         else {
             User user=User.getUserByUsername(username);
             //todo forgot pass doesn't care here
-            if (!isPasswordCorrect(user,password)) System.out.println("");
+            if (!isPasswordCorrect(user,password)) {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong password");return alert;}
             else {
                 User.setLoggedInUser(user);
-                System.out.println("");
-                //todo  (is there anything else?)
+               return null;
             }
         }
-
     }
-
-
     public static Alert userRegister( String username,String password,String passwordConfirm,String nickname,String email){
-        if(isUsernameDuplicate(username)) System.out.println("");
-        else if(! isUsernameValid(username)) System.out.println("");
-        else if(! isEmailAddressValid(email)) System.out.println("");
-        else if(! isPasswordValid(password)) System.out.println("");
-        else if(isPasswordWeak(password)) System.out.println(additionalInformation);//todo is normal way better?
-        else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)) System.out.println(" ");
+        if(isUsernameDuplicate(username)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username is taken");return alert;}
+        else if(! isUsernameValid(username)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid username");return alert;}
+        else if(! isEmailAddressValid(email)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid email");return alert;}
+        else if(! isPasswordValid(password)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
+        else if(isPasswordWeak(password)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation);return alert;}
+        else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("password is not confirmed correctly");return alert;}
         else{
             //todo answer security Q and set answer
             int secNum=1;
             String answer= "ok";
            User user=new User(username,password,nickname,email,secNum,answer);
+            return null;
         }
     }
     public static boolean isUsernameDuplicate(String username){
@@ -62,10 +56,9 @@ public class LoginMenuController {
         //todo make random password with the required regex
     };
     public static boolean isPasswordValid(String password){
-        return password.matches("\\S+");//todo regex phase1+
+        return password.matches("\\S+");//
     }
     public static boolean isPasswordWeak(String password){
-        //todo regex phase2 + additional  information;+
         if(!password.matches("\\S{8,}")) {
             additionalInformation="too short";
             return true;
@@ -84,7 +77,6 @@ public class LoginMenuController {
         }
         else if(!password.matches("(?=\\S*[!@#$%^&*()\\-+=])")){
             additionalInformation="no special character";
-            System.out.println("for commit");
             return true;
         }
         else return false;
@@ -96,19 +88,24 @@ public class LoginMenuController {
         return user.getPassword().equals(password);
     }
     public static void pickSecurityQuestion(){
-        //todo
+       //todo a menu to sout all Q's and a field for answer and a botton for number of Q
     }
     public static Alert forgotPassword(String username) {
-        if(IsSecurityQuestionAnswered(username)){
+        //todo a menu to sout chosen question and a field to get answer
+        String answer=" ";//todo
+        if(IsSecurityQuestionAnswered(username,answer)){
             setNewPassword(username);
-            System.out.println("");
-        }else System.out.println("");
+            return null;
+        }else{ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong answer");return alert;}
     }
-    public static boolean IsSecurityQuestionAnswered(String username,int questionNumber,String answer){
+    public static boolean IsSecurityQuestionAnswered(String username,String answer){
         User user=User.getUserByUsername(username);
-        if(answer.equals(User.))
+        if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
+        return false;
     }
     public static void setNewPassword(String username){
-     User.h   //todo
+        User user=User.getUserByUsername(username);
+        String pass=" ";
+        user.setPassword(pass);//todo
     }
 }
