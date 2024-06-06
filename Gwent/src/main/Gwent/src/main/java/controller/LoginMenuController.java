@@ -80,6 +80,7 @@ public class LoginMenuController {
         }
         else if(!password.matches("(?=\\S*[!@#$%^&*()\\-+=])")){
             additionalInformation="no special character";
+            System.out.println("for commit");
             return true;
         }
         else return false;
