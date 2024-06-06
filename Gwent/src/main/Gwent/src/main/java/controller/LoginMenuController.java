@@ -48,20 +48,20 @@ public class LoginMenuController {
         return false;
     }
     public static boolean isUsernameValid(String username){
-        return username.matches("");//todo regex
+        return username.matches("");//todo regex+
     }
     public static boolean isEmailAddressValid(String email){
-        return email.matches("");//todo regex
+        return email.matches("");//todo regex+
     }
 
     public static void makeRandomPassword(MouseEvent mouseEvent){
         //todo make random password with the required regex
     };
     public static boolean isPasswordValid(String password){
-        return password.matches("");//todo regex phase1
+        return password.matches("");//todo regex phase1+
     }
     public static boolean isPasswordWeak(String password){
-        //todo regex phase2 + additional  information;
+        //todo regex phase2 + additional  information;+
 
 
         if(true){
