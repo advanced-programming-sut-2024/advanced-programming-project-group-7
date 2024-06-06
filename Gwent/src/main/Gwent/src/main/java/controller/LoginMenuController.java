@@ -10,7 +10,11 @@ import java.util.regex.Matcher;
 public class LoginMenuController {
     private static String additionalInformation;
     public static Alert userLogin( String username,String password) {
-        if (!isUsernameDuplicate(username)) System.out.println("");
+        if (!isUsernameDuplicate(username)){
+            Alert alert=new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("you haven't registered");
+            return alert;
+        }
         else {
             User user=User.getUserByUsername(username);
             //todo forgot pass doesn't care here
@@ -90,6 +94,6 @@ public class LoginMenuController {
         //todo
     }
     public static void setNewPassword(String username){
-        //todo
+     User.h   //todo
     }
 }

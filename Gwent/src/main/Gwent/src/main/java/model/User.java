@@ -164,6 +164,7 @@ public class User {
     public static ArrayList<User> getUsers() {
         return users;
     }
+    public static void hi(){}
     static{
         securityQuestions.put(1,"");
         //todo+
