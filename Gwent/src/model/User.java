@@ -68,7 +68,6 @@ public class User {
                 return user;
         return null;
     }
-
     public ArrayList<Card> getDeck() {
     return null;
     }
