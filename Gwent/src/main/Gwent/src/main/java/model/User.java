@@ -41,8 +41,15 @@ public class User {
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
     private Deck currentDeck;
     static{
-        securityQuestions.put(0, "");
+        securityQuestions.put(0, "what is your father name?");
+        securityQuestions.put(1,"what is yoy mother name?");
+        securityQuestions.put(2,"how old are you?");
+        securityQuestions.put(3,"what is your last teacher name?");
     }
+    public static String getSecurityQuestionsAnswer(int securityQuestionNumber){
+        return securityQuestions.get(securityQuestionNumber);
+    }
+
     private String userCurrentMenu;
 
     public User(String username,String password,String nickname,String emailAddress,int securityQuestionNumber, String securityQuestionAnswer) {
@@ -164,9 +171,6 @@ public class User {
     public static ArrayList<User> getUsers() {
         return users;
     }
-    public static void hi(){}
-    static{
-        securityQuestions.put(1,"");
-        //todo+
-    }
+
+
 }

@@ -62,18 +62,32 @@ public class LoginMenuController {
         //todo make random password with the required regex
     };
     public static boolean isPasswordValid(String password){
-        return password.matches("");//todo regex phase1+
+        return password.matches("\\S+");//todo regex phase1+
     }
     public static boolean isPasswordWeak(String password){
         //todo regex phase2 + additional  information;+
-
-
-        if(true){
-            if (true){
-
-            }else additionalInformation="hey";
-        }else additionalInformation="hi";
-        return false;
+        if(!password.matches("\\S{8,}")) {
+            additionalInformation="too short";
+            return true;
+        }
+        else if(!password.matches("(?=\\S*[a-z])")) {
+            additionalInformation="no small word";
+            return true;
+        }
+        else if(!password.matches("(?=\\S*[A-Z])")) {
+            additionalInformation="no big word";
+            return true;
+        }
+        else if(!password.matches("(?=\\S*\\d)")) {
+            additionalInformation="no number";
+            return true;
+        }
+        else if(!password.matches("(?=\\S*[!@#$%^&*()\\-+=])")){
+            additionalInformation="no special character";
+            System.out.println("for commit");
+            return true;
+        }
+        else return false;
     }
     public static boolean isPasswordConfirmed(String password,String passwordConfirm){
         return password.equals(passwordConfirm);
@@ -90,8 +104,9 @@ public class LoginMenuController {
             System.out.println("");
         }else System.out.println("");
     }
-    public static boolean IsSecurityQuestionAnswered(String username){
-        //todo
+    public static boolean IsSecurityQuestionAnswered(String username,int questionNumber,String answer){
+        User user=User.getUserByUsername(username);
+        if(answer.equals(User.))
     }
     public static void setNewPassword(String username){
      User.h   //todo
