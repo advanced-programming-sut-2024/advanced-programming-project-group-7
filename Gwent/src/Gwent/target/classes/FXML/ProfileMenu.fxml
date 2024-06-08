@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProfileMenu">
+    <center>
+        <VBox alignment="CENTER" maxWidth="300" spacing="10">
+            <Label fx:id="username" text="Username" />
+            <TextField fx:id="newName" promptText="default" />
+            <Label text="Password" />
+            <TextField fx:id="oldPassword" promptText="old password" />
+            <TextField fx:id="newPassword" promptText="new password" />
+            <Label fx:id="nickname" text="Nickname" />
+            <TextField fx:id="newNickname" promptText="new nickname" />
+            <Label fx:id="email" text="Email" />
+            <TextField fx:id="newEmail" promptText="new email" />
+            <HBox alignment="CENTER">
+                <Button onMouseClicked="#changeUsername" text="Change name" />
+                <Button onMouseClicked="#changePassword" text="Change password" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button onMouseClicked="#changeNickname" text="Change nickname" />
+                <Button onMouseClicked="#changeEmail" text="Change email" />
+            </HBox>
+            <Button onMouseClicked="#backToMainMenu" text="Back" />
+        </VBox>
+    </center>
+   <left>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="111.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Battle Log" />
+             <ComboBox fx:id="numberOfBattles" editable="true" prefHeight="26.0" prefWidth="98.0" promptText="5">
+                 <items>
+                     <FXCollections fx:factory="observableArrayList">
+                         <Integer fx:value="1" />
+                         <Integer fx:value="2" />
+                         <Integer fx:value="3" />
+                         <Integer fx:value="4" />
+                         <Integer fx:value="5" />
+                         <Integer fx:value="6" />
+                         <Integer fx:value="7" />
+                         <Integer fx:value="8" />
+                         <Integer fx:value="9" />
+                         <Integer fx:value="10" />
+                     </FXCollections>
+                 </items>
+             </ComboBox>
+            <Button mnemonicParsing="false" text="Show" />
+         </children></VBox>
+   </left>
+   <right>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Players info" />
+            <TextField prefHeight="26.0" prefWidth="65.0" fx:id="searchBar" />
+            <Button mnemonicParsing="false" text="Serach" onMouseClicked="#showPlayerInfo" />
+         </children></VBox>
+   </right>
+
+</BorderPane>
