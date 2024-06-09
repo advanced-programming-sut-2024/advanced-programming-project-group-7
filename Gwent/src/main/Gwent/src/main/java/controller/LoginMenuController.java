@@ -18,6 +18,7 @@ public class LoginMenuController {
             if (!isPasswordCorrect(user,password)) {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong password");return alert;}
             else {
                 User.setLoggedInUser(user);
+                System.out.println("ook");
                return null;
             }
         }
