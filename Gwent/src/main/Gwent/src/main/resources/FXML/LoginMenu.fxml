@@ -14,12 +14,17 @@
             <Label text="Username" />
             <TextField fx:id="nameField" promptText="your beautiful name" />
             <Label text="Password" />
-            <TextField fx:id="password" promptText="1234" />
+            <TextField fx:id="password" promptText="enter password" />
+         <TextField promptText="confirm password" fx:id="confirmPWD" visible="false" />
+         <Label fx:id="nicknameLable" text="Nickname" visible="false" />
+         <TextField fx:id="nicknameText" visible="false" />
+         <Label fx:id="emailLabel" text="Email" visible="false" />
+         <TextField fx:id="emailText" visible="false" />
             <HBox alignment="CENTER" spacing="10">
-                <Button onMouseClicked="#signUp" text="Sign up" />
-                <Button onMouseClicked="#login" text="Login" />
+                <Button fx:id="hybridButt" onMouseClicked="#signUp" text="Login" />
+                <Button onMouseClicked="#Switch" text="switch" />
             </HBox>
-            <Button text="Continue as guest" />
+            <Button onMouseClicked="#recoverPSWD" text="Forgot Password" fx:id="forgotPWD" visible="true" />
         </VBox>
 
     </center>
