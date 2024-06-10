@@ -1,6 +1,7 @@
 package view;
 
 //import controller.LoginMenuController;
+import controller.LoginMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -62,12 +63,12 @@ public class LoginMenu extends Application {
     public void signUp(MouseEvent mouseEvent) {
         Alert alert = null;
         if (!isLoggingIN) {
-//        alert = LoginMenuController.userRegister(nameField.getText()
-//                , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
+        alert = LoginMenuController.userRegister(nameField.getText()
+                , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
             if (alert == null) {
-//            MainMenu mainMenu = new MainMenu();
+            MainMenu mainMenu = new MainMenu();
                 try {
-//                mainMenu.start(LoginMenu.stage);
+                mainMenu.start(LoginMenu.stage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -75,11 +76,12 @@ public class LoginMenu extends Application {
                 alert.show();
             }
         } else {
-//        alert = LoginMenuController.userLogin(nameField.getText(), password.getText());
+
+        alert = LoginMenuController.userLogin(nameField.getText(), password.getText());
             if (alert == null) {
-//            MainMenu mainMenu = new MainMenu();
+            MainMenu mainMenu = new MainMenu();
                 try {
-//                mainMenu.start(LoginMenu.stage);
+                mainMenu.start(LoginMenu.stage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -116,8 +118,8 @@ public class LoginMenu extends Application {
         Button confirmButton = new Button("Confirm");
         Button backButton = new Button("Back");
         confirmButton.setOnMouseClicked(event -> {
-//            LoginMenuController.handleForgottenPassword(usernameTextField.getText(), //todo creat the method
-//                    securityAnswerFields[0].getText(), securityAnswerFields[1].getText(), securityAnswerFields[2].getText());
+            LoginMenuController.handleForgottenPassword(usernameTextField.getText(), //todo create the method
+                    securityAnswerFields[0].getText(), securityAnswerFields[1].getText(), securityAnswerFields[2].getText());
         });
         backButton.setOnMouseClicked(event -> {
             try {

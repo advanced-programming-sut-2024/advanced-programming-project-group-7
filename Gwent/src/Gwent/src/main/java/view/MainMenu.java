@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import model.User;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,13 +39,11 @@ public class MainMenu extends Application {
     }
 
     public void setLabelText() {
-        //todo get the name and handle
-        Username.setText("name");
+        Username.setText("welcome "+ User.getLoggedInUser().getNickname());
     }
 
-
     public void goToProfileMenu(MouseEvent mouseEvent) {
-        soundPlayer("/Sounds/paper.mp3");// todo find sound
+        soundPlayer("/Sounds/paper.mp3");
         ProfileMenu profileMenu = new ProfileMenu();
         try {
             profileMenu.start(LoginMenu.stage);
@@ -53,7 +53,8 @@ public class MainMenu extends Application {
     }
 
     public void startNewGame(MouseEvent mouseEvent) {
-        soundPlayer("/Sounds/sword.mp3");//todo find sound
+        soundPlayer("/Sounds/sword.mp3");
+        System.out.println("lets goto to game");//todo for check
 //        try {
 //            new GameLauncher().start(LoginMenu.stage);
 //        } catch (Exception e) {
@@ -62,7 +63,7 @@ public class MainMenu extends Application {
     }
 
     public void Logout(MouseEvent mouseEvent) {
-        // todo MainMenuController.logout();
+        MainMenuController.logout();
         soundPlayer("/Sounds/paper.mp3");
         LoginMenu loginMenu = new LoginMenu();
         try {
@@ -77,7 +78,7 @@ public class MainMenu extends Application {
     }
 
     public void mouseEnteredSound(MouseEvent mouseEvent) {
-        soundPlayer("/Sounds/Tik.mp3"); // todo find sound
+        soundPlayer("/Sounds/Tik.mp3");
     }
     private void soundPlayer(String path) {
         Media media = new Media(getClass().getResource(path).toString());

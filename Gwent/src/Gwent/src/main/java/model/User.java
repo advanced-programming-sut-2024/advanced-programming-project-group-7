@@ -37,6 +37,7 @@ public class User {
     private int lostGame=0;
     private Faction currentFaction;
     private  int securityQuestionNumber;//todo removed final
+    private String answerOfSecurityQuestion;
     private final String securityQuestionAnswer;
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
     private Deck currentDeck;
@@ -46,10 +47,9 @@ public class User {
         securityQuestions.put(2,"how old are you?");
         securityQuestions.put(3,"what is your last teacher name?");
     }
-    private String answerOfSecurityQuestion;
-//    public  String getSecurityQuestionsAnswer(int securityQuestionNumber){//made non static
-//        return securityQuestions.get(securityQuestionNumber);
-//    }
+    public  String getSecurityQuestionsAnswer(int securityQuestionNumber){//made non static
+        return securityQuestions.get(securityQuestionNumber);
+    }
 
 
 
@@ -86,9 +86,9 @@ public class User {
             this.getDeck().add(card);
     }
     public static User getUserByUsername(String username){
-        for(User user:users)
-            if(user.getUsername().equals(username))
-                return user;
+        for(User user:users) {
+            if(user.getUsername().equals(username)) return user;
+        }
         return null;
     }
 
@@ -112,7 +112,7 @@ public class User {
         this.username = username;
     }
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     public void setPassword(String password) {

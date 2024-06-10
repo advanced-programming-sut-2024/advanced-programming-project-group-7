@@ -1,5 +1,6 @@
 package view;
 
+import controller.ProfileMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.User;
 
 import java.net.URL;
 
@@ -40,20 +42,24 @@ public class ProfileMenu extends Application {
 
     public void initialize() {
         numberOfBattles.setValue(5);
-        username.setText("fill it");
-        nickname.setText("fill it");
-        email.setText("fill it");
+        username.setText("username");
+        nickname.setText("nickname");//todo changed from tofill.thought it's gonna be filled by myself.
+        email.setText("email");
     }
 
     public void changeUsername(MouseEvent mouseEvent) {
-        // todo Alert alert = ProfileMenuController.changeUsername(newName.getText());
-//        if (alert != null) {
-//            alert.show();
-//        }
+          Alert alert = ProfileMenuController.changeUsername(newName.getText());
+        System.out.println(User.getLoggedInUser().getUsername());
+        if (alert != null) {
+            alert.show();
+        }
     }
 
     public void changePassword(MouseEvent mouseEvent) {
-        // todo ProfileMenuController.changePassword(newPassword.getText());
+        Alert alert= ProfileMenuController.changePassword(oldPassword.getText(),newPassword.getText());
+        if (alert != null) {
+            alert.show();
+        }
     }
 
     public void backToMainMenu(MouseEvent mouseEvent) {
@@ -66,16 +72,21 @@ public class ProfileMenu extends Application {
     }
 
     public void changeNickname(MouseEvent mouseEvent) {
-        //todo handle alert
+        Alert alert = ProfileMenuController.changeNickname(newNickname.getText());
+        if (alert != null) {
+            alert.show();
+        }
     }
 
     public void changeEmail(MouseEvent mouseEvent) {
-        //todo handle alert
+        Alert alert = ProfileMenuController.changeEmail(email.getText());
+        if (alert != null) {
+            alert.show();
+        }
     }
 
     public void showPlayerInfo(MouseEvent mouseEvent) {
         String name = searchBar.getText();
         //todo
-
     }
 }
