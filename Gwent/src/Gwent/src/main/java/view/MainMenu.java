@@ -54,7 +54,6 @@ public class MainMenu extends Application {
 
     public void startNewGame(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/sword.mp3");
-        System.out.println("lets goto to game");//todo for check
 //        try {
 //            new GameLauncher().start(LoginMenu.stage);
 //        } catch (Exception e) {

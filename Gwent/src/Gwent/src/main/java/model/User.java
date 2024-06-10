@@ -30,13 +30,13 @@ public class User {
     private String nickname;
     private String emailAddress;
     private int highestScore=0;
-    private int rank;
+    private int rank=1000;//todo init
     private int totalGame=0;
     private int drawnGame=0;
     private int wonGame=0;
     private int lostGame=0;
     private Faction currentFaction;
-    private  int securityQuestionNumber;//todo removed final
+    private  int securityQuestionNumber;//todo removed final todo ok but is it ok?
     private String answerOfSecurityQuestion;
     private final String securityQuestionAnswer;
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();

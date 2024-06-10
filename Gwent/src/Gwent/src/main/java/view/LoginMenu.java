@@ -118,7 +118,7 @@ public class LoginMenu extends Application {
         Button confirmButton = new Button("Confirm");
         Button backButton = new Button("Back");
         confirmButton.setOnMouseClicked(event -> {
-            LoginMenuController.handleForgottenPassword(usernameTextField.getText(), //todo create the method
+            LoginMenuController.handleForgottenPassword(usernameTextField.getText(), //todo create the method  todo ok but it's empty now
                     securityAnswerFields[0].getText(), securityAnswerFields[1].getText(), securityAnswerFields[2].getText());
         });
         backButton.setOnMouseClicked(event -> {
