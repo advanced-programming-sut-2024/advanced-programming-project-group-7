@@ -54,6 +54,7 @@ public class MainMenu extends Application {
 
     public void startNewGame(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/sword.mp3");
+
 //        try {
 //            new GameLauncher().start(LoginMenu.stage);
 //        } catch (Exception e) {
@@ -64,6 +65,7 @@ public class MainMenu extends Application {
     public void Logout(MouseEvent mouseEvent) {
         MainMenuController.logout();
         soundPlayer("/Sounds/paper.mp3");
+        LoginMenu.mediaPlayer.stop();
         LoginMenu loginMenu = new LoginMenu();
         try {
             loginMenu.start(LoginMenu.stage);

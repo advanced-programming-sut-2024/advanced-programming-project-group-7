@@ -117,6 +117,9 @@ public static Alert userLogin( String username,String password) {
         user.setPassword(pass);//todo
     }
 
-    public static void handleForgottenPassword(String text, String text1, String text2, String text3) {
+    public static void handleForgottenPassword(String text, String text1) {
+    }
+
+    public static void setSecutrityQ(String text, String text1, String text2, String text3) {
     }
 }

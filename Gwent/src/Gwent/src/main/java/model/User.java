@@ -188,4 +188,7 @@ public class User {
     }
 
 
+    public String getSecurityQuestion() {
+        return "fuck this shit"; // complete it
+    }
 }
