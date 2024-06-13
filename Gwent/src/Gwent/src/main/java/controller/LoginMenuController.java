@@ -68,26 +68,26 @@ public static Alert userLogin( String username,String password) {
         return password.matches("\\S+");//
     }
     public static boolean isPasswordWeak(String password){
-//        if(!password.matches("\\S{8,}")) {
-//            additionalInformation="too short";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*[a-z])")) {
-//            additionalInformation="no small word";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*[A-Z])")) {
-//            additionalInformation="no big word";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*\\d)")) {
-//            additionalInformation="no number";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*[!@#$%^&*()\\-+=])")){
-//            additionalInformation="no special character";
-//            return true;
-//        }
+        if(!password.matches("\\S{8,}")) {
+            additionalInformation="too short";
+            return true;
+        }
+        else if(!password.matches("//S*(?=[a-z])//S*")) {
+            additionalInformation="no small word";
+            return true;
+        }
+        else if(!password.matches("//S*(?=[A-Z])//S*")) {
+            additionalInformation="no big word";
+            return true;
+        }
+        else if(!password.matches("//S*(?=\\d)//S*")) {
+            additionalInformation="no number";
+            return true;
+        }
+        else if(!password.matches("\\S*(?=[!@#$%^&*()\\-+=])\\S*")){
+            additionalInformation="no special character";
+            return true;
+        }
          return false;//todo regexes should change
     }
     public static boolean isPasswordConfirmed(String password,String passwordConfirm){
