@@ -3,12 +3,14 @@ package controller;
 import javafx.scene.control.Alert;
 import model.User;
 
+import java.util.Random;
+
 
 public class LoginMenuController {
-    private static String additionalInformation;
+    private static StringBuilder additionalInformation=new StringBuilder();
 
 
-public static Alert userLogin( String username,String password) {
+    public static Alert userLogin( String username,String password) {
         if (!isUsernameDuplicate(username)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("you haven't registered");return alert;}
         else {
             User user=User.getUserByUsername(username);
@@ -20,6 +22,7 @@ public static Alert userLogin( String username,String password) {
             }
         }
     }
+
     public static Alert userRegister( String username,String password,String passwordConfirm,String nickname,String email){
 //        if(username.isEmpty()){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("empty username");return alert;}
         if(isUsernameDuplicate(username)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username is taken");return alert;}
@@ -27,7 +30,7 @@ public static Alert userLogin( String username,String password) {
         else if(! isEmailAddressValid(email)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid email");return alert;}
         else if(! isPasswordValid(password)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
         else if(! isNicknameValid(nickname)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid nickname");return alert;}
-        else if(isPasswordWeak(password)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation);return alert;}
+        else if(isPasswordWeak(password)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation.toString());return alert;}
         else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("password is not confirmed correctly");return alert;}
         else{
            User user=new User(username,password,nickname,email);
@@ -37,7 +40,7 @@ public static Alert userLogin( String username,String password) {
     }
 
     public static boolean isNicknameValid(String nickname) {
-    return nickname.matches(".+");//todo regex+
+    return nickname.matches("\\S+");
     }
 
     public static boolean isUsernameDuplicate(String username){
@@ -48,42 +51,49 @@ public static Alert userLogin( String username,String password) {
         }
         return false;
     }
+
     public static boolean isUsernameValid(String username){
-        return username.matches(".+");//todo regex+
+        return username.matches("[a-zA-Z\\d\\-]+");
     }
+
     public static boolean isEmailAddressValid(String email){
-        return email.matches(".+");//todo regex+
+        return email.matches("\\S+@\\S+.com");
     }
 
     public static boolean isPasswordValid(String password){
-        return password.matches("\\S+");//
+        return password.matches("\\S+");
     }
+
     public static boolean isPasswordWeak(String password){
+        additionalInformation.delete(0,additionalInformation.toString().length());
+        boolean isPasswordWeak=false;
         if(!password.matches("\\S{8,}")) {
-            additionalInformation="too short";
-            return true;
+            additionalInformation.append("too short\n");
+            isPasswordWeak=true;
         }
-        else if(!password.matches(".*[a-z]+.*")) {
-            additionalInformation="no small word";
-            return true;
+        if(!password.matches(".*[a-z]+.*")) {
+            additionalInformation.append("no small word\n");
+            isPasswordWeak=true;
         }
-        else if(!password.matches(".*[A-Z].*")) {
-            additionalInformation="no big word";
-            return true;
+        if(!password.matches(".*[A-Z].*")) {
+            additionalInformation.append("no big word\n");
+            isPasswordWeak=true;
         }
-        else if(!password.matches(".*\\d+.*")) {
-            additionalInformation="no number";
-            return true;
+        if(!password.matches(".*\\d+.*")) {
+            additionalInformation.append("no number\n");
+            isPasswordWeak=true;
         }
-        else if(!password.matches(".*[!@#$%^&*()\\-+=]+.*")){
-            additionalInformation="no special character";
-            return true;
+        if(!password.matches(".*[!@#$%^&*()\\-+=]+.*")){
+            additionalInformation.append("no special character\n");
+            isPasswordWeak=true;
         }
-         return false;
+        return isPasswordWeak;
     }
+
     public static boolean isPasswordConfirmed(String password,String passwordConfirm){
         return password.equals(passwordConfirm);
     }
+
     private static boolean isPasswordCorrect(User user ,String password ) {
         return user.getPassword().equals(password);
     }
@@ -93,6 +103,7 @@ public static Alert userLogin( String username,String password) {
         if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
         return false;
     }
+
     public static void setNewPassword(String username, String text){
         User user=User.getUserByUsername(username);
         String pass=" ";
@@ -124,6 +135,15 @@ public static Alert userLogin( String username,String password) {
     }
 
     public static String generatePassword() {
-        return null; // todo strong pass as String
+        Random random=new Random();
+        StringBuilder password=new StringBuilder();
+        int passwordLength=random.nextInt(8,16);
+        String validLetters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-+=";
+        password.append(validLetters.charAt(random.nextInt(0,23)));
+        password.append(validLetters.charAt(random.nextInt(23,46)));
+        password.append(validLetters.charAt(random.nextInt(46,56)));
+        password.append(validLetters.charAt(random.nextInt(56,69)));
+        for(int i=0;i<passwordLength-4;i++)password.append(validLetters.charAt(random.nextInt(0,validLetters.length())));
+        return password.toString();
     }
 }
