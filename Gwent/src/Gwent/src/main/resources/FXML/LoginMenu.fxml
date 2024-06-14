@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginMenu">
     <center>
-        <VBox alignment="CENTER" maxWidth="300" spacing="10">
+        <VBox alignment="CENTER" maxWidth="494.0" prefHeight="400.0" prefWidth="440.0" spacing="10">
             <Label text="Welcome To Gwent">
                 <font>
                     <Font name="Arabic Typesetting" size="24.0" />
                 </font></Label>
             <Label text="Username" />
-            <TextField fx:id="nameField" promptText="your beautiful name" />
+            <TextField fx:id="nameField" maxWidth="300.0" promptText="your beautiful name" />
             <Label text="Password" />
-            <TextField fx:id="password" promptText="enter password" />
-         <TextField promptText="confirm password" fx:id="confirmPWD" visible="false" />
+         <HBox maxWidth="410.0" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
+            <children>
+               <Button fx:id="PassGen" mnemonicParsing="false" onMouseClicked="#genratePassforSignup" prefHeight="20" prefWidth="30" visible="false">
+                   <graphic>
+                       <ImageView fitHeight="20" fitWidth="30">
+                           <Image url="@../Images/icons/key.jpg" />
+                       </ImageView>
+                   </graphic>
+               </Button>
+                  <TextField fx:id="password" maxWidth="340.0" prefHeight="26.0" prefWidth="301.0" promptText="enter password" />
+            </children>
+         </HBox>
+         <TextField fx:id="confirmPWD" maxWidth="300.0" promptText="confirm password" visible="false" />
          <Label fx:id="nicknameLable" text="Nickname" visible="false" />
-         <TextField fx:id="nicknameText" visible="false" />
+         <TextField fx:id="nicknameText" maxWidth="300.0" visible="false" />
          <Label fx:id="emailLabel" text="Email" visible="false" />
-         <TextField fx:id="emailText" visible="false" />
+         <TextField fx:id="emailText" maxWidth="300.0" visible="false" />
             <HBox alignment="CENTER" spacing="10">
                 <Button fx:id="hybridButt" onMouseClicked="#signUp" text="Login" />
                 <Button onMouseClicked="#Switch" text="switch" />
             </HBox>
-            <Button onMouseClicked="#recoverPSWD" text="Forgot Password" fx:id="forgotPWD" visible="true" />
+            <Button fx:id="forgotPWD" onMouseClicked="#recoverPSWD" text="Forgot Password" visible="true" />
         </VBox>
 
     </center>

@@ -1,8 +1,6 @@
 package controller;
 
 import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
-import model.Faction;
 import model.User;
 
 
@@ -57,9 +55,6 @@ public static Alert userLogin( String username,String password) {
         return email.matches(".+");//todo regex+
     }
 
-    public static void makeRandomPassword(MouseEvent mouseEvent){
-        //todo make random password with the required regex
-    };
     public static boolean isPasswordValid(String password){
         return password.matches("\\S+");//
     }
@@ -98,18 +93,10 @@ public static Alert userLogin( String username,String password) {
         if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
         return false;
     }
-    public static void setNewPassword(String username){
+    public static void setNewPassword(String username, String text){
         User user=User.getUserByUsername(username);
         String pass=" ";
-        user.setPassword(pass);//todo
-    }
-
-    public static Alert handleForgottenPassword(String username, String answer) {
-        if(! isUsernameDuplicate(username)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username doesn't exist");return alert;}
-        User user=User.getUserByUsername(username);
-        if(! answer.equals(user.getAnswerOfSecurityQuestion())){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong answer");return alert;}
-        User.setLoggedInUser(user);
-        return null;
+        user.setPassword(pass);//todo samyar: i don know what did you made it for, i used it for password recovery
     }
 
     public static Alert setSecurityQ(String username, String text1, String text2, String text3) {
@@ -126,5 +113,17 @@ public static Alert userLogin( String username,String password) {
             if (! text3.isEmpty()){user.setSecurityQuestionNumber(3);user.setAnswerOfSecurityQuestion(text1);}
             return null;
         }
+    }
+
+    public static Alert hasAnsweredCorrectly(String username, String answer) {
+        if(! isUsernameDuplicate(username)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username doesn't exist");return alert;}
+        User user=User.getUserByUsername(username);
+        if(! answer.equals(user.getAnswerOfSecurityQuestion())){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong answer");return alert;}
+        User.setLoggedInUser(user);
+        return null;
+    }
+
+    public static String generatePassword() {
+        return null; // todo strong pass as String
     }
 }
