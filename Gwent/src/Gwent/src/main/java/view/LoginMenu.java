@@ -80,7 +80,6 @@ public class LoginMenu extends Application {
                             "What is your pet's name?",
                             "Where were you born?"
                     };
-
                     for (int i = 0; i < 3; i++) {
                         securityQuestionLabels[i] = new Label(securityQuestions[i]);
                         securityAnswerFields[i] = new TextField();
@@ -90,9 +89,15 @@ public class LoginMenu extends Application {
                     Button confirmButton = new Button("Confirm");
                     Button backButton = new Button("Back");
                     confirmButton.setOnMouseClicked(event -> {
-                        LoginMenuController.setSecutrityQ(nameField.getText(), //todo complete the method  todo ok but it's empty now
+                       Alert alert1= LoginMenuController.setSecurityQ(nameField.getText(),
                                 securityAnswerFields[0].getText(), securityAnswerFields[1].getText(), securityAnswerFields[2].getText());
-                        goToMainMenu();
+                       if (alert1==null){
+                           goToMainMenu();
+                       }
+                       else {
+                           alert1.show();
+                       }
+
                     });
                     backButton.setOnMouseClicked(event -> {
                         try {
@@ -157,14 +162,16 @@ public class LoginMenu extends Application {
 
         Label securityQuestion = new Label();
         TextField securityAnswerField = new TextField();
-        securityQuestion.setText("what?"); //User.getUserByUsername(nameField.getText()).getSecurityQuestion() //todo after method is completed
+        securityQuestion.setText(User.getUserByUsername(nameField.getText()).getSecurityQuestion());
         securityAnswerField.setMaxWidth(300);
 
         Button confirmButton = new Button("Confirm");
         Button backButton = new Button("Back");
         confirmButton.setOnMouseClicked(event -> {
-            LoginMenuController.handleForgottenPassword(usernameTextField.getText(), //todo complete the method and change the name
-                    securityAnswerField.getText());
+           Alert alert2= LoginMenuController.handleForgottenPassword(usernameTextField.getText(), securityAnswerField.getText());
+           if(alert2==null){
+               goToMainMenu();
+           }else alert2.show();
         });
         backButton.setOnMouseClicked(event -> {
             try {

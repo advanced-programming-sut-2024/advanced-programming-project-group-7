@@ -38,23 +38,21 @@ public class User {
     private Faction currentFaction;
     private  int securityQuestionNumber;//todo removed final todo ok but is it ok?
     private String answerOfSecurityQuestion;
-    private final String securityQuestionAnswer;
+    //private final String securityQuestionAnswer;
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
     private Deck currentDeck;
     static{
-        securityQuestions.put(0, "what is your father's name?");
-        securityQuestions.put(1,"what is your mother's name?");
-        securityQuestions.put(2,"how old are you?");
-        securityQuestions.put(3,"what is your last teacher name?");
-    }
-    public  String getSecurityQuestionsAnswer(int securityQuestionNumber){//made non static
-        return securityQuestions.get(securityQuestionNumber);
+        securityQuestions.put(1, "What is your favorite color?");
+        securityQuestions.put(2, "What is your pet's name?");
+        securityQuestions.put(3,  "Where were you born?");
     }
 
+    public int getSecurityQuestionNumber() {
+        return securityQuestionNumber;
+    }
 
-
-    public void pickSecurityQuestion(int i){
-        this.securityQuestionNumber=i;
+    public void setSecurityQuestionNumber(int securityQuestionNumber) {
+        this.securityQuestionNumber = securityQuestionNumber;
     }
 
     public void setAnswerOfSecurityQuestion(String answerOfSecurityQuestion) {
@@ -65,16 +63,15 @@ public class User {
         return answerOfSecurityQuestion;
     }
 
+
     private String userCurrentMenu;
 
-    public User(String username, String password, String nickname, String emailAddress, int securityQuestionNumber, String securityQuestionAnswer) {
+    public User(String username, String password, String nickname, String emailAddress) {
         this.username=username;
         this.password=password;
         this.nickname=nickname;
         this.currentFaction=new Faction();
         this.emailAddress=emailAddress;
-        this.securityQuestionNumber = securityQuestionNumber;
-        this.securityQuestionAnswer = securityQuestionAnswer;
         addUser(this);
     }
 
@@ -187,8 +184,7 @@ public class User {
         return users;
     }
 
-
     public String getSecurityQuestion() {
-        return "fuck this shit"; // complete it
+        return securityQuestions.get(this.securityQuestionNumber);
     }
 }
