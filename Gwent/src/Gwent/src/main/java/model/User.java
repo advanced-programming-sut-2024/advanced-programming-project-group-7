@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -78,6 +79,7 @@ public class User {
         this.currentFaction=new Faction();
         this.emailAddress=emailAddress;
         addUser(this);
+        this.battleInfos.add(new BattleInfo("amir", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},this));
     }
 
     public static void addUser(User user){
@@ -201,6 +203,6 @@ public class User {
     User userTest=new User("a","b","amir","amir2023@gmail.com");
     userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
-    userTest.battleInfos.add(new BattleInfo());
+//    userTest.battleInfos.add(new BattleInfo());
     }
 }
