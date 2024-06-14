@@ -158,4 +158,8 @@ public class User {
     public void setLostGame(int lostGame) {
         this.lostGame = lostGame;
     }
+
+    public String getSecurityQuestionAnswer() {
+        return securityQuestionAnswer;
+    }
 }

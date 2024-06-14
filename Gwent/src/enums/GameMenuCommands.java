@@ -37,7 +37,7 @@ public enum GameMenuCommands {
     ShowTotalRowScore("show total score of row (?<row_number>\\d)"),
     PassRound("pass round"),
     ShowCurrentMenu("show menu"),
-    MenuExit("menu exit");
+    Back("menu exit"),;
     private final String pattern;
 
     GameMenuCommands(String pattern) {
