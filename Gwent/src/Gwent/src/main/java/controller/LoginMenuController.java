@@ -93,10 +93,11 @@ public static Alert userLogin( String username,String password) {
         if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
         return false;
     }
-    public static void setNewPassword(String username, String text){
-        User user=User.getUserByUsername(username);
-        String pass=" ";
-        user.setPassword(pass);//todo samyar: i don know what did you made it for, i used it for password recovery
+    public static Alert setNewPassword(String password, String confirm){
+        if(! password.equals(confirm)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("answer one question at least");return alert;}
+        if(isPasswordWeak(password)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation);return alert;}
+        User.getLoggedInUser().setPassword(password);
+        return null;
     }
 
     public static Alert setSecurityQ(String username, String text1, String text2, String text3) {
