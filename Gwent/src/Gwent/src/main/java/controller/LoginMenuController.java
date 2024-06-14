@@ -108,7 +108,7 @@ public static Alert userLogin( String username,String password) {
     }
     public static boolean IsSecurityQuestionAnswered(String username,String answer){
         User user=User.getUserByUsername(username);
-        if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
+        if(answer.equals(user.getSecurityQuestionAnswer()))return true;
         return false;
     }
     public static void setNewPassword(String username){

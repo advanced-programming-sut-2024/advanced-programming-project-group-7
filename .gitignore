@@ -4,3 +4,12 @@ Gwent/src/main/Gwent/.idea/workspace.xml
 Gwent/src/Gwent/.idea/compiler.xml
 /Gwent/src/Gwent/.idea
 *.class
+.DS_Store
+Gwent/.DS_Store
+Gwent/src/.DS_Store
+Gwent/src/.idea/workspace.xml
+Gwent/src/Gwent/.DS_Store
+Gwent/src/Gwent/src/.DS_Store
+Gwent/src/Gwent/src/main/.DS_Store
+Gwent/src/Gwent/src/main/java/controller/LoginMenuController.java
+Gwent/src/model/User.java
