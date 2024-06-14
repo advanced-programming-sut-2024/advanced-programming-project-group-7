@@ -188,8 +188,8 @@ public class User {
         return securityQuestions.get(this.securityQuestionNumber);
     }
     static {
-        User userTest = new User("a", "b", "amir", "amir2023@gmail.com");
-        userTest.setSecurityQuestionNumber(1);
-        userTest.setAnswerOfSecurityQuestion("red");
+    User userTest=new User("a","b","amir","amir2023@gmail.com");
+    userTest.setSecurityQuestionNumber(1);
+    userTest.setAnswerOfSecurityQuestion("red");
     }
 }
