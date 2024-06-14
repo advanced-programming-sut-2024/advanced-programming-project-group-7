@@ -2,6 +2,7 @@ package view;
 
 //import controller.LoginMenuController;
 import controller.LoginMenuController;
+import controller.ProfileMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -36,6 +37,7 @@ public class LoginMenu extends Application {
     public boolean isLoggingIN = true;
     public TextField confirmPWD;
     public Button forgotPWD;
+    public Button PassGen;
 
     public static void main(String[] args) {
         launch(args);
@@ -80,7 +82,6 @@ public class LoginMenu extends Application {
                             "What is your pet's name?",
                             "Where were you born?"
                     };
-
                     for (int i = 0; i < 3; i++) {
                         securityQuestionLabels[i] = new Label(securityQuestions[i]);
                         securityAnswerFields[i] = new TextField();
@@ -90,9 +91,15 @@ public class LoginMenu extends Application {
                     Button confirmButton = new Button("Confirm");
                     Button backButton = new Button("Back");
                     confirmButton.setOnMouseClicked(event -> {
-                        LoginMenuController.setSecutrityQ(nameField.getText(), //todo complete the method  todo ok but it's empty now
+                       Alert alert1= LoginMenuController.setSecurityQ(nameField.getText(),
                                 securityAnswerFields[0].getText(), securityAnswerFields[1].getText(), securityAnswerFields[2].getText());
-                        goToMainMenu();
+                       if (alert1==null){
+                           goToMainMenu();
+                       }
+                       else {
+                           alert1.show();
+                       }
+
                     });
                     backButton.setOnMouseClicked(event -> {
                         try {
@@ -104,7 +111,6 @@ public class LoginMenu extends Application {
                     });
 
 
-                    // Align components in center
                     VBox vbox = new VBox(10);
                     vbox.setAlignment(Pos.CENTER);
                     vbox.setMaxWidth(300);
@@ -148,47 +154,82 @@ public class LoginMenu extends Application {
 
     public void recoverPSWD(MouseEvent mouseEvent) {
 
-        Stage recoveryStage = new Stage();
-        recoveryStage.setTitle("Password Recovery");
+        User user = User.getUserByUsername(nameField.getText());
+        if (user == null) {
+            Alert alert  = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("enter your username first");
+            alert.show();
+        } else {
+            Stage recoveryStage = new Stage();
+            recoveryStage.setTitle("Password Recovery");
 
-        Label usernameLabel = new Label("Username:");
-        TextField usernameTextField = new TextField();
-        usernameTextField.setMaxWidth(300);
+            Label usernameLabel = new Label("Username:");
+            TextField usernameTextField = new TextField();
+            usernameTextField.setMaxWidth(300);
 
-        Label securityQuestion = new Label();
-        TextField securityAnswerField = new TextField();
-        securityQuestion.setText("what?"); //User.getUserByUsername(nameField.getText()).getSecurityQuestion() //todo after method is completed
-        securityAnswerField.setMaxWidth(300);
+            Label securityQuestion = new Label();
+            TextField securityAnswerField = new TextField();
+            securityQuestion.setText(user.getSecurityQuestion());
+            securityAnswerField.setMaxWidth(300);
 
-        Button confirmButton = new Button("Confirm");
-        Button backButton = new Button("Back");
-        confirmButton.setOnMouseClicked(event -> {
-            LoginMenuController.handleForgottenPassword(usernameTextField.getText(), //todo complete the method and change the name
-                    securityAnswerField.getText());
-        });
-        backButton.setOnMouseClicked(event -> {
-            try {
-                hasMusic = true;
-                start(LoginMenu.stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+            Button confirmButton = new Button("Confirm");
+            Button backButton = new Button("Back");
+            confirmButton.setOnMouseClicked(event ->{
+                    Alert alert = LoginMenuController.hasAnsweredCorrectly(usernameTextField.getText(), securityAnswerField.getText());
+                    if (alert == null) {
+                        User.setLoggedInUser(user);
+                        Stage newPass = new Stage();
+                        newPass.setTitle("Reset Password");
+                        TextField newPassTextField = new TextField();
+                        newPassTextField.setMaxWidth(300);
+                        Label newPassLabel = new Label("Enter new password");
+                        TextField confirmNewPassTextField = new TextField();
+                        confirmNewPassTextField.setMaxWidth(300);
+                        Button randomPass = new Button("Generate Pass");
+                        randomPass.setOnMouseClicked(event1 -> {
+                            String autoPass = LoginMenuController.generatePassword();
+                            newPassTextField.setText(autoPass);
+                            confirmNewPassTextField.setText(autoPass);
+                        });
+                        Button confirmNewPass = new Button("Confirm");
+                        confirmNewPass.setOnMouseClicked(event1 -> {
+                            LoginMenuController.setNewPassword(
+                                    newPassTextField.getText(), confirmNewPassTextField.getText());
+                            goToMainMenu();
+                        });
+                        VBox vbox = new VBox(10);
+                        vbox.setAlignment(Pos.CENTER);
+                        vbox.setMaxWidth(300);
+                        vbox.getChildren().addAll(newPassLabel, newPassTextField, confirmNewPassTextField, randomPass);
+                        Scene scene = new Scene(vbox, 600, 400);
+                        LoginMenu.stage.setScene(scene);
+                        LoginMenu.stage.show();
+                    } else
+                        alert.show();
+            });
+            backButton.setOnMouseClicked(event -> {
+                try {
+                    hasMusic = true;
+                    start(LoginMenu.stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
 
-        // Align components in center
-        VBox vbox = new VBox(10);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setMaxWidth(300);
-        vbox.getChildren().addAll(
-                usernameLabel, usernameTextField,
-                securityQuestion, securityAnswerField,
-                confirmButton, backButton
-        );
+            VBox vbox = new VBox(10);
+            vbox.setAlignment(Pos.CENTER);
+            vbox.setMaxWidth(300);
+            vbox.getChildren().addAll(
+                    usernameLabel, usernameTextField,
+                    securityQuestion, securityAnswerField,
+                    confirmButton, backButton
+            );
 
-        Scene scene = new Scene(vbox, 600, 400);
-        LoginMenu.stage.setScene(scene);
-        LoginMenu.stage.show();
+            Scene scene = new Scene(vbox, 600, 400);
+            LoginMenu.stage.setScene(scene);
+            LoginMenu.stage.show();
+        }
     }
 
     public void Switch(MouseEvent mouseEvent) {
@@ -199,17 +240,25 @@ public class LoginMenu extends Application {
             nicknameText.setVisible(false);
             emailLabel.setVisible(false);
             emailText.setVisible(false);
+            PassGen.setVisible(false);
             forgotPWD.setVisible(true);
             hybridButt.setText("login");
         } else {
             confirmPWD.setVisible(true);
             forgotPWD.setVisible(false);
             nicknameLable.setVisible(true);
+            PassGen.setVisible(true);
             nicknameText.setVisible(true);
             emailLabel.setVisible(true);
             emailText.setVisible(true);
             hybridButt.setText("signup");
         }
+    }
+
+    public void genratePassforSignup(MouseEvent mouseEvent) {
+        String autoPass = LoginMenuController.generatePassword();
+        password.setText(autoPass);
+        confirmPWD.setText(autoPass);
     }
 }
 

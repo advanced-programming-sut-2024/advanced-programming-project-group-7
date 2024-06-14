@@ -1,8 +1,6 @@
 package controller;
 
 import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
-import model.Faction;
 import model.User;
 
 
@@ -15,7 +13,6 @@ public static Alert userLogin( String username,String password) {
         else {
             User user=User.getUserByUsername(username);
             System.out.println(user.getUsername());
-            //todo forgot pass doesn't care here
             if (!isPasswordCorrect(user,password)) {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong password");return alert;}
             else {
                 User.setLoggedInUser(user);
@@ -33,17 +30,14 @@ public static Alert userLogin( String username,String password) {
         else if(isPasswordWeak(password)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation);return alert;}
         else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("password is not confirmed correctly");return alert;}
         else{
-            //todo answer security Q and set answer
-            int secNum=1;
-            String answer= "ok";
-           User user=new User(username,password,nickname,email,secNum,answer);
+           User user=new User(username,password,nickname,email);
            User.setLoggedInUser(user);
             return null;
         }
     }
 
     public static boolean isNicknameValid(String nickname) {
-    return nickname.matches(".+");
+    return nickname.matches(".+");//todo regex+
     }
 
     public static boolean isUsernameDuplicate(String username){
@@ -61,34 +55,31 @@ public static Alert userLogin( String username,String password) {
         return email.matches(".+");//todo regex+
     }
 
-    public static String makeRandomPassword(MouseEvent mouseEvent){
-
-    }
     public static boolean isPasswordValid(String password){
         return password.matches("\\S+");//
     }
     public static boolean isPasswordWeak(String password){
-//        if(!password.matches("\\S{8,}")) {
-//            additionalInformation="too short";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*[a-z])")) {
-//            additionalInformation="no small word";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*[A-Z])")) {
-//            additionalInformation="no big word";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*\\d)")) {
-//            additionalInformation="no number";
-//            return true;
-//        }
-//        else if(!password.matches("(?=\\S*[!@#$%^&*()\\-+=])")){
-//            additionalInformation="no special character";
-//            return true;
-//        }
-         return false;//todo regexes should change
+        if(!password.matches("\\S{8,}")) {
+            additionalInformation="too short";
+            return true;
+        }
+        else if(!password.matches(".*[a-z]+.*")) {
+            additionalInformation="no small word";
+            return true;
+        }
+        else if(!password.matches(".*[A-Z].*")) {
+            additionalInformation="no big word";
+            return true;
+        }
+        else if(!password.matches(".*\\d+.*")) {
+            additionalInformation="no number";
+            return true;
+        }
+        else if(!password.matches(".*[!@#$%^&*()\\-+=]+.*")){
+            additionalInformation="no special character";
+            return true;
+        }
+         return false;
     }
     public static boolean isPasswordConfirmed(String password,String passwordConfirm){
         return password.equals(passwordConfirm);
@@ -96,30 +87,43 @@ public static Alert userLogin( String username,String password) {
     private static boolean isPasswordCorrect(User user ,String password ) {
         return user.getPassword().equals(password);
     }
-    public static void pickSecurityQuestion(){
-       //todo a menu to sout all Q's and a field for answer and a botton for number of Q
-    }
-    public static Alert forgotPassword(String username) {
-        String answer=" ";//todo
-        if(IsSecurityQuestionAnswered(username,answer)){
-            setNewPassword(username);
-            return null;
-        }else{ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong answer");return alert;}
-    }
+
     public static boolean IsSecurityQuestionAnswered(String username,String answer){
         User user=User.getUserByUsername(username);
-//        if(answer.equals(user.getSecurityQuestionAnswer()))return true;
+        if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
         return false;
     }
-    public static void setNewPassword(String username){
+    public static void setNewPassword(String username, String text){
         User user=User.getUserByUsername(username);
         String pass=" ";
-        user.setPassword(pass);//todo
+        user.setPassword(pass);//todo samyar: i don know what did you made it for, i used it for password recovery
     }
 
-    public static void handleForgottenPassword(String text, String text1) {
+    public static Alert setSecurityQ(String username, String text1, String text2, String text3) {
+        User user=User.getUserByUsername(username);
+        int i=0;
+        if (! text1.isEmpty())i++;
+        if (! text2.isEmpty())i++;
+        if (! text3.isEmpty())i++;
+        if(i==0){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("answer one question at least");return alert;}
+        if (i>=2){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("answer only one question");return alert;}
+        else {
+            if (! text1.isEmpty()){user.setSecurityQuestionNumber(1);user.setAnswerOfSecurityQuestion(text1);}
+            if (! text2.isEmpty()){user.setSecurityQuestionNumber(2);user.setAnswerOfSecurityQuestion(text1);}
+            if (! text3.isEmpty()){user.setSecurityQuestionNumber(3);user.setAnswerOfSecurityQuestion(text1);}
+            return null;
+        }
     }
 
-    public static void setSecutrityQ(String text, String text1, String text2, String text3) {
+    public static Alert hasAnsweredCorrectly(String username, String answer) {
+        if(! isUsernameDuplicate(username)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username doesn't exist");return alert;}
+        User user=User.getUserByUsername(username);
+        if(! answer.equals(user.getAnswerOfSecurityQuestion())){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong answer");return alert;}
+        User.setLoggedInUser(user);
+        return null;
+    }
+
+    public static String generatePassword() {
+        return null; // todo strong pass as String
     }
 }
