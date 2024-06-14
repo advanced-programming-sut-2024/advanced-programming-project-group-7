@@ -23,6 +23,11 @@ public class User {
     }
 
     private ArrayList<Deck> decks=new ArrayList<>();
+    private ArrayList<Game> games=new ArrayList<>();
+    private ArrayList<BattleInfo> battleInfos=new ArrayList<>();
+    static {
+
+    }
     private Leader currentLeader;
     private static User loggedInUser;
     private String username;
@@ -187,9 +192,15 @@ public class User {
     public String getSecurityQuestion() {
         return securityQuestions.get(this.securityQuestionNumber);
     }
+
+    public ArrayList<Game> getGames() {
+        return games;
+    }
+
     static {
     User userTest=new User("a","b","amir","amir2023@gmail.com");
     userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
+    userTest.battleInfos.add(new BattleInfo());
     }
 }

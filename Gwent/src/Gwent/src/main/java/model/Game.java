@@ -1,16 +1,17 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Game {
-    private Date Date;
-    private String[] players;
-    private Integer[][] roundsPoints=new Integer[3][2];
-    private int[] finalPoints=new int[2];
-    private User winner;
+    private LocalDate date= LocalDate.now();
+    private String[] players={User.getLoggedInUser().getUsername(),"amir"};
+    private Integer[][] roundsPoints=new Integer[][]{{20,10},{10,20},{20,10}};
+    private int[] finalPoints=new int[]{50,40};
+    private User winner=User.getLoggedInUser();
 
-    public Game(String[] players) {
-        this.players = players;
+    public Game(String[] players) {this.players = players;
     }
 
     public void setPlayers(String[] players) {
@@ -29,13 +30,13 @@ public class Game {
         this.winner = winner;
     }
 
-    public void setDate(java.util.Date date) {
-        Date = date;
-    }
-
-    public java.util.Date getDate() {
-        return Date;
-    }
+//    public void setDate(java.util.Date date) {
+//        Date = date;
+//    }
+//
+//    public java.util.Date getDate() {
+//        return Date;
+//    }
 
     public String[] getPlayers() {
         return players;
