@@ -37,7 +37,6 @@ public class ProfileMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
     @FXML
 
     public void initialize() {
