@@ -13,3 +13,11 @@ Gwent/src/Gwent/src/.DS_Store
 Gwent/src/Gwent/src/main/.DS_Store
 Gwent/src/Gwent/src/main/java/controller/LoginMenuController.java
 Gwent/src/model/User.java
+*.fxml
+*.xml
+Gwent/.DS_Store
+Gwent/.DS_Store
+Gwent/.idea/misc.xml
+Gwent/src/.DS_Store
+Gwent/src/.idea/misc.xml
+Gwent/src/.idea/workspace.xml

@@ -61,9 +61,9 @@ public static Alert userLogin( String username,String password) {
         return email.matches(".+");//todo regex+
     }
 
-    public static void makeRandomPassword(MouseEvent mouseEvent){
-        //todo make random password with the required regex
-    };
+    public static String makeRandomPassword(MouseEvent mouseEvent){
+
+    }
     public static boolean isPasswordValid(String password){
         return password.matches("\\S+");//
     }
@@ -108,7 +108,7 @@ public static Alert userLogin( String username,String password) {
     }
     public static boolean IsSecurityQuestionAnswered(String username,String answer){
         User user=User.getUserByUsername(username);
-        if(answer.equals(user.getSecurityQuestionAnswer()))return true;
+//        if(answer.equals(user.getSecurityQuestionAnswer()))return true;
         return false;
     }
     public static void setNewPassword(String username){
