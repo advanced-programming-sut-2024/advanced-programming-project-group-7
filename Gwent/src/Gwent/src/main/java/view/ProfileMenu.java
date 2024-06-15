@@ -46,7 +46,7 @@ public class ProfileMenu extends Application {
     public void initialize() {
         numberOfBattles.setValue(5);
         username.setText("username");
-        nickname.setText("nickname");//todo changed from tofill.thought it's gonna be filled by myself.
+        nickname.setText("nickname");
         email.setText("email");
     }
 

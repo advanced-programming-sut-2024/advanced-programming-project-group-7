@@ -196,7 +196,7 @@ public class LoginMenu extends Application {
                            Alert alert1= LoginMenuController.setNewPassword(newPassTextField.getText(), confirmNewPassTextField.getText());
                             if(alert1==null){
                                 User.setLoggedInUser(null);
-                                goToMainMenu();//todo goto loginmenu is better
+                                goToMainMenu();
                             }else alert1.show();
                         });
                         VBox vbox = new VBox(10);
