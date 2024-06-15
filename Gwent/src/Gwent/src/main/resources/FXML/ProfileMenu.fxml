@@ -48,7 +48,7 @@
                      </FXCollections>
                  </items>
              </ComboBox>
-            <Button mnemonicParsing="false" text="Show" />
+            <Button mnemonicParsing="false" text="Show Log" fx:id="battleLog" onMouseClicked="#showBattleLog" />
          </children></VBox>
    </left>
    <right>
@@ -56,7 +56,7 @@
          <children>
             <Label text="Players info" />
             <TextField prefHeight="26.0" prefWidth="65.0" fx:id="searchBar" />
-            <Button mnemonicParsing="false" text="Serach" onMouseClicked="#showPlayerInfo" />
+            <Button mnemonicParsing="false" text="Serach" onMouseClicked="#showPlayerInfo" fx:id="searchButton" />
          </children></VBox>
    </right>
 
