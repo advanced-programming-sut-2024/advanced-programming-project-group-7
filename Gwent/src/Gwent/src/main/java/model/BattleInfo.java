@@ -8,7 +8,7 @@ public class BattleInfo {
     private int[][] roundsPoints=new int[3][2];//{{20,10},{10,20},{20,10}};
     private int[] finalPoints=new int[2];//{50,40};
     private User winner=User.getLoggedInUser();
-    String opponent="amir";
+    private String opponent="amir";
 
     public BattleInfo(String opponent, LocalDate date, int[][]roundsPoints, int[] finalPoints, User winner) {
         this.opponent = opponent;
@@ -16,5 +16,25 @@ public class BattleInfo {
         this.roundsPoints = roundsPoints;
         this.finalPoints = finalPoints;
         this.winner = winner;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public int[][] getRoundsPoints() {
+        return roundsPoints;
+    }
+
+    public int[] getFinalPoints() {
+        return finalPoints;
+    }
+
+    public User getWinner() {
+        return winner;
+    }
+
+    public String getOpponent() {
+        return opponent;
     }
 }
