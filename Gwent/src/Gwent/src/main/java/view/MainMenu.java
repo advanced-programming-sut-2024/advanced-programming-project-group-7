@@ -63,8 +63,9 @@ public class MainMenu extends Application {
     }
 
     public void Logout(MouseEvent mouseEvent) {
-        MainMenuController.logout();
+        LoginMenu.mediaPlayer.stop();
         soundPlayer("/Sounds/paper.mp3");
+        MainMenuController.logout();
         LoginMenu.mediaPlayer.stop();
         LoginMenu loginMenu = new LoginMenu();
         try {

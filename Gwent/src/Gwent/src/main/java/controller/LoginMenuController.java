@@ -104,10 +104,12 @@ public class LoginMenuController {
         return false;
     }
 
-    public static void setNewPassword(String username, String text){
+    public static Alert setNewPassword(String username, String pass){
         User user=User.getUserByUsername(username);
-        String pass=" ";
+        if(isPasswordValid(pass)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
+        if(isPasswordWeak(pass)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation.toString());return alert;}
         user.setPassword(pass);
+        return null;
     }
 
     public static Alert setSecurityQ(String username, String text1, String text2, String text3) {
