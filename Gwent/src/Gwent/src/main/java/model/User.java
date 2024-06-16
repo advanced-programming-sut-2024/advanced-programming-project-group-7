@@ -26,9 +26,7 @@ public class User {
     private ArrayList<Deck> decks=new ArrayList<>();
     private ArrayList<Game> games=new ArrayList<>();
     private ArrayList<BattleInfo> battleInfos=new ArrayList<>();
-    static {
 
-    }
     private Leader currentLeader;
     private static User loggedInUser;
     private String username;

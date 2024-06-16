@@ -107,7 +107,7 @@ public class LoginMenuController {
     public static void setNewPassword(String username, String text){
         User user=User.getUserByUsername(username);
         String pass=" ";
-        user.setPassword(pass);//todo samyar: i don know what did you made it for, i used it for password recovery
+        user.setPassword(pass);
     }
 
     public static Alert setSecurityQ(String username, String text1, String text2, String text3) {
