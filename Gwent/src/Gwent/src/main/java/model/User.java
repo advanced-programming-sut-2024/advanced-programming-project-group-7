@@ -203,7 +203,6 @@ public class User {
     userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
         userTest.battleLog.add(new BattleInfo("amir", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
- //   userTest.battleInfos.add(new BattleInfo());
     }
 
     public ArrayList<BattleInfo> getBattleLog() {
