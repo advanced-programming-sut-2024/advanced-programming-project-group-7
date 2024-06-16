@@ -78,8 +78,7 @@ public class User {
         this.nickname=nickname;
         this.currentFaction=new Faction();
         this.emailAddress=emailAddress;
-        addUser(this); //todo dude grab a piece of shit and clean this up
-        this.battleLog.add(new BattleInfo("amir", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},this));
+        addUser(this);
     }
 
     public static void addUser(User user){
@@ -200,9 +199,10 @@ public class User {
     }
 
     static {
-    User userTest=new User("a","a","amir","amir2023@gmail.com");
+    User userTest=new User("a","a","ali","amir2023@gmail.com");
     userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
+        userTest.battleLog.add(new BattleInfo("amir", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
  //   userTest.battleInfos.add(new BattleInfo());
     }
 
