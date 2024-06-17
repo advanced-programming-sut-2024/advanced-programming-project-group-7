@@ -55,11 +55,11 @@ public class MainMenu extends Application {
     public void startNewGame(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/sword.mp3");
 
-//        try {
-//            new GameLauncher().start(LoginMenu.stage);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            new PreGameMenu().start(LoginMenu.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void Logout(MouseEvent mouseEvent) {
