@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +24,11 @@ public class User {
     }
 
     private ArrayList<Deck> decks=new ArrayList<>();
+    private ArrayList<Game> games=new ArrayList<>();
+    private ArrayList<BattleInfo> battleLog =new ArrayList<>();
+    static {
+
+    }
     private Leader currentLeader;
     private static User loggedInUser;
     private String username;
@@ -72,7 +78,8 @@ public class User {
         this.nickname=nickname;
         this.currentFaction=new Faction();
         this.emailAddress=emailAddress;
-        addUser(this);
+        addUser(this); //todo dude grab a piece of shit and clean this up
+        this.battleLog.add(new BattleInfo("amir", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},this));
     }
 
     public static void addUser(User user){
@@ -186,5 +193,20 @@ public class User {
 
     public String getSecurityQuestion() {
         return securityQuestions.get(this.securityQuestionNumber);
+    }
+
+    public ArrayList<Game> getGames() {
+        return games;
+    }
+
+    static {
+    User userTest=new User("a","a","amir","amir2023@gmail.com");
+    userTest.setSecurityQuestionNumber(1);
+    userTest.setAnswerOfSecurityQuestion("red");
+ //   userTest.battleInfos.add(new BattleInfo());
+    }
+
+    public ArrayList<BattleInfo> getBattleLog() {
+        return battleLog;
     }
 }

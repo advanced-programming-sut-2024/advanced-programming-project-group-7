@@ -193,9 +193,11 @@ public class LoginMenu extends Application {
                         });
                         Button confirmNewPass = new Button("Confirm");
                         confirmNewPass.setOnMouseClicked(event1 -> {
-                            LoginMenuController.setNewPassword(
-                                    newPassTextField.getText(), confirmNewPassTextField.getText());
-                            goToMainMenu();
+                           Alert alert1= LoginMenuController.setNewPassword(newPassTextField.getText(), confirmNewPassTextField.getText());
+                            if(alert1==null){
+                                User.setLoggedInUser(null);
+                                goToMainMenu();
+                            }else alert1.show();
                         });
                         VBox vbox = new VBox(10);
                         vbox.setAlignment(Pos.CENTER);
