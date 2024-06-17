@@ -14,6 +14,9 @@ Gwent/src/Gwent/target/classes/model/Leader$NorthenRealmsLeader.class
 Gwent/src/Gwent/target/classes/model/Leader$SkelligLeader.class
 Gwent/src/Gwent/target/classes/module-info.class
 Gwent/src/Gwent/target/classes/view/LoginMenu.class
-.DS_Store
-Gwent/.DS_Store
+*.java
+*.java
 Gwent/src/.DS_Store
+*.class
+*.class
+*.java
