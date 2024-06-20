@@ -10,11 +10,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.Card;
+import model.Faction;
+import model.Medic;
 import model.User;
 
 import java.io.FileOutputStream;
@@ -34,11 +39,7 @@ public class PreGameMenu extends Application {
     public ImageView I00;
     public ImageView I01;
     public ImageView I02;
-    public Label totalCardInDeck;
-    public Label numberOfUnitCard;
-    public Label numberOfspecialCard;
-    public Label totalUnitCardStrength;
-    public Label numberOfHeroCard;
+    public GridPane leftGrid;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -52,22 +53,20 @@ public class PreGameMenu extends Application {
 
     @FXML
     public void initialize() {
-        // these are only here for as examples
-        LeaderImage.setFill(new ImagePattern
-                (new Image(PreGameMenu.class.getResource("/Images/lg/realms_foltest_bronze.jpg").toExternalForm())));
-        cell00.setFill(new ImagePattern
-                (new Image(PreGameMenu.class.getResource("/Images/lg/monsters_fiend.jpg").toExternalForm())));
-        L00.setVisible(true);
-        I00.setVisible(true); // find the difference
-        cell01.setFill(new ImagePattern
-                (new Image(PreGameMenu.class.getResource("/Images/lg/monsters_fire_elemental.jpg").toExternalForm())));
-        cell02.setFill(new ImagePattern
-                (new Image(PreGameMenu.class.getResource("/Images/lg/monsters_eredin_the_treacherous.jpg").toExternalForm())));
-        //*******
         setCardsAndCommander();//this is the real deal
     }
 
     private void setCardsAndCommander() {
+        for (Card card: Faction.Monsters.getMonsterCards()) {
+            Pane pane = new Pane();
+            Rectangle rectangle = new Rectangle();
+            rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
+            rectangle.setHeight(300);
+            rectangle.setWidth(150);
+            pane.getChildren().add(rectangle);
+            leftGrid.add(pane, 1, 1);
+            System.out.println("hi");
+        }
     }
 
     public void add00(MouseEvent mouseEvent) {
