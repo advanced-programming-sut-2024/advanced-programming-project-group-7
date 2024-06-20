@@ -20,3 +20,5 @@ Gwent/src/.DS_Store
 *.class
 *.class
 *.java
+Gwent/src/Gwent/src/main/resources/FXML/PreGameMenu.fxml
+*.fxml
