@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -13,46 +12,69 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.HBox?>
-<BorderPane prefHeight="1000" prefWidth="1600.0" style="-fx-background-color: darkslategray;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PreGameMenu">
+<BorderPane prefHeight="1000" prefWidth="1600.0" style="-fx-background-color: darkslategray;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PreGameMenu">
     <center>
-        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
-            <children>
-                <BorderPane prefHeight="400.0" prefWidth="600.0">
-                    <top>
-                        <Label text="choose your leader" BorderPane.alignment="CENTER" />
-                    </top>
-                    <center>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                            <children>
-                                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                            </children>
-                        </HBox>
-                    </center>
-                    <bottom>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                            <children>
-                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                    <children>
-                                        <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="72.0" text="Left" />
-                                        <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="72.0" text="Right" />
-                                    </children>
-                                </HBox>
-                                <Button mnemonicParsing="false" text="choose" />
-                            </children>
-                        </VBox>
-                    </bottom>
-                </BorderPane>
-            </children>
-        </Pane>
         <VBox alignment="CENTER" maxWidth="300" spacing="10">
-         <children>
-            <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="320" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-         </children></VBox>
+            <children>
+                <Label text="leader">
+               <font>
+                  <Font size="37.0" />
+               </font></Label>
+                <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="224.0" stroke="BLACK" strokeType="INSIDE" width="152.0" />
+            <Label text="total card in deck" textFill="#ebb342">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalCardInDeck" text="0/0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="number of unit card" textFill="#ebb342">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="numberOfUnitCard" text="0/22">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="special card" textFill="#ebb342">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="numberOfspecialCard" text="0/10">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="total unit card strength" textFill="#ebb342">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalUnitCardStrength" text="0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="hero cards" textFill="#ebb342">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="numberOfHeroCard" text="0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            </children>
+         </VBox>
     </center>
    <left>
        <ScrollPane style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
@@ -61,23 +83,23 @@
                    <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
                        <Rectangle fx:id="cell00" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" onMouseClicked="#add00" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView fx:id="I00" layoutX="90" layoutY="245" visible="false">
-                           <Image url="@../Images/lg/special_horn.jpg" /> <!-- todo: terrible quality create a new image using Pixlr-->
+                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
                        </ImageView>
-                       <Label fx:id="L00" layoutX="120.0" layoutY="245.0" text="3" textFill="#ac941b" visible="false" />
+                       <Label fx:id="L00" layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>
                    <Pane GridPane.columnIndex="1" GridPane.rowIndex="0">
                        <Rectangle fx:id="cell01" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300" onMouseClicked="#add01" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView fx:id="I01" layoutX="90" layoutY="245" visible="false">
-                           <Image url="@../Images/lg/special_decoy.jpg" />
+                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" />
                        </ImageView>
-                       <Label fx:id="L01" layoutX="120.0" layoutY="245.0" text="3" textFill="#ac941b" visible="false" />
+                       <Label fx:id="L01" layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>
                    <Pane GridPane.columnIndex="2" GridPane.rowIndex="0">
-                       <Rectangle fx:id="cell02" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300" onMouseClicked="#add01" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                       <Rectangle fx:id="cell02" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300" onMouseClicked="#add02" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView fx:id="I02" layoutX="90" layoutY="245" visible="false">
-                           <Image url="@../Images/lg/special_mardroeme.jpg" />
+                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" />
                        </ImageView>
-                       <Label fx:id="L02" layoutX="120.0" layoutY="245.0" text="3" textFill="#ac941b" visible="false" />
+                       <Label fx:id="L02" layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>
                    <!-- todo add others here-->
                    <columnConstraints>
