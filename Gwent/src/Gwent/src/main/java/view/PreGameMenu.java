@@ -34,6 +34,11 @@ public class PreGameMenu extends Application {
     public ImageView I00;
     public ImageView I01;
     public ImageView I02;
+    public Label totalCardInDeck;
+    public Label numberOfUnitCard;
+    public Label numberOfspecialCard;
+    public Label totalUnitCardStrength;
+    public Label numberOfHeroCard;
 
     @Override
     public void start(Stage stage) throws Exception {

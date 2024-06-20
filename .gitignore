@@ -20,3 +20,6 @@ Gwent/src/.DS_Store
 *.class
 *.class
 *.java
+Gwent/src/.DS_Store
+Gwent/src/Gwent/target/classes/model/User.class
+Gwent/src/Gwent/target/classes/view/MainMenu.class
