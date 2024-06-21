@@ -11,39 +11,24 @@
         <VBox alignment="CENTER" maxWidth="300" spacing="10">
          <children>
             <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="320" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Change Leader" onMouseClicked="#showLeaderMenu" />
+            <Button mnemonicParsing="false" text="Change Faction" onMouseClicked="#showFactionMenu" />
             <Button mnemonicParsing="false" text="Button" />
          </children></VBox>
     </center>
    <left>
        <ScrollPane style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
            <content>
-               <GridPane fx:id = "leftGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
-                   <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
+               <GridPane fx:id="leftGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
+                   <Pane GridPane.columnIndex="2" GridPane.rowIndex="1">
                        <Rectangle fx:id="cell00" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" onMouseClicked="#add00" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView fx:id="I00" layoutX="90" layoutY="245" visible="false">
                            <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
                        </ImageView>
                        <Label fx:id="L00" layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>
-                   <Pane GridPane.columnIndex="1" GridPane.rowIndex="0">
-                       <Rectangle fx:id="cell01" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300" onMouseClicked="#add01" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                       <ImageView fx:id="I01" layoutX="90" layoutY="245" visible="false">
-                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" />
-                       </ImageView>
-                       <Label fx:id="L01" layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
-                   </Pane>
-                   <Pane GridPane.columnIndex="2" GridPane.rowIndex="0">
-                       <Rectangle fx:id="cell02"  arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300" onMouseClicked="#add02" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                       <ImageView fx:id="I02" layoutX="90" layoutY="245" visible="false">
-                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png"  />
-                       </ImageView>
-                       <Label fx:id="L02" layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
-                   </Pane>
                    <!-- todo add others here-->
                    <columnConstraints>
-                       <ColumnConstraints />
                        <ColumnConstraints />
                        <ColumnConstraints />
                        <ColumnConstraints />

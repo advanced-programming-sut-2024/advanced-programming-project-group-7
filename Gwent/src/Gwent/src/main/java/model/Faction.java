@@ -3,18 +3,26 @@ package model;
 import java.util.ArrayList;
 
 public class Faction {
-    private static String[] factionsName={"",""};
-    public boolean isFactionNameValid(String factionName){
-        return false;
+    private String descriptions;
+    private String lgPath = "/Images/lg/faction_monsters.jpg";
+    private static ArrayList<Faction> factions = new ArrayList<>();
+    static {
+        factions.add(new Monsters("hi there"));
     }
-    public class Monsters {
-        public static ArrayList<Card> monsterCards = new ArrayList<>();
 
-        static {
-            monsterCards.add(new Card("fiend", 5 , false, 5, "monsters"));
-        }
-        public static ArrayList<Card> getMonsterCards() {
-            return monsterCards;
-        }
+    public Faction(String descriptions) {
+        this.descriptions = descriptions;
+    }
+
+    public static ArrayList<Faction> getFactions() {
+        return factions;
+    }
+
+    public String getDescription() {
+        return descriptions;
+    }
+
+    public String getLgPath() {
+        return  lgPath;
     }
 }

@@ -76,7 +76,7 @@ public class User {
         this.username=username;
         this.password=password;
         this.nickname=nickname;
-        this.currentFaction=new Faction();
+        this.currentFaction=new Faction("hi bitches");
         this.emailAddress=emailAddress;
         addUser(this);
     }
