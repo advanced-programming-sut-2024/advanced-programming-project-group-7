@@ -1,71 +1,94 @@
 package view;
 
-import controller.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Card;
-import model.Faction;
-import model.Medic;
-import model.User;
+import javafx.stage.StageStyle;
+import model.*;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class PreGameMenu extends Application {
 
     public Rectangle LeaderImage;
-    public Rectangle cell00;
-    public Rectangle cell01;
-    public Rectangle cell02;
-    public Label L00;
-    public Label L01;
-    public Label L02;
-    public ImageView I00;
-    public ImageView I01;
-    public ImageView I02;
+    public Leader leader;
+    public int leaderIndex;
     public GridPane leftGrid;
+    public Stage leaderMenu;
+    public Stage factionMenu;
+    public Faction currentFaction = new Monsters("hello there");
+    private int factionIndex;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws IOException {
         URL url = LoginMenu.class.getResource("/FXML/PreGameMenu.fxml");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("pregame menu");
         stage.show();
         stage.setFullScreen(true);
     }
 
+    private void handleLeaderMenu(Rectangle rectangle, Label label) {
+        leaderIndex %= 1; // todo adapt it
+        Leader MonsterLeader = (Leader) Leader.MonsterLeader.getLeaders().get(leaderIndex);
+        label.setText(MonsterLeader.getDescription());
+        rectangle.setFill(new ImagePattern(new Image(
+                String.valueOf(PreGameMenu.class.getResource(MonsterLeader.getLgPath()).toExternalForm()))));
+    }
+
+
     @FXML
     public void initialize() {
+        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource("/Images/lg/monsters_eredin_gold.jpg").toString())));
         setCardsAndCommander();//this is the real deal
     }
 
     private void setCardsAndCommander() {
-        for (Card card: Faction.Monsters.getMonsterCards()) {
+        if(currentFaction instanceof Monsters){
+            //this is how it is done
+        }
+        int count = 0;
+        for (Card card: Monsters.getMonsterCards()) { //todo fix it so it will work for all classes
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
             rectangle.setHeight(300);
             rectangle.setWidth(150);
-            pane.getChildren().add(rectangle);
-            leftGrid.add(pane, 1, 1);
+            rectangle.setArcHeight(20);
+            rectangle.setArcWidth(20);
+            Label label = new Label(String.valueOf(card.getCountOfCard()));
+            label.setLayoutY(240);
+            label.setLayoutX(120);
+            label.setTextFill(Color.GOLD);
+            label.setFont(new Font(20));
+            pane.getChildren().addAll(rectangle, label);
+            leftGrid.add(pane,count % 3,count / 3);
+            pane.setOnMouseClicked(event -> {
+                System.out.println(card.getCardName());
+
+            });
             System.out.println("hi");
+            count++;
         }
     }
 
@@ -77,4 +100,97 @@ public class PreGameMenu extends Application {
 
     public void add02(MouseEvent mouseEvent) {
     }
+
+    public void showLeaderMenu(MouseEvent mouseEvent) {
+        leaderMenu = new Stage();
+        Pane root = new Pane();
+        Scene scene = new Scene(root);
+        // Remove window decoration
+        leaderMenu.initStyle(StageStyle.UNDECORATED);
+        leaderMenu.initStyle(StageStyle.TRANSPARENT);
+        root.setBackground(Background.EMPTY);
+        scene.setFill(Color.rgb(1,1,1, 0.7));
+        root.setMinHeight(500);
+        root.setMinWidth(800);
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setLayoutX(300);
+        vBox.setLayoutY(10);
+        Rectangle rectangle = new Rectangle(400, 300, 200, 320);
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/lg/monsters_eredin_silver.jpg")))));
+        Button confirm = new Button("confirm");
+        confirm.setOnMouseClicked(event -> {
+            LeaderImage.setFill(rectangle.getFill());
+            leaderMenu.close();
+            leaderIndex = 0;
+        });
+        Label label = new Label("leader description here");
+
+        Button toRight = new Button("to right");
+        Button toLeft = new Button("to left");
+        toRight.setOnMouseClicked(event -> {
+            leaderIndex++;
+            handleLeaderMenu(rectangle, label);
+        });
+        toLeft.setOnMouseClicked(event -> {
+            leaderIndex--;
+            handleLeaderMenu(rectangle, label);
+        });
+        HBox hBox = new HBox(10, toLeft, toRight);
+        hBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(rectangle, hBox, confirm, label);
+        root.getChildren().add(vBox);
+        leaderMenu.setScene(scene);
+        leaderMenu.showAndWait();
+    }
+    public void showFactionMenu(MouseEvent mouseEvent) {
+        factionMenu = new Stage();
+        Pane root = new Pane();
+        Scene scene = new Scene(root);
+        // Remove window decoration
+        factionMenu.initStyle(StageStyle.UNDECORATED);
+        factionMenu.initStyle(StageStyle.TRANSPARENT);
+        root.setBackground(Background.EMPTY);
+        scene.setFill(Color.rgb(1,1,1, 0.7));
+        root.setMinHeight(500);
+        root.setMinWidth(800);
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setLayoutX(300);
+        vBox.setLayoutY(10);
+        Rectangle rectangle = new Rectangle(400, 300, 200, 320);
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/lg/faction_nilfgaard.jpg")))));
+        Button confirm = new Button("confirm");
+        confirm.setOnMouseClicked(event -> {
+            factionMenu.close();
+            factionIndex = 0;
+        });
+        Label label = new Label("faction description here");
+
+        Button toRight = new Button("to right");
+        Button toLeft = new Button("to left");
+        toRight.setOnMouseClicked(event -> {
+            factionIndex++;
+            handleFactionMenu(rectangle, label);
+        });
+        toLeft.setOnMouseClicked(event -> {
+            factionIndex--;
+            handleFactionMenu(rectangle, label);
+        });
+        HBox hBox = new HBox(10, toLeft, toRight);
+        hBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(rectangle, hBox, confirm, label);
+        root.getChildren().add(vBox);
+        factionMenu.setScene(scene);
+        factionMenu.showAndWait();
+    }
+
+    private void handleFactionMenu(Rectangle rectangle, Label label) {
+        factionIndex %= 1; //todo set to 5 when all factions are added
+        Faction faction = Faction.getFactions().get(factionIndex);
+        label.setText(faction.getDescription());
+        rectangle.setFill(new ImagePattern(new Image(
+                String.valueOf(PreGameMenu.class.getResource(faction.getLgPath()).toExternalForm()))));
+    }
+
 }
