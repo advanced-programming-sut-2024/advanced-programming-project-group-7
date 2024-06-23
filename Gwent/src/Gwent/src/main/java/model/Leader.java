@@ -1,22 +1,23 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public abstract class Leader {
 
     private String leaderName;
     private String description;
     private String lgPath;
+    private  String factionName;
 
-    public Leader(String leaderName, String description) {
+    public Leader(String leaderName, String description,String factionName) {
         this.leaderName = leaderName;
         this.description = description;
-        this.lgPath = lgPathMaker();
+        this.lgPath = lgPathMaker(leaderName, factionName);
+        this.factionName=factionName;
     }
 
-    private String lgPathMaker() {
-        return "/Images/lg/" + this.jpg"; // todo fill it
+    private static String lgPathMaker(String leaderName, String factionName) {
+        return "/Images/lg/" + factionName+"_" + leaderName.replaceAll(" ", "_") + ".jpg";
     }
 
     public String getLeaderName() {
@@ -39,12 +40,12 @@ public abstract class Leader {
 
         private static ArrayList<Leader> monsterLeaders = new ArrayList<>();
         static {
-            monsterLeaders.add(new MonsterLeader("ALI","hi bitches"));
+            monsterLeaders.add(new MonsterLeader("ALI","hi bitches",""));
             System.out.println(monsterLeaders.size());
         }
 
-        public MonsterLeader(String leaderName, String description) {
-            super(leaderName, description);
+        public MonsterLeader(String leaderName, String description, String faction) {
+            super(leaderName, description,faction);
         }
 
         public static ArrayList getLeaders() {
