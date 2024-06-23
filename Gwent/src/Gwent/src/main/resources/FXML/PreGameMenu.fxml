@@ -21,7 +21,7 @@
            <content>
                <GridPane fx:id="leftGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
                    <Pane GridPane.columnIndex="2" GridPane.rowIndex="1">
-                       <Rectangle fx:id="cell00" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" onMouseClicked="#add00" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                       <Rectangle fx:id="cell00" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0"  stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView fx:id="I00" layoutX="90" layoutY="245" visible="false">
                            <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
                        </ImageView>
@@ -29,7 +29,6 @@
                    </Pane>
                    <!-- todo add others here-->
                    <columnConstraints>
-                       <ColumnConstraints />
                        <ColumnConstraints />
                        <ColumnConstraints />
                        <ColumnConstraints />

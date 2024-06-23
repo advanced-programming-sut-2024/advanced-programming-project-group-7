@@ -83,7 +83,7 @@ public class Scoiatael extends Faction {
         scoiataelLeaders.add(new ScoiataelLeaders("francesca bronze","pick a biting frost card from your deck and play it instantly."));
         scoiataelLeaders.add(new ScoiataelLeaders("francesca hope of the aen seidhe","move agile units to whichever valid row maximizes their strength(don't move units in optimal row)."));
     }
-    public static ArrayList<Leader> getScoiataelLeaders() {
+    public ArrayList<Leader> getLeaders() {
         return scoiataelLeaders;
     }
     public static ArrayList<Card> getScoiataelCards() {

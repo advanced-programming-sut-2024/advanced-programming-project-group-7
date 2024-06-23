@@ -16,7 +16,7 @@ public abstract class Leader {
     }
 
     private String lgPathMaker() {
-        return "/Images/lg/monsters_eredin_bronze.jpg"; // todo fill it
+        return "/Images/lg/" + this.jpg"; // todo fill it
     }
 
     public String getLeaderName() {

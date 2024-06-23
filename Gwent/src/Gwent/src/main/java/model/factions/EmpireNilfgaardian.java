@@ -2,6 +2,7 @@ package model.factions;
 
 import model.*;
 import model.cards.*;
+import model.cards.Horn;
 import model.leaders.EmpireNilfgaardiansLeaders;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class EmpireNilfgaardian extends Faction {
         empireNilfgaardiansLeader.add(new EmpireNilfgaardiansLeaders("emhyr invader of the north","abilities that restore a unit to the battlefield restore a randomly-chosen unit.affects both players."));
     }
 
-    public static ArrayList<Leader> getEmpireNilfgaardiansLeader() {
+    public ArrayList<Leader> getLeaders() {
         return empireNilfgaardiansLeader;
     }
 

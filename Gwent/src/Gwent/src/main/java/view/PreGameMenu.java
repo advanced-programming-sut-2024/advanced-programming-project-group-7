@@ -21,6 +21,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.*;
+import model.factions.*;
+import model.leaders.EmpireNilfgaardiansLeaders;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,12 +32,14 @@ import java.util.List;
 public class PreGameMenu extends Application {
 
     public Rectangle LeaderImage;
-    public Leader currentLeader ;
+    public ArrayList<Leader> leaders;
     public int leaderIndex;
     public GridPane leftGrid;
     public Stage leaderMenu;
     public Stage factionMenu;
     public Faction currentFaction = Faction.getFactions().get(0);
+    public Leader currentLeader = (Leader) currentFaction.getLeaders().get(0);
+
     private int factionIndex;
 
     @Override
@@ -51,7 +55,7 @@ public class PreGameMenu extends Application {
 
     @FXML
     public void initialize() {
-        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource("/Images/lg/monsters_eredin_gold.jpg").toString())));
+        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource().toString())));
         setCardsAndCommander();//this is the real deal
     }
 
@@ -66,7 +70,7 @@ public class PreGameMenu extends Application {
         } else if (currentFaction instanceof Scoiatael) {
             factionCards = Scoiatael.getScoiataelCards();
         } else if (currentFaction instanceof EmpireNilfgaardian) {
-            factionCards = EmpireNilfgaardian.getEmpireNilfgaardianCards();
+            factionCards = EmpireNilfgaardian.getEmpireNilfgaardian();
         }
         int count = 0;
         leftGrid.getChildren().clear();
@@ -95,10 +99,23 @@ public class PreGameMenu extends Application {
 
 
     public void showLeaderMenu(MouseEvent mouseEvent) {
+        leaders = new ArrayList<>();
+        if(currentFaction instanceof EmpireNilfgaardian) {
+            leaders = currentFaction.getLeaders();
+        } else if (currentFaction instanceof NorthernRealms) {
+            leaders = currentFaction.getLeaders();
+        } else if (currentFaction instanceof Monsters) {
+            leaders = currentFaction.getLeaders();
+        } else if (currentFaction instanceof Scoiatael) {
+            leaders = currentFaction.getLeaders();
+        } else if (currentFaction instanceof Skellige) {
+            leaders = currentFaction.getLeaders();
+        }
         leaderMenu = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root);
-        int leaderCount = currentFaction.getLeaders().sizeOf();
+        Leader leader = null;
+        int leaderCount = 5;
         leaderMenu.initStyle(StageStyle.UNDECORATED);
         leaderMenu.initStyle(StageStyle.TRANSPARENT);
         root.setBackground(Background.EMPTY);
@@ -123,20 +140,20 @@ public class PreGameMenu extends Application {
         toRight.setOnMouseClicked(event -> {
             leaderIndex++;
             leaderIndex %= leaderCount;
-            Leader leader = currentFaction.getLeaders().get(leaderIndex);
-            label.setText(leader.getDescription());
+            Leader leader1 = leaders.get(leaderIndex);
+            label.setText(leader1.getDescription());
             rectangle.setFill(new ImagePattern(new Image(
-                    String.valueOf(PreGameMenu.class.getResource(leader.getLgPath()).toExternalForm()))));
+                    String.valueOf(PreGameMenu.class.getResource(leader1.getLgPath()).toExternalForm()))));
         });
         toLeft.setOnMouseClicked(event -> {
             leaderIndex--;
             if (leaderIndex < 0)
                 leaderIndex = leaderCount -1;
             leaderIndex %= leaderCount;
-            Leader leader = currentFaction.getLeaders().get(leaderIndex);
-            label.setText(leader.getDescription());
+            Leader leader1 = leaders.get(leaderIndex);
+            label.setText(leader1.getDescription());
             rectangle.setFill(new ImagePattern(new Image(
-                    String.valueOf(PreGameMenu.class.getResource(leader.getLgPath()).toExternalForm()))));
+                    String.valueOf(PreGameMenu.class.getResource(leader1.getLgPath()).toExternalForm()))));
         });
         HBox hBox = new HBox(10, toLeft, toRight);
         hBox.setAlignment(Pos.CENTER);

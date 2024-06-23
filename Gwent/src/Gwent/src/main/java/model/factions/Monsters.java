@@ -87,7 +87,7 @@ public class Monsters extends Faction {
         monsterLeaders.add(new MonstersLeaders("eredin the treacherous","doubles the strength of all spy cards(affects both players)"));
     }
 
-    public static ArrayList<Leader> getMonsterLeaders() {
+    public ArrayList<Leader> getLeaders() {
         return monsterLeaders;
     }
 

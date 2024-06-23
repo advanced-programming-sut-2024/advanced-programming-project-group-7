@@ -78,11 +78,9 @@ public class NorthernRealms extends Faction {
         northernRealmsLeader.add(new NorthernRealmsLeaders("foltest son of medell","distroy your enemy's strongest ranged combat unit(s) if the combined strength of all his or her ranged combat units is 10 or more."));
     }
 
-    public static ArrayList<Card> getNorthernRealmsCards() {
-        return northernRealmsCards;
-    }
 
-    public static ArrayList<Leader> getNorthernRealmsLeader() {
+
+    public ArrayList<Leader> getLeaders() {
         return northernRealmsLeader;
     }
 

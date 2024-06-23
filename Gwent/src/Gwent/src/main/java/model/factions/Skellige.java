@@ -68,7 +68,7 @@ public class Skellige extends Faction {
         skelligeLeaders.add(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions"));
     }
 
-    public static ArrayList<Leader> getSkelligeLeaders() {
+    public ArrayList<Leader> getLeaders() {
         return skelligeLeaders;
     }
 
