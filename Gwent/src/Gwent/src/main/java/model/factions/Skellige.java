@@ -64,8 +64,8 @@ public class Skellige extends Faction {
     }
     private static  ArrayList<Leader> skelligeLeaders=new ArrayList<>();
     static {
-        skelligeLeaders.add(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks"));
-        skelligeLeaders.add(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions"));
+        skelligeLeaders.add(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks","skellige"));
+        skelligeLeaders.add(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions","skellige"));
     }
 
     public static ArrayList<Leader> getSkelligeLeaders() {

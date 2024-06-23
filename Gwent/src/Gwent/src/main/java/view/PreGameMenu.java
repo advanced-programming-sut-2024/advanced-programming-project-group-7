@@ -45,7 +45,7 @@ public class PreGameMenu extends Application {
     }
 
     private void handleLeaderMenu(Rectangle rectangle, Label label) {
-        leaderIndex %= 1; // todo adapt it
+        leaderIndex %= 5; // todo adapt it
         Leader MonsterLeader = (Leader) Leader.MonsterLeader.getLeaders().get(leaderIndex);
         label.setText(MonsterLeader.getDescription());
         rectangle.setFill(new ImagePattern(new Image(

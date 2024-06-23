@@ -6,8 +6,9 @@ import model.User;
 import java.util.ArrayList;
 
 public class NorthernRealmsLeaders extends Leader{
-    public NorthernRealmsLeaders(String leaderName, String description) {
-        super(leaderName, description);
+    public NorthernRealmsLeaders(String leaderName, String description,String faction) {
+        super(leaderName, description,faction);
+
     }
 
     @Override
