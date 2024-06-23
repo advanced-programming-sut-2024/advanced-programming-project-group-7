@@ -107,7 +107,7 @@ public class PreGameMenu extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root);
         Leader leader = null;
-        int leaderCount = 5;
+        int leaderCount = leaders.size();
         leaderMenu.initStyle(StageStyle.UNDECORATED);
         leaderMenu.initStyle(StageStyle.TRANSPARENT);
         root.setBackground(Background.EMPTY);
@@ -127,7 +127,7 @@ public class PreGameMenu extends Application {
             LeaderImage.setFill(rectangle.getFill());
             leaderMenu.close();
         });
-        Label label = new Label("leader description here");
+        Label label = new Label(currentLeader.getDescription());
 
         Button toRight = new Button("to right");
         Button toLeft = new Button("to left");
