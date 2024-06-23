@@ -55,11 +55,13 @@ public class PreGameMenu extends Application {
 
     @FXML
     public void initialize() {
-        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource().toString())));
+        System.out.println(currentLeader.getLgPath());
+        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         setCardsAndCommander();//this is the real deal
     }
 
     private void setCardsAndCommander() {
+        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         ArrayList<Card> factionCards = new ArrayList<>();
         if(currentFaction instanceof Monsters){
             factionCards = Monsters.getMonsterCards();
@@ -100,17 +102,7 @@ public class PreGameMenu extends Application {
 
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaders = new ArrayList<>();
-        if(currentFaction instanceof EmpireNilfgaardian) {
-            leaders = currentFaction.getLeaders();
-        } else if (currentFaction instanceof NorthernRealms) {
-            leaders = currentFaction.getLeaders();
-        } else if (currentFaction instanceof Monsters) {
-            leaders = currentFaction.getLeaders();
-        } else if (currentFaction instanceof Scoiatael) {
-            leaders = currentFaction.getLeaders();
-        } else if (currentFaction instanceof Skellige) {
-            leaders = currentFaction.getLeaders();
-        }
+        leaders = currentFaction.getLeaders();
         leaderMenu = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root);
@@ -127,6 +119,8 @@ public class PreGameMenu extends Application {
         vBox.setLayoutX(300);
         vBox.setLayoutY(10);
         Rectangle rectangle = new Rectangle(400, 300, 200, 320);
+        rectangle.setArcWidth(25);
+        rectangle.setArcHeight(25);
         rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(currentLeader.getLgPath())))));
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
@@ -178,11 +172,14 @@ public class PreGameMenu extends Application {
         vBox.setLayoutX(300);
         vBox.setLayoutY(10);
         Rectangle rectangle = new Rectangle(400, 300, 200, 320);
+        rectangle.setArcWidth(25);
+        rectangle.setArcHeight(25);
         rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(currentFaction.getLgPath())))));
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
             factionMenu.close();
             currentFaction = Faction.getFactions().get(factionIndex);
+            currentLeader = (Leader) currentFaction.getLeaders().get(0);
             setCardsAndCommander();
             System.out.println(currentFaction.getFactionName());
             leaderIndex = 0;

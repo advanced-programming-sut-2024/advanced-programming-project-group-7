@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public abstract class Leader {
 
@@ -13,12 +12,12 @@ public abstract class Leader {
     public Leader(String leaderName, String description,String factionName) {
         this.leaderName = leaderName;
         this.description = description;
-        this.lgPath = lgPathMaker();
+        this.lgPath = lgPathMaker(leaderName, factionName);
         this.factionName=factionName;
     }
 
-    private String lgPathMaker() {
-        return "/Images/lg/" + this.factionName+" " +this.leaderName+ ".jpg";
+    private static String lgPathMaker(String leaderName, String factionName) {
+        return "/Images/lg/" + factionName+"_" + leaderName.replaceAll(" ", "_") + ".jpg";
     }
 
     public String getLeaderName() {
