@@ -25,16 +25,17 @@ import model.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PreGameMenu extends Application {
 
     public Rectangle LeaderImage;
-    public Leader leader;
+    public Leader currentLeader ;
     public int leaderIndex;
     public GridPane leftGrid;
     public Stage leaderMenu;
     public Stage factionMenu;
-    public Faction currentFaction = new Monsters("hello there");
+    public Faction currentFaction = Faction.getFactions().get(0);
     private int factionIndex;
 
     @Override
@@ -48,15 +49,6 @@ public class PreGameMenu extends Application {
         stage.setFullScreen(true);
     }
 
-    private void handleLeaderMenu(Rectangle rectangle, Label label) {
-        leaderIndex %= 1; // todo adapt it
-        Leader MonsterLeader = (Leader) Leader.MonsterLeader.getLeaders().get(leaderIndex);
-        label.setText(MonsterLeader.getDescription());
-        rectangle.setFill(new ImagePattern(new Image(
-                String.valueOf(PreGameMenu.class.getResource(MonsterLeader.getLgPath()).toExternalForm()))));
-    }
-
-
     @FXML
     public void initialize() {
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource("/Images/lg/monsters_eredin_gold.jpg").toString())));
@@ -64,11 +56,21 @@ public class PreGameMenu extends Application {
     }
 
     private void setCardsAndCommander() {
+        ArrayList<Card> factionCards = new ArrayList<>();
         if(currentFaction instanceof Monsters){
-            //this is how it is done
+            factionCards = Monsters.getMonsterCards();
+        } else if (currentFaction instanceof Skellige) {
+            factionCards = Skellige.getSkelligeCards();
+        } else if (currentFaction instanceof NorthernRealms) {
+            factionCards = NorthernRealms.getNorthernRealmsCards();
+        } else if (currentFaction instanceof Scoiatael) {
+            factionCards = Scoiatael.getScoiataelCards();
+        } else if (currentFaction instanceof EmpireNilfgaardian) {
+            factionCards = EmpireNilfgaardian.getEmpireNilfgaardianCards();
         }
         int count = 0;
-        for (Card card: Monsters.getMonsterCards()) {
+        leftGrid.getChildren().clear();
+        for (Card card: factionCards) {
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
@@ -85,27 +87,18 @@ public class PreGameMenu extends Application {
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
                 System.out.println(card.getCardName());
-
             });
             System.out.println("hi");
             count++;
         }
     }
 
-    public void add00(MouseEvent mouseEvent) {
-    }
-
-    public void add01(MouseEvent mouseEvent) {
-    }
-
-    public void add02(MouseEvent mouseEvent) {
-    }
 
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaderMenu = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root);
-        // Remove window decoration
+        int leaderCount = currentFaction.getLeaders().sizeOf();
         leaderMenu.initStyle(StageStyle.UNDECORATED);
         leaderMenu.initStyle(StageStyle.TRANSPARENT);
         root.setBackground(Background.EMPTY);
@@ -117,12 +110,11 @@ public class PreGameMenu extends Application {
         vBox.setLayoutX(300);
         vBox.setLayoutY(10);
         Rectangle rectangle = new Rectangle(400, 300, 200, 320);
-        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/lg/monsters_eredin_silver.jpg")))));
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(currentLeader.getLgPath())))));
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
             LeaderImage.setFill(rectangle.getFill());
             leaderMenu.close();
-            leaderIndex = 0;
         });
         Label label = new Label("leader description here");
 
@@ -130,11 +122,21 @@ public class PreGameMenu extends Application {
         Button toLeft = new Button("to left");
         toRight.setOnMouseClicked(event -> {
             leaderIndex++;
-            handleLeaderMenu(rectangle, label);
+            leaderIndex %= leaderCount;
+            Leader leader = currentFaction.getLeaders().get(leaderIndex);
+            label.setText(leader.getDescription());
+            rectangle.setFill(new ImagePattern(new Image(
+                    String.valueOf(PreGameMenu.class.getResource(leader.getLgPath()).toExternalForm()))));
         });
         toLeft.setOnMouseClicked(event -> {
             leaderIndex--;
-            handleLeaderMenu(rectangle, label);
+            if (leaderIndex < 0)
+                leaderIndex = leaderCount -1;
+            leaderIndex %= leaderCount;
+            Leader leader = currentFaction.getLeaders().get(leaderIndex);
+            label.setText(leader.getDescription());
+            rectangle.setFill(new ImagePattern(new Image(
+                    String.valueOf(PreGameMenu.class.getResource(leader.getLgPath()).toExternalForm()))));
         });
         HBox hBox = new HBox(10, toLeft, toRight);
         hBox.setAlignment(Pos.CENTER);
@@ -159,23 +161,39 @@ public class PreGameMenu extends Application {
         vBox.setLayoutX(300);
         vBox.setLayoutY(10);
         Rectangle rectangle = new Rectangle(400, 300, 200, 320);
-        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/lg/faction_nilfgaard.jpg")))));
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(currentFaction.getLgPath())))));
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
             factionMenu.close();
-            factionIndex = 0;
+            currentFaction = Faction.getFactions().get(factionIndex);
+            setCardsAndCommander();
+            System.out.println(currentFaction.getFactionName());
+            leaderIndex = 0;
         });
-        Label label = new Label("faction description here");//todo why is it here?
-
+        Label label = new Label("faction description here");
         Button toRight = new Button("to right");
         Button toLeft = new Button("to left");
         toRight.setOnMouseClicked(event -> {
-            factionIndex++;
-            handleFactionMenu(rectangle, label);
+            factionIndex ++;
+            factionIndex %= 5;
+            Faction faction = Faction.getFactions().get(factionIndex);
+            label.setText(faction.getDescription());
+            rectangle.setFill(new ImagePattern(new Image(
+                    String.valueOf(PreGameMenu.class.getResource(faction.getLgPath()).toExternalForm()))));
+            rectangle.setLayoutX(400);
+            rectangle.setLayoutY(300);
         });
         toLeft.setOnMouseClicked(event -> {
             factionIndex--;
-            handleFactionMenu(rectangle, label);
+            if (factionIndex < 0)
+                factionIndex = 4;
+            factionIndex %= 5;
+            Faction faction = Faction.getFactions().get(factionIndex);
+            label.setText(faction.getDescription());
+            rectangle.setFill(new ImagePattern(new Image(
+                    String.valueOf(PreGameMenu.class.getResource(faction.getLgPath()).toExternalForm()))));
+            rectangle.setLayoutX(400);
+            rectangle.setLayoutY(300);
         });
         HBox hBox = new HBox(10, toLeft, toRight);
         hBox.setAlignment(Pos.CENTER);
@@ -183,14 +201,6 @@ public class PreGameMenu extends Application {
         root.getChildren().add(vBox);
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
-    }
-
-    private void handleFactionMenu(Rectangle rectangle, Label label) {
-        factionIndex %= 5; //todo set to 5 when all factions are added
-        Faction faction = Faction.getFactions().get(factionIndex);
-        label.setText(faction.getDescription());
-        rectangle.setFill(new ImagePattern(new Image(
-                String.valueOf(PreGameMenu.class.getResource(faction.getLgPath()).toExternalForm()))));
     }
 
 }

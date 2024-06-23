@@ -28,4 +28,8 @@ public class Faction {
     public String getLgPath(){
         return "/Images/lg/" +"faction_" + this.factionName + ".jpg";
     }
+
+    public String getFactionName() {
+        return factionName;
+    }
 }

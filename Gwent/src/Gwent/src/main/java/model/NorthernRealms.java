@@ -66,4 +66,8 @@ public class NorthernRealms extends Faction{
     public String[] getLeaderNames() {
         return leaderNames;
     }
+
+    public static ArrayList<Card> getNorthernRealmsCards() {
+        return northernRealmsCards;
+    }
 }
