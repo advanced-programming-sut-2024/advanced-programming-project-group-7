@@ -1,8 +1,11 @@
-package model;
+package model.factions;
+
+import model.*;
+import model.cards.*;
 
 import java.util.ArrayList;
 
-public class Skellige extends Faction{
+public class Skellige extends Faction {
     public Skellige(String descriptions) {
         super(descriptions);
         this.factionName="skellige";

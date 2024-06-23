@@ -1,9 +1,14 @@
-package model;
+package model.factions;
+
+import model.*;
+import model.cards.*;
 
 import java.util.ArrayList;
 
-public class NorthernRealms extends Faction{
-    private String[] leaderNames = {""};
+public class NorthernRealms extends Faction {
+    private static final ArrayList<Leader> leaders=new ArrayList<>();
+    static {
+    }
     public NorthernRealms(String descriptions) {
         super(descriptions);
         this.factionName="realms";
@@ -62,8 +67,5 @@ public class NorthernRealms extends Faction{
         northernRealmsCards.add(new Spy("thaler", 1 , false, 1, "realms"));
         northernRealmsCards.add(new Cow("cow", 1 , false, 0, "neutral"));
         northernRealmsCards.add(new Spy("mysterious elf", 1 , false, 0, "neutral"));
-    }
-    public String[] getLeaderNames() {
-        return leaderNames;
     }
 }

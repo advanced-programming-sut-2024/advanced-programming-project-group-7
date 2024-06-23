@@ -1,8 +1,11 @@
-package model;
+package model.factions;
+
+import model.*;
+import model.cards.*;
 
 import java.util.ArrayList;
 
-public class Scoiatael extends Faction{
+public class Scoiatael extends Faction {
     public Scoiatael(String descriptions) {
         super(descriptions);
         this.factionName="scoiatael";

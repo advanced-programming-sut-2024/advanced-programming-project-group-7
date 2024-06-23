@@ -1,5 +1,7 @@
 package model;
 
+import model.factions.*;
+
 import java.util.ArrayList;
 
 public class Faction {

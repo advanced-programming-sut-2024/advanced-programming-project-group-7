@@ -10,4 +10,6 @@ module Gwent {
     opens controller to javafx.fxml;
 
     opens model to javafx.base;
+    opens model.factions to javafx.base;
+    opens model.cards to javafx.base;
 }
