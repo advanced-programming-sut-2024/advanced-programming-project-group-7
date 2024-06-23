@@ -8,15 +8,17 @@ public abstract class Leader {
     private String leaderName;
     private String description;
     private String lgPath;
+    private  String factionName;
 
-    public Leader(String leaderName, String description) {
+    public Leader(String leaderName, String description,String factionName) {
         this.leaderName = leaderName;
         this.description = description;
         this.lgPath = lgPathMaker();
+        this.factionName=factionName;
     }
 
     private String lgPathMaker() {
-        return "/Images/lg/" + this.jpg"; // todo fill it
+        return "/Images/lg/" + this.factionName+" " +this.leaderName+ ".jpg";
     }
 
     public String getLeaderName() {
@@ -39,12 +41,12 @@ public abstract class Leader {
 
         private static ArrayList<Leader> monsterLeaders = new ArrayList<>();
         static {
-            monsterLeaders.add(new MonsterLeader("ALI","hi bitches"));
+            monsterLeaders.add(new MonsterLeader("ALI","hi bitches",""));
             System.out.println(monsterLeaders.size());
         }
 
-        public MonsterLeader(String leaderName, String description) {
-            super(leaderName, description);
+        public MonsterLeader(String leaderName, String description, String faction) {
+            super(leaderName, description,faction);
         }
 
         public static ArrayList getLeaders() {

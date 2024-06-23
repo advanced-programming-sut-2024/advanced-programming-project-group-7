@@ -6,8 +6,8 @@ import model.User;
 import java.util.ArrayList;
 
 public class ScoiataelLeaders extends Leader {
-    public ScoiataelLeaders(String leaderName, String description) {
-        super(leaderName, description);
+    public ScoiataelLeaders(String leaderName, String description,String faction) {
+        super(leaderName, description,faction);
     }
     @Override
     public void generalAbility() {

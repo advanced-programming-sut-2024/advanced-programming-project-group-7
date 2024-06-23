@@ -6,8 +6,8 @@ import model.User;
 import java.util.ArrayList;
 
 public class MonstersLeaders extends Leader {
-    public MonstersLeaders(String leaderName, String description) {
-        super(leaderName, description);
+    public MonstersLeaders(String leaderName, String description,String faction) {
+        super(leaderName, description,faction);
     }
 
 
