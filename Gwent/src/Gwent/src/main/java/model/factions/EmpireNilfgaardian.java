@@ -1,8 +1,12 @@
-package model;
+package model.factions;
+
+import model.*;
+import model.cards.*;
+import model.leaders.EmpireNilfgaardiansLeaders;
 
 import java.util.ArrayList;
 
-public class EmpireNilfgaardian extends Faction{
+public class EmpireNilfgaardian extends Faction {
     public EmpireNilfgaardian(String descriptions) {
         super(descriptions);
         this.factionName="nilfgaard";
@@ -65,8 +69,20 @@ public class EmpireNilfgaardian extends Faction{
         empireNilfgaardian.add(new Spy("mysterious elf",1,false,0,"neutral"));
         empireNilfgaardian.add(new Medic("siege support",1,false,0,"nilfgaard"));
     }
-    public static ArrayList<Card> getEmpireNilfgaardianCards() {
-        return empireNilfgaardian;
+    private static ArrayList<Leader> empireNilfgaardiansLeader=new ArrayList<>();
+    static {
+        empireNilfgaardiansLeader.add(new EmpireNilfgaardiansLeaders("emhyr silver","pick a torrential rain card from your deck and play it instantly"));
+        empireNilfgaardiansLeader.add(new EmpireNilfgaardiansLeaders("emhyr copper","look at 3 random cards from your opponent's hand"));
+        empireNilfgaardiansLeader.add(new EmpireNilfgaardiansLeaders("emhyr bronze","cansel your opponent's Leader ability"));
+        empireNilfgaardiansLeader.add(new EmpireNilfgaardiansLeaders("emhyr gold","draw a card from your opponent's discard pile"));
+        empireNilfgaardiansLeader.add(new EmpireNilfgaardiansLeaders("emhyr invader of the north","abilities that restore a unit to the battlefield restore a randomly-chosen unit.affects both players."));
     }
 
+    public static ArrayList<Leader> getEmpireNilfgaardiansLeader() {
+        return empireNilfgaardiansLeader;
+    }
+
+    public static ArrayList<Card> getEmpireNilfgaardian() {
+        return empireNilfgaardian;
+    }
 }

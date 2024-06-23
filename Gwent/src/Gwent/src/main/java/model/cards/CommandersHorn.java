@@ -1,4 +1,6 @@
-package model;
+package model.cards;
+
+import model.Card;
 
 public class CommandersHorn extends Card {
 
