@@ -68,7 +68,7 @@ public class PreGameMenu extends Application {
             //this is how it is done
         }
         int count = 0;
-        for (Card card: Monsters.getMonsterCards()) { //todo fix it so it will work for all classes
+        for (Card card: Monsters.getMonsterCards()) {
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
@@ -165,7 +165,7 @@ public class PreGameMenu extends Application {
             factionMenu.close();
             factionIndex = 0;
         });
-        Label label = new Label("faction description here");
+        Label label = new Label("faction description here");//todo why is it here?
 
         Button toRight = new Button("to right");
         Button toLeft = new Button("to left");
@@ -186,7 +186,7 @@ public class PreGameMenu extends Application {
     }
 
     private void handleFactionMenu(Rectangle rectangle, Label label) {
-        factionIndex %= 1; //todo set to 5 when all factions are added
+        factionIndex %= 5; //todo set to 5 when all factions are added
         Faction faction = Faction.getFactions().get(factionIndex);
         label.setText(faction.getDescription());
         rectangle.setFill(new ImagePattern(new Image(

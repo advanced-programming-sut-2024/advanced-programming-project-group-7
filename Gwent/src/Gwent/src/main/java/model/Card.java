@@ -51,14 +51,7 @@ public class Card extends Pane {
     }
 
     public String lgPathCreator(String cardName, String factionName){
-        StringBuilder path=new StringBuilder();
-        String newCardName=cardName.replaceAll(" ","_");
-        path.append("/Images/lg/");
-        path.append(factionName);
-        path.append("_");
-        path.append(newCardName);
-        path.append(".jpg");
-        return path.toString();
+        return "/Images/lg/"+factionName+"_"+cardName.replaceAll(" ","_")+".jpg";
     }
     public String smPathCreator(String cardName, String factionName){
         StringBuilder path=new StringBuilder();
