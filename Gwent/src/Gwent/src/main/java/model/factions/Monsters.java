@@ -78,6 +78,18 @@ public class Monsters extends Faction {
         monsterCards.add(new Cow("cow", 1, false, 0, "neutral"));
         monsterCards.add(new Spy("mysterious elf", 1, false, 0, "neutral"));
     }
+    private static  ArrayList<Leader> monsterLeaders=new ArrayList<>();
+    static {
+        monsterLeaders.add(new MonstersLeaders("eredin silver","double the strength of all your "));
+        monsterLeaders.add(new MonstersLeaders("eredin bronze","restore a card from your discard pile to your hand"));
+        monsterLeaders.add(new MonstersLeaders("eredin gold","discard 2 card amd draw 1 card of your choise from your deck"));
+        monsterLeaders.add(new MonstersLeaders("eredin copper","pick any weather card from your deck and play it instantly"));
+        monsterLeaders.add(new MonstersLeaders("eredin the treacherous","doubles the strength of all spy cards(affects both players)"));
+    }
+
+    public static ArrayList<Leader> getMonsterLeaders() {
+        return monsterLeaders;
+    }
 
     public static ArrayList<Card> getMonsterCards() {
         return monsterCards;

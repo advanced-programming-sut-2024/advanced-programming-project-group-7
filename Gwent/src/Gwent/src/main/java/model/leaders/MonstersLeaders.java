@@ -10,6 +10,8 @@ public class MonstersLeaders extends Leader {
         super(leaderName, description);
     }
 
+
+
     @Override
     public void generalAbility() {
 

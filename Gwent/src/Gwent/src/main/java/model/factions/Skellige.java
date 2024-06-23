@@ -2,6 +2,7 @@ package model.factions;
 
 import model.*;
 import model.cards.*;
+import model.leaders.SkelligeLeaders;
 
 import java.util.ArrayList;
 
@@ -61,6 +62,16 @@ public class Skellige extends Faction {
         skelligeCards.add(new Cow("kambi", 1, false, 0, "skellige"));
         skelligeCards.add(new Spy("mysterious elf", 1, false, 0, "neutral"));
     }
+    private static  ArrayList<Leader> skelligeLeaders=new ArrayList<>();
+    static {
+        skelligeLeaders.add(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks"));
+        skelligeLeaders.add(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions"));
+    }
+
+    public static ArrayList<Leader> getSkelligeLeaders() {
+        return skelligeLeaders;
+    }
+
     public static ArrayList<Card> getSkelligeCards() {
         return skelligeCards;
     }
