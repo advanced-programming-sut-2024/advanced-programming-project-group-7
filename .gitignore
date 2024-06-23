@@ -34,3 +34,8 @@ Gwent/src/Gwent/target/classes/FXML/PreGameMenu.fxml
 Gwent/src/Gwent/src/main/.DS_Store
 Gwent/src/Gwent/target/classes/module-info.class
 Gwent/src/Gwent/target/classes/model/Faction.class
+Gwent/src/Gwent/src/main/java/view/PreGameMenu.java
+Gwent/src/Gwent/target/classes/model/Faction.class
+Gwent/src/Gwent/target/classes/model/Leader$MonsterLeader.class
+Gwent/src/Gwent/target/classes/model/Leader.class
+Gwent/src/Gwent/target/classes/model/User.class

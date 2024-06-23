@@ -55,7 +55,7 @@ public class PreGameMenu extends Application {
 
     @FXML
     public void initialize() {
-        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource().toString())));
+        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         setCardsAndCommander();//this is the real deal
     }
 
