@@ -2,6 +2,7 @@ package model.factions;
 
 import model.*;
 import model.cards.*;
+import model.leaders.ScoiataelLeaders;
 
 import java.util.ArrayList;
 
@@ -73,6 +74,17 @@ public class Scoiatael extends Faction {
         scoiataelCards.add(new Medic("havekar nurse 1", 1, false, 0, "scoiatael"));
         scoiataelCards.add(new Medic("havekar nurse 2", 1, false, 0, "scoiatael"));
         scoiataelCards.add(new Spy("mysterious elf", 1, false, 0, "neutral"));
+    }
+    private static ArrayList<Leader> scoiataelLeaders=new ArrayList<>();
+    static {
+        scoiataelLeaders.add(new ScoiataelLeaders("francesca silver","destroy your enemy's strongest close combat unit(s) if the combined strength of all his or her close combat units is 10 or more."));
+        scoiataelLeaders.add(new ScoiataelLeaders("francesca gold","doubles the strength of all your ranged combat units (unless a commander's horn is also present on that row)."));
+        scoiataelLeaders.add(new ScoiataelLeaders("francesca copper","draw an extra card at the beginning of the battle."));
+        scoiataelLeaders.add(new ScoiataelLeaders("francesca bronze","pick a biting frost card from your deck and play it instantly."));
+        scoiataelLeaders.add(new ScoiataelLeaders("francesca hope of the aen seidhe","move agile units to whichever valid row maximizes their strength(don't move units in optimal row)."));
+    }
+    public static ArrayList<Leader> getScoiataelLeaders() {
+        return scoiataelLeaders;
     }
     public static ArrayList<Card> getScoiataelCards() {
         return scoiataelCards;

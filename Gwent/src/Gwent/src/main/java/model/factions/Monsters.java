@@ -2,6 +2,7 @@ package model.factions;
 
 import model.*;
 import model.cards.*;
+import model.leaders.MonstersLeaders;
 
 import java.util.ArrayList;
 
@@ -77,6 +78,7 @@ public class Monsters extends Faction {
         monsterCards.add(new Cow("cow", 1, false, 0, "neutral"));
         monsterCards.add(new Spy("mysterious elf", 1, false, 0, "neutral"));
     }
+
     public static ArrayList<Card> getMonsterCards() {
         return monsterCards;
     }
