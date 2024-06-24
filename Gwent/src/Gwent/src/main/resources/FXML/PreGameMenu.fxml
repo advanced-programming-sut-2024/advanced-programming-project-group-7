@@ -114,7 +114,7 @@
    <right>
        <ScrollPane style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
            <content>
-               <GridPane hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
+               <GridPane  fx:id="rightGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
                    <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
                        <Rectangle arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView layoutX="90" layoutY="245">
