@@ -50,7 +50,6 @@ public class IPMenu extends Application {
         } catch (Exception e) {
             {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("client had problem and we didn't make it ");alert.show();}
         }
-
         gotoLoginMenu();
     }
 
