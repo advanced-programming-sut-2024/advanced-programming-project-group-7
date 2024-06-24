@@ -24,8 +24,9 @@ public class Server {
         }
     }
 
-    private void handleConnection(Socket socket) {
-        System.out.println("vasl");
+    private void handleConnection(Socket socket) throws IOException {
+        DataInputStream receiveBuffer=new DataInputStream(socket.getInputStream());
+        System.out.println(receiveBuffer.readUTF());
     }
 
     public static void main(String[] args) {

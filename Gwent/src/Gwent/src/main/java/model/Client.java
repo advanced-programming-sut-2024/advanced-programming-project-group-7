@@ -20,7 +20,7 @@ public class Client  {
 
 
     public void start(String IP) throws IOException {
-
         this.establishConnection(IP, 60000);
+        sendBuffer.writeUTF("aleik salam");
     }
 }
