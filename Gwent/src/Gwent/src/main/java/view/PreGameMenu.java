@@ -35,6 +35,7 @@ public class PreGameMenu extends Application {
     public ArrayList<Leader> leaders;
     public int leaderIndex;
     public GridPane leftGrid;
+    public GridPane rightGrid;
     public Stage leaderMenu;
     public Stage factionMenu;
     public Faction currentFaction = Faction.getFactions().get(0);
@@ -55,7 +56,7 @@ public class PreGameMenu extends Application {
 
     @FXML
     public void initialize() {
-        System.out.println(currentLeader.getLgPath());
+//        System.out.println(currentLeader.getLgPath());
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         setCardsAndCommander();//this is the real deal
     }
@@ -87,7 +88,7 @@ public class PreGameMenu extends Application {
             Label label = new Label(String.valueOf(card.getCountOfCard()));
             label.setLayoutY(240);
             label.setLayoutX(120);
-            label.setTextFill(Color.GOLD);
+            label.setTextFill(Color.BLACK);
             label.setFont(new Font(20));
             pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);
@@ -216,5 +217,7 @@ public class PreGameMenu extends Application {
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
     }
+    public void addCardToDeck(){
 
+    }
 }

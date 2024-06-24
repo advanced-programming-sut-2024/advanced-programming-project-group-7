@@ -14,9 +14,9 @@
             <Label prefHeight="39.0" prefWidth="75.0" text="   Enter  IP" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <VBox alignment="CENTER" prefHeight="243.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="243.0" prefWidth="600.0" BorderPane.alignment="CENTER" spacing="10">
                <children>
-                  <TextField fx:id="IPtext" alignment="CENTER" promptText="enter IP here" />
+                  <TextField fx:id="IPtext" alignment="CENTER" promptText="enter IP here" maxWidth="400" />
                   <Button fx:id="enter" mnemonicParsing="false" onAction="#makeClient" text="enter" />
                </children>
             </VBox>
