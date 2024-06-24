@@ -47,10 +47,10 @@ public class IPMenu extends Application {
         Client client = new Client();
         try {
             client.start(IPtext.getText());
+            gotoLoginMenu();
         } catch (Exception e) {
             {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("client had problem and we didn't make it ");alert.show();}
         }
-        gotoLoginMenu();
     }
 
     private void gotoLoginMenu() throws Exception {
