@@ -29,6 +29,7 @@ public class PreGameMenu extends Application {
     public ArrayList<Leader> leaders;
     public int leaderIndex;
     public GridPane leftGrid;
+    public GridPane rightGrid;
     public Stage leaderMenu;
     public Stage factionMenu;
     public Faction currentFaction = Faction.getFactions().get(0);
@@ -90,7 +91,7 @@ public class PreGameMenu extends Application {
             Label label = new Label(String.valueOf(card.getCountOfCard()));
             label.setLayoutY(240);
             label.setLayoutX(120);
-            label.setTextFill(Color.GOLD);
+            label.setTextFill(Color.BLACK);
             label.setFont(new Font(20));
             pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);

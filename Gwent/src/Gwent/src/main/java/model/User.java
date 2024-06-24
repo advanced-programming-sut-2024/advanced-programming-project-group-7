@@ -198,7 +198,7 @@ public class User {
     }
 
     static {
-    User userTest=new User("a","a","ali","amir2023@gmail.com");
+    User userTest=new User("a","a","Ebi","amir2023@gmail.com");
     userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
         userTest.battleLog.add(new BattleInfo("ebi", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
