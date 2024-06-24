@@ -5,14 +5,22 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="1000" prefWidth="1600.0" style="-fx-background-color: darkslategray;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PreGameMenu">
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: darkslategray;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PreGameMenu">
     <center>
         <VBox alignment="CENTER" maxWidth="300" spacing="10">
          <children>
+             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="294.0" spacing="10">
+                 <Rectangle fx:id="factionLogo" height="75.0" width="75.0" />
+                 <Label fx:id="factionName" text="Northern Realms" textFill="WHITE">
+                  <font>
+                     <Font name="Baskerville Old Face" size="25.0" />
+                  </font></Label>
+             </HBox>
             <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="320" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-            <Button mnemonicParsing="false" text="Change Leader" onMouseClicked="#showLeaderMenu" />
-            <Button mnemonicParsing="false" text="Change Faction" onMouseClicked="#showFactionMenu" />
+            <Button mnemonicParsing="false" onMouseClicked="#showLeaderMenu" text="Change Leader" />
+            <Button mnemonicParsing="false" onMouseClicked="#showFactionMenu" text="Change Faction" />
             <Button mnemonicParsing="false" text="Button" />
          </children></VBox>
     </center>
@@ -21,7 +29,7 @@
            <content>
                <GridPane fx:id="leftGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
                    <Pane GridPane.columnIndex="2" GridPane.rowIndex="1">
-                       <Rectangle fx:id="cell00" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0"  stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                       <Rectangle fx:id="cell00" arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView fx:id="I00" layoutX="90" layoutY="245" visible="false">
                            <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
                        </ImageView>
@@ -114,32 +122,31 @@
    <right>
        <ScrollPane style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
            <content>
-               <GridPane hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
-                   <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
-                       <Rectangle arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                       <ImageView layoutX="90" layoutY="245">
-                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" />
+               <GridPane fx:id="rightGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
+                   <Pane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                       <Rectangle  arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                       <ImageView  layoutX="90" layoutY="245" visible="false">
+                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
                        </ImageView>
-                       <Label layoutX="120.0" layoutY="245.0" text="0" textFill="#ac941b" />
+                       <Label  layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>
-                   <Pane GridPane.columnIndex="1" GridPane.rowIndex="0">
-                       <Rectangle arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                       <ImageView layoutX="90" layoutY="245">
-                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" />
+                   <Pane GridPane.columnIndex="2" GridPane.rowIndex="1">
+                       <Rectangle  arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                       <ImageView  layoutX="90" layoutY="245" visible="false">
+                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
                        </ImageView>
-                       <Label layoutX="120.0" layoutY="245.0" text="0" textFill="#ac941b" />
+                       <Label  layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>
-                   <Pane GridPane.columnIndex="2" GridPane.rowIndex="0">
-                       <Rectangle arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                       <ImageView layoutX="90" layoutY="245">
-                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" />
+                   <Pane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                       <Rectangle  arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                       <ImageView  layoutX="90" layoutY="245" visible="false">
+                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
                        </ImageView>
-                       <Label layoutX="120.0" layoutY="245.0" text="0" textFill="#ac941b" />
+                       <Label  layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>
+
                    <!-- todo add others here-->
                    <columnConstraints>
-                       <ColumnConstraints />
-                       <ColumnConstraints />
                        <ColumnConstraints />
                        <ColumnConstraints />
                        <ColumnConstraints />
@@ -216,9 +223,9 @@
                    </rowConstraints>
                </GridPane>
            </content>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
+           <cursor>
+               <Cursor fx:constant="HAND" />
+           </cursor>
        </ScrollPane>
    </right>
 

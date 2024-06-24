@@ -13,7 +13,6 @@ public class Card extends Pane {
     private String factionName;
     private Rectangle rectangle = new Rectangle();
     private int power;
-    public static Card getCardByName(String cardName){return null;}
 
     public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName) {
         this.cardName = cardName;
@@ -22,12 +21,12 @@ public class Card extends Pane {
         this.power = power;
         this.factionName = factionName;
         this.lgPath = lgPathCreator(cardName, factionName);
-        this.setHeight(200);
-        this.setWidth(100);
+        this.setHeight(98);
+        this.setWidth(70);
         this.getChildren().add(rectangle);
         rectangle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource(smPathCreator(cardName, factionName)).toExternalForm()))));
-        rectangle.setHeight(200);
-        rectangle.setWidth(100);
+        rectangle.setHeight(98);
+        rectangle.setWidth(70);
     }
 
     public String getCardName() {
@@ -56,7 +55,7 @@ public class Card extends Pane {
     public String smPathCreator(String cardName, String factionName){
         StringBuilder path=new StringBuilder();
         String newCardName=cardName.replaceAll(" ","_");
-        path.append("/Images/lg/");
+        path.append("/Images/sm/");
         path.append(factionName);
         path.append("_");
         path.append(newCardName);
