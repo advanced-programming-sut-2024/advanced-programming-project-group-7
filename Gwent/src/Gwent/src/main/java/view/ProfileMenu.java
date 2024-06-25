@@ -48,6 +48,7 @@ public class ProfileMenu extends Application {
         username.setText("username");
         nickname.setText("nickname");
         email.setText("email");
+
     }
 
     public void changeUsername(MouseEvent mouseEvent) {
