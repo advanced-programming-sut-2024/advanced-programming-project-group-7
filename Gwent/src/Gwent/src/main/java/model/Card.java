@@ -1,9 +1,13 @@
 package model;
 
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 public class Card extends Pane {
     private String cardName;
@@ -12,9 +16,11 @@ public class Card extends Pane {
     private String lgPath;
     private String factionName;
     private Rectangle rectangle = new Rectangle();
+    private Circle powerIcon = new Circle();
+    private Label powerLabel;
     private int power;
 
-    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName) {
+    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName) { //int rows, boolean ishero
         this.cardName = cardName;
         this.countOfCard = countOfCard;
         this.isSpecial = isSpecial;
@@ -23,10 +29,19 @@ public class Card extends Pane {
         this.lgPath = lgPathCreator(cardName, factionName);
         this.setHeight(98);
         this.setWidth(70);
-        this.getChildren().add(rectangle);
+        powerLabel = new Label(String.valueOf(power));
+        this.getChildren().addAll(rectangle, powerIcon, powerLabel);
         rectangle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource(smPathCreator(cardName, factionName)).toExternalForm()))));
         rectangle.setHeight(98);
         rectangle.setWidth(70);
+        powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/power_normal.png").toExternalForm()))));
+        powerIcon.setRadius(25);
+        powerIcon.setCenterX(22);
+        powerIcon.setCenterY(22);
+        powerLabel.setLayoutX(8);
+        powerLabel.setLayoutY(-2);
+        powerLabel.setTextFill(Color.BLACK);
+        powerLabel.setFont(new Font(20));
     }
 
     public String getCardName() {
