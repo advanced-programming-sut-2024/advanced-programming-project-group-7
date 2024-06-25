@@ -86,7 +86,7 @@ public class GameLauncher extends Application {
         double sinTheta = Math.sin(theta);
         double cosTheta = Math.cos(theta);
         double vy = sinTheta * 8;
-        double vx = cosTheta * 8;
+        double vx = cosTheta * 8; //I'm doing math here
         CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, game, card, playerRow, vx, vy, playerRow, endY, endX);
         cardPlacementAnimation.play();
     }
