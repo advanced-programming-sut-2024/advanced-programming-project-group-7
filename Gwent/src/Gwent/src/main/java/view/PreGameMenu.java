@@ -34,7 +34,6 @@ public class PreGameMenu extends Application {
     public Stage factionMenu;
     public Faction currentFaction = Faction.getFactions().get(0);
     public Leader currentLeader = (Leader) currentFaction.getLeaders().get(0);
-    public GridPane rightGrid;
     public Rectangle factionLogo;
     public Label factionName;
 
@@ -241,5 +240,7 @@ public class PreGameMenu extends Application {
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
     }
+    public void addCardToDeck(){
 
+    }
 }
