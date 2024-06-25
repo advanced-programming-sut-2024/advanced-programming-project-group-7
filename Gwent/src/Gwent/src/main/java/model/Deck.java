@@ -17,7 +17,7 @@ public class Deck {
     public void setCardsInDeck(HashMap<Card, Integer> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }
-    public void addCardToDeck(Card card){
+    public void addToDeck(Card card){
         if(cardsInDeck.containsKey(card))
             cardsInDeck.put(card,cardsInDeck.get(card)+1);
         else
