@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Card;
 import model.Game;
 import model.cards.*;
+import view.animations.CardPlacementAnimation;
 
 public class GameLauncher extends Application {
 
@@ -86,8 +87,8 @@ public class GameLauncher extends Application {
         double cosTheta = Math.cos(theta);
         double vy = sinTheta * 8;
         double vx = cosTheta * 8; //I'm doing math here
-//        CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, game, card, playerRow, vx, vy, playerRow, endY, endX);
-//        cardPlacementAnimation.play();
+        CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, game, card, vx, vy, endY, endX);
+        cardPlacementAnimation.play();
     }
 
     private HBox createHbox() {
