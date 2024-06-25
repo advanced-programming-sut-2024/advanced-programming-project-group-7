@@ -5,29 +5,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.*;
 import model.factions.*;
-import model.leaders.EmpireNilfgaardiansLeaders;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PreGameMenu extends Application {
 
@@ -40,6 +34,9 @@ public class PreGameMenu extends Application {
     public Stage factionMenu;
     public Faction currentFaction = Faction.getFactions().get(0);
     public Leader currentLeader = (Leader) currentFaction.getLeaders().get(0);
+    public GridPane rightGrid;
+    public Rectangle factionLogo;
+    public Label factionName;
 
     private int factionIndex;
 
@@ -56,9 +53,14 @@ public class PreGameMenu extends Application {
 
     @FXML
     public void initialize() {
-//        System.out.println(currentLeader.getLgPath());
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
-        setCardsAndCommander();//this is the real deal
+        setCurrentFactionInfo();
+        setCardsAndCommander();
+    }
+
+    private void setCurrentFactionInfo() {
+        factionLogo.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentFaction.getShieldPic()).toString())));
+        factionName.setText(currentFaction.getFactionName());
     }
 
     private void setCardsAndCommander() {
@@ -79,6 +81,7 @@ public class PreGameMenu extends Application {
         leftGrid.getChildren().clear();
         for (Card card: factionCards) {
             Pane pane = new Pane();
+            Pane pane1 = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
             rectangle.setHeight(300);
@@ -93,11 +96,30 @@ public class PreGameMenu extends Application {
             pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
-                System.out.println(card.getCardName());
+                int cardLeft = Integer.parseInt(label.getText());
+                if (cardLeft > 0) {
+                    label.setText(String.valueOf(cardLeft - 1));
+                    addCardToDeck(card, pane1);
+                }
             });
-            System.out.println("hi");
             count++;
         }
+    }
+
+    private void addCardToDeck(Card card, Pane pane) {
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
+        rectangle.setHeight(300);
+        rectangle.setWidth(150);
+        rectangle.setArcHeight(20);
+        rectangle.setArcWidth(20);
+        Label label = new Label(String.valueOf(card.getCountOfCard()));
+        label.setLayoutY(240);
+        label.setLayoutX(120);
+        label.setTextFill(Color.GOLD);
+        label.setFont(new Font(20));
+        pane.getChildren().addAll(rectangle, label);
+        rightGrid.add(pane,0,0); // todo: handle the deck class asap
     }
 
 
@@ -119,6 +141,7 @@ public class PreGameMenu extends Application {
         vBox.setAlignment(Pos.CENTER);
         vBox.setLayoutX(300);
         vBox.setLayoutY(10);
+        vBox.setMaxWidth(200);
         Rectangle rectangle = new Rectangle(400, 300, 200, 320);
         rectangle.setArcWidth(25);
         rectangle.setArcHeight(25);
@@ -172,6 +195,7 @@ public class PreGameMenu extends Application {
         vBox.setAlignment(Pos.CENTER);
         vBox.setLayoutX(300);
         vBox.setLayoutY(10);
+        vBox.setMaxWidth(200);
         Rectangle rectangle = new Rectangle(400, 300, 200, 320);
         rectangle.setArcWidth(25);
         rectangle.setArcHeight(25);
@@ -181,8 +205,8 @@ public class PreGameMenu extends Application {
             factionMenu.close();
             currentFaction = Faction.getFactions().get(factionIndex);
             currentLeader = (Leader) currentFaction.getLeaders().get(0);
+            setCurrentFactionInfo();
             setCardsAndCommander();
-            System.out.println(currentFaction.getFactionName());
             leaderIndex = 0;
         });
         Label label = new Label("faction description here");
@@ -217,7 +241,5 @@ public class PreGameMenu extends Application {
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
     }
-    public void addCardToDeck(){
 
-    }
 }

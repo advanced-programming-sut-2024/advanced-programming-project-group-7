@@ -3,7 +3,6 @@ package model;
 import model.factions.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Faction {
     private final String description;
@@ -31,9 +30,18 @@ public class Faction {
     public String getLgPath(){
         return "/Images/lg/" +"faction_" + this.factionName + ".jpg";
     }
+    public String getShieldPic() {return "/Images/icons/deck_shield_" + this.factionName + ".png";}
 
     public String getFactionName() {
-        return factionName;
+        if(factionName.equals("realms"))
+            return "Northern Realms";
+        if (factionName.equals("skellige"))
+            return "Skellige";
+        if (factionName.equals("scoiatael"))
+            return "Scoiatael";
+        if (factionName.equals("monsters"))
+            return "Monsters";
+        return "EmpireNilfgaardian";
     }
 
     public ArrayList getLeaders() {
