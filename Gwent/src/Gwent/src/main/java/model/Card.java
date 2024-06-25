@@ -15,12 +15,12 @@ public class Card extends Pane {
     private boolean isSpecial;
     private String lgPath;
     private String factionName;
-    private Rectangle rectangle = new Rectangle();
+    public Rectangle rectangle = new Rectangle();
     private Circle powerIcon = new Circle();
     private Label powerLabel;
     private int power;
 
-    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHreo) {
+    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName) {
         this.cardName = cardName;
         this.countOfCard = countOfCard;
         this.isSpecial = isSpecial;
