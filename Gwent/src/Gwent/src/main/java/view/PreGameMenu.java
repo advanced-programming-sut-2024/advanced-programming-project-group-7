@@ -22,6 +22,7 @@ import model.factions.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PreGameMenu extends Application {
 
@@ -29,11 +30,12 @@ public class PreGameMenu extends Application {
     public ArrayList<Leader> leaders;
     public int leaderIndex;
     public GridPane leftGrid;
-    public GridPane rightGrid;
     public Stage leaderMenu;
     public Stage factionMenu;
     public Faction currentFaction = Faction.getFactions().get(0);
     public Leader currentLeader = (Leader) currentFaction.getLeaders().get(0);
+    public Deck currentDeck=new Deck(currentFaction,currentLeader);
+    public GridPane rightGrid;
     public Rectangle factionLogo;
     public Label factionName;
 
@@ -56,6 +58,7 @@ public class PreGameMenu extends Application {
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         setCurrentFactionInfo();
         setCardsAndCommander();
+        setRightGrid();
     }
 
     private void setCurrentFactionInfo() {
@@ -66,16 +69,22 @@ public class PreGameMenu extends Application {
     private void setCardsAndCommander() {
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         ArrayList<Card> factionCards = new ArrayList<>();
+        HashMap<Card,Integer> cardsInDeck=currentDeck.getCardsInDeck();
         if(currentFaction instanceof Monsters){
             factionCards = Monsters.getMonsterCards();
+//            currentDeck.setCardsInDeck(Monsters.getMonsterDefaultDeck());
         } else if (currentFaction instanceof Skellige) {
             factionCards = Skellige.getSkelligeCards();
+//            currentDeck.setCardsInDeck(Skellige.getSkelligeDefaultDeck());
         } else if (currentFaction instanceof NorthernRealms) {
             factionCards = NorthernRealms.getNorthernRealmsCards();
+            currentDeck.setCardsInDeck(NorthernRealms.getNorthernRealmsDefaultDeck());
         } else if (currentFaction instanceof Scoiatael) {
             factionCards = Scoiatael.getScoiataelCards();
+//            currentDeck.setCardsInDeck(Scoiatael.getScoiataelDefaultDeck());
         } else if (currentFaction instanceof EmpireNilfgaardian) {
-            factionCards = EmpireNilfgaardian.getEmpireNilfgaardian();
+            factionCards = EmpireNilfgaardian.getEmpireNilfgaardianCards();
+//            currentDeck.setCardsInDeck(EmpireNilfgaardian.getEmpireNilfgaardianDefaultDeck());
         }
         int count = 0;
         leftGrid.getChildren().clear();
@@ -88,7 +97,13 @@ public class PreGameMenu extends Application {
             rectangle.setWidth(150);
             rectangle.setArcHeight(20);
             rectangle.setArcWidth(20);
-            Label label = new Label(String.valueOf(card.getCountOfCard()));
+            Label label;
+            if(cardsInDeck.containsKey(card)){
+                 label=new Label(String.valueOf(card.getCountOfCard()-cardsInDeck.get(card)));
+            }
+            else{
+                label=new Label(String.valueOf(card.getCountOfCard()));
+            }
             label.setLayoutY(240);
             label.setLayoutX(120);
             label.setTextFill(Color.BLACK);
@@ -105,8 +120,28 @@ public class PreGameMenu extends Application {
             count++;
         }
     }
-
-    private void addCardToDeck(Card card, Pane pane) {
+    public void setRightGrid(){
+        rightGrid.getChildren().clear();
+        int count=0;
+        for(Card card:currentDeck.getCardsInDeck().keySet()){
+            Pane pane=new Pane();
+            Rectangle rectangle=new Rectangle();
+            rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
+            rectangle.setHeight(300);
+            rectangle.setWidth(150);
+            rectangle.setArcWidth(20);
+            rectangle.setArcHeight(20);
+            Label label=new Label(String.valueOf(currentDeck.getCardsInDeck().get(card)));
+            label.setLayoutY(240);
+            label.setLayoutX(120);
+            label.setTextFill(Color.BLACK);
+            label.setFont(new Font(20));
+            pane.getChildren().addAll(rectangle,label);
+            rightGrid.add(pane,count%3,count/3);
+            count++;
+        }
+    }
+    private void addCardToDeck(Card card, Pane pane){
         Rectangle rectangle = new Rectangle();
         rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
         rectangle.setHeight(300);
@@ -121,8 +156,6 @@ public class PreGameMenu extends Application {
         pane.getChildren().addAll(rectangle, label);
         rightGrid.add(pane,0,0); // todo: handle the deck class asap
     }
-
-
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaders = new ArrayList<>();
         leaders = currentFaction.getLeaders();
@@ -207,6 +240,7 @@ public class PreGameMenu extends Application {
             currentLeader = (Leader) currentFaction.getLeaders().get(0);
             setCurrentFactionInfo();
             setCardsAndCommander();
+            setRightGrid();
             leaderIndex = 0;
         });
         Label label = new Label("faction description here");
@@ -240,8 +274,5 @@ public class PreGameMenu extends Application {
         root.getChildren().add(vBox);
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
-    }
-    public void addCardToDeck(){
-
     }
 }

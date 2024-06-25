@@ -46,7 +46,7 @@ public class User {
     private String answerOfSecurityQuestion;
     //private final String securityQuestionAnswer;
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
-    private Deck currentDeck;
+    private static Deck currentDeck;
     static{
         securityQuestions.put(1, "What is your favorite color?");
         securityQuestions.put(2, "What is your pet's name?");
