@@ -27,6 +27,7 @@ public class Game {
 
     public void setWinner(User winner) {
         this.winner = winner;
+        System.out.println("yo");
     }
 
 //    public void setDate(java.util.Date date) {

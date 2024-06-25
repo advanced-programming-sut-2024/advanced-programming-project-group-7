@@ -20,7 +20,8 @@ public class Card extends Pane {
     private Label powerLabel;
     private int power;
 
-    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName) {
+    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int row,boolean isHero) {
+        System.out.println("3");
         this.cardName = cardName;
         this.countOfCard = countOfCard;
         this.isSpecial = isSpecial;

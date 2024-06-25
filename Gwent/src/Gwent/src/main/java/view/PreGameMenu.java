@@ -44,6 +44,7 @@ public class PreGameMenu extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         URL url = LoginMenu.class.getResource("/FXML/PreGameMenu.fxml");
+        System.out.println("1");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -76,8 +77,10 @@ public class PreGameMenu extends Application {
             factionCards = Skellige.getSkelligeCards();
 //            currentDeck.setCardsInDeck(Skellige.getSkelligeDefaultDeck());
         } else if (currentFaction instanceof NorthernRealms) {
+
             factionCards = NorthernRealms.getNorthernRealmsCards();
             currentDeck.setCardsInDeck(NorthernRealms.getNorthernRealmsDefaultDeck());
+            System.out.println("norhen");
         } else if (currentFaction instanceof Scoiatael) {
             factionCards = Scoiatael.getScoiataelCards();
 //            currentDeck.setCardsInDeck(Scoiatael.getScoiataelDefaultDeck());
@@ -153,7 +156,7 @@ public class PreGameMenu extends Application {
         label.setTextFill(Color.GOLD);
         label.setFont(new Font(20));
         pane.getChildren().addAll(rectangle, label);
-        rightGrid.add(pane,0,0); // todo: handle the deck class asap
+        //rightGrid.add(pane,0,0); // todo: handle the deck class asap
     }
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaders = new ArrayList<>();
