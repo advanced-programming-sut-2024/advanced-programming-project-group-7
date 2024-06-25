@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import model.Card;
 import model.Game;
 import model.cards.*;
-import view.animations.CardPlacementAnimation;
 
 public class GameLauncher extends Application {
 
@@ -53,21 +52,21 @@ public class GameLauncher extends Application {
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
-        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerFirstRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerSecondRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerSecondRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerThirdRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerThirdRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerFourthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
-        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerFifthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
-        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
-        playerSixthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerHand.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
+        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+//        playerFirstRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerSecondRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerSecondRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerThirdRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerThirdRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerFourthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
+//        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerFifthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
+//        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
+//        playerSixthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerHand.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
+//        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
+//        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 sceneX = event.getSceneX();
