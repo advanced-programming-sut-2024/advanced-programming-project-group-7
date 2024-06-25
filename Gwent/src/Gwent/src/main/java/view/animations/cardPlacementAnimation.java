@@ -7,7 +7,7 @@ import model.Game;
 
 public class cardPlacementAnimation extends Transition {
 
-    public cardPlacementAnimation (Pane pane, Game game, Card card)
+    public cardPlacementAnimation (Pane pane, Game game, Card card){}
 
     @Override
     protected void interpolate(double frac) {
