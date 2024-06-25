@@ -59,15 +59,15 @@ public class GameLauncher extends Application {
     @FXML
     public void initialize() {
 
-        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerFirstRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerSecondRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerSecondRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerThirdRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerThirdRow.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerHand.getChildren().add(new Decoy("horn", 3, true, 0, "special"));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters"));
+//        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",1));
+//        playerFirstRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",1));
+//        playerSecondRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",1));
+//        playerSecondRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",1));
+//        playerThirdRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",1));
+        playerThirdRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",1,false));
+        playerHand.getChildren().add(new Decoy("horn", 3, true, 0, "special",1,false));
+        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",1,false));
+        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",1,false));
 
 //        playerHand.getChildren().add(new Scorch("scorch", 3, true, 0, "special"));
 //        playerHand.getChildren().add(new Card("frost", 3, true, 0, "weather"));
