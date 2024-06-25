@@ -126,7 +126,7 @@
                    <Pane GridPane.columnIndex="0" GridPane.rowIndex="1">
                        <Rectangle  arcHeight="20" arcWidth="20" fill="TRANSPARENT" height="300.0" stroke="white" strokeType="INSIDE" width="150.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                        <ImageView  layoutX="90" layoutY="245" visible="false">
-                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" /> <!-- todo: terrible quality create a new image using Pixlr-->
+                           <Image requestedHeight="20" requestedWidth="20" url="@../Images/icons/preview_count.png" />
                        </ImageView>
                        <Label  layoutX="120.0" layoutY="245.0" text="5" textFill="#ac941b" visible="false" />
                    </Pane>

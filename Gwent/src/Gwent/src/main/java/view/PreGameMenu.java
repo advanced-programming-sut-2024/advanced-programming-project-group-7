@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -99,6 +100,14 @@ public class PreGameMenu extends Application {
             rectangle.setWidth(150);
             rectangle.setArcHeight(20);
             rectangle.setArcWidth(20);
+
+            Rectangle cardx=new Rectangle();
+            cardx.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/preview_count.png").toExternalForm()))));
+            cardx.setHeight(30);
+            cardx.setWidth(15);
+            cardx.setLayoutY(235);
+            cardx.setLayoutX(105);
+
             Label label;
             if(cardsInDeck.containsKey(card)){
                  label=new Label(String.valueOf(card.getCountOfCard()-cardsInDeck.get(card)));
@@ -110,7 +119,7 @@ public class PreGameMenu extends Application {
             label.setLayoutX(120);
             label.setTextFill(Color.BLACK);
             label.setFont(new Font(20));
-            pane.getChildren().addAll(rectangle, label);
+            pane.getChildren().addAll(rectangle,cardx, label);
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
                 int cardLeft = Integer.parseInt(label.getText());
@@ -156,7 +165,7 @@ public class PreGameMenu extends Application {
         label.setTextFill(Color.GOLD);
         label.setFont(new Font(20));
         pane.getChildren().addAll(rectangle, label);
-        //rightGrid.add(pane,0,0); // todo: handle the deck class asap
+        rightGrid.add(pane,0,0); // todo: handle the deck class asap
     }
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaders = new ArrayList<>();

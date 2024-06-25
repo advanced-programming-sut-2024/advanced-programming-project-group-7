@@ -19,6 +19,9 @@ public class Card extends Pane {
     private Circle powerIcon = new Circle();
     private Label powerLabel;
     private int power;
+    private int rows;
+    private boolean isHero;
+
 
     public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int row,boolean isHero) {
         System.out.println("3");
@@ -28,6 +31,8 @@ public class Card extends Pane {
         this.power = power;
         this.factionName = factionName;
         this.lgPath = lgPathCreator(cardName, factionName);
+        this.rows=row;
+        this.isHero=isHero;
         this.setHeight(98);
         this.setWidth(70);
         powerLabel = new Label(String.valueOf(power));
@@ -63,6 +68,22 @@ public class Card extends Pane {
 
     public String getLgPath() {
         return lgPath;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public boolean isHero() {
+        return isHero;
+    }
+
+    public void setHero(boolean hero) {
+        isHero = hero;
     }
 
     public String lgPathCreator(String cardName, String factionName){
