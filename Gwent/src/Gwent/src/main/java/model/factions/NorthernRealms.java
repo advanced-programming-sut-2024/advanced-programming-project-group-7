@@ -6,6 +6,7 @@ import model.leaders.NorthernRealmsLeaders;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class NorthernRealms extends Faction {
     private static final ArrayList<Leader> leaders=new ArrayList<>();
@@ -70,13 +71,43 @@ public class NorthernRealms extends Faction {
         northernRealmsCards.add(new Cow("cow", 1 , false, 0, "neutral",2,false));
         northernRealmsCards.add(new Spy("mysterious elf", 1 , false, 0, "neutral",3,true));
     }
-    private final static HashMap<Card,Integer> northernRealmsDefaultDeck=new HashMap<>();
+    private final static LinkedHashMap<Card,Integer> northernRealmsDefaultDeck=new LinkedHashMap<>();
     static {
-        northernRealmsDefaultDeck.put(new Horn("horn", 3 , true, 0, "special",123,false),1);
-        northernRealmsDefaultDeck.put(new Decoy("decoy", 3 , true, 0, "special",123,false),3);
-        northernRealmsDefaultDeck.put(new Card("frost", 3 , true, 0, "weather",7,false),1);
-        northernRealmsDefaultDeck.put(new Card("ciri", 1 , false, 15, "neutral",3,false),1);
-        northernRealmsDefaultDeck.put(new Card("geralt", 1 , false, 15, "neutral",3,true),1);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(0),1);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),3);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(4),1);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(9),1);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(10),1);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(11),1);
+        northernRealmsDefaultDeck.put(northernRealmsCards.get(12),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),2);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),3);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),3);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),3);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+//        northernRealmsDefaultDeck.put(northernRealmsCards.get(1),1);
+
+
+//        northernRealmsDefaultDeck.put(new Horn("horn", 3 , true, 0, "special",123,false),1);
+//        northernRealmsDefaultDeck.put(new Decoy("decoy", 3 , true, 0, "special",123,false),3);
+//        northernRealmsDefaultDeck.put(new Card("frost", 3 , true, 0, "weather",7,false),1);
+//        northernRealmsDefaultDeck.put(new Card("ciri", 1 , false, 15, "neutral",3,false),1);
+//        northernRealmsDefaultDeck.put(new Card("geralt", 1 , false, 15, "neutral",3,true),1);
 //        northernRealmsDefaultDeck.put(new Card("esterad", 1 , false, 10, "realms",3,true),1);
 //        northernRealmsDefaultDeck.put(new Card("natalis", 1 , false, 10, "realms",3,true),1);
 //        northernRealmsDefaultDeck.put(new Card("philippa", 1 , false, 10, "realms",2,true),1);
@@ -115,7 +146,7 @@ public class NorthernRealms extends Faction {
     public static ArrayList<Card> getNorthernRealmsCards() {
         return northernRealmsCards;
     }
-    public static HashMap<Card,Integer> getNorthernRealmsDefaultDeck(){
+    public static LinkedHashMap<Card,Integer> getNorthernRealmsDefaultDeck(){
         return northernRealmsDefaultDeck;
     }
 }

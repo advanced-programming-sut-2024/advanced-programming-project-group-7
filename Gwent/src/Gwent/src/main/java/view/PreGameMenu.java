@@ -6,9 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -24,11 +24,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class PreGameMenu extends Application {
 
     public Rectangle LeaderImage;
     public ArrayList<Leader> leaders;
+    public ArrayList<Integer> leftCardLabels=new ArrayList<>();
     public int leaderIndex;
     public GridPane leftGrid;
     public Stage leaderMenu;
@@ -39,13 +41,20 @@ public class PreGameMenu extends Application {
     public GridPane rightGrid;
     public Rectangle factionLogo;
     public Label factionName;
+    public ArrayList<Card> factionCards = new ArrayList<>();
+    public Label totalCardInDeck;
+    public Label numberOfUnitCard;
+    public Label specialCards;
+    public Label totalUnitCardStrength;
+    public Label heroCards;
+
 
     private int factionIndex;
 
     @Override
     public void start(Stage stage) throws IOException {
         URL url = LoginMenu.class.getResource("/FXML/PreGameMenu.fxml");
-        System.out.println("1");
+//        System.out.println("1");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -60,6 +69,7 @@ public class PreGameMenu extends Application {
         setCurrentFactionInfo();
         setCardsAndCommander();
         setRightGrid();
+        calculateLabels();
     }
 
     private void setCurrentFactionInfo() {
@@ -69,8 +79,7 @@ public class PreGameMenu extends Application {
 
     private void setCardsAndCommander() {
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
-        ArrayList<Card> factionCards = new ArrayList<>();
-        HashMap<Card,Integer> cardsInDeck=currentDeck.getCardsInDeck();
+//        LinkedHashMap<Card,Integer> cardsInDeck=currentDeck.getCardsInDeck();
         if(currentFaction instanceof Monsters){
             factionCards = Monsters.getMonsterCards();
 //            currentDeck.setCardsInDeck(Monsters.getMonsterDefaultDeck());
@@ -78,7 +87,6 @@ public class PreGameMenu extends Application {
             factionCards = Skellige.getSkelligeCards();
 //            currentDeck.setCardsInDeck(Skellige.getSkelligeDefaultDeck());
         } else if (currentFaction instanceof NorthernRealms) {
-
             factionCards = NorthernRealms.getNorthernRealmsCards();
             currentDeck.setCardsInDeck(NorthernRealms.getNorthernRealmsDefaultDeck());
             System.out.println("norhen");
@@ -100,33 +108,32 @@ public class PreGameMenu extends Application {
             rectangle.setWidth(150);
             rectangle.setArcHeight(20);
             rectangle.setArcWidth(20);
-
-            Rectangle cardx=new Rectangle();
-            cardx.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/preview_count.png").toExternalForm()))));
-            cardx.setHeight(30);
-            cardx.setWidth(15);
-            cardx.setLayoutY(235);
-            cardx.setLayoutX(105);
-
             Label label;
-            if(cardsInDeck.containsKey(card)){
-                 label=new Label(String.valueOf(card.getCountOfCard()-cardsInDeck.get(card)));
+            if(currentDeck.getCardsInDeck().containsKey(card)){
+                 label=new Label(String.valueOf(card.getCountOfCard()-currentDeck.getCardsInDeck().get(card)));
+                 leftCardLabels.add(card.getCountOfCard()-currentDeck.getCardsInDeck().get(card));
+//                System.out.println("jj");
             }
             else{
                 label=new Label(String.valueOf(card.getCountOfCard()));
+                leftCardLabels.add(card.getCountOfCard());
+//                System.out.println("kk ");
             }
+//            leftCardLabels.add(card.getCountOfCard()-currentDeck.getCardsInDeck().get(card));
             label.setLayoutY(240);
             label.setLayoutX(120);
-
             label.setTextFill(Color.BLACK);
             label.setFont(new Font(20));
-            pane.getChildren().addAll(rectangle,cardx, label);
+            pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
                 int cardLeft = Integer.parseInt(label.getText());
                 if (cardLeft > 0) {
                     label.setText(String.valueOf(cardLeft - 1));
+//                    leftCardLabels.set(count-1,leftCardLabels.get(count)-1);
                     addCardToDeck(card, pane1);
+                    setRightGrid();
+                    calculateLabels();
                 }
             });
             count++;
@@ -137,6 +144,7 @@ public class PreGameMenu extends Application {
         int count=0;
         for(Card card:currentDeck.getCardsInDeck().keySet()){
             Pane pane=new Pane();
+            Pane pane1=new Pane();
             Rectangle rectangle=new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
             rectangle.setHeight(300);
@@ -149,6 +157,14 @@ public class PreGameMenu extends Application {
             label.setTextFill(Color.BLACK);
             label.setFont(new Font(20));
             pane.getChildren().addAll(rectangle,label);
+            pane.setOnMouseClicked(event -> {
+                int countOfCardInDeck=Integer.parseInt(label.getText());
+                if(countOfCardInDeck>0){
+                    label.setText(String.valueOf(countOfCardInDeck - 1));
+                    returnCardToLeft(card,pane1);
+                    currentDeck.deleteCardFromDeck(card);
+                }
+            });
             rightGrid.add(pane,count%3,count/3);
             count++;
         }
@@ -160,13 +176,54 @@ public class PreGameMenu extends Application {
         rectangle.setWidth(150);
         rectangle.setArcHeight(20);
         rectangle.setArcWidth(20);
-        Label label = new Label(String.valueOf(card.getCountOfCard()));
+        Label label;
+//        Label label = new Label(String.valueOf(card.getCountOfCard()));
+        if(currentDeck.getCardsInDeck().containsKey(card)){
+            label=new Label(String.valueOf(currentDeck.getCardsInDeck().get(card)+1));
+            System.out.println("jj");
+        }
+        else{
+            label=new Label(String.valueOf(1));
+            System.out.println("kk ");
+        }
+        int index=0;
+        for(Card tmpcard:factionCards){
+            if(!tmpcard.getCardName().equals(card.getCardName()))
+                index++;
+            else break;
+        }
+        leftCardLabels.set(index,leftCardLabels.get(index)-1);
+        currentDeck.addToDeck(card);
         label.setLayoutY(240);
         label.setLayoutX(120);
         label.setTextFill(Color.GOLD);
         label.setFont(new Font(20));
         pane.getChildren().addAll(rectangle, label);
-        rightGrid.add(pane,0,0); // todo: handle the deck class asap
+        int size=currentDeck.getCardsInDeck().size();
+        rightGrid.add(pane,(size-1)%3,(size-1)/3);
+//        rightGrid.add(pane,0,0); // todo: handle the deck class asap
+    }
+    public void returnCardToLeft(Card card,Pane pane){
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
+        rectangle.setHeight(300);
+        rectangle.setWidth(150);
+        rectangle.setArcHeight(20);
+        rectangle.setArcWidth(20);
+        int index=0;
+        for(Card tmpCard:factionCards){
+            if(tmpCard.getCardName().equals(card.getCardName())){
+                break;
+            }
+            index++;
+        }
+        leftCardLabels.set(index,leftCardLabels.get(index)+1);
+        Label label=new Label(String.valueOf(leftCardLabels.get(index)));
+        label.setLayoutY(240);
+        label.setLayoutX(120);
+        label.setTextFill(Color.GOLD);
+        label.setFont(new Font(20));
+        pane.getChildren().addAll(rectangle, label);
     }
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaders = new ArrayList<>();
@@ -286,5 +343,13 @@ public class PreGameMenu extends Application {
         root.getChildren().add(vBox);
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
+    }
+    public void calculateLabels(){
+        currentDeck.calculateDeck();
+        totalCardInDeck.setText(String.valueOf(currentDeck.totalCardsInDeck));
+        numberOfUnitCard.setText(currentDeck.totalUnitCard +"/22");
+        specialCards.setText(currentDeck.totalSpecialCardInDeck +"/10");
+        totalUnitCardStrength.setText(String.valueOf(currentDeck.totalUnitCardStrength));
+        heroCards.setText(String.valueOf(currentDeck.totalHeroCard));
     }
 }

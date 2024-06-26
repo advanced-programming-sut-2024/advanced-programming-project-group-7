@@ -19,60 +19,35 @@ public class Card extends Pane {
     private Circle powerIcon = new Circle();
     private Label powerLabel;
     private int power;
-    private int rows;
     private boolean isHero;
+    private int rows;
 
-
-    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int row,boolean isHero) {
+    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHero) {
+//        System.out.println("3");
         this.cardName = cardName;
         this.countOfCard = countOfCard;
         this.isSpecial = isSpecial;
         this.power = power;
+        this.rows=rows;
+        this.isHero=isHero;
         this.factionName = factionName;
         this.lgPath = lgPathCreator(cardName, factionName);
-        this.rows=row;
-        this.isHero=isHero;
         this.setHeight(98);
         this.setWidth(70);
+        powerLabel = new Label(String.valueOf(power));
+        this.getChildren().addAll(rectangle, powerIcon, powerLabel);
         rectangle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource(smPathCreator(cardName, factionName)).toExternalForm()))));
         rectangle.setHeight(98);
         rectangle.setWidth(70);
-        if(this.isSpecial) {
-            setupForSpecial(this);
-        }else {
-            powerLabel = new Label(String.valueOf(power));
-                this.getChildren().addAll(rectangle, powerIcon, powerLabel);
-
-            if (this.isHero) {
-                powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/power_hero.png").toExternalForm()))));
-            } else
-                powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/power_normal.png").toExternalForm()))));
-            powerIcon.setRadius(25);
-            powerIcon.setCenterX(22);
-            powerIcon.setCenterY(22);
-            powerLabel.setLayoutX(8);
-            powerLabel.setLayoutY(-2);
-            if (this.isHero) {
-                powerLabel.setTextFill(Color.WHITE);
-            } else powerLabel.setTextFill(Color.BLACK);
-            powerLabel.setFont(new Font(20));
-
-            Circle circle = new Circle(12.5);
-            if (this.rows == 3) {
-                circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_close.png").toExternalForm()))));
-            } else if (this.rows == 2) {
-                circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_ranged.png").toExternalForm()))));
-            } else if (this.rows == 1) {
-                circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_siege.png").toExternalForm()))));
-            } else if (this.rows == 23) {
-                circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_agile.png").toExternalForm()))));
-            }
-            circle.setCenterX(60);
-            circle.setCenterY(85);
-            this.getChildren().add(circle);
-        }
+        powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/power_normal.png").toExternalForm()))));
+        powerIcon.setRadius(25);
+        powerIcon.setCenterX(22);
+        powerIcon.setCenterY(22);
+        powerLabel.setLayoutX(8);
+        powerLabel.setLayoutY(-2);
+        powerLabel.setTextFill(Color.BLACK);
+        powerLabel.setFont(new Font(20));
     }
-
 
     public String getCardName() {
         return cardName;
@@ -82,8 +57,16 @@ public class Card extends Pane {
         return countOfCard;
     }
 
+    public int getPower() {
+        return power;
+    }
+
     public boolean isSpecial() {
         return isSpecial;
+    }
+
+    public boolean isHero(){
+        return isHero;
     }
 
     public String getFactionName() {
@@ -92,22 +75,6 @@ public class Card extends Pane {
 
     public String getLgPath() {
         return lgPath;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    public boolean isHero() {
-        return isHero;
-    }
-
-    public void setHero(boolean hero) {
-        isHero = hero;
     }
 
     public String lgPathCreator(String cardName, String factionName){
@@ -122,38 +89,5 @@ public class Card extends Pane {
         path.append(newCardName);
         path.append(".jpg");
         return path.toString();
-    }
-    private void setupForSpecial(Card card) {
-        if(card.cardName.equals("decoy")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_special_decoy.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("horn")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_special_horn.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("mardroeme")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_special_mardroeme.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("scorch")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_special_scorch.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("frost")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_weather_frost.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("clear")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_weather_clearpng.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("fog")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_weather_fog.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("storm")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_weather_storm.png").toExternalForm()))));
-        }
-        else if (card.cardName.equals("rain")){
-            powerIcon.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_weather_rain.png").toExternalForm()))));
-        }
-        powerIcon.setRadius(16);
-        powerIcon.setCenterX(14);
-        powerIcon.setCenterY(14);
-        this.getChildren().addAll(rectangle,powerIcon);
     }
 }
