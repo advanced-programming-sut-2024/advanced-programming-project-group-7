@@ -24,7 +24,6 @@ public class Card extends Pane {
 
 
     public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int row,boolean isHero) {
-        System.out.println("3");
         this.cardName = cardName;
         this.countOfCard = countOfCard;
         this.isSpecial = isSpecial;

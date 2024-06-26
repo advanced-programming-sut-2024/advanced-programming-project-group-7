@@ -9,13 +9,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Card;
 import model.Game;
 import model.cards.*;
 import view.animations.CardPlacementAnimation;
 
+import java.util.ArrayList;
+
 public class GameLauncher extends Application {
+    public  ArrayList<HBox>hBoxes=new ArrayList<HBox>();
 
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
@@ -39,9 +44,12 @@ public class GameLauncher extends Application {
     private double sceneX;
     private double sceneY;
 
+    public Rectangle showCardRectangle = new Rectangle();
+
+
+
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("phase 1");
         pane = new Pane();
         game = new Game();
         setSize(pane);
@@ -49,34 +57,83 @@ public class GameLauncher extends Application {
         pane.getChildren().add(createHbox());
 
         Scene scene = new Scene(pane);
-        System.out.println("phase2");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
-        System.out.println("phase2");
-        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        System.out.println("added");
-        playerSecondRow.getChildren().add(new Card("rain", 2 , true, 0, "weather",7,false));
-        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerFifthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
-        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+
+        hBoxes.add(playerFirstRow);
+        hBoxes.add(playerSecondRow);
+        hBoxes.add(playerThirdRow);
+        hBoxes.add(playerFourthRow);
+        hBoxes.add(playerFifthRow);
+        hBoxes.add(playerSixthRow);
+
+        hBoxes.add(playerFirstRowHorn);
+        hBoxes.add(playerSecondRowHorn);
+        hBoxes.add(playerThirdRowHorn);
+        hBoxes.add(playerFourthRowHorn);
+        hBoxes.add(playerFifthRowHorn);
+        hBoxes.add(playerSixthRowHorn);
+
+//        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+//        playerSecondRow.getChildren().add(new Card("rain", 2 , true, 0, "weather",7,false));
+//        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+//        playerFifthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
+//        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+//        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
         playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
         playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
         playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
         playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
+        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
+        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
+                if(pane.getChildren().contains(showCardRectangle)){
+                    pane.getChildren().remove(showCardRectangle);
+                }
+                for (HBox hBox:hBoxes){
+                    hBox.setStyle("");
+                }
                 sceneX = event.getSceneX();
                 sceneY = event.getSceneY();
                 selected = (Card) card;
+
+
+                showCardRectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(selected.getLgPath()).toExternalForm()))));
+                showCardRectangle.setHeight(470);
+                showCardRectangle.setWidth(235);
+                showCardRectangle.setLayoutY(220);
+                showCardRectangle.setLayoutX(1280);
+                pane.getChildren().add(showCardRectangle);
+
+
+                if(selected.getRows()==3){
+                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getRows()==2){
+                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getRows()==1){
+                    playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getRows()==23){
+                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getCardName().equals("horn")){
+                    playerFirstRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    playerSecondRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    playerThirdRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+
             });
         }
     }
-    public void addCardToPane(Card card, double endY, double endX, HBox playerRow) {
+    public void addCardToPane(Card card, double endY, double endX, HBox playerRow){
         pane.getChildren().add(card);
         card.setLayoutY(this.sceneY);
         card.setLayoutX(this.sceneX);
@@ -143,9 +200,28 @@ public class GameLauncher extends Application {
         row.setMinWidth(minWidth);
         row.setOnMouseClicked(event -> {
             if (selected != null) {
+                pane.getChildren().remove(showCardRectangle);
                 game.selectedBox = playerRow;
                 playerHand.getChildren().remove(selected);
                 addCardToPane(selected, event.getSceneY(), event.getSceneX(), playerRow);
+                if(selected.getRows()==3){
+                    playerThirdRow.setStyle("");
+                }
+                else if(selected.getRows()==2){
+                    playerSecondRow.setStyle("");
+                }
+                else if(selected.getRows()==1){
+                    playerFirstRow.setStyle("");
+                }
+                else if(selected.getRows()==23){
+                    playerSecondRow.setStyle("");
+                    playerThirdRow.setStyle("");
+                }
+                else if(selected.getCardName().equals("horn")){
+                    playerFirstRowHorn.setStyle("");
+                    playerSecondRowHorn.setStyle("");
+                    playerThirdRowHorn.setStyle("");
+                }
                 selected = null;
             }
         });
