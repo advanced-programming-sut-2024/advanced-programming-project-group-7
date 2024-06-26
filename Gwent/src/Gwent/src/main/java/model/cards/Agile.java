@@ -6,8 +6,8 @@ import javafx.scene.shape.Circle;
 import model.Card;
 
 public class Agile extends Card {
-    public Agile(String cardName, int countOfCard, boolean isSpecial, int power, String factionName) {
-        super(cardName, countOfCard, isSpecial, power, factionName);
+    public Agile(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHero) {
+        super(cardName, countOfCard, isSpecial, power, factionName,rows,isHero);
         Circle circle = new Circle(12.5);
         circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_ability_agile.png").toExternalForm()))));
         circle.setCenterX(35);
