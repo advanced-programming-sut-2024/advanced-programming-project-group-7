@@ -8,15 +8,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
-<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: darkslategray;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PreGameMenu">
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: darkslategray;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PreGameMenu">
     <center>
         <VBox alignment="CENTER" maxWidth="300" spacing="10">
          <children>
@@ -28,57 +28,99 @@
                   </font>
                  </Label>
              </HBox>
-            <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="320" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+            <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="320" stroke="BLACK" strokeType="INSIDE" width="200.0"/>
             <Button mnemonicParsing="false" onMouseClicked="#showLeaderMenu" text="Change Leader" />
             <Button mnemonicParsing="false" onMouseClicked="#showFactionMenu" text="Change Faction" />
-            <Button mnemonicParsing="false" text="Button" />
+             <Button mnemonicParsing="false" text="Button" />
          </children>
             <Label text="total cards in deck" textFill="#ffa514">
                 <font>
                     <Font size="20.0" />
                 </font>
             </Label>
-         <Label  fx:id="totalCardInDeck" text="Label">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </Label>
+         <HBox prefHeight="22.0" prefWidth="152.0">
+            <children>
+               <ImageView fitHeight="21.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../Images/icons/deck_stats_unit.png" />
+                  </image>
+               </ImageView>
+               <Label fx:id="totalCardInDeck" text="Label">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
          <Label text="number of units card" textFill="#ffa514">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Label fx:id="numberOfUnitCard" text="Label">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </Label>
+         <HBox prefHeight="22.0" prefWidth="152.0">
+            <children>
+               <ImageView fitHeight="25.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../Images/icons/deck_stats_unit.png" />
+                  </image>
+               </ImageView>
+               <Label fx:id="numberOfUnitCard" text="Label">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
          <Label text="special cards" textFill="#ffa514">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Label fx:id="specialCards" text="Label">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </Label>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <ImageView fitHeight="21.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../Images/icons/deck_stats_unit.png" />
+                  </image></ImageView>
+               <Label fx:id="specialCards" text="Label">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
          <Label text="total unit card strength" textFill="#ffa514">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Label fx:id="totalUnitCardStrength" text="Label">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </Label>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <ImageView fitHeight="18.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../Images/icons/deck_stats_unit.png" />
+                  </image></ImageView>
+               <Label fx:id="totalUnitCardStrength" prefHeight="19.0" prefWidth="29.0" text="Label">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
          <Label text="hero cards" textFill="#ffa514">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Label fx:id="heroCards" text="Label" />
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <ImageView fitHeight="19.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../Images/icons/deck_stats_unit.png" />
+                  </image></ImageView>
+               <Label fx:id="heroCards" text="Label" />
+            </children>
+         </HBox>
         </VBox>
     </center>
    <left>

@@ -90,4 +90,20 @@ public class Card extends Pane {
         path.append(".jpg");
         return path.toString();
     }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public void setHero(boolean hero) {
+        isHero = hero;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
 }
