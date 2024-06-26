@@ -12,6 +12,8 @@ public abstract class Leader extends Pane {
     private String leaderName;
     private String description;
     private String lgPath;
+    private String smPath;
+
     private  String factionName;
     public Rectangle rectangle = new Rectangle();
 
@@ -20,17 +22,24 @@ public abstract class Leader extends Pane {
         this.leaderName = leaderName;
         this.description = description;
         this.lgPath = lgPathMaker(leaderName, factionName);
+        this.smPath=smPathMaker(leaderName,factionName);
         this.factionName=factionName;
         this.setHeight(98);
         this.setWidth(70);
-        rectangle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource(this.getLgPath()).toExternalForm()))));
-        rectangle.setHeight(98);
-        rectangle.setWidth(70);
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource(this.getSmPath()).toExternalForm()))));
+        rectangle.setHeight(100);
+        rectangle.setWidth(75);
+        this.getChildren().add(rectangle);
     }
 
     private static String lgPathMaker(String leaderName, String factionName) {
         return "/Images/lg/" + factionName+"_" + leaderName.replaceAll(" ", "_") + ".jpg";
     }
+    private static String smPathMaker(String leaderName, String factionName) {
+        return "/Images/sm/" + factionName+"_" + leaderName.replaceAll(" ", "_") + ".jpg";
+    }
+
+
 
     public String getLeaderName() {
         return leaderName;
@@ -43,6 +52,7 @@ public abstract class Leader extends Pane {
     public String getLgPath() {
         return lgPath;
     }
+    public String getSmPath(){return  smPath;}
 
     public abstract void generalAbility();
 

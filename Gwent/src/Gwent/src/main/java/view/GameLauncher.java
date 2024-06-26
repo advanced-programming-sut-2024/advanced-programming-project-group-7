@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import model.Card;
 import model.Game;
 import model.Leader;
 import model.cards.*;
+import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
@@ -306,9 +308,23 @@ public class GameLauncher extends Application {
 
 
         Leader leader=new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms");
-        leader.setLayoutX(100);
-        leader.setLayoutY(200);
+        leader.setLayoutX(120);
+        leader.setLayoutY(700);
 
+        Leader leaderOpponent=new MonstersLeaders("eredin silver","double the strength of all your ","monsters");
+        leaderOpponent.setLayoutX(120);
+        leaderOpponent.setLayoutY(75);
+
+        Button buttonPass=new Button();
+        buttonPass.setText("Pass");
+        buttonPass.setLayoutX(320);
+        buttonPass.setLayoutY(750);
+
+
+        Button buttonPassOpponent=new Button();
+        buttonPassOpponent.setText("Pass");
+        buttonPassOpponent.setLayoutX(320);
+        buttonPassOpponent.setLayoutY(110);
 
         highScoreOpponent.setVisible(false);
 
@@ -330,7 +346,7 @@ public class GameLauncher extends Application {
                 playerNameOpponent,avatarOpponent,life1Opponent,life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,totalPowerOpponent,highScoreOpponent,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
                 ,totalRow1Power,totalRow2Power,totalRow3Power,totalRow1PowerOpponent,totalRow2PowerOpponent,totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
-                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader);
+                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent);
 
 
         Scene scene = new Scene(pane);
