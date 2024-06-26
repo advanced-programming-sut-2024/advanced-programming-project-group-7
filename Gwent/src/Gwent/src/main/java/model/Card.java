@@ -13,13 +13,17 @@ public class Card extends Pane {
     private String factionName;
     private Rectangle rectangle = new Rectangle();
     private int power;
+    private final int rows;
+    private boolean isHero;
 
-    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName) {
+    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName, int rows,boolean isHero) {
         this.cardName = cardName;
         this.countOfCard = countOfCard;
         this.isSpecial = isSpecial;
         this.power = power;
         this.factionName = factionName;
+        this.rows = rows;
+        this.isHero=isHero;
         this.lgPath = lgPathCreator(cardName, factionName);
         this.setHeight(98);
         this.setWidth(70);
