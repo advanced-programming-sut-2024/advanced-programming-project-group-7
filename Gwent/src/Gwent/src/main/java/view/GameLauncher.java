@@ -16,7 +16,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Card;
 import model.Game;
+import model.Leader;
 import model.cards.*;
+import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
 import java.awt.*;
@@ -101,11 +103,31 @@ public class GameLauncher extends Application {
         life2.setLayoutY(555);
         life2.setLayoutX(281);
 
-        Label totalPower=new Label(String.valueOf(100));
+        Label totalPower=new Label(String.valueOf(300));
         totalPower.setLayoutY(600);
         totalPower.setLayoutX(357);
         totalPower.setTextFill(Color.BLACK);
         totalPower.setFont(new Font(25));
+
+        Label totalRow1Power=new Label(String.valueOf(100));
+        totalRow1Power.setLayoutY(625);
+        totalRow1Power.setLayoutX(427);
+        totalRow1Power.setTextFill(Color.BLACK);
+        totalRow1Power.setFont(new Font(20));
+
+        Label totalRow2Power=new Label(String.valueOf(200));
+        totalRow2Power.setLayoutY(510);
+        totalRow2Power.setLayoutX(427);
+        totalRow2Power.setTextFill(Color.BLACK);
+        totalRow2Power.setFont(new Font(20));
+
+        Label totalRow3Power=new Label(String.valueOf(300));
+        totalRow3Power.setLayoutY(395);
+        totalRow3Power.setLayoutX(427);
+        totalRow3Power.setTextFill(Color.BLACK);
+        totalRow3Power.setFont(new Font(20));
+
+
 
         Rectangle highScore=new Rectangle();
         highScore.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
@@ -121,8 +143,10 @@ public class GameLauncher extends Application {
         realmForAvatar.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_realms.png").toExternalForm()))));
         realmForAvatar.setHeight(50);
         realmForAvatar.setWidth(50);
-        realmForAvatar.setLayoutY(530);
+        realmForAvatar.setLayoutY(550);
         realmForAvatar.setLayoutX(75);
+
+
 
 
         Label labelForNumberOfCardsOpponent=new Label(String.valueOf(10));
@@ -171,6 +195,24 @@ public class GameLauncher extends Application {
         totalPowerOpponent.setLayoutX(357);
         totalPowerOpponent.setTextFill(Color.BLACK);
         totalPowerOpponent.setFont(new Font(25));
+
+        Label totalRow1PowerOpponent=new Label(String.valueOf(10));
+        totalRow1PowerOpponent.setLayoutY(47);
+        totalRow1PowerOpponent.setLayoutX(427);
+        totalRow1PowerOpponent.setTextFill(Color.BLACK);
+        totalRow1PowerOpponent.setFont(new Font(20));
+
+        Label totalRow2PowerOpponent=new Label(String.valueOf(20));
+        totalRow2PowerOpponent.setLayoutY(162);
+        totalRow2PowerOpponent.setLayoutX(427);
+        totalRow2PowerOpponent.setTextFill(Color.BLACK);
+        totalRow2PowerOpponent.setFont(new Font(20));
+
+        Label totalRow3PowerOpponent=new Label(String.valueOf(30));
+        totalRow3PowerOpponent.setLayoutY(277);
+        totalRow3PowerOpponent.setLayoutX(427);
+        totalRow3PowerOpponent.setTextFill(Color.BLACK);
+        totalRow3PowerOpponent.setFont(new Font(20));
 
         Rectangle highScoreOpponent=new Rectangle();
         highScoreOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
@@ -236,6 +278,38 @@ public class GameLauncher extends Application {
 
 
 
+        Rectangle cardInDeckBack=new Rectangle();//todo load png with currentdeck
+        cardInDeckBack.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_back_realms.jpg").toExternalForm()))));
+        cardInDeckBack.setHeight(110);
+        cardInDeckBack.setWidth(80);
+        cardInDeckBack.setLayoutY(690);
+        cardInDeckBack.setLayoutX(1440);
+
+        Rectangle cardInDeckBackOpponent=new Rectangle();//todo load png with currentdeck
+        cardInDeckBackOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_back_monsters.jpg").toExternalForm()))));
+        cardInDeckBackOpponent.setHeight(110);
+        cardInDeckBackOpponent.setWidth(80);
+        cardInDeckBackOpponent.setLayoutY(60);
+        cardInDeckBackOpponent.setLayoutX(1440);
+
+        Label numberOfRemainingCardsInDeck=new Label(String.valueOf(25));
+        numberOfRemainingCardsInDeck.setLayoutY(770);
+        numberOfRemainingCardsInDeck.setLayoutX(1460);
+        numberOfRemainingCardsInDeck.setTextFill(Color.WHITE);
+        numberOfRemainingCardsInDeck.setFont(new Font(30));
+
+        Label numberOfRemainingCardsInDeckOpponent=new Label(String.valueOf(27));
+        numberOfRemainingCardsInDeckOpponent.setLayoutY(140);
+        numberOfRemainingCardsInDeckOpponent.setLayoutX(1465);
+        numberOfRemainingCardsInDeckOpponent.setTextFill(Color.WHITE);
+        numberOfRemainingCardsInDeckOpponent.setFont(new Font(30));
+
+
+        Leader leader=new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms");
+        leader.setLayoutX(100);
+        leader.setLayoutY(200);
+
+
         highScoreOpponent.setVisible(false);
 
         frostedRow.setVisible(false);
@@ -254,7 +328,9 @@ public class GameLauncher extends Application {
 
         pane.getChildren().addAll(createHbox(),playerName,avatar,life1,life2, cardx,labelForNumberOfCards,totalPower,highScore,realmForAvatar,
                 playerNameOpponent,avatarOpponent,life1Opponent,life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,totalPowerOpponent,highScoreOpponent,realmForAvatarOpponent,
-                frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent);
+                frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
+                ,totalRow1Power,totalRow2Power,totalRow3Power,totalRow1PowerOpponent,totalRow2PowerOpponent,totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
+                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader);
 
 
         Scene scene = new Scene(pane);
