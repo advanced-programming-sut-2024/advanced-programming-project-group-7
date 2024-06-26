@@ -117,6 +117,7 @@ public class PreGameMenu extends Application {
             }
             label.setLayoutY(240);
             label.setLayoutX(120);
+
             label.setTextFill(Color.BLACK);
             label.setFont(new Font(20));
             pane.getChildren().addAll(rectangle,cardx, label);
