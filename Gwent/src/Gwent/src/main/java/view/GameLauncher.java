@@ -383,6 +383,7 @@ public class GameLauncher extends Application {
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
         playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
         playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
+
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 if(pane.getChildren().contains(showCardRectangle)){
