@@ -9,6 +9,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.util.ArrayList;
+
 public class Card extends Pane {
     private String cardName;
     private int countOfCard;
@@ -147,8 +149,14 @@ public class Card extends Pane {
         this.getChildren().addAll(rectangle,powerIcon);
     }
 
-    public int getRows() {
-        return rows;
+    public ArrayList<Integer> getRows() {
+        int rowInt = rows;
+        ArrayList<Integer> row = new ArrayList<>();
+        while(rowInt > 0) {
+            row.add(rowInt % 10);
+            rowInt /= 10;
+        }
+        return row;
     }
 
     public void setRows(int rows) {

@@ -61,7 +61,7 @@ public class GameLauncher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         pane = new Pane();
-        game = new Game();
+        game = new Game(this);
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
 
@@ -370,19 +370,22 @@ public class GameLauncher extends Application {
         hBoxes.add(playerFifthRowHorn);
         hBoxes.add(playerSixthRowHorn);
 
-//        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-//        playerSecondRow.getChildren().add(new Card("rain", 2 , true, 0, "weather",7,false));
-//        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-//        playerFifthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
-//        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-//        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+        playerSecondRow.getChildren().add(new Card("rain", 2 , true, 0, "weather",7,false));
+        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+        playerFifthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
+        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
         playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
         playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
         playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
         playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
-        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
-        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+
+
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 if(pane.getChildren().contains(showCardRectangle)){
@@ -404,25 +407,20 @@ public class GameLauncher extends Application {
                 pane.getChildren().add(showCardRectangle);
 
 
-                if(selected.getRows()==3){
-                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-                else if(selected.getRows()==2){
-                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-                else if(selected.getRows()==1){
-                    playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-                else if(selected.getRows()==23){
-                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-                else if(selected.getCardName().equals("horn")){
+                if(selected.getCardName().equals("horn")){
                     playerFirstRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                     playerSecondRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                     playerThirdRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                } else if(selected.getRows().contains(2) && selected.getRows().contains(3)){
+                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                } else if(selected.getRows().contains(2)){
+                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                } else if(selected.getRows().contains(1)){
+                    playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                } else if(selected.getRows().contains(3)){
+                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                 }
-
             });
         }
 
@@ -495,31 +493,17 @@ public class GameLauncher extends Application {
         row.setMinHeight(minHeight);
         row.setMinWidth(minWidth);
         row.setOnMouseClicked(event -> {
-            if (selected != null) {
+            if (selected != null && fitsBox(selected, playerRow)) {
                 pane.getChildren().remove(showCardRectangle);
                 game.selectedBox = playerRow;
                 playerHand.getChildren().remove(selected);
                 addCardToPane(selected, event.getSceneY(), event.getSceneX(), playerRow);
-                if(selected.getRows()==3){
-                    playerThirdRow.setStyle("");
-                }
-                else if(selected.getRows()==2){
-                    playerSecondRow.setStyle("");
-                }
-                else if(selected.getRows()==1){
-                    playerFirstRow.setStyle("");
-                }
-                else if(selected.getRows()==23){
-                    playerSecondRow.setStyle("");
-                    playerThirdRow.setStyle("");
-                }
-                else if(selected.getCardName().equals("horn")){
-                    playerFirstRowHorn.setStyle("");
-                    playerSecondRowHorn.setStyle("");
-                    playerThirdRowHorn.setStyle("");
-                }
-                selected = null;
             }
+            pane.getChildren().remove(showCardRectangle);
+            playerFirstRow.setStyle("");
+            playerSecondRow.setStyle("");
+            playerThirdRow.setStyle("");
+            selected = null;
         });
 
         if (horn != null) {
@@ -539,6 +523,21 @@ public class GameLauncher extends Application {
         }
 
         parent.getChildren().add(row);
+    }
+
+    private boolean fitsBox(Card selected, HBox playerRow) {
+        int selectedRow = 0;
+        if (playerRow.equals(playerFirstRow))
+            selectedRow = 1;
+        else if (playerRow.equals(playerSecondRow)) {
+            selectedRow = 2;
+        } else if (playerRow.equals(playerThirdRow)) {
+            selectedRow = 3;
+        }
+        if (selected.getRows().contains(selectedRow)) {
+            return true;
+        }
+        return false;
     }
 
     private void setSize (Pane pane) {

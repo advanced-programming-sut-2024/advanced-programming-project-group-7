@@ -1,12 +1,15 @@
 package view.animations;
 
 import javafx.animation.Transition;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Card;
 import model.Game;
+import model.cards.Muster;
 
+import java.util.Iterator;
 
 public class CardPlacementAnimation extends Transition {
 
@@ -39,8 +42,19 @@ public class CardPlacementAnimation extends Transition {
         double x = card.getLayoutX() + vx;
         if (Math.abs(x - endX) <= 10 && Math.abs(y - endY) <= 10) {
             pane.getChildren().remove(card);
+            game.playerHand.getChildren().remove(card);
             game.selectedBox.getChildren().add(card);
             this.stop();
+            if (card instanceof Muster) {
+                Iterator<Node> iterator = game.playerHand.getChildren().iterator();
+                while (iterator.hasNext()) {
+                    Node card1 = iterator.next();
+                    if (card1 instanceof Muster || card.getCardName().equals(((Card) card1).getCardName())) {
+                        iterator.remove();
+                        game.selectedBox.getChildren().add(card1); //tod
+                    }
+                }
+            }
         }
         card.setLayoutX(x);
         card.setLayoutY(y);

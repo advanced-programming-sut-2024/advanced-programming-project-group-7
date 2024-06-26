@@ -2,15 +2,17 @@ package model;
 
 import javafx.scene.Group;
 import javafx.scene.layout.HBox;
+import view.GameLauncher;
 
 import java.time.LocalDate;
 
 public class Game {
     public HBox selectedBox;
+    public HBox playerHand;
 
-    public Game() {
+    public Game(GameLauncher gameLauncher) {
+        this.playerHand = gameLauncher.playerHand;
     }
-
     public Group cardGroup = new Group();
     private LocalDate date= LocalDate.now();
     private Integer[][] roundsPoints=new Integer[][]{{20,10},{10,20},{20,10}};
@@ -27,16 +29,8 @@ public class Game {
 
     public void setWinner(User winner) {
         this.winner = winner;
-        System.out.println("yo");
     }
 
-//    public void setDate(java.util.Date date) {
-//        Date = date;
-//    }
-//
-//    public java.util.Date getDate() {
-//        return Date;
-//    }
 
     public Integer[][] getRoundsPoints() {
         return roundsPoints;
