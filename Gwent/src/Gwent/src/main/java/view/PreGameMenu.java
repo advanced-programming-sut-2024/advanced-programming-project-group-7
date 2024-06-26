@@ -47,8 +47,6 @@ public class PreGameMenu extends Application {
     public Label specialCards;
     public Label totalUnitCardStrength;
     public Label heroCards;
-
-
     private int factionIndex;
 
     @Override
