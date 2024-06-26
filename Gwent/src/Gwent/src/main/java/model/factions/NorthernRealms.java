@@ -84,7 +84,7 @@ public class NorthernRealms extends Faction {
 //        northernRealmsDefaultDeck.put(new TightBond("catapult 1", 2 , false, 8, "realms",1,false),2);
 //        northernRealmsDefaultDeck.put(new Card("triss", 1 , false, 7, "neutral",3,true),1);
 //        northernRealmsDefaultDeck.put(new Scorch("villen", 1 , false, 7, "neutral",3,false),1);
-//        northernRealmsDefaultDeck.put(new Medic("yennefer", 1 , false, 7, "neutral",2,true),1);
+        northernRealmsDefaultDeck.put(new Medic("yennefer", 1 , false, 7, "neutral",2,true),1);
 //        northernRealmsDefaultDeck.put(new Card("ballista", 1 , false, 6, "realms",1,false),1);
 //        northernRealmsDefaultDeck.put(new MoralBoost("olgierd", 1 , false, 6, "neutral",23,false),1);
 //        northernRealmsDefaultDeck.put(new Card("siege tower", 1 , false, 6, "realms",1,false),1);

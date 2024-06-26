@@ -41,6 +41,7 @@ public class GameLauncher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println("phase 1");
         pane = new Pane();
         game = new Game();
         setSize(pane);
@@ -48,26 +49,25 @@ public class GameLauncher extends Application {
         pane.getChildren().add(createHbox());
 
         Scene scene = new Scene(pane);
+        System.out.println("phase2");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
+        System.out.println("phase2");
         playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerFirstRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerSecondRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerSecondRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerThirdRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerThirdRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerFourthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
+        System.out.println("added");
+        playerSecondRow.getChildren().add(new Card("rain", 2 , true, 0, "weather",7,false));
         playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerFifthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
+        playerFifthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
         playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
-        playerSixthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerHand.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
+        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
+        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+        playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 sceneX = event.getSceneX();
