@@ -1,22 +1,21 @@
 package model;
 
+import javafx.scene.Group;
+import javafx.scene.layout.HBox;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Game {
+    public HBox selectedBox;
+
+    public Game() {
+    }
+
+    public Group cardGroup = new Group();
     private LocalDate date= LocalDate.now();
-    private String[] players={User.getLoggedInUser().getUsername(),"amir"};
     private Integer[][] roundsPoints=new Integer[][]{{20,10},{10,20},{20,10}};
     private int[] finalPoints=new int[]{50,40};
     private User winner=User.getLoggedInUser();
-
-    public Game(String[] players) {this.players = players;
-    }
-
-    public void setPlayers(String[] players) {
-        this.players = players;
-    }
 
     public void setRoundsPoints(Integer[][] roundsPoints) {
         this.roundsPoints = roundsPoints;
@@ -28,6 +27,7 @@ public class Game {
 
     public void setWinner(User winner) {
         this.winner = winner;
+        System.out.println("yo");
     }
 
 //    public void setDate(java.util.Date date) {
@@ -37,10 +37,6 @@ public class Game {
 //    public java.util.Date getDate() {
 //        return Date;
 //    }
-
-    public String[] getPlayers() {
-        return players;
-    }
 
     public Integer[][] getRoundsPoints() {
         return roundsPoints;

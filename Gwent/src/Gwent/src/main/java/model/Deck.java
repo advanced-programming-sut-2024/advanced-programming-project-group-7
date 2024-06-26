@@ -14,6 +14,7 @@ public class Deck {
     public HashMap<Card, Integer> getCardsInDeck() {
         return cardsInDeck;
     }
+
     public void setCardsInDeck(HashMap<Card, Integer> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }

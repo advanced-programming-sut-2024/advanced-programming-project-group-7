@@ -15,22 +15,19 @@ public class Card extends Pane {
     private boolean isSpecial;
     private String lgPath;
     private String factionName;
-    private Rectangle rectangle = new Rectangle();
+    public Rectangle rectangle = new Rectangle();
     private Circle powerIcon = new Circle();
     private Label powerLabel;
     private int power;
-    private int rows;
-    private boolean isHero;
 
-    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHero) { //int rows, boolean ishero
+    public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int row,boolean isHero) {
+        System.out.println("3");
         this.cardName = cardName;
         this.countOfCard = countOfCard;
         this.isSpecial = isSpecial;
         this.power = power;
         this.factionName = factionName;
         this.lgPath = lgPathCreator(cardName, factionName);
-        this.rows=rows;
-        this.isHero=isHero;
         this.setHeight(98);
         this.setWidth(70);
         powerLabel = new Label(String.valueOf(power));

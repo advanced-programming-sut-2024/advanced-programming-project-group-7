@@ -47,7 +47,7 @@ public class IPMenu extends Application {
     public void makeClient(ActionEvent actionEvent) throws Exception {
         Client client = new Client();
         try {
-            client.start(IPtext.getText(),clientMassage.getText());
+
             gotoLoginMenu();
         } catch (Exception e) {
             {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("client had problem and we didn't make it ");alert.show();}

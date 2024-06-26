@@ -9,7 +9,7 @@ public class Faction {
     protected String factionName;
     private static ArrayList<Faction>factions=new ArrayList<>();
     static {
-        factions.add(new NorthernRealms("draw a card from your deck whenever you win a round"));
+        factions.add(new NorthernRealms("draw a card from your deck whenever you win a round."));
         factions.add(new EmpireNilfgaardian("wins any round that ends in draw"));
         factions.add(new Monsters("keeps a random unit card after each round"));
         factions.add(new Scoiatael("decides who takes first turn"));
