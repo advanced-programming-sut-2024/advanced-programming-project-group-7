@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class PreGameMenu extends Application {
 
@@ -44,7 +45,7 @@ public class PreGameMenu extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         URL url = LoginMenu.class.getResource("/FXML/PreGameMenu.fxml");
-        System.out.println("1");
+//        System.out.println("1");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -69,7 +70,7 @@ public class PreGameMenu extends Application {
     private void setCardsAndCommander() {
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         ArrayList<Card> factionCards = new ArrayList<>();
-        HashMap<Card,Integer> cardsInDeck=currentDeck.getCardsInDeck();
+//        LinkedHashMap<Card,Integer> cardsInDeck=currentDeck.getCardsInDeck();
         if(currentFaction instanceof Monsters){
             factionCards = Monsters.getMonsterCards();
 //            currentDeck.setCardsInDeck(Monsters.getMonsterDefaultDeck());
@@ -77,7 +78,6 @@ public class PreGameMenu extends Application {
             factionCards = Skellige.getSkelligeCards();
 //            currentDeck.setCardsInDeck(Skellige.getSkelligeDefaultDeck());
         } else if (currentFaction instanceof NorthernRealms) {
-
             factionCards = NorthernRealms.getNorthernRealmsCards();
             currentDeck.setCardsInDeck(NorthernRealms.getNorthernRealmsDefaultDeck());
             System.out.println("norhen");
@@ -100,11 +100,13 @@ public class PreGameMenu extends Application {
             rectangle.setArcHeight(20);
             rectangle.setArcWidth(20);
             Label label;
-            if(cardsInDeck.containsKey(card)){
-                 label=new Label(String.valueOf(card.getCountOfCard()-cardsInDeck.get(card)));
+            if(currentDeck.getCardsInDeck().containsKey(card)){
+                 label=new Label(String.valueOf(card.getCountOfCard()-currentDeck.getCardsInDeck().get(card)));
+//                System.out.println("jj");
             }
             else{
                 label=new Label(String.valueOf(card.getCountOfCard()));
+//                System.out.println("kk ");
             }
             label.setLayoutY(240);
             label.setLayoutX(120);
@@ -150,13 +152,25 @@ public class PreGameMenu extends Application {
         rectangle.setWidth(150);
         rectangle.setArcHeight(20);
         rectangle.setArcWidth(20);
-        Label label = new Label(String.valueOf(card.getCountOfCard()));
+        Label label;
+//        Label label = new Label(String.valueOf(card.getCountOfCard()));
+        if(currentDeck.getCardsInDeck().containsKey(card)){
+            label=new Label(String.valueOf(currentDeck.getCardsInDeck().get(card)+1));
+            System.out.println("jj");
+        }
+        else{
+            label=new Label(String.valueOf(1));
+            System.out.println("kk ");
+        }
+        currentDeck.addToDeck(card);
         label.setLayoutY(240);
         label.setLayoutX(120);
         label.setTextFill(Color.GOLD);
         label.setFont(new Font(20));
         pane.getChildren().addAll(rectangle, label);
-        //rightGrid.add(pane,0,0); // todo: handle the deck class asap
+        int size=currentDeck.getCardsInDeck().size();
+        rightGrid.add(pane,(size-1)%3,(size-1)/3);
+//        rightGrid.add(pane,0,0); // todo: handle the deck class asap
     }
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaders = new ArrayList<>();

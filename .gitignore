@@ -13,3 +13,8 @@ Gwent/src/Gwent/src/main/.DS_Store
 Gwent/src/Gwent/src/main/resources/.DS_Store
 Gwent/src/Gwent/src/main/.DS_Store
 
+Gwent/src/Gwent/target/classes/model/Card.class
+Gwent/src/Gwent/target/classes/model/Deck.class
+Gwent/src/Gwent/target/classes/model/factions/NorthernRealms.class
+Gwent/src/Gwent/target/classes/view/GameLauncher.class
+Gwent/src/Gwent/target/classes/view/PreGameMenu.class

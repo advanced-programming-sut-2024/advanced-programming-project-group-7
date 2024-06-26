@@ -1,21 +1,22 @@
 package model;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Deck {
     private Faction deckFaction;
     private Leader deckLeader;
-    private HashMap<Card, Integer> cardsInDeck=new HashMap<>();
+    private LinkedHashMap<Card, Integer> cardsInDeck=new LinkedHashMap<>();
 
     public Deck(Faction deckFaction, Leader deckLeader) {
         this.deckFaction = deckFaction;
         this.deckLeader = deckLeader;
     }
-    public HashMap<Card, Integer> getCardsInDeck() {
+    public LinkedHashMap<Card, Integer> getCardsInDeck() {
         return cardsInDeck;
     }
 
-    public void setCardsInDeck(HashMap<Card, Integer> cardsInDeck) {
+    public void setCardsInDeck(LinkedHashMap<Card, Integer> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }
     public void addToDeck(Card card){
