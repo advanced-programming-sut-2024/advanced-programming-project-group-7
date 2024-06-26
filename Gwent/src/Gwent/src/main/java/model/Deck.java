@@ -31,7 +31,7 @@ public class Deck {
             cardsInDeck.put(card,1);
     }
     public void deleteCardFromDeck(Card card){
-        if(cardsInDeck.get(card)==0)
+        if(cardsInDeck.get(card)==1)
             cardsInDeck.remove(card);
         else
             cardsInDeck.put(card,cardsInDeck.get(card)-1);
@@ -54,7 +54,7 @@ public class Deck {
          for(Card card: cardsInDeck.keySet()){
              totalCardsInDeck+=cardsInDeck.get(card);
              totalUnitCardStrength+=card.getPower();
-             if(card.isSpecial())totalCardsInDeck+=cardsInDeck.get(card);
+             if(card.isSpecial())totalSpecialCardInDeck+=cardsInDeck.get(card);
              if(card.isHero())totalHeroCard+=cardsInDeck.get(card);
              if(!card.isSpecial())totalUnitCard+=cardsInDeck.get(card);
          }
