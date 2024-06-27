@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 public class PreGameMenu extends Application {
 
     public Label factionName;
+    public Client currentClient;
     private int factionIndex;
     public Rectangle LeaderImage;
     public ArrayList<Leader> leaders;
@@ -139,6 +140,9 @@ public class PreGameMenu extends Application {
                             setLeftGrid();
                             calculateLabels();
                         }
+                        for(Card card1:currentDeck.getCardsInDeck().keySet()){
+                            System.out.println(card1.getCardName()+" "+currentDeck.getCardsInDeck().get(card));
+                        }
                     });
                     count++;
                 }
@@ -190,12 +194,16 @@ public class PreGameMenu extends Application {
                         pane.setOnMouseClicked(event -> {
                             int cardLeft = Integer.parseInt(label.getText());
                             if (cardLeft > 0) {
+                                System.out.println("ok");
                                 label.setText(String.valueOf(cardLeft - 1));
                                 if (Integer.parseInt(label.getText()) == 0) factionCardsCurrent.remove(card);
                                 currentDeck.addToDeck(card);
                                 setCardsInDeck();
                                 setLeftGrid();
                                 calculateLabels();
+                            }
+                            for(Card card1:currentDeck.getCardsInDeck().keySet()){
+                                System.out.println(card1.getCardName()+" "+currentDeck.getCardsInDeck().get(card));
                             }
                         });
                         count++;
