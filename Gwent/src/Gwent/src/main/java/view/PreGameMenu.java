@@ -47,12 +47,14 @@ public class PreGameMenu extends Application {
     public Label specialCards;
     public Label totalUnitCardStrength;
     public Label heroCards;
+    public Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
         URL url = LoginMenu.class.getResource("/FXML/PreGameMenu.fxml");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
+        this.stage = stage;
         stage.setScene(scene);
         stage.setTitle("pregame menu");
         stage.show();
@@ -299,4 +301,12 @@ public class PreGameMenu extends Application {
         totalCardInDeck.setTextFill(Color.BLACK);
         totalUnitCardStrength.setTextFill(Color.BLACK);
    }
+    public void startGame(MouseEvent mouseEvent) {
+        try {
+            GameLauncher gameLauncher = new GameLauncher();
+            gameLauncher.start(LoginMenu.stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

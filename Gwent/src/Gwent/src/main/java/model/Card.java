@@ -19,10 +19,20 @@ public class Card extends Pane {
     private String factionName;
     public Rectangle rectangle = new Rectangle();
     private Circle powerIcon = new Circle();
-    private Label powerLabel;
+    public Label powerLabel = new Label();
     private int power;
     private int rows;
     private boolean isHero;
+
+    public boolean isWeak = false;
+
+    public boolean isDoubeld = false;
+
+    public int bondLevel = 1;
+
+    public int boostLevel = 0;
+
+
 
     public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHero) {
         this.cardName = cardName;
@@ -90,9 +100,13 @@ public class Card extends Pane {
         return isSpecial;
     }
 
-//    public boolean isHero(){
-//        return isHero;
-//    }
+    public void calculatePower() {
+        int currentPower = isWeak ? 1 : power;
+        currentPower *= bondLevel;
+        currentPower += boostLevel;
+        if (isDoubeld) currentPower *= 2;
+        this.powerLabel.setText(String.valueOf(currentPower));
+    }
 
     public String getFactionName() {
         return factionName;
