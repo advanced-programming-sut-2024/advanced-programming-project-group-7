@@ -97,9 +97,8 @@ public class Client {
 //        }
     }
     public void sendButton() throws IOException {
-        System.out.println("im ready");
         sendBuffer.writeUTF("im ready");
-        this.isReady=true;
+
     }
 
     public static void main(String[] args) throws IOException {
