@@ -18,3 +18,6 @@ Gwent/src/Gwent/target/classes/model/Deck.class
 Gwent/src/Gwent/target/classes/model/factions/NorthernRealms.class
 Gwent/src/Gwent/target/classes/view/GameLauncher.class
 Gwent/src/Gwent/target/classes/view/PreGameMenu.class
+Gwent/src/Gwent/target/classes/model/Card.class
+Gwent/src/Gwent/target/classes/model/Deck.class
+Gwent/src/Gwent/target/classes/view/PreGameMenu.class
