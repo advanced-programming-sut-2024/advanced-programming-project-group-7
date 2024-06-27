@@ -10,9 +10,9 @@ public class Decoy extends Card {
     public Decoy(String cardName, int countOfCard, boolean isSpecial, int power, String factionName, int rows, boolean isHero) {
         super(cardName, countOfCard, isSpecial, power, factionName, rows, isHero);
         Circle circle = new Circle(12.5);
-        circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_ability_decoy.png").toExternalForm()))));
-        circle.setCenterX(35);
-        circle.setCenterY(85);
-        this.getChildren().add(circle);
+//        circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_ability_decoy.png").toExternalForm()))));
+//        circle.setCenterX(35);
+//        circle.setCenterY(85);
+//        this.getChildren().add(circle);todo no need
     }
 }

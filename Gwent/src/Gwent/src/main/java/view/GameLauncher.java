@@ -5,17 +5,30 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Card;
 import model.Game;
+import model.Leader;
 import model.cards.*;
+import model.leaders.MonstersLeaders;
+import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class GameLauncher extends Application {
+    public  ArrayList<HBox>hBoxes=new ArrayList<HBox>();
+
 
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
@@ -39,13 +52,302 @@ public class GameLauncher extends Application {
     private double sceneX;
     private double sceneY;
 
+    public Rectangle showCardRectangle = new Rectangle();
+
+
+
+
+
     @Override
     public void start(Stage stage) throws Exception {
         pane = new Pane();
         game = new Game();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
-        pane.getChildren().add(createHbox());
+
+        Label labelForNumberOfCards=new Label(String.valueOf(10));
+        labelForNumberOfCards.setLayoutY(570);
+        labelForNumberOfCards.setLayoutX(210);
+        labelForNumberOfCards.setTextFill(Color.YELLOW);
+        labelForNumberOfCards.setFont(new Font(20));
+
+        Rectangle avatar=new Rectangle();
+        avatar.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/profile.png").toExternalForm()))));
+        avatar.setHeight(100);
+        avatar.setWidth(70);
+        avatar.setLayoutY(530);
+        avatar.setLayoutX(120);
+
+        Rectangle cardx=new Rectangle();
+        cardx.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_card_count.png").toExternalForm()))));
+        cardx.setHeight(35);
+        cardx.setWidth(35);
+        cardx.setLayoutY(555);
+        cardx.setLayoutX(178);
+
+        Label playerName=new Label("player1");
+        playerName.setLayoutY(600);
+        playerName.setLayoutX(200);
+        playerName.setTextFill(Color.YELLOW);
+        playerName.setFont(new Font(20));
+
+        Rectangle life1=new Rectangle();
+        life1.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        life1.setHeight(40);
+        life1.setWidth(40);
+        life1.setLayoutY(555);
+        life1.setLayoutX(240);
+
+        Rectangle life2=new Rectangle();
+        life2.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        life2.setHeight(40);
+        life2.setWidth(40);
+        life2.setLayoutY(555);
+        life2.setLayoutX(281);
+
+        Label totalPower=new Label(String.valueOf(300));
+        totalPower.setLayoutY(600);
+        totalPower.setLayoutX(357);
+        totalPower.setTextFill(Color.BLACK);
+        totalPower.setFont(new Font(25));
+
+        Label totalRow1Power=new Label(String.valueOf(100));
+        totalRow1Power.setLayoutY(625);
+        totalRow1Power.setLayoutX(427);
+        totalRow1Power.setTextFill(Color.BLACK);
+        totalRow1Power.setFont(new Font(20));
+
+        Label totalRow2Power=new Label(String.valueOf(200));
+        totalRow2Power.setLayoutY(510);
+        totalRow2Power.setLayoutX(427);
+        totalRow2Power.setTextFill(Color.BLACK);
+        totalRow2Power.setFont(new Font(20));
+
+        Label totalRow3Power=new Label(String.valueOf(300));
+        totalRow3Power.setLayoutY(395);
+        totalRow3Power.setLayoutX(427);
+        totalRow3Power.setTextFill(Color.BLACK);
+        totalRow3Power.setFont(new Font(20));
+
+
+
+        Rectangle highScore=new Rectangle();
+        highScore.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
+        highScore.setHeight(63);
+        highScore.setWidth(63);
+        highScore.setLayoutY(590);
+        highScore.setLayoutX(347);
+
+
+
+
+        Rectangle realmForAvatar=new Rectangle();//todo needs 5 else if for player's faction
+        realmForAvatar.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_realms.png").toExternalForm()))));
+        realmForAvatar.setHeight(50);
+        realmForAvatar.setWidth(50);
+        realmForAvatar.setLayoutY(550);
+        realmForAvatar.setLayoutX(75);
+
+
+
+
+        Label labelForNumberOfCardsOpponent=new Label(String.valueOf(10));
+        labelForNumberOfCardsOpponent.setLayoutY(285);
+        labelForNumberOfCardsOpponent.setLayoutX(210);
+        labelForNumberOfCardsOpponent.setTextFill(Color.YELLOW);
+        labelForNumberOfCardsOpponent.setFont(new Font(20));
+
+
+        Rectangle avatarOpponent=new Rectangle();
+        avatarOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/profile.png").toExternalForm()))));
+        avatarOpponent.setHeight(100);
+        avatarOpponent.setWidth(70);
+        avatarOpponent.setLayoutY(245);
+        avatarOpponent.setLayoutX(120);
+
+        Rectangle cardxOpponent=new Rectangle();
+        cardxOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_card_count.png").toExternalForm()))));
+        cardxOpponent.setHeight(35);
+        cardxOpponent.setWidth(35);
+        cardxOpponent.setLayoutY(270);
+        cardxOpponent.setLayoutX(178);
+
+        Label playerNameOpponent=new Label("player2");
+        playerNameOpponent.setLayoutY(315);
+        playerNameOpponent.setLayoutX(200);
+        playerNameOpponent.setTextFill(Color.YELLOW);
+        playerNameOpponent.setFont(new Font(20));
+
+        Rectangle life1Opponent=new Rectangle();
+        life1Opponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        life1Opponent.setHeight(40);
+        life1Opponent.setWidth(40);
+        life1Opponent.setLayoutY(270);
+        life1Opponent.setLayoutX(240);
+
+        Rectangle life2Opponent=new Rectangle();
+        life2Opponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        life2Opponent.setHeight(40);
+        life2Opponent.setWidth(40);
+        life2Opponent.setLayoutY(270);
+        life2Opponent.setLayoutX(281);
+
+        Label totalPowerOpponent=new Label(String.valueOf(50));
+        totalPowerOpponent.setLayoutY(265);
+        totalPowerOpponent.setLayoutX(357);
+        totalPowerOpponent.setTextFill(Color.BLACK);
+        totalPowerOpponent.setFont(new Font(25));
+
+        Label totalRow1PowerOpponent=new Label(String.valueOf(10));
+        totalRow1PowerOpponent.setLayoutY(47);
+        totalRow1PowerOpponent.setLayoutX(427);
+        totalRow1PowerOpponent.setTextFill(Color.BLACK);
+        totalRow1PowerOpponent.setFont(new Font(20));
+
+        Label totalRow2PowerOpponent=new Label(String.valueOf(20));
+        totalRow2PowerOpponent.setLayoutY(162);
+        totalRow2PowerOpponent.setLayoutX(427);
+        totalRow2PowerOpponent.setTextFill(Color.BLACK);
+        totalRow2PowerOpponent.setFont(new Font(20));
+
+        Label totalRow3PowerOpponent=new Label(String.valueOf(30));
+        totalRow3PowerOpponent.setLayoutY(277);
+        totalRow3PowerOpponent.setLayoutX(427);
+        totalRow3PowerOpponent.setTextFill(Color.BLACK);
+        totalRow3PowerOpponent.setFont(new Font(20));
+
+        Rectangle highScoreOpponent=new Rectangle();
+        highScoreOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
+        highScoreOpponent.setHeight(63);
+        highScoreOpponent.setWidth(63);
+        highScoreOpponent.setLayoutY(252);
+        highScoreOpponent.setLayoutX(347);
+
+
+
+        Rectangle realmForAvatarOpponent=new Rectangle();//todo needs 5 else if for player's faction
+        realmForAvatarOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_monsters.png").toExternalForm()))));
+        realmForAvatarOpponent.setHeight(50);
+        realmForAvatarOpponent.setWidth(50);
+        realmForAvatarOpponent.setLayoutY(245);
+        realmForAvatarOpponent.setLayoutX(75);
+
+
+
+
+        Rectangle frostedRow=new Rectangle();
+        frostedRow.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_frost.png").toExternalForm()))));
+        frostedRow.setHeight(100);
+        frostedRow.setWidth(680);
+        frostedRow.setLayoutY(360);
+        frostedRow.setLayoutX(590);
+
+        Rectangle frostedRowOpponent=new Rectangle();
+        frostedRowOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_frost.png").toExternalForm()))));
+        frostedRowOpponent.setHeight(100);
+        frostedRowOpponent.setWidth(680);
+        frostedRowOpponent.setLayoutY(245);
+        frostedRowOpponent.setLayoutX(590);
+
+        Rectangle foggedRow=new Rectangle();
+        foggedRow.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_fog.png").toExternalForm()))));
+        foggedRow.setHeight(100);
+        foggedRow.setWidth(680);
+        foggedRow.setLayoutY(470);
+        foggedRow.setLayoutX(590);
+
+        Rectangle foggedRowOpponent=new Rectangle();
+        foggedRowOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_fog.png").toExternalForm()))));
+        foggedRowOpponent.setHeight(100);
+        foggedRowOpponent.setWidth(680);
+        foggedRowOpponent.setLayoutY(135);
+        foggedRowOpponent.setLayoutX(590);
+
+        Rectangle rainedRow=new Rectangle();
+        rainedRow.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_rain.png").toExternalForm()))));
+        rainedRow.setHeight(100);
+        rainedRow.setWidth(680);
+        rainedRow.setLayoutY(580);
+        rainedRow.setLayoutX(590);
+
+
+        Rectangle rainedRowOpponent=new Rectangle();
+        rainedRowOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_rain.png").toExternalForm()))));
+        rainedRowOpponent.setHeight(100);
+        rainedRowOpponent.setWidth(680);
+        rainedRowOpponent.setLayoutY(25);
+        rainedRowOpponent.setLayoutX(590);
+
+
+
+        Rectangle cardInDeckBack=new Rectangle();//todo load png with currentdeck
+        cardInDeckBack.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_back_realms.jpg").toExternalForm()))));
+        cardInDeckBack.setHeight(110);
+        cardInDeckBack.setWidth(80);
+        cardInDeckBack.setLayoutY(690);
+        cardInDeckBack.setLayoutX(1440);
+
+        Rectangle cardInDeckBackOpponent=new Rectangle();//todo load png with currentdeck
+        cardInDeckBackOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_back_monsters.jpg").toExternalForm()))));
+        cardInDeckBackOpponent.setHeight(110);
+        cardInDeckBackOpponent.setWidth(80);
+        cardInDeckBackOpponent.setLayoutY(60);
+        cardInDeckBackOpponent.setLayoutX(1440);
+
+        Label numberOfRemainingCardsInDeck=new Label(String.valueOf(25));
+        numberOfRemainingCardsInDeck.setLayoutY(770);
+        numberOfRemainingCardsInDeck.setLayoutX(1460);
+        numberOfRemainingCardsInDeck.setTextFill(Color.WHITE);
+        numberOfRemainingCardsInDeck.setFont(new Font(30));
+
+        Label numberOfRemainingCardsInDeckOpponent=new Label(String.valueOf(27));
+        numberOfRemainingCardsInDeckOpponent.setLayoutY(140);
+        numberOfRemainingCardsInDeckOpponent.setLayoutX(1465);
+        numberOfRemainingCardsInDeckOpponent.setTextFill(Color.WHITE);
+        numberOfRemainingCardsInDeckOpponent.setFont(new Font(30));
+
+
+        Leader leader=new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms");
+        leader.setLayoutX(120);
+        leader.setLayoutY(700);
+
+        Leader leaderOpponent=new MonstersLeaders("eredin silver","double the strength of all your ","monsters");
+        leaderOpponent.setLayoutX(120);
+        leaderOpponent.setLayoutY(75);
+
+        Button buttonPass=new Button();
+        buttonPass.setText("Pass");
+        buttonPass.setLayoutX(320);
+        buttonPass.setLayoutY(750);
+
+
+        Button buttonPassOpponent=new Button();
+        buttonPassOpponent.setText("Pass");
+        buttonPassOpponent.setLayoutX(320);
+        buttonPassOpponent.setLayoutY(110);
+
+        highScoreOpponent.setVisible(false);
+
+        frostedRow.setVisible(false);
+        frostedRowOpponent.setVisible(false);
+
+        foggedRow.setVisible(false);
+        foggedRowOpponent.setVisible(false);
+
+        rainedRow.setVisible(false);
+        rainedRowOpponent.setVisible(false);
+
+
+
+
+
+
+        pane.getChildren().addAll(createHbox(),playerName,avatar,life1,life2, cardx,labelForNumberOfCards,totalPower,highScore,realmForAvatar,
+                playerNameOpponent,avatarOpponent,life1Opponent,life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,totalPowerOpponent,highScoreOpponent,realmForAvatarOpponent,
+                frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
+                ,totalRow1Power,totalRow2Power,totalRow3Power,totalRow1PowerOpponent,totalRow2PowerOpponent,totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
+                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent);
+
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -53,30 +355,79 @@ public class GameLauncher extends Application {
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
-        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerFirstRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerSecondRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerSecondRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerThirdRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerThirdRow.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerFourthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
-        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerFifthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
-        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
-        playerSixthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerHand.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",12,false));
+
+        hBoxes.add(playerFirstRow);
+        hBoxes.add(playerSecondRow);
+        hBoxes.add(playerThirdRow);
+        hBoxes.add(playerFourthRow);
+        hBoxes.add(playerFifthRow);
+        hBoxes.add(playerSixthRow);
+
+        hBoxes.add(playerFirstRowHorn);
+        hBoxes.add(playerSecondRowHorn);
+        hBoxes.add(playerThirdRowHorn);
+        hBoxes.add(playerFourthRowHorn);
+        hBoxes.add(playerFifthRowHorn);
+        hBoxes.add(playerSixthRowHorn);
+
+//        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+//        playerSecondRow.getChildren().add(new Card("rain", 2 , true, 0, "weather",7,false));
+//        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+//        playerFifthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
+//        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
+//        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
+        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+        playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
+        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
+        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
+                if(pane.getChildren().contains(showCardRectangle)){
+                    pane.getChildren().remove(showCardRectangle);
+                }
+                for (HBox hBox:hBoxes){
+                    hBox.setStyle("");
+                }
                 sceneX = event.getSceneX();
                 sceneY = event.getSceneY();
                 selected = (Card) card;
+
+
+                showCardRectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(selected.getLgPath()).toExternalForm()))));
+                showCardRectangle.setHeight(470);
+                showCardRectangle.setWidth(235);
+                showCardRectangle.setLayoutY(220);
+                showCardRectangle.setLayoutX(1280);
+                pane.getChildren().add(showCardRectangle);
+
+
+                if(selected.getRows()==3){
+                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getRows()==2){
+                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getRows()==1){
+                    playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getRows()==23){
+                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+                else if(selected.getCardName().equals("horn")){
+                    playerFirstRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    playerSecondRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    playerThirdRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                }
+
             });
         }
+
     }
-    public void addCardToPane(Card card, double endY, double endX, HBox playerRow) {
+    public void addCardToPane(Card card, double endY, double endX, HBox playerRow){
         pane.getChildren().add(card);
         card.setLayoutY(this.sceneY);
         card.setLayoutX(this.sceneX);
@@ -94,6 +445,8 @@ public class GameLauncher extends Application {
     private HBox createHbox() {
         HBox rootHBox = new HBox();
         rootHBox.setAlignment(Pos.BOTTOM_CENTER);
+
+
 
         // Create the left VBox (equivalent to the first <VBox> in FXML)
         VBox leftVBox = new VBox();
@@ -143,9 +496,28 @@ public class GameLauncher extends Application {
         row.setMinWidth(minWidth);
         row.setOnMouseClicked(event -> {
             if (selected != null) {
+                pane.getChildren().remove(showCardRectangle);
                 game.selectedBox = playerRow;
                 playerHand.getChildren().remove(selected);
                 addCardToPane(selected, event.getSceneY(), event.getSceneX(), playerRow);
+                if(selected.getRows()==3){
+                    playerThirdRow.setStyle("");
+                }
+                else if(selected.getRows()==2){
+                    playerSecondRow.setStyle("");
+                }
+                else if(selected.getRows()==1){
+                    playerFirstRow.setStyle("");
+                }
+                else if(selected.getRows()==23){
+                    playerSecondRow.setStyle("");
+                    playerThirdRow.setStyle("");
+                }
+                else if(selected.getCardName().equals("horn")){
+                    playerFirstRowHorn.setStyle("");
+                    playerSecondRowHorn.setStyle("");
+                    playerThirdRowHorn.setStyle("");
+                }
                 selected = null;
             }
         });
