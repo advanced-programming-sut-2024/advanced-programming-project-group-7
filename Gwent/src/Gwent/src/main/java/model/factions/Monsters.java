@@ -6,6 +6,7 @@ import model.leaders.MonstersLeaders;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Monsters extends Faction {
     public Monsters(String descriptions) {
@@ -79,28 +80,34 @@ public class Monsters extends Faction {
         monsterCards.add(new Cow("cow", 1, false, 0, "neutral",2,false));
         monsterCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",3,true));
     }
-//    private final static HashMap<Card,Integer> monsterDefaultDeck=new HashMap<>();
-//    static{
-//        monsterDefaultDeck.put(new Decoy("horn", 3, true, 0, "special"),2);
-//        monsterDefaultDeck.put(new Horn("decoy", 3, true, 0, "special"),3);
-//        monsterDefaultDeck.put(new Scorch("scorch", 3, true, 0, "special"),2);
-//        monsterDefaultDeck.put(new Card("frost", 3, true, 0, "weather"),1);
-//        monsterDefaultDeck.put(new Card("ciri", 1, false, 15, "neutral"),1);
-//        monsterDefaultDeck.put(new Card("geralt", 1, false, 15, "neutral"),1);
-//        monsterDefaultDeck.put(new Card("leshen", 1, false, 10, "monsters"),1);
-//        monsterDefaultDeck.put(new Card("triss", 1, false, 7, "neutral"),1);
-//        monsterDefaultDeck.put(new Scorch("villen", 1, false, 7, "neutral"),1);
-//        monsterDefaultDeck.put(new Medic("yennefer", 1, false, 7, "neutral"),1);
-//        monsterDefaultDeck.put(new Muster("witch velen 2", 1, false, 6, "monsters"),1);
-//        monsterDefaultDeck.put(new Card("fiend", 1, false, 6, "monsters"),1);
-//        monsterDefaultDeck.put(new MoralBoost("olgierd", 1, false, 6, "neutral"),1);
-//        monsterDefaultDeck.put(new Card("gravehag", 1, false, 5, "monsters"),1);
-//        monsterDefaultDeck.put(new Card("gryffin", 1, false, 5, "monsters"),1);
-//        monsterDefaultDeck.put(new Muster("gaunter odimm darkness", 3, false, 4, "neutral"),3);
-//        monsterDefaultDeck.put(new Horn("dandelion", 1, false, 2, "neutral"),1);
-//        monsterDefaultDeck.put(new Agile("harpy", 1, false, 2, "monsters"),1);
-//        monsterDefaultDeck.put(new Spy("mysterious elf", 1, false, 0, "neutral"),1);
-//    }
+    private final static LinkedHashMap<Card,Integer> monsterDefaultDeck=new LinkedHashMap<>();
+    static{
+        monsterDefaultDeck.put(monsterCards.get(0),1);
+        monsterDefaultDeck.put(monsterCards.get(1),3);
+        monsterDefaultDeck.put(monsterCards.get(3),1);
+        monsterDefaultDeck.put(monsterCards.get(4),2);
+        monsterDefaultDeck.put(monsterCards.get(8),1);
+        monsterDefaultDeck.put(monsterCards.get(9),1);
+        monsterDefaultDeck.put(monsterCards.get(11),1);
+        monsterDefaultDeck.put(monsterCards.get(14),1);
+        monsterDefaultDeck.put(monsterCards.get(15),1);
+        monsterDefaultDeck.put(monsterCards.get(17),1);
+        monsterDefaultDeck.put(monsterCards.get(19),1);
+        monsterDefaultDeck.put(monsterCards.get(20),1);
+        monsterDefaultDeck.put(monsterCards.get(21),1);
+        monsterDefaultDeck.put(monsterCards.get(23),1);
+        monsterDefaultDeck.put(monsterCards.get(25),1);
+        monsterDefaultDeck.put(monsterCards.get(30),1);
+        monsterDefaultDeck.put(monsterCards.get(35),1);
+        monsterDefaultDeck.put(monsterCards.get(37),1);
+        monsterDefaultDeck.put(monsterCards.get(38),1);
+        monsterDefaultDeck.put(monsterCards.get(42),3);
+        monsterDefaultDeck.put(monsterCards.get(49),1);
+        monsterDefaultDeck.put(monsterCards.get(53),1);
+        monsterDefaultDeck.put(monsterCards.get(59),1);
+        monsterDefaultDeck.put(monsterCards.get(60),1);
+        monsterDefaultDeck.put(monsterCards.get(63),1);
+    }
     private  final static  ArrayList<Leader> monsterLeaders=new ArrayList<>();
     static {
         monsterLeaders.add(new MonstersLeaders("eredin silver","double the strength of all your ","monsters"));
@@ -116,7 +123,7 @@ public class Monsters extends Faction {
     public static ArrayList<Card> getMonsterCards() {
         return monsterCards;
     }
-//    public static HashMap<Card,Integer> getMonsterDefaultDeck(){
-//        return monsterDefaultDeck;
-//    }
+    public static LinkedHashMap<Card,Integer> getMonsterDefaultDeck(){
+        return monsterDefaultDeck;
+    }
 }

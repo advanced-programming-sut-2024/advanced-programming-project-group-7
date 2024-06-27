@@ -6,6 +6,7 @@ import model.leaders.SkelligeLeaders;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Skellige extends Faction {
     public Skellige(String descriptions) {
@@ -63,28 +64,28 @@ public class Skellige extends Faction {
         skelligeCards.add(new Cow("kambi", 1, false, 0, "skellige",3,false));
         skelligeCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",3,true));
     }
-//    private final static HashMap<Card,Integer> skelligeDefaultDeck=new HashMap<>();
-//    static {
-//        skelligeDefaultDeck.put(new Decoy("horn", 3, true, 0, "special"),1);
-//        skelligeDefaultDeck.put(new Horn("decoy", 3, true, 0, "special"),3);
-//        skelligeDefaultDeck.put(new Scorch("scorch", 3, true, 0, "special"),1);
-//        skelligeDefaultDeck.put(new Card("frost", 3, true, 0, "weather"),1);
-//        skelligeDefaultDeck.put(new Card("ciri", 1, false, 15, "neutral"),1);
-//        skelligeDefaultDeck.put(new Card("geralt", 1, false, 15, "neutral"),1);
-//        skelligeDefaultDeck.put(new Card("triss", 1, false, 7, "neutral"),1);
-//        skelligeDefaultDeck.put(new Scorch("villen", 1, false, 7, "neutral"),1);
-//        skelligeDefaultDeck.put(new Medic("yennefer", 1, false, 7, "neutral"),1);
-//        skelligeDefaultDeck.put(new Card("brokva archer", 2, false, 6, "skellige"),2);
-//        skelligeDefaultDeck.put(new Scorch("dimun pirate", 1, false, 6, "skellige"),1);
-//        skelligeDefaultDeck.put(new TightBond("war longship", 2, false, 6, "skellige"),2);
-//        skelligeDefaultDeck.put(new TightBond("shield maiden", 1, false, 4, "skellige"),1);
-//        skelligeDefaultDeck.put(new TightBond("shield maiden 1", 1, false, 4, "skellige"),1);
-//        skelligeDefaultDeck.put(new Muster("gaunter odimm darkness", 3, false, 4, "neutral"),1);
-//        skelligeDefaultDeck.put(new Medic("birna", 1, false, 2, "skellige"),1);
-//        skelligeDefaultDeck.put(new Horn("dandelion", 1, false, 2, "neutral"),1);
-//        skelligeDefaultDeck.put(new Muster("gaunter odimm", 1, false, 2, "neutral"),1);
-//        skelligeDefaultDeck.put(new Spy("mysterious elf", 1, false, 0, "neutral"),1);
-//    }
+    private final static LinkedHashMap<Card,Integer> skelligeDefaultDeck=new LinkedHashMap<>();
+    static {
+        skelligeDefaultDeck.put(skelligeCards.get(0),1);
+        skelligeDefaultDeck.put(skelligeCards.get(1),2);
+        skelligeDefaultDeck.put(skelligeCards.get(2),2);
+        skelligeDefaultDeck.put(skelligeCards.get(3),1);
+        skelligeDefaultDeck.put(skelligeCards.get(4),2);
+        skelligeDefaultDeck.put(skelligeCards.get(8),1);
+        skelligeDefaultDeck.put(skelligeCards.get(9),1);
+        skelligeDefaultDeck.put(skelligeCards.get(10),1);
+        skelligeDefaultDeck.put(skelligeCards.get(15),1);
+        skelligeDefaultDeck.put(skelligeCards.get(16),1);
+        skelligeDefaultDeck.put(skelligeCards.get(17),1);
+        skelligeDefaultDeck.put(skelligeCards.get(24),1);
+        skelligeDefaultDeck.put(skelligeCards.get(25),1);
+        skelligeDefaultDeck.put(skelligeCards.get(26),1);
+        skelligeDefaultDeck.put(skelligeCards.get(36),3);
+        skelligeDefaultDeck.put(skelligeCards.get(38),2);
+        skelligeDefaultDeck.put(skelligeCards.get(42),1);
+        skelligeDefaultDeck.put(skelligeCards.get(44),1);
+        skelligeDefaultDeck.put(skelligeCards.get(47),1);
+    }
     private final static  ArrayList<Leader> skelligeLeaders=new ArrayList<>();
     static {
         skelligeLeaders.add(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks","skellige"));
@@ -96,7 +97,7 @@ public class Skellige extends Faction {
     public static ArrayList<Card> getSkelligeCards() {
         return skelligeCards;
     }
-//    public static HashMap<Card,Integer> getSkelligeDefaultDeck(){
-//        return skelligeDefaultDeck;
-//    }
+    public static LinkedHashMap<Card,Integer> getSkelligeDefaultDeck(){
+        return skelligeDefaultDeck;
+    }
 }
