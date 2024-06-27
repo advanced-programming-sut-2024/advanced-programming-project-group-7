@@ -80,8 +80,8 @@ public class Skellige extends Faction {
         skelligeDefaultDeck.put(skelligeCards.get(24),1);
         skelligeDefaultDeck.put(skelligeCards.get(25),1);
         skelligeDefaultDeck.put(skelligeCards.get(26),1);
-        skelligeDefaultDeck.put(skelligeCards.get(36),3);
-        skelligeDefaultDeck.put(skelligeCards.get(38),2);
+        skelligeDefaultDeck.put(skelligeCards.get(37),3);
+        skelligeDefaultDeck.put(skelligeCards.get(38),1);
         skelligeDefaultDeck.put(skelligeCards.get(42),1);
         skelligeDefaultDeck.put(skelligeCards.get(44),1);
         skelligeDefaultDeck.put(skelligeCards.get(47),1);

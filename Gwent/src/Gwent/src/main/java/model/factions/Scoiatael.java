@@ -98,7 +98,7 @@ public class Scoiatael extends Faction {
         scoiataelDefaultDeck.put(scoiataelCards.get(32),1);
         scoiataelDefaultDeck.put(scoiataelCards.get(35),1);
         scoiataelDefaultDeck.put(scoiataelCards.get(36),1);
-        scoiataelDefaultDeck.put(scoiataelCards.get(44),3);
+        scoiataelDefaultDeck.put(scoiataelCards.get(43),3);
         scoiataelDefaultDeck.put(scoiataelCards.get(50),1);
         scoiataelDefaultDeck.put(scoiataelCards.get(51),1);
         scoiataelDefaultDeck.put(scoiataelCards.get(52),1);
