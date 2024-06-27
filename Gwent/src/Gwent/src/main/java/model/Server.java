@@ -86,11 +86,8 @@ public class Server extends Thread {
             @Override
             public void run( ) {
                 if(isReady==true&&otherServer.isReady==true){
-                    try {
-                        server.sendAll("enter the real deall",socket);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    //                        server.sendAll("enter the real deall",socket);
+                    System.out.println("both are now ready");
                 }
             }
         }).start();
