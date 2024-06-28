@@ -1,5 +1,7 @@
 package model;
 
+import controller.GameServer;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -7,7 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import view.GameLauncher;
 
-import java.security.cert.PolicyNode;
 import java.time.LocalDate;
 
 public class Game {
@@ -26,7 +27,8 @@ public class Game {
     public Rectangle life2;
     public Rectangle life1Opponent;
     public Rectangle life2Opponent;
-    private HBox playerFourthRow;
+    public HBox weatherBox;
+    public HBox playerFourthRow;
     public HBox selectedBox;
     public HBox playerHand;
     public HBox remainingDeck;
@@ -39,8 +41,8 @@ public class Game {
     public Label totalRow2Power;
     public Label totalPower;
     public Card selected;
-    private HBox playerFifthRow;
-    private HBox playerSixthRow;
+    public HBox playerFifthRow;
+    public HBox playerSixthRow;
 
     public Game(GameLauncher gameLauncher) {
         this.playerHand = gameLauncher.playerHand;
@@ -138,7 +140,9 @@ public class Game {
     }
 
     public void waitForEnemy(Game game) {
-        game.playerFourthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
+
+        Platform.runLater(() -> {
+        });
         calculateLabels(playerFourthRow);
     }
 

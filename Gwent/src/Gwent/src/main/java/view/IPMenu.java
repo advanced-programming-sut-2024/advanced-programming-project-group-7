@@ -18,7 +18,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import model.Client;
 import model.User;
 
 import javax.swing.*;
@@ -45,7 +44,7 @@ public class IPMenu extends Application {
     }
 
     public void makeClient(ActionEvent actionEvent) throws Exception {
-        Client client = new Client();
+
         try {
 
             gotoLoginMenu();

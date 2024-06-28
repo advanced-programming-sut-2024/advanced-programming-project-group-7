@@ -49,7 +49,8 @@ public class CardPlacementAnimation extends Transition {
         double x = card.getLayoutX() + vx;
         if (Math.abs(x - endX) <= 10 && Math.abs(y - endY) <= 10) {
             pane.getChildren().remove(card);
-            game.selectedBox.getChildren().add(card);
+            if (!card.getCardName().equals("clear"))
+                game.selectedBox.getChildren().add(card);
             card.setOnMouseClicked(event -> {
                 if (game.selected instanceof Decoy) {
                     game.playerHand.getChildren().add(card);
@@ -108,6 +109,17 @@ public class CardPlacementAnimation extends Transition {
                 game.spyACard();
             } else if (card instanceof TightBond) {
                 game.handleBond(game.selectedBox, card, game);
+            } else if (card.getRows().contains(7)) {
+                for (Node card2 : game.selectedBox.getChildren()) {
+                    if (!card2.equals(card) && ((Card) card2).getCardName().equals(card.getCardName()) || card.getCardName().equals("clear")){
+                        game.selectedBox.getChildren().remove(card2);
+                        pane.getChildren().add(card2);
+                        card2.setLayoutY(385);
+                        card2.setLayoutX(125);
+                        HelicopterAnimation helicopterAnimation = new HelicopterAnimation(pane, game, (Card) card2);
+                        helicopterAnimation.play();
+                    }
+                }
             }
         }
         card.setLayoutX(x);

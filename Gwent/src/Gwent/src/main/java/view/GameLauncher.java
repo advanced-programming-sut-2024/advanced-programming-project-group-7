@@ -1,5 +1,7 @@
 package view;
 
+import controller.Client;
+import controller.GameServer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -23,6 +25,9 @@ import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class GameLauncher extends Application {
@@ -58,8 +63,11 @@ public class GameLauncher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        pane = new Pane();
+
         game = new Game(this);
+        Client client = new Client(game);
+        client.start();
+        pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
 
@@ -127,8 +135,6 @@ public class GameLauncher extends Application {
         game.totalRow3Power.setTextFill(Color.BLACK);
         game.totalRow3Power.setFont(new Font(20));
 
-
-
         Rectangle highScore=new Rectangle();
         highScore.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
         highScore.setHeight(63);
@@ -136,8 +142,29 @@ public class GameLauncher extends Application {
         highScore.setLayoutY(590);
         highScore.setLayoutX(347);
 
-
-
+        game.weatherBox = new HBox();
+        game.weatherBox.setLayoutY(385);
+        game.weatherBox.setLayoutX(120);
+        game.weatherBox.setMinHeight(98);
+        game.weatherBox.setMinWidth(235);
+        game.weatherBox.setOnMouseClicked(event ->  {
+            HBox target;
+            target = game.weatherBox;
+            if (selected != null && fitsBox(selected, target)) {
+                game.selectedBox = target;
+                game.playerHand.getChildren().remove(selected);
+                addCardToPane(selected, event.getSceneY(), event.getSceneX());
+            }
+            pane.getChildren().remove(showCardRectangle);
+            playerFirstRow.setStyle("");
+            playerSecondRow.setStyle("");
+            playerThirdRow.setStyle("");
+            playerFirstRowHorn.setStyle("");
+            playerSecondRowHorn.setStyle("");
+            playerThirdRowHorn.setStyle("");
+            game.weatherBox.setStyle("");
+            selected = null;
+        });
 
         Rectangle realmForAvatar=new Rectangle();//todo needs 5 else if for player's faction
         realmForAvatar.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_realms.png").toExternalForm()))));
@@ -345,7 +372,7 @@ public class GameLauncher extends Application {
 
 
 
-        pane.getChildren().addAll(createHbox(),playerName,avatar,game.life1,game.life2, cardx,labelForNumberOfCards,game.totalPower,highScore,realmForAvatar,
+        pane.getChildren().addAll(createHbox(),game.weatherBox, playerName,avatar,game.life1,game.life2, cardx,labelForNumberOfCards,game.totalPower,highScore,realmForAvatar,
                 playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
                 ,game.totalRow1Power,game.totalRow2Power,game.totalRow3Power,game.totalRow1PowerOpponent,game.totalRow2PowerOpponent,game.totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
@@ -376,7 +403,7 @@ public class GameLauncher extends Application {
         playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
         playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
         playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
         playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
         playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
@@ -386,6 +413,9 @@ public class GameLauncher extends Application {
         playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
         Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
         playerHand.getChildren().add(medic);
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
@@ -425,6 +455,8 @@ public class GameLauncher extends Application {
                             playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                         } else if (selected.getRows().contains(3)) {
                             playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        } else if (selected.getRows().contains(7)) {
+                            game.weatherBox.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                         }
                     }
                 }
@@ -550,6 +582,8 @@ public class GameLauncher extends Application {
             selectedRow = 3;
         } else if (selected instanceof Horn) {
             return true;
+        } else if (playerRow.equals(game.weatherBox)) {
+            selectedRow = 7;
         }
         if (selected.getRows().contains(selectedRow)) {
             return true;
