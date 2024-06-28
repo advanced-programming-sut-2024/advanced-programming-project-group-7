@@ -62,7 +62,7 @@ public class VetoCard  extends Application {
                     okButton.setOnMouseClicked(mouseEvent1 -> {
                         addSomeCardsToHand();
                         try {
-                            gotoGameLauncher();
+                            //gotoGameLauncher();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -84,12 +84,6 @@ public class VetoCard  extends Application {
 
     }
 
-    private void gotoGameLauncher() throws Exception {
-        GameLauncher gameLauncher = new GameLauncher();
-//        gameLauncher.setDeck(currentDeck);
-//        gameLauncher.setHand(hand);
-        gameLauncher.start(stage);
-    }
     public void addSomeCardsToHand(){
         int first;
         int second;
@@ -110,86 +104,22 @@ public class VetoCard  extends Application {
     }
 
 
-
-
-
     @Override
     public void start(Stage stage) throws Exception {
 
-        hand.add(new Card("horn",3,true,0,"special",123,false));
-        hand.add(new Card("horn",3,true,0,"special",123,false));
-        hand.add(new Mardroeme("mardroeme", 3 , true, 0, "special",123,false));
-        hand.add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
-        hand.add(new Card("frost", 3 , true, 0, "weather",7,false));
-        hand.add(new Card("clear", 2 , true, 0, "weather",7,false));
-        hand.add(new Card("fog", 3 , true, 0, "weather",7,false));
-        hand.add(new Card("storm", 3 , true, 0, "weather",7,false));
-        hand.add(new Card("rain", 2 , true, 0, "weather",7,false));
-        hand.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-
-
-        currentDeck.add(new Card("horn",3,true,0,"special",123,false));
-        currentDeck.add(new Card("horn",3,true,0,"special",123,false));
-        currentDeck.add(new Mardroeme("mardroeme", 3 , true, 0, "special",123,false));
-        currentDeck.add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
-        currentDeck.add(new Card("frost", 3 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("clear", 2 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("fog", 3 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("storm", 3 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("rain", 2 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        currentDeck.add(new Muster("arachas behemoth", 1, false, 6, "monsters",1,false));
-        currentDeck.add(new Muster("witch velen", 1, false, 6, "monsters",3,false));
-        currentDeck.add(new Muster("witch velen 1", 1, false, 6, "monsters",3,false));
-        currentDeck.add(new Muster("witch velen 2", 1, false, 6, "monsters",3,false));
-        currentDeck.add(new Card("earth elemental", 1, false, 6, "monsters",1,false));
-        currentDeck.add(new Card("fiend", 1, false, 6, "monsters",3,false));
-
-
-        for(Card card:currentDeck){
-            tempDeck.add(card);
-        }
-        for(Card card:hand){
-            tempDeck.remove(hand);
-        }
-
-
-            pane = new Pane();
-        setSize(pane);
-        pane.setBackground(Background.EMPTY);
-
-
-
 
         Button okButton=new Button();
-        okButton.setText("ok");
+        okButton.setText("Confirm");
         okButton.setLayoutX(730);
         okButton.setLayoutY(790);
         okButton.setOnMouseClicked(mouseEvent1 -> {
             try {
-                gotoGameLauncher();
+                //gotoGameLauncher();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
 
-        pane.getChildren().add(okButton);
-
-
-        setRectanglesProperty(10,hand,pane);
-
-
-
-
-        Scene scene = new Scene(pane);
-        VetoCard.stage=stage;
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.centerOnScreen();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();
-        stage.setFullScreen(true);
     }
 
     private void setSize(Pane pane) {
