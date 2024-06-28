@@ -31,7 +31,7 @@ public class Server extends Thread {
             while (true) {
                 command = input.readUTF();
                 if(command.equals("im ready"));{
-
+                    isReady=true;
                 }
               //  sendAll(command,socket);
 
@@ -59,21 +59,12 @@ public class Server extends Thread {
                 clientSocket = serverSocket.accept();
                 Server storeServer = new Server(clientSocket);
                 System.out.println("no no no");
-//                storeServer.serverClient=socket.getRemoteSocketAddress();
-//                if (!Client.clients.isEmpty()) {
-//                    for (Client client : Client.clients) {
-//                        if (client.socket.equals(socket)) {
-//                            storeServer.serverClient = client;
-//                            System.out.println("client added to array");
-//                        }else System.out.println("why?");
-//                    }
-//                }else System.out.println("not added");
+
                 servers.add(storeServer);
-                if (servers.size()==2){
-                    storeServer.otherServer=servers.get(0);
-                    storeServer.otherServer.otherServer=servers.get(1);
-                    System.out.println("connected bitch");
-                }
+//                if (servers.size()==2){
+//                    storeServer.otherServer=servers.get(0);
+//                    storeServer.otherServer.otherServer=servers.get(1);
+//                }
                 System.out.println("new client");
                 storeServer.start();
             }

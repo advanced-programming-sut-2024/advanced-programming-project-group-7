@@ -42,7 +42,7 @@ public class User {
     private int wonGame=0;
     private int lostGame=0;
     private Faction currentFaction;
-    private  int securityQuestionNumber;//todo removed final todo ok but is it ok?
+    private  int securityQuestionNumber;
     private String answerOfSecurityQuestion;
     //private final String securityQuestionAnswer;
     private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
