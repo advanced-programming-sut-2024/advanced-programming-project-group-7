@@ -1,13 +1,13 @@
 package view;
 
 import javafx.application.Application;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -15,181 +15,107 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Card;
 import model.Deck;
-import model.cards.*;
+import model.Game;
 
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Random;
 
 public class VetoCard  extends Application {
-    Pane pane;
-    static Stage stage;
+    private Pane pane;
+    public Deck deck;
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     private int totalClick=0;
 
-    private static ArrayList <Card>hand=new ArrayList<>();
-    private static ArrayList<Card> currentDeck=new ArrayList<>();
-    private static ArrayList<Card> tempDeck=new ArrayList<>();
+    private Stage vetoMenu;
+    private GridPane gridpane = new GridPane();
+    private int count =0;
+    private Stage stage;
+    private ArrayList<Card> update = new ArrayList<>();
 
 
-    public void setRectanglesProperty(int number, ArrayList<Card> cards,Pane pane){
-//        ArrayList<Rectangle> rectangles=new ArrayList<>();
-        for(int i=0;i<number;i++){
-            int j=i;
-            Rectangle rectangle=new Rectangle();
-            rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(hand.get(i).getLgPath()).toExternalForm()))));
-            rectangle.setHeight(170);
-            rectangle.setWidth(128);
-            rectangle.setLayoutY(400);
-            rectangle.setLayoutX(160*i-(80*number)+816);
-            pane.getChildren().add(rectangle);
-//            rectangles.add(rectangle);
-            rectangle.setOnMouseClicked(mouseEvent -> {
-                totalClick++;
-                if(totalClick>=3) {
-                Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("only 2!");
-                alert.show();}
-                else {
-                    hand.remove(j);
-                    pane.getChildren().clear();
-                    Button okButton=new Button();
-                    okButton.setText("ok");
-                    okButton.setLayoutX(730);
-                    okButton.setLayoutY(790);
-                    okButton.setOnMouseClicked(mouseEvent1 -> {
-                        addSomeCardsToHand();
-                        try {
-                            gotoGameLauncher();
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-                    pane.getChildren().add(okButton);
-//                List<Node> rectanglesToRemove = new ArrayList<>();
-//                for (Node node : pane.getChildren()) {
-//                    if (node instanceof Rectangle) {
-//                        rectanglesToRemove.add(node);
-//                    }
-//                    pane.getChildren().removeAll(rectanglesToRemove);
-
-//                }
-                    setRectanglesProperty(hand.size(), hand, pane);
-                }
-
-            });
-        }
-
-    }
-
-    private void gotoGameLauncher() throws Exception {
-        GameLauncher gameLauncher = new GameLauncher();
-//        gameLauncher.setDeck(currentDeck);
-//        gameLauncher.setHand(hand);
-        gameLauncher.start(stage);
-    }
-    public void addSomeCardsToHand(){
-        int first;
-        int second;
-        Random random=new Random();
-
-        if(totalClick==2){
-            first= random.nextInt(0,tempDeck.size()-1);
-            while (true){
-                second= random.nextInt(0,tempDeck.size()-1);
-                if(second!=first)break;
-            }
-            hand.add(tempDeck.get(first));
-            hand.add(tempDeck.get(second));
-        }else if(totalClick==1){
-            first= random.nextInt(0,tempDeck.size()-1);
-            hand.add(tempDeck.get(first));
-        }
-    }
-
-
-
-
-
-    @Override
-    public void start(Stage stage) throws Exception {
-
-        hand.add(new Card("horn",3,true,0,"special",123,false));
-        hand.add(new Card("horn",3,true,0,"special",123,false));
-        hand.add(new Mardroeme("mardroeme", 3 , true, 0, "special",123,false));
-        hand.add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
-        hand.add(new Card("frost", 3 , true, 0, "weather",7,false));
-        hand.add(new Card("clear", 2 , true, 0, "weather",7,false));
-        hand.add(new Card("fog", 3 , true, 0, "weather",7,false));
-        hand.add(new Card("storm", 3 , true, 0, "weather",7,false));
-        hand.add(new Card("rain", 2 , true, 0, "weather",7,false));
-        hand.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-
-
-        currentDeck.add(new Card("horn",3,true,0,"special",123,false));
-        currentDeck.add(new Card("horn",3,true,0,"special",123,false));
-        currentDeck.add(new Mardroeme("mardroeme", 3 , true, 0, "special",123,false));
-        currentDeck.add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
-        currentDeck.add(new Card("frost", 3 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("clear", 2 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("fog", 3 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("storm", 3 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("rain", 2 , true, 0, "weather",7,false));
-        currentDeck.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        currentDeck.add(new Muster("arachas behemoth", 1, false, 6, "monsters",1,false));
-        currentDeck.add(new Muster("witch velen", 1, false, 6, "monsters",3,false));
-        currentDeck.add(new Muster("witch velen 1", 1, false, 6, "monsters",3,false));
-        currentDeck.add(new Muster("witch velen 2", 1, false, 6, "monsters",3,false));
-        currentDeck.add(new Card("earth elemental", 1, false, 6, "monsters",1,false));
-        currentDeck.add(new Card("fiend", 1, false, 6, "monsters",3,false));
-
-
-        for(Card card:currentDeck){
-            tempDeck.add(card);
-        }
-        for(Card card:hand){
-            tempDeck.remove(hand);
-        }
-
-
-            pane = new Pane();
-        setSize(pane);
-        pane.setBackground(Background.EMPTY);
-
-
-
-
-        Button okButton=new Button();
-        okButton.setText("ok");
-        okButton.setLayoutX(730);
-        okButton.setLayoutY(790);
-        okButton.setOnMouseClicked(mouseEvent1 -> {
+    public void showVetoMenu() {
+        vetoMenu = new Stage();
+        Pane root = new Pane();
+        gridpane = new GridPane();
+        Scene scene = new Scene(root);
+        vetoMenu.initStyle(StageStyle.UNDECORATED);
+        vetoMenu.initStyle(StageStyle.TRANSPARENT);
+        root.setBackground(Background.EMPTY);
+        scene.setFill(Color.rgb(1,1,1, 0.9));
+        root.setMinHeight(800);
+        root.setMinWidth(1200);
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setLayoutX(300);
+        vBox.setLayoutY(10);
+        vBox.setMaxWidth(200);
+        Button confirm = new Button("confirm");
+        confirm.setOnMouseClicked(event -> {
+            vetoMenu.close();
+            stage.close();
+            GameLauncher gameLauncher = new GameLauncher();
             try {
-                gotoGameLauncher();
+                gameLauncher.start(LoginMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
+        setCards();
+        root.getChildren().add(gridpane);
+        root.getChildren().add(confirm);
+        confirm.setLayoutX(550);
+        confirm.setLayoutY(750);
+        gridpane.setAlignment(Pos.CENTER);
+        gridpane.setLayoutX(250);
+        gridpane.setLayoutY(100);
+        vetoMenu.setScene(scene);
+        vetoMenu.showAndWait();
+    }
 
-        pane.getChildren().add(okButton);
+    private void setCards() {
+        gridpane.getChildren().clear();
+         deck.hand = update;
+        int bound = deck.reservedCards.size() - 1;
+        for (Iterator<Card> iterator = deck.hand.iterator(); iterator.hasNext(); ) {
+            Card card = iterator.next();
+            Pane pane = new Pane();
+            Rectangle rectangle = new Rectangle();
+            rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
+            rectangle.setHeight(300);
+            rectangle.setWidth(150);
+            rectangle.setArcHeight(20);
+            rectangle.setArcWidth(20);
+            pane.getChildren().add(rectangle);
+            pane.setOnMouseClicked(event -> {
+                deck.hand.remove(card); // Use iterator to remove the card
+                Random random = new Random();
+                Card card1 = deck.reservedCards.get(random.nextInt(0, bound));
+                update.add(card1);
+                deck.reservedCards.add(card);
+                setCards();
+            });
+            gridpane.add(pane, count % 5, count / 5);
+            count++;
+        }
+    }
 
+    private BackgroundImage createBackgroundImage () {
+        Image image = new Image(Game.class.getResource("/Images/board.jpg").toExternalForm(), WIDTH ,HEIGHT, false, false);
+        ImageView imageView = new ImageView(image);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image bwImage = imageView.snapshot(params, null);
 
-        setRectanglesProperty(10,hand,pane);
+        BackgroundImage backgroundImage = new BackgroundImage(bwImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
 
-
-
-
-        Scene scene = new Scene(pane);
-        VetoCard.stage=stage;
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.centerOnScreen();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();
-        stage.setFullScreen(true);
+        return backgroundImage;
     }
 
     private void setSize(Pane pane) {
@@ -197,5 +123,26 @@ public class VetoCard  extends Application {
         pane.setMaxHeight(HEIGHT);
         pane.setMinWidth(WIDTH);
         pane.setMaxWidth(WIDTH);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        pane = new Pane();
+
+        this.stage = new Stage();
+        setSize(pane);
+        pane.setBackground(new Background(createBackgroundImage()));
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.setResizable(false);
+
+
+        deck = Deck.currentDeck;
+        deck.shuffleDeck();
+        update = deck.hand;
+        stage.centerOnScreen();
+        stage.show();
+        stage.setFullScreen(true);
+        showVetoMenu();
     }
 }

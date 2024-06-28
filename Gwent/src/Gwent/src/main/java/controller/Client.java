@@ -38,7 +38,6 @@ public class Client extends Thread {
                 if (commandToSend.equalsIgnoreCase("exit")) {
                     break;
                 }
-
                 dataOutputStream.writeUTF(commandToSend);
                 dataOutputStream.flush();
 
@@ -60,6 +59,8 @@ public class Client extends Thread {
             card = new Card(components[1], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
         Card finalCard = card;
         Platform.runLater(() -> {
+            System.out.println("got the card");
+            System.out.println(finalCard.getCardName());
             target.getChildren().add(finalCard);
             game.calculateLabels(game.playerFourthRow);
         });

@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -29,7 +28,6 @@ import java.util.LinkedHashMap;
 
 public class PreGameMenu extends Application {
 
-    public static Stage stage;
     public Label factionName;
     private int factionIndex;
     public Rectangle LeaderImage;
@@ -49,7 +47,7 @@ public class PreGameMenu extends Application {
     public Label specialCards;
     public Label totalUnitCardStrength;
     public Label heroCards;
-//     public Stage stage;
+    public Stage stage = new Stage();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -59,7 +57,6 @@ public class PreGameMenu extends Application {
         this.stage = stage;
         stage.setScene(scene);
         stage.setTitle("pregame menu");
-        PreGameMenu.stage=stage;
         stage.show();
         stage.setFullScreen(true);
     }
@@ -286,26 +283,6 @@ public class PreGameMenu extends Application {
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
     }
-
-    @FXML
-    private void gotoVeto() throws Exception {
-        if(currentDeck.totalUnitCard>=22){
-            if(currentDeck.totalSpecialCardInDeck<=10) {
-                VetoCard vetoCard = new VetoCard();
-//                vetoCard.setDeck(currentDeck.shuffleDeck());
-                vetoCard.start(stage);
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("!");
-                alert.show();
-            }
-        }else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("!");
-            alert.show();
-        }
-    }
-
     public void calculateLabels(){
         currentDeck.calculateDeck();
         totalCardInDeck.setText(String.valueOf(currentDeck.totalCardsInDeck));
@@ -325,10 +302,13 @@ public class PreGameMenu extends Application {
         totalCardInDeck.setTextFill(Color.BLACK);
         totalUnitCardStrength.setTextFill(Color.BLACK);
    }
-    public void startGame(MouseEvent mouseEvent) {
+
+
+    public void goToVeto(MouseEvent mouseEvent) {
         try {
-            GameLauncher gameLauncher = new GameLauncher();
-            gameLauncher.start(LoginMenu.stage);
+            Deck.currentDeck = currentDeck;
+            VetoCard vetoCard = new VetoCard();
+            vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
             e.printStackTrace();
         }

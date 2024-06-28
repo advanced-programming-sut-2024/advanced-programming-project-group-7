@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Card;
+import model.Deck;
 import model.Game;
 import model.Leader;
 import model.cards.*;
@@ -59,12 +60,15 @@ public class GameLauncher extends Application {
 
     public Rectangle showCardRectangle = new Rectangle();
     private boolean yourTurn = true;
+    private Deck deck;
+    private Stage stage;
 
 
     @Override
     public void start(Stage stage) throws Exception {
 
         game = new Game(this);
+        this.stage = stage;
         Client client = new Client(game);
         client.start();
         pane = new Pane();
@@ -400,30 +404,15 @@ public class GameLauncher extends Application {
         hBoxes.add(playerFifthRowHorn);
         hBoxes.add(playerSixthRowHorn);
 
-        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
-        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
-        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
-        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
-//        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
-        playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
-//        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-//        playerHand.getChildren().add((new Card("storm", 3 , true, 0, "weather",7,false));todo why ?
-        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-        playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
-        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
-        playerHand.getChildren().add(medic);
-        playerHand.getChildren().add(new MoralBoost("olgierd",1,false,6,"neutral",23,false));;
-        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-
+        deck = Deck.currentDeck;
+        for (Card card : deck.hand) {
+            playerHand.getChildren().add(card);
+        }
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 if (yourTurn) {
                     if (card instanceof Decoy) {
-                        game.selected = (Card) card;//todo What?
+                        game.selected = (Card) card;
                     } else {
                         if (pane.getChildren().contains(showCardRectangle)) {
                             pane.getChildren().remove(showCardRectangle);
@@ -454,6 +443,8 @@ public class GameLauncher extends Application {
                         } else if (selected.getRows().contains(2)) {
                             playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                         } else if (selected.getRows().contains(1)) {
+                            System.out.println(selected.getCardName());
+                            System.out.println(selected.getRows());
                             playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                         } else if (selected.getRows().contains(3)) {
                             playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
