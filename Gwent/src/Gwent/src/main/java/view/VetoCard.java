@@ -3,11 +3,12 @@ package view;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Card;
 import model.Deck;
+import model.Game;
 import model.cards.*;
 
 
@@ -182,6 +184,7 @@ public class VetoCard  extends Application {
 
 
         Scene scene = new Scene(pane);
+        pane.setBackground(new Background(createBackgroundImage()));
         VetoCard.stage=stage;
         stage.setScene(scene);
         stage.setResizable(false);
@@ -197,5 +200,20 @@ public class VetoCard  extends Application {
         pane.setMaxHeight(HEIGHT);
         pane.setMinWidth(WIDTH);
         pane.setMaxWidth(WIDTH);
+    }
+    private BackgroundImage createBackgroundImage () {
+        Image image = new Image(Game.class.getResource("/Images/board.jpg").toExternalForm(), WIDTH ,HEIGHT, false, false);
+        ImageView imageView = new ImageView(image);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image bwImage = imageView.snapshot(params, null);
+
+        BackgroundImage backgroundImage = new BackgroundImage(bwImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        return backgroundImage;
     }
 }
