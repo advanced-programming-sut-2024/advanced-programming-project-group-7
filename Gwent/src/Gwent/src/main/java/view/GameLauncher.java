@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Card;
+import model.Client;
 import model.Game;
 import model.Leader;
 import model.cards.*;
@@ -24,6 +25,7 @@ import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameLauncher extends Application {
@@ -51,6 +53,8 @@ public class GameLauncher extends Application {
     private Card selected;
     private double sceneX;
     private double sceneY;
+    public Client currentClient;
+
 
     public Rectangle showCardRectangle = new Rectangle();
 
@@ -319,6 +323,13 @@ public class GameLauncher extends Application {
         buttonPass.setText("Pass");
         buttonPass.setLayoutX(320);
         buttonPass.setLayoutY(750);
+        buttonPass.setOnMouseClicked(mouseEvent -> {
+            try {
+                currentClient.sendButton();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 
         Button buttonPassOpponent=new Button();
@@ -383,6 +394,7 @@ public class GameLauncher extends Application {
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
         playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
         playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
+
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 if(pane.getChildren().contains(showCardRectangle)){
