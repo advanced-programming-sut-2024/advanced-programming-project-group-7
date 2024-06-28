@@ -1,5 +1,6 @@
 package model;
 
+import controller.Client;
 import controller.GameServer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -11,6 +12,7 @@ import model.cards.Spy;
 import view.GameLauncher;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Game {
     private final HBox playerThirdRowHorn;
@@ -44,6 +46,8 @@ public class Game {
     public Card selected;
     public HBox playerFifthRow;
     public HBox playerSixthRow;
+    public ArrayList<HBox> hBoxes=new ArrayList<HBox>();
+    public Client client;
 
     public Game(GameLauncher gameLauncher) {
         this.playerHand = gameLauncher.playerHand;
@@ -59,6 +63,9 @@ public class Game {
         this.playerFourthRowHorn =gameLauncher.playerFourthRowHorn;
         this.playerFifthRowHorn = gameLauncher.playerFifthRowHorn;
         this.playerSixthRowHorn = gameLauncher.playerSixthRowHorn;
+        hBoxes=gameLauncher.hBoxes;
+
+        hBoxes.add(playerSixthRow);
 //        this.graveYard.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
 //        this.graveYard.getChildren().add(new Card("tibor",1,false,10,"nilfgaard",2,true));
     }

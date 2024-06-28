@@ -72,7 +72,7 @@ public class VetoCard  extends Application {
         gridpane.setLayoutX(250);
         gridpane.setLayoutY(100);
         vetoMenu.setScene(scene);
-        vetoMenu.showAndWait();
+        vetoMenu.show();
     }
 
     private void setCards() {
