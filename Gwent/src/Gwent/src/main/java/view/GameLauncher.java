@@ -34,6 +34,8 @@ public class GameLauncher extends Application {
 
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
+    private ArrayList<Card> deck=new ArrayList<>();
+    private ArrayList<Card> hand=new ArrayList<>();
     public HBox playerHand = new HBox();
     public HBox playerFirstRowHorn = new HBox();
     public HBox playerFirstRow = new HBox();
@@ -362,7 +364,7 @@ public class GameLauncher extends Application {
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
@@ -574,5 +576,22 @@ public class GameLauncher extends Application {
 
         return backgroundImage;
     }
+
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
+
+    public void setDeck(ArrayList<Card> deck) {
+        this.deck = deck;
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
+    }
+
 
 }

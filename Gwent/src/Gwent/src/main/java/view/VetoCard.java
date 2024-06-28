@@ -25,6 +25,7 @@ import java.util.Random;
 
 public class VetoCard  extends Application {
     Pane pane;
+    static Stage stage;
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     private int totalClick=0;
@@ -60,7 +61,11 @@ public class VetoCard  extends Application {
                     okButton.setLayoutY(790);
                     okButton.setOnMouseClicked(mouseEvent1 -> {
                         addSomeCardsToHand();
-                        gotoGameLauncher();
+                        try {
+                            gotoGameLauncher();
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     });
                     pane.getChildren().add(okButton);
 //                List<Node> rectanglesToRemove = new ArrayList<>();
@@ -79,8 +84,11 @@ public class VetoCard  extends Application {
 
     }
 
-    private void gotoGameLauncher() {
-
+    private void gotoGameLauncher() throws Exception {
+        GameLauncher gameLauncher = new GameLauncher();
+        gameLauncher.setDeck(currentDeck);
+        gameLauncher.setHand(hand);
+        gameLauncher.start(stage);
     }
     public void addSomeCardsToHand(){
         int first;
@@ -158,7 +166,11 @@ public class VetoCard  extends Application {
         okButton.setLayoutX(730);
         okButton.setLayoutY(790);
         okButton.setOnMouseClicked(mouseEvent1 -> {
-            gotoGameLauncher();
+            try {
+                gotoGameLauncher();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
 
         pane.getChildren().add(okButton);
@@ -170,6 +182,7 @@ public class VetoCard  extends Application {
 
 
         Scene scene = new Scene(pane);
+        VetoCard.stage=stage;
         stage.setScene(scene);
         stage.setResizable(false);
         stage.centerOnScreen();
