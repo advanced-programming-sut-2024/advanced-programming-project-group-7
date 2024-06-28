@@ -106,7 +106,7 @@ public class VetoCard  extends Application {
         }else if(totalClick==1){
             first= random.nextInt(0,tempDeck.size()-1);
             hand.add(tempDeck.get(first));
-        }
+        }//formerge
     }
 
 
