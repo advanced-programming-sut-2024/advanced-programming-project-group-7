@@ -23,11 +23,11 @@ public class GameServer extends Thread {
 
     @Override
     public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(9200)) {
-            System.out.println("Server is listening on port 9200");
+        try (ServerSocket serverSocket = new ServerSocket(34600)) {
+            System.out.println("Server is listening on port 34600");
             while (true) {
                 socket1 = serverSocket.accept();
-                if (socket1 !=null) {
+                if (socket1 != null) {
                     System.out.println(1);
                     while (true) {
                         socket2 = serverSocket.accept();
@@ -35,6 +35,7 @@ public class GameServer extends Thread {
                         if (socket2 != null) {
                             System.out.println(2);
                             GameThread gameThread = new GameThread(socket1, socket2);
+                            System.out.println("should be only");
                             gameThread.run(); // may here
                         }
                     }

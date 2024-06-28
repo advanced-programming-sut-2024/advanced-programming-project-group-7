@@ -71,6 +71,7 @@ public class GameLauncher extends Application {
         this.stage = stage;
         Client client = new Client(game);
         client.start();
+        game.client = client;
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
@@ -403,11 +404,29 @@ public class GameLauncher extends Application {
         hBoxes.add(playerFourthRowHorn);
         hBoxes.add(playerFifthRowHorn);
         hBoxes.add(playerSixthRowHorn);
+        hBoxes.add(game.weatherBox);
 
         deck = Deck.currentDeck;
-        for (Card card : deck.hand) {
-            playerHand.getChildren().add(card);
-        }
+//        for (Card card : deck.hand) {
+//            playerHand.getChildren().add(card);
+//        }
+        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
+        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
+        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
+        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+        playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
+        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
+        playerHand.getChildren().add(medic);
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 if (yourTurn) {
@@ -604,6 +623,22 @@ public class GameLauncher extends Application {
                 BackgroundSize.DEFAULT);
 
         return backgroundImage;
+    }
+    public static int enemyPosition(int i){
+        if(i==0)return 5 ;
+        if(i==1)return 4;
+        if(i==2)return 3;
+        if(i==3)return 2;
+        if(i==4)return 1;
+        if(i==5)return 0;
+        if(i==6)return 11;
+        if(i==7)return 10;
+        if(i==8)return 9;
+        if(i==9)return 8;
+        if(i==10)return 7;
+        if(i==11)return 6;
+        if(i==12)return 12;
+        return 0;
     }
 
 }
