@@ -15,8 +15,8 @@ public class Skellige extends Faction {
     }
     private final static ArrayList<Card> skelligeCards = new ArrayList<>();
     static {
-        skelligeCards.add(new Decoy("horn", 3, true, 0, "special",123,false));
-        skelligeCards.add(new Horn("decoy", 3, true, 0, "special",123,false));
+        skelligeCards.add(new Horn("horn", 3, true, 0, "special",123,false));
+        skelligeCards.add(new Card("decoy", 3, true, 0, "special",123,false));
         skelligeCards.add(new Mardroeme("mardroeme", 3, true, 0, "special",123,false));
         skelligeCards.add(new Scorch("scorch", 3, true, 0, "special",123456,false));
         skelligeCards.add(new Card("frost", 3, true, 0, "weather",7,false));
@@ -62,7 +62,7 @@ public class Skellige extends Faction {
         skelligeCards.add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
         skelligeCards.add(new Cow("cow", 1, false, 0, "neutral",2,false));
         skelligeCards.add(new Cow("kambi", 1, false, 0, "skellige",3,false));
-        skelligeCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",3,true));
+        skelligeCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",4,true));
     }
     private final static LinkedHashMap<Card,Integer> skelligeDefaultDeck=new LinkedHashMap<>();
     static {

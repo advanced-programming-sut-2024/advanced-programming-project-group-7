@@ -15,8 +15,8 @@ public class Scoiatael extends Faction {
     }
     private final static ArrayList<Card> scoiataelCards = new ArrayList<>();
     static {
-        scoiataelCards.add(new Decoy("horn", 3, true, 0, "special",123,false));
-        scoiataelCards.add(new Horn("decoy", 3, true, 0, "special",123,false));
+        scoiataelCards.add(new Horn("horn", 3, true, 0, "special",123,false));
+        scoiataelCards.add(new Card("decoy", 3, true, 0, "special",123,false));
         scoiataelCards.add(new Mardroeme("mardroeme", 3, true, 0, "special",123,false));
         scoiataelCards.add(new Scorch("scorch", 3, true, 0, "special",123456,false));
         scoiataelCards.add(new Card("frost", 3, true, 0, "weather",7,false));
@@ -75,7 +75,7 @@ public class Scoiatael extends Faction {
         scoiataelCards.add(new Medic("havekar nurse", 1, false, 0, "scoiatael",2,false));
         scoiataelCards.add(new Medic("havekar nurse 1", 1, false, 0, "scoiatael",2,false));
         scoiataelCards.add(new Medic("havekar nurse 2", 1, false, 0, "scoiatael",2,false));
-        scoiataelCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",3,true));
+        scoiataelCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",4,true));
     }
     private final static LinkedHashMap<Card,Integer> scoiataelDefaultDeck=new LinkedHashMap<>();
     static {
