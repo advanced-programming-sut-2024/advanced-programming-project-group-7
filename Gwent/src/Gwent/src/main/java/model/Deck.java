@@ -3,6 +3,7 @@ package model;
 import java.util.*;
 
 public class Deck {
+    public static Deck currentDeck;
     private Faction deckFaction;
     private Leader deckLeader;
     private LinkedHashMap<Card, Integer> cardsInDeck=new LinkedHashMap<>();
@@ -12,7 +13,11 @@ public class Deck {
     public int totalUnitCard;
     public int totalUnitCardStrength;
 
+    public ArrayList<Card> hand=new ArrayList<>();
 
+    public  ArrayList<Card> deckAsArrayList=new ArrayList<>();
+
+    public List<Card> reservedCards=new ArrayList<>();
     public Deck(Faction deckFaction, Leader deckLeader) {
         this.deckFaction = deckFaction;
         this.deckLeader = deckLeader;
@@ -36,14 +41,16 @@ public class Deck {
         else
             cardsInDeck.put(card,cardsInDeck.get(card)-1);
     }
-    public ArrayList<Card> shuffleDeck(){
+    public void shuffleDeck(){
         ArrayList<Card> shuffledDeck=new ArrayList<>();
         for (Card card:cardsInDeck.keySet()){
             for(int i=0;i<cardsInDeck.get(card);i++)
                 shuffledDeck.add(card);
         }
         Collections.shuffle(shuffledDeck);
-        return shuffledDeck;
+        deckAsArrayList=shuffledDeck;
+        hand.addAll(shuffledDeck.subList(0,10));
+        reservedCards.addAll(shuffledDeck.subList(10, shuffledDeck.size()));
     }
     public void calculateDeck(){
          int totalCardsInDeck=0;
