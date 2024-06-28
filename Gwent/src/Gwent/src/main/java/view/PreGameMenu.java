@@ -292,12 +292,16 @@ public class PreGameMenu extends Application {
                 VetoCard vetoCard = new VetoCard();
                 vetoCard.setDeck(currentDeck.shuffleDeck());
                 vetoCard.start(stage);
+            }else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("!");
+                alert.show();
             }
-            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("!");
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("!");
             alert.show();
         }
-        Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("!");
-        alert.show();
     }
 
     public void calculateLabels(){

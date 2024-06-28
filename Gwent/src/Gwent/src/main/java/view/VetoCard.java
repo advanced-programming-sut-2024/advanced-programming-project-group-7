@@ -186,8 +186,6 @@ public class VetoCard  extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.centerOnScreen();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
         stage.setFullScreen(true);
     }
