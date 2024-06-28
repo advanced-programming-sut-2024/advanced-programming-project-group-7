@@ -122,6 +122,7 @@ public class PreGameMenu extends Application {
                     setCardsInDeck();
                     calculateLabels();
                 }
+                for(Card card1:currentDeck.getCardsInDeck().keySet()) System.out.println(card1.getCardName()+" "+currentDeck.getCardsInDeck().get(card1));
             });
             count++;
         }
