@@ -89,11 +89,11 @@ public class Client {
     public void start(String IP) throws IOException {
         this.establishConnection(IP, 35000);
         Scanner scanner = new Scanner(System.in);
-        String input;
-        this.getMessageFromOtherClient();
-        while (true) {
-            this.sendMessage(scanner.nextLine());
-
+//        String input;
+//        this.getMessageFromOtherClient();
+//        while (true) {
+//            this.sendMessage(scanner.nextLine());
+//
         }
     }
     public void sendButton() throws IOException {
