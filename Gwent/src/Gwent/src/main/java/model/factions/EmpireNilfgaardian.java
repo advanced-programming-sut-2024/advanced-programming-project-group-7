@@ -16,8 +16,8 @@ public class EmpireNilfgaardian extends Faction {
     }
     private final static ArrayList<Card> empireNilfgaardianCards =new ArrayList<>();
     static {
-        empireNilfgaardianCards.add(new Card("horn",3,true,0,"special",123,false));
-        empireNilfgaardianCards.add(new Horn("decoy", 3 , true, 0, "special",123,false));
+        empireNilfgaardianCards.add(new Horn("horn",3,true,0,"special",123,false));
+        empireNilfgaardianCards.add(new Card("decoy", 3 , true, 0, "special",123,false));
         empireNilfgaardianCards.add(new Mardroeme("mardroeme", 3 , true, 0, "special",123,false));
         empireNilfgaardianCards.add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
         empireNilfgaardianCards.add(new Card("frost", 3 , true, 0, "weather",7,false));
@@ -34,8 +34,8 @@ public class EmpireNilfgaardian extends Faction {
         empireNilfgaardianCards.add(new Medic("menno",1,false,10,"nilfgaard",3,true));
         empireNilfgaardianCards.add(new Card("moorvran",1,false,10,"nilfgaard",1,true));
         empireNilfgaardianCards.add(new Card("tibor",1,false,10,"nilfgaard",2,true));
-        empireNilfgaardianCards.add(new Spy("stefan",1,false,9,"nilfgaard",3,false));
-        empireNilfgaardianCards.add(new Spy("shilard",1,false,7,"nilfgaard",3,false));
+        empireNilfgaardianCards.add(new Spy("stefan",1,false,9,"nilfgaard",4,false));
+        empireNilfgaardianCards.add(new Spy("shilard",1,false,7,"nilfgaard",4,false));
         empireNilfgaardianCards.add(new Card("triss",1,false,7,"neutral",3,true));
         empireNilfgaardianCards.add(new Scorch("villen",1,false,7,"neutral",3,false));
         empireNilfgaardianCards.add(new Medic("yennefer",1,false,7,"neutral",2,true));
@@ -55,7 +55,7 @@ public class EmpireNilfgaardian extends Faction {
         empireNilfgaardianCards.add(new Muster("gaunter odimm darkness",3,false,4,"neutral",2,false));
         empireNilfgaardianCards.add(new Card("rainfarn",1,false,4,"nilfgaard",3,false));
         empireNilfgaardianCards.add(new Card("vanhemar",1,false,4,"nilfgaard",2,false));
-        empireNilfgaardianCards.add(new Spy("vattier",1,false,4,"nilfgaard",3,false));
+        empireNilfgaardianCards.add(new Spy("vattier",1,false,4,"nilfgaard",4,false));
         empireNilfgaardianCards.add(new TightBond("imperal brigade",4,false,3,"nilfgaard",3,false));
         empireNilfgaardianCards.add(new Card("morteisen",1,false,3,"nilfgaard",3,false));
         empireNilfgaardianCards.add(new Card("puttkammer",1,false,3,"nilfgaard",2,false));
@@ -69,7 +69,7 @@ public class EmpireNilfgaardian extends Faction {
         empireNilfgaardianCards.add(new Medic("archer support",1,false,1,"nilfgaard",2,false));
         empireNilfgaardianCards.add(new Medic("archer support 1",1,false,1,"nilfgaard",2,false));
         empireNilfgaardianCards.add(new Cow("cow",1,false,0,"neutral",2,false));
-        empireNilfgaardianCards.add(new Spy("mysterious elf",1,false,0,"neutral",3,true));
+        empireNilfgaardianCards.add(new Spy("mysterious elf",1,false,0,"neutral",4,true));
         empireNilfgaardianCards.add(new Medic("siege support",1,false,0,"nilfgaard",1,false));
     }
     private final static LinkedHashMap<Card,Integer> empireNilfgaardianDefaultDeck=new LinkedHashMap<>();

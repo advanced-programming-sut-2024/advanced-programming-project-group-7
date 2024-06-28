@@ -19,7 +19,7 @@ public class NorthernRealms extends Faction {
     private final static ArrayList<Card> northernRealmsCards=new ArrayList<>();
     static {
         northernRealmsCards.add(new Horn("horn", 3 , true, 0, "special",123,false));
-        northernRealmsCards.add(new Decoy("decoy", 3 , true, 0, "special",123,false));
+        northernRealmsCards.add(new Card("decoy", 3 , true, 0, "special",123,false));
         northernRealmsCards.add(new Mardroeme("mardroeme", 3 , true, 0, "special",123,false));
         northernRealmsCards.add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
         northernRealmsCards.add(new Card("frost", 3 , true, 0, "weather",7,false));
@@ -48,7 +48,7 @@ public class NorthernRealms extends Faction {
         northernRealmsCards.add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
         northernRealmsCards.add(new Card("emiel", 1 , false, 5, "neutral",3,false));
         northernRealmsCards.add(new Card("keira", 1 , false, 5, "realms",2,false));
-        northernRealmsCards.add(new Spy("stennis", 1 , false, 5, "realms",3,false));
+        northernRealmsCards.add(new Spy("stennis", 1 , false, 5, "realms",4,false));
         northernRealmsCards.add(new Card("siegfried", 1 , false, 5, "realms",3,false));
         northernRealmsCards.add(new Card("sheala", 1 , false, 5, "realms",2,false));
         northernRealmsCards.add(new Card("ves", 1 , false, 5, "realms",3,false));
@@ -57,7 +57,7 @@ public class NorthernRealms extends Faction {
         northernRealmsCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         northernRealmsCards.add(new Card("sabrina", 1 , false, 4, "realms",2,false));
         northernRealmsCards.add(new Card("sheldon", 1 , false, 4, "realms",2,false));
-        northernRealmsCards.add(new Spy("dijkstra", 1 , false, 4, "realms",3,false));
+        northernRealmsCards.add(new Spy("dijkstra", 1 , false, 4, "realms",4,false));
         northernRealmsCards.add(new Horn("dandelion", 1 , false, 2, "neutral",3,false));
         northernRealmsCards.add(new Muster("gaunter odimm", 1 , false, 2, "neutral",1,false));
         northernRealmsCards.add(new Horn("yarpen", 1 , false, 2, "realms",3,false));
@@ -67,9 +67,9 @@ public class NorthernRealms extends Faction {
         northernRealmsCards.add(new TightBond("poor infantry", 4 , false, 1, "realms",3,false));
         northernRealmsCards.add(new Horn("redania", 1 , false, 1, "realms",3,false));
         northernRealmsCards.add(new Horn("redania 1", 1 , false, 1, "realms",3,false));
-        northernRealmsCards.add(new Spy("thaler", 1 , false, 1, "realms",1,false));
+        northernRealmsCards.add(new Spy("thaler", 1 , false, 1, "realms",6,false));
         northernRealmsCards.add(new Cow("cow", 1 , false, 0, "neutral",2,false));
-        northernRealmsCards.add(new Spy("mysterious elf", 1 , false, 0, "neutral",3,true));
+        northernRealmsCards.add(new Spy("mysterious elf", 1 , false, 0, "neutral",4,true));
     }
     private final static LinkedHashMap<Card,Integer> northernRealmsDefaultDeck=new LinkedHashMap<>();
     static {

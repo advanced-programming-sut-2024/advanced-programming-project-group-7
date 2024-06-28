@@ -15,8 +15,8 @@ public class Monsters extends Faction {
     }
     private final static ArrayList<Card> monsterCards = new ArrayList<>();
     static {
-        monsterCards.add(new Decoy("horn", 3, true, 0, "special",123,false));
-        monsterCards.add(new Horn("decoy", 3, true, 0, "special",123,false));
+        monsterCards.add(new Horn("horn", 3, true, 0, "special",123,false));
+        monsterCards.add(new Card("decoy", 3, true, 0, "special",123,false));
         monsterCards.add(new Mardroeme("mardroeme", 3, true, 0, "special",123,false));
         monsterCards.add(new Scorch("scorch", 3, true, 0, "special",123456,false));
         monsterCards.add(new Card("frost", 3, true, 0, "weather",7,false));
@@ -78,7 +78,7 @@ public class Monsters extends Faction {
         monsterCards.add(new Muster("ghoul 1", 1, false, 1, "monsters",3,false));
         monsterCards.add(new Muster("ghoul 2", 1, false, 1, "monsters",2,false));
         monsterCards.add(new Cow("cow", 1, false, 0, "neutral",2,false));
-        monsterCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",3,true));
+        monsterCards.add(new Spy("mysterious elf", 1, false, 0, "neutral",4,true));
     }
     private final static LinkedHashMap<Card,Integer> monsterDefaultDeck=new LinkedHashMap<>();
     static{
