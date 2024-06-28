@@ -35,3 +35,6 @@ Gwent/src/Gwent/target/classes/model/Leader.class
 Gwent/src/Gwent/target/classes/view/GameLauncher.class
 Gwent/src/Gwent/src/main/java/view/PreGameMenu.java
 Gwent/src/Gwent/src/main/java/model/Client.java
+Gwent/src/Gwent/target/classes/model/Client$1.class
+Gwent/src/Gwent/target/classes/model/factions/EmpireNilfgaardian.class
+Gwent/src/Gwent/target/classes/model/Server$1.class
