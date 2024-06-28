@@ -13,18 +13,20 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.Card;
-import model.Deck;
-import model.Game;
+import model.*;
+import model.cards.Horn;
+import model.factions.Monsters;
+import model.leaders.MonstersLeaders;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
 
 public class VetoCard  extends Application {
     private Pane pane;
-    public Deck deck;
+    public Deck deck = new Deck(new Monsters("hi"), new MonstersLeaders("eredin silver","hi", "monsters"));
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     private int totalClick=0;
@@ -34,6 +36,10 @@ public class VetoCard  extends Application {
     private int count =0;
     private Stage stage;
     private ArrayList<Card> update = new ArrayList<>();
+    private Card substitue1 = new Horn("horn", 3 , true, 0, "special",123,false);
+    private Card substitue2 = new Horn("horn", 3 , true, 0, "special",123,false);
+    private boolean First = true;
+    public static Deck staticDeck;
 
 
     public void showVetoMenu() {
@@ -54,11 +60,12 @@ public class VetoCard  extends Application {
         vBox.setMaxWidth(200);
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
+            staticDeck = deck;
             vetoMenu.close();
             stage.close();
             GameLauncher gameLauncher = new GameLauncher();
             try {
-                gameLauncher.start(LoginMenu.stage);
+                gameLauncher.start(MainMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -72,15 +79,14 @@ public class VetoCard  extends Application {
         gridpane.setLayoutX(250);
         gridpane.setLayoutY(100);
         vetoMenu.setScene(scene);
-        vetoMenu.showAndWait();
+        vetoMenu.show();
     }
 
     private void setCards() {
         gridpane.getChildren().clear();
-         deck.hand = update;
-        int bound = deck.reservedCards.size() - 1;
-        for (Iterator<Card> iterator = deck.hand.iterator(); iterator.hasNext(); ) {
-            Card card = iterator.next();
+         deck.hand.clear();
+         deck.hand.addAll(update);
+        for (Card card : deck.hand) {
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
@@ -90,11 +96,14 @@ public class VetoCard  extends Application {
             rectangle.setArcWidth(20);
             pane.getChildren().add(rectangle);
             pane.setOnMouseClicked(event -> {
-                deck.hand.remove(card); // Use iterator to remove the card
-                Random random = new Random();
-                Card card1 = deck.reservedCards.get(random.nextInt(0, bound));
-                update.add(card1);
-                deck.reservedCards.add(card);
+                update.remove(card); // Use iterator to remove the card
+                if (First) {
+//                    update.add(substitue2);
+                    First = false;
+                }
+                else {
+//                    update.add(substitue1);
+                }
                 setCards();
             });
             gridpane.add(pane, count % 5, count / 5);
@@ -135,11 +144,11 @@ public class VetoCard  extends Application {
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setResizable(false);
-
-
-        deck = Deck.currentDeck;
-        deck.shuffleDeck();
-        update = deck.hand;
+        Deck.currentDeck.shuffleDeck();
+        deck.hand.addAll(Deck.currentDeck.hand);
+        update.addAll(deck.hand);
+//        substitue1 = deck.reservedCards.get(0);
+//        substitue2 = deck.reservedCards.get(1);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);

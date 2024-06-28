@@ -22,6 +22,7 @@ import java.net.URL;
 
 public class MainMenu extends Application {
 
+    public static Stage stage;
     public Label Username;
 
     @Override

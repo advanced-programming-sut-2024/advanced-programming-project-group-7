@@ -54,7 +54,6 @@ public class PreGameMenu extends Application {
         URL url = LoginMenu.class.getResource("/FXML/PreGameMenu.fxml");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
-        this.stage = stage;
         stage.setScene(scene);
         stage.setTitle("pregame menu");
         stage.show();
@@ -306,9 +305,9 @@ public class PreGameMenu extends Application {
 
     public void goToVeto(MouseEvent mouseEvent) {
         try {
-            Deck.currentDeck = currentDeck;
-            VetoCard vetoCard = new VetoCard();
-            vetoCard.start(LoginMenu.stage);
+
+            GameLauncher gameLauncher = new GameLauncher();
+            gameLauncher.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
