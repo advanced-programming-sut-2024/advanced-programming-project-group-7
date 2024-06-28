@@ -86,8 +86,8 @@ public class VetoCard  extends Application {
 
     private void gotoGameLauncher() throws Exception {
         GameLauncher gameLauncher = new GameLauncher();
-        gameLauncher.setDeck(currentDeck);
-        gameLauncher.setHand(hand);
+//        gameLauncher.setDeck(currentDeck);
+//        gameLauncher.setHand(hand);
         gameLauncher.start(stage);
     }
     public void addSomeCardsToHand(){
@@ -106,7 +106,7 @@ public class VetoCard  extends Application {
         }else if(totalClick==1){
             first= random.nextInt(0,tempDeck.size()-1);
             hand.add(tempDeck.get(first));
-        }//formerge
+        }
     }
 
 
@@ -186,6 +186,8 @@ public class VetoCard  extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.centerOnScreen();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
         stage.setFullScreen(true);
     }
@@ -195,9 +197,5 @@ public class VetoCard  extends Application {
         pane.setMaxHeight(HEIGHT);
         pane.setMinWidth(WIDTH);
         pane.setMaxWidth(WIDTH);
-    }
-
-    public void setDeck(ArrayList<Card> currentDeck) {
-        VetoCard.currentDeck=currentDeck;
     }
 }

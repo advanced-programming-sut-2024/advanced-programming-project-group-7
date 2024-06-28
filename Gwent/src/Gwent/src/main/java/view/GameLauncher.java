@@ -1,5 +1,7 @@
 package view;
 
+import controller.Client;
+import controller.GameServer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,7 +18,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Card;
-import model.Client;
 import model.Game;
 import model.Leader;
 import model.cards.*;
@@ -24,8 +25,9 @@ import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
-import java.awt.*;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class GameLauncher extends Application {
@@ -34,8 +36,6 @@ public class GameLauncher extends Application {
 
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
-    private ArrayList<Card> deck=new ArrayList<>();
-    private ArrayList<Card> hand=new ArrayList<>();
     public HBox playerHand = new HBox();
     public HBox playerFirstRowHorn = new HBox();
     public HBox playerFirstRow = new HBox();
@@ -55,19 +55,19 @@ public class GameLauncher extends Application {
     private Card selected;
     private double sceneX;
     private double sceneY;
-    public Client currentClient;
 
 
     public Rectangle showCardRectangle = new Rectangle();
-
-
-
+    private boolean yourTurn = true;
 
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        game = new Game(this);
+        Client client = new Client(game);
+        client.start();
         pane = new Pane();
-        game = new Game();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
 
@@ -97,45 +97,43 @@ public class GameLauncher extends Application {
         playerName.setTextFill(Color.YELLOW);
         playerName.setFont(new Font(20));
 
-        Rectangle life1=new Rectangle();
-        life1.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
-        life1.setHeight(40);
-        life1.setWidth(40);
-        life1.setLayoutY(555);
-        life1.setLayoutX(240);
+        game.life1=new Rectangle();
+        game.life1.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        game.life1.setHeight(40);
+        game.life1.setWidth(40);
+        game.life1.setLayoutY(555);
+        game.life1.setLayoutX(240);
 
-        Rectangle life2=new Rectangle();
-        life2.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
-        life2.setHeight(40);
-        life2.setWidth(40);
-        life2.setLayoutY(555);
-        life2.setLayoutX(281);
+        game.life2 = new Rectangle();
+        game.life2.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        game.life2.setHeight(40);
+        game.life2.setWidth(40);
+        game.life2.setLayoutY(555);
+        game.life2.setLayoutX(281);
 
-        Label totalPower=new Label(String.valueOf(300));
-        totalPower.setLayoutY(600);
-        totalPower.setLayoutX(357);
-        totalPower.setTextFill(Color.BLACK);
-        totalPower.setFont(new Font(25));
+        game.totalPower=new Label("0");
+        game.totalPower.setLayoutY(600);
+        game.totalPower.setLayoutX(357);
+        game.totalPower.setTextFill(Color.BLACK);
+        game.totalPower.setFont(new Font(25));
 
-        Label totalRow1Power=new Label(String.valueOf(100));
-        totalRow1Power.setLayoutY(625);
-        totalRow1Power.setLayoutX(427);
-        totalRow1Power.setTextFill(Color.BLACK);
-        totalRow1Power.setFont(new Font(20));
+        game.totalRow1Power=new Label("0");
+        game.totalRow1Power.setLayoutY(625);
+        game.totalRow1Power.setLayoutX(427);
+        game.totalRow1Power.setTextFill(Color.BLACK);
+        game.totalRow1Power.setFont(new Font(20));
 
-        Label totalRow2Power=new Label(String.valueOf(200));
-        totalRow2Power.setLayoutY(510);
-        totalRow2Power.setLayoutX(427);
-        totalRow2Power.setTextFill(Color.BLACK);
-        totalRow2Power.setFont(new Font(20));
+        game.totalRow2Power=new Label("0");
+        game.totalRow2Power.setLayoutY(510);
+        game.totalRow2Power.setLayoutX(427);
+        game.totalRow2Power.setTextFill(Color.BLACK);
+        game.totalRow2Power.setFont(new Font(20));
 
-        Label totalRow3Power=new Label(String.valueOf(300));
-        totalRow3Power.setLayoutY(395);
-        totalRow3Power.setLayoutX(427);
-        totalRow3Power.setTextFill(Color.BLACK);
-        totalRow3Power.setFont(new Font(20));
-
-
+        game.totalRow3Power=new Label("0");
+        game.totalRow3Power.setLayoutY(395);
+        game.totalRow3Power.setLayoutX(427);
+        game.totalRow3Power.setTextFill(Color.BLACK);
+        game.totalRow3Power.setFont(new Font(20));
 
         Rectangle highScore=new Rectangle();
         highScore.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
@@ -144,8 +142,29 @@ public class GameLauncher extends Application {
         highScore.setLayoutY(590);
         highScore.setLayoutX(347);
 
-
-
+        game.weatherBox = new HBox();
+        game.weatherBox.setLayoutY(385);
+        game.weatherBox.setLayoutX(120);
+        game.weatherBox.setMinHeight(98);
+        game.weatherBox.setMinWidth(235);
+        game.weatherBox.setOnMouseClicked(event ->  {
+            HBox target;
+            target = game.weatherBox;
+            if (selected != null && fitsBox(selected, target)) {
+                game.selectedBox = target;
+                game.playerHand.getChildren().remove(selected);
+                addCardToPane(selected, event.getSceneY(), event.getSceneX());
+            }
+            pane.getChildren().remove(showCardRectangle);
+            playerFirstRow.setStyle("");
+            playerSecondRow.setStyle("");
+            playerThirdRow.setStyle("");
+            playerFirstRowHorn.setStyle("");
+            playerSecondRowHorn.setStyle("");
+            playerThirdRowHorn.setStyle("");
+            game.weatherBox.setStyle("");
+            selected = null;
+        });
 
         Rectangle realmForAvatar=new Rectangle();//todo needs 5 else if for player's faction
         realmForAvatar.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_realms.png").toExternalForm()))));
@@ -184,50 +203,50 @@ public class GameLauncher extends Application {
         playerNameOpponent.setTextFill(Color.YELLOW);
         playerNameOpponent.setFont(new Font(20));
 
-        Rectangle life1Opponent=new Rectangle();
-        life1Opponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
-        life1Opponent.setHeight(40);
-        life1Opponent.setWidth(40);
-        life1Opponent.setLayoutY(270);
-        life1Opponent.setLayoutX(240);
+        game.life1Opponent=new Rectangle();
+        game.life1Opponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        game.life1Opponent.setHeight(40);
+        game.life1Opponent.setWidth(40);
+        game.life1Opponent.setLayoutY(270);
+        game.life1Opponent.setLayoutX(240);
 
-        Rectangle life2Opponent=new Rectangle();
-        life2Opponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
-        life2Opponent.setHeight(40);
-        life2Opponent.setWidth(40);
-        life2Opponent.setLayoutY(270);
-        life2Opponent.setLayoutX(281);
+        game.life2Opponent=new Rectangle();
+        game.life2Opponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_gem_on.png").toExternalForm()))));
+        game.life2Opponent.setHeight(40);
+        game.life2Opponent.setWidth(40);
+        game.life2Opponent.setLayoutY(270);
+        game.life2Opponent.setLayoutX(281);
 
-        Label totalPowerOpponent=new Label(String.valueOf(50));
-        totalPowerOpponent.setLayoutY(265);
-        totalPowerOpponent.setLayoutX(357);
-        totalPowerOpponent.setTextFill(Color.BLACK);
-        totalPowerOpponent.setFont(new Font(25));
+        game.totalPowerOpponent=new Label("0");
+        game.totalPowerOpponent.setLayoutY(265);
+        game.totalPowerOpponent.setLayoutX(357);
+        game.totalPowerOpponent.setTextFill(Color.BLACK);
+        game.totalPowerOpponent.setFont(new Font(25));
 
-        Label totalRow1PowerOpponent=new Label(String.valueOf(10));
-        totalRow1PowerOpponent.setLayoutY(47);
-        totalRow1PowerOpponent.setLayoutX(427);
-        totalRow1PowerOpponent.setTextFill(Color.BLACK);
-        totalRow1PowerOpponent.setFont(new Font(20));
+        game.totalRow1PowerOpponent=new Label("0");
+        game.totalRow1PowerOpponent.setLayoutY(47);
+        game.totalRow1PowerOpponent.setLayoutX(427);
+        game.totalRow1PowerOpponent.setTextFill(Color.BLACK);
+        game.totalRow1PowerOpponent.setFont(new Font(20));
 
-        Label totalRow2PowerOpponent=new Label(String.valueOf(20));
-        totalRow2PowerOpponent.setLayoutY(162);
-        totalRow2PowerOpponent.setLayoutX(427);
-        totalRow2PowerOpponent.setTextFill(Color.BLACK);
-        totalRow2PowerOpponent.setFont(new Font(20));
+        game.totalRow2PowerOpponent=new Label("0");
+        game.totalRow2PowerOpponent.setLayoutY(162);
+        game.totalRow2PowerOpponent.setLayoutX(427);
+        game.totalRow2PowerOpponent.setTextFill(Color.BLACK);
+        game.totalRow2PowerOpponent.setFont(new Font(20));
 
-        Label totalRow3PowerOpponent=new Label(String.valueOf(30));
-        totalRow3PowerOpponent.setLayoutY(277);
-        totalRow3PowerOpponent.setLayoutX(427);
-        totalRow3PowerOpponent.setTextFill(Color.BLACK);
-        totalRow3PowerOpponent.setFont(new Font(20));
+        game.totalRow3PowerOpponent=new Label("0");
+        game.totalRow3PowerOpponent.setLayoutY(277);
+        game.totalRow3PowerOpponent.setLayoutX(427);
+        game.totalRow3PowerOpponent.setTextFill(Color.BLACK);
+        game.totalRow3PowerOpponent.setFont(new Font(20));
 
-        Rectangle highScoreOpponent=new Rectangle();
-        highScoreOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
-        highScoreOpponent.setHeight(63);
-        highScoreOpponent.setWidth(63);
-        highScoreOpponent.setLayoutY(252);
-        highScoreOpponent.setLayoutX(347);
+        game.highScoreOpponent=new Rectangle();
+        game.highScoreOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
+        game.highScoreOpponent.setHeight(63);
+        game.highScoreOpponent.setWidth(63);
+        game.highScoreOpponent.setLayoutY(252);
+        game.highScoreOpponent.setLayoutX(347);
 
 
 
@@ -325,21 +344,19 @@ public class GameLauncher extends Application {
         buttonPass.setText("Pass");
         buttonPass.setLayoutX(320);
         buttonPass.setLayoutY(750);
-        buttonPass.setOnMouseClicked(mouseEvent -> {
-            try {
-                currentClient.sendButton();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        buttonPass.setOnMouseClicked(event -> game.waitForEnemy(game));
 
 
         Button buttonPassOpponent=new Button();
         buttonPassOpponent.setText("Pass");
         buttonPassOpponent.setLayoutX(320);
         buttonPassOpponent.setLayoutY(110);
+        buttonPassOpponent.setOnMouseClicked(event -> {
+            yourTurn = true;
+            game.newRound(game);
+        });
 
-        highScoreOpponent.setVisible(false);
+        game.highScoreOpponent.setVisible(false);
 
         frostedRow.setVisible(false);
         frostedRowOpponent.setVisible(false);
@@ -355,16 +372,16 @@ public class GameLauncher extends Application {
 
 
 
-        pane.getChildren().addAll(createHbox(),playerName,avatar,life1,life2, cardx,labelForNumberOfCards,totalPower,highScore,realmForAvatar,
-                playerNameOpponent,avatarOpponent,life1Opponent,life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,totalPowerOpponent,highScoreOpponent,realmForAvatarOpponent,
+        pane.getChildren().addAll(createHbox(),game.weatherBox, playerName,avatar,game.life1,game.life2, cardx,labelForNumberOfCards,game.totalPower,highScore,realmForAvatar,
+                playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
-                ,totalRow1Power,totalRow2Power,totalRow3Power,totalRow1PowerOpponent,totalRow2PowerOpponent,totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
+                ,game.totalRow1Power,game.totalRow2Power,game.totalRow3Power,game.totalRow1PowerOpponent,game.totalRow2PowerOpponent,game.totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
                 ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent);
 
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
@@ -383,65 +400,70 @@ public class GameLauncher extends Application {
         hBoxes.add(playerFifthRowHorn);
         hBoxes.add(playerSixthRowHorn);
 
-//        playerFirstRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-//        playerSecondRow.getChildren().add(new Card("rain", 2 , true, 0, "weather",7,false));
-//        playerFourthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-//        playerFifthRow.getChildren().add(new Card("geralt", 1 , false, 15, "neutral",3,true));
-//        playerFifthRowHorn.getChildren().add(new Decoy("horn", 3, true, 0, "special",12,false));
-//        playerSixthRow.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
+        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
         playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
-        playerHand.getChildren().add(new Agile("harpy", 1, false, 2, "monsters",23,false));
+        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
         playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
         playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
-        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
-        playerHand.getChildren().add(new Horn("horn", 3 , true, 0, "special",123,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
+        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
+        playerHand.getChildren().add(medic);
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
-                if(pane.getChildren().contains(showCardRectangle)){
-                    pane.getChildren().remove(showCardRectangle);
-                }
-                for (HBox hBox:hBoxes){
-                    hBox.setStyle("");
-                }
-                sceneX = event.getSceneX();
-                sceneY = event.getSceneY();
-                selected = (Card) card;
+                if (yourTurn) {
+                    if (card instanceof Decoy) {
+                        game.selected = (Card) card;
+                    } else {
+                        if (pane.getChildren().contains(showCardRectangle)) {
+                            pane.getChildren().remove(showCardRectangle);
+                        }
+                        for (HBox hBox : hBoxes) {
+                            hBox.setStyle("");
+                        }
+                        sceneX = event.getSceneX();
+                        sceneY = event.getSceneY();
+                        selected = (Card) card;
 
 
-                showCardRectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(selected.getLgPath()).toExternalForm()))));
-                showCardRectangle.setHeight(470);
-                showCardRectangle.setWidth(235);
-                showCardRectangle.setLayoutY(220);
-                showCardRectangle.setLayoutX(1280);
-                pane.getChildren().add(showCardRectangle);
+                        showCardRectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(selected.getLgPath()).toExternalForm()))));
+                        showCardRectangle.setHeight(470);
+                        showCardRectangle.setWidth(235);
+                        showCardRectangle.setLayoutY(220);
+                        showCardRectangle.setLayoutX(1280);
+                        pane.getChildren().add(showCardRectangle);
 
 
-                if(selected.getRows()==3){
-                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        if (selected.getCardName().equals("horn")) {
+                            playerFirstRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                            playerSecondRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                            playerThirdRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        } else if (selected.getRows().contains(2) && selected.getRows().contains(3)) {
+                            playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                            playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        } else if (selected.getRows().contains(2)) {
+                            playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        } else if (selected.getRows().contains(1)) {
+                            playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        } else if (selected.getRows().contains(3)) {
+                            playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        } else if (selected.getRows().contains(7)) {
+                            game.weatherBox.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        }
+                    }
                 }
-                else if(selected.getRows()==2){
-                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-                else if(selected.getRows()==1){
-                    playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-                else if(selected.getRows()==23){
-                    playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                    playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-                else if(selected.getCardName().equals("horn")){
-                    playerFirstRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                    playerSecondRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                    playerThirdRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                }
-
             });
         }
-
     }
-    public void addCardToPane(Card card, double endY, double endX, HBox playerRow){
+    public void addCardToPane(Card card, double endY, double endX){
         pane.getChildren().add(card);
         card.setLayoutY(this.sceneY);
         card.setLayoutX(this.sceneX);
@@ -479,7 +501,7 @@ public class GameLauncher extends Application {
         addRow(rightVBox, playerSixthRowHorn, playerSixthRow, 98.0, 80.0);
         addRow(rightVBox, playerFifthRowHorn, playerFifthRow, 98.0, 670.0);
         addRow(rightVBox, playerFourthRowHorn, playerFourthRow, 98.0, 670.0);
-        addRow(rightVBox, null ,null, 0 , 670);
+        addRow(rightVBox, new HBox() ,null, 0 , 670);
         addRow(rightVBox, playerThirdRowHorn, playerThirdRow, 98, 670.0);
         addRow(rightVBox, playerSecondRowHorn, playerSecondRow, 98.0, 670.0);
         addRow(rightVBox, playerFirstRowHorn, playerFirstRow, 98.0, 670.0);
@@ -509,31 +531,26 @@ public class GameLauncher extends Application {
         row.setMinHeight(minHeight);
         row.setMinWidth(minWidth);
         row.setOnMouseClicked(event -> {
-            if (selected != null) {
+            HBox target;
+            if (selected instanceof Horn)
+                target = horn;
+            else target = playerRow;
+
+            if (selected != null && fitsBox(selected, target)) {
                 pane.getChildren().remove(showCardRectangle);
-                game.selectedBox = playerRow;
-                playerHand.getChildren().remove(selected);
-                addCardToPane(selected, event.getSceneY(), event.getSceneX(), playerRow);
-                if(selected.getRows()==3){
-                    playerThirdRow.setStyle("");
-                }
-                else if(selected.getRows()==2){
-                    playerSecondRow.setStyle("");
-                }
-                else if(selected.getRows()==1){
-                    playerFirstRow.setStyle("");
-                }
-                else if(selected.getRows()==23){
-                    playerSecondRow.setStyle("");
-                    playerThirdRow.setStyle("");
-                }
-                else if(selected.getCardName().equals("horn")){
-                    playerFirstRowHorn.setStyle("");
-                    playerSecondRowHorn.setStyle("");
-                    playerThirdRowHorn.setStyle("");
-                }
-                selected = null;
+                game.selectedBox = target;
+                System.out.println("hi");
+                game.playerHand.getChildren().remove(selected);
+                addCardToPane(selected, event.getSceneY(), event.getSceneX());
             }
+            pane.getChildren().remove(showCardRectangle);
+            playerFirstRow.setStyle("");
+            playerSecondRow.setStyle("");
+            playerThirdRow.setStyle("");
+            playerFirstRowHorn.setStyle("");
+            playerSecondRowHorn.setStyle("");
+            playerThirdRowHorn.setStyle("");
+            selected = null;
         });
 
         if (horn != null) {
@@ -553,6 +570,25 @@ public class GameLauncher extends Application {
         }
 
         parent.getChildren().add(row);
+    }
+
+    private boolean fitsBox(Card selected, HBox playerRow) {
+        int selectedRow = 0;
+        if (playerRow.equals(playerFirstRow))
+            selectedRow = 1;
+        else if (playerRow.equals(playerSecondRow)) {
+            selectedRow = 2;
+        } else if (playerRow.equals(playerThirdRow)) {
+            selectedRow = 3;
+        } else if (selected instanceof Horn) {
+            return true;
+        } else if (playerRow.equals(game.weatherBox)) {
+            selectedRow = 7;
+        }
+        if (selected.getRows().contains(selectedRow)) {
+            return true;
+        }
+        return false;
     }
 
     private void setSize (Pane pane) {
@@ -576,22 +612,5 @@ public class GameLauncher extends Application {
 
         return backgroundImage;
     }
-
-    public ArrayList<Card> getDeck() {
-        return deck;
-    }
-
-    public void setDeck(ArrayList<Card> deck) {
-        this.deck = deck;
-    }
-
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
-
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
-    }
-
 
 }
