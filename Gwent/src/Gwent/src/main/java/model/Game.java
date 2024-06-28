@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
+import model.cards.Spy;
 import view.GameLauncher;
 
 import java.time.LocalDate;
@@ -58,6 +59,8 @@ public class Game {
         this.playerFourthRowHorn =gameLauncher.playerFourthRowHorn;
         this.playerFifthRowHorn = gameLauncher.playerFifthRowHorn;
         this.playerSixthRowHorn = gameLauncher.playerSixthRowHorn;
+//        this.graveYard.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
+//        this.graveYard.getChildren().add(new Card("tibor",1,false,10,"nilfgaard",2,true));
     }
     public Group cardGroup = new Group();
     private LocalDate date= LocalDate.now();
@@ -90,7 +93,7 @@ public class Game {
         return finalPoints;
     }
 
-    public void removeDominantCard() {
+    public void removeDominantCard(){
         //todo
     }
 

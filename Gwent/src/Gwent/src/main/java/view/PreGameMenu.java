@@ -49,7 +49,7 @@ public class PreGameMenu extends Application {
     public Label specialCards;
     public Label totalUnitCardStrength;
     public Label heroCards;
-    public Stage stage;
+//     public Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -292,7 +292,7 @@ public class PreGameMenu extends Application {
         if(currentDeck.totalUnitCard>=22){
             if(currentDeck.totalSpecialCardInDeck<=10) {
                 VetoCard vetoCard = new VetoCard();
-                vetoCard.setDeck(currentDeck.shuffleDeck());
+//                vetoCard.setDeck(currentDeck.shuffleDeck());
                 vetoCard.start(stage);
             }else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);

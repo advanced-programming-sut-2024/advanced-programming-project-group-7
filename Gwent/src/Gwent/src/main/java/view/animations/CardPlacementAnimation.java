@@ -104,7 +104,7 @@ public class CardPlacementAnimation extends Transition {
                 game.removeDominantCard();
                 game.selectedBox.getChildren().remove(card);
             } else if (card instanceof MoralBoost) {
-                game.boostRow(game.selectedBox, game);
+                game.boostRow(game.selectedBox,game);
             } else if (card instanceof Spy) {
                 game.spyACard();
             } else if (card instanceof TightBond) {

@@ -404,15 +404,17 @@ public class GameLauncher extends Application {
         playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
         playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
         playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
-        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+//        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
         playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
-        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+//        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+//        playerHand.getChildren().add((new Card("storm", 3 , true, 0, "weather",7,false));todo why ?
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
         Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
         playerHand.getChildren().add(medic);
+        playerHand.getChildren().add(new MoralBoost("olgierd",1,false,6,"neutral",23,false));;
         playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
         playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
         playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
@@ -421,7 +423,7 @@ public class GameLauncher extends Application {
             card.setOnMouseClicked(event -> {
                 if (yourTurn) {
                     if (card instanceof Decoy) {
-                        game.selected = (Card) card;
+                        game.selected = (Card) card;//todo What?
                     } else {
                         if (pane.getChildren().contains(showCardRectangle)) {
                             pane.getChildren().remove(showCardRectangle);

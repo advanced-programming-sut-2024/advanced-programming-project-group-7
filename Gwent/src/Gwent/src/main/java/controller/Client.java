@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.net.URL;
 
 public class Client extends Thread {
-    private final String serverName = "localhost";
+    private final String serverName =  "192.168.45.59";
     private final int serverPort = 9200;
     private Game game;
 
@@ -22,9 +22,11 @@ public class Client extends Thread {
 
     @Override
     public void run(){
-
+        this.dir();
     }
-    public void start() {
+    public void dir() {
+
+        System.out.println("yo");
         try (Socket socket = new Socket(serverName, serverPort);
              BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
              DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());

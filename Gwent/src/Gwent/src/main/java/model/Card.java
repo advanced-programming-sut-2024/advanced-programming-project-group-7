@@ -102,9 +102,9 @@ public class Card extends Pane {
 
     public void calculatePower() {
         int currentPower = isWeak ? 1 : power;
-        currentPower *= bondLevel;
+        currentPower *= bondLevel;//todo what?
         currentPower += boostLevel;
-        if (isDoubeld) currentPower *= 2;
+        if (isDoubeld) currentPower *= 2;//todo what?
         this.powerLabel.setText(String.valueOf(currentPower));
     }
 
