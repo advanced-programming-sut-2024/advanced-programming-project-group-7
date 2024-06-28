@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ import java.util.LinkedHashMap;
 
 public class PreGameMenu extends Application {
 
+    public static Stage stage;
     public Label factionName;
     private int factionIndex;
     public Rectangle LeaderImage;
@@ -55,6 +57,7 @@ public class PreGameMenu extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("pregame menu");
+        PreGameMenu.stage=stage;
         stage.show();
         stage.setFullScreen(true);
     }
@@ -281,6 +284,22 @@ public class PreGameMenu extends Application {
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
     }
+
+    @FXML
+    private void gotoVeto() throws Exception {
+        if(currentDeck.totalUnitCard>=22){
+            if(currentDeck.totalSpecialCardInDeck<=10) {
+                VetoCard vetoCard = new VetoCard();
+                vetoCard.setDeck(currentDeck.shuffleDeck());
+                vetoCard.start(stage);
+            }
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("!");
+            alert.show();
+        }
+        Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("!");
+        alert.show();
+    }
+
     public void calculateLabels(){
         currentDeck.calculateDeck();
         totalCardInDeck.setText(String.valueOf(currentDeck.totalCardsInDeck));

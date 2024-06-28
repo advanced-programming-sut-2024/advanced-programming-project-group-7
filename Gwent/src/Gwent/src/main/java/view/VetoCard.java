@@ -198,4 +198,8 @@ public class VetoCard  extends Application {
         pane.setMinWidth(WIDTH);
         pane.setMaxWidth(WIDTH);
     }
+
+    public void setDeck(ArrayList<Card> currentDeck) {
+        VetoCard.currentDeck=currentDeck;
+    }
 }

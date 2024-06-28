@@ -31,7 +31,7 @@
                 <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="320" stroke="BLACK" strokeType="INSIDE" width="200.0" />
                 <Button mnemonicParsing="false" onMouseClicked="#showLeaderMenu" text="Change Leader" />
                 <Button mnemonicParsing="false" onMouseClicked="#showFactionMenu" text="Change Faction" />
-                <Button mnemonicParsing="false" text="Button" />
+                <Button mnemonicParsing="false" text="Start"  onMouseClicked="#gotoVeto" />
             </children>
             <Label text="total cards in deck" textFill="#ffa514">
                 <font>
