@@ -1,5 +1,6 @@
 package view;
 
+import controller.Client;
 import controller.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.Game;
 import model.User;
 
 import java.io.FileOutputStream;
@@ -36,6 +38,11 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        GameLauncher gameLauncher = new GameLauncher();
+        Game game = new Game(gameLauncher);
+        Client client = new Client(game, User.getLoggedInUser());
+        client.start();
+
         URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
