@@ -130,7 +130,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Client extends Thread {
 
 
-    private Game game;
+    public Game game;
     Socket socket;
     DataOutputStream sendBuffer;
     DataInputStream receiveBuffer;

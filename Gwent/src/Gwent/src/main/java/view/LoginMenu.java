@@ -1,6 +1,7 @@
 package view;
 
 //import controller.LoginMenuController;
+import controller.Client;
 import controller.LoginMenuController;
 import controller.ProfileMenuController;
 import javafx.application.Application;
@@ -18,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import model.Game;
 import model.User;
 
 import java.net.URL;
@@ -51,6 +53,10 @@ public class LoginMenu extends Application {
             mediaPlayer = new MediaPlayer(music);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
+            GameLauncher gameLauncher = new GameLauncher();
+            Game game = new Game(gameLauncher);
+            Client client = new Client(game);
+            client.start();
         }
 
         LoginMenu.stage = stage;

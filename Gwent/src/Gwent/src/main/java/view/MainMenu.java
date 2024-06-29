@@ -4,14 +4,21 @@ import controller.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.User;
 
@@ -24,6 +31,7 @@ public class MainMenu extends Application {
 
     public static Stage stage;
     public Label Username;
+    public Rectangle mail;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -86,5 +94,42 @@ public class MainMenu extends Application {
         Media media = new Media(getClass().getResource(path).toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
+    }
+
+    public void showRequests(MouseEvent mouseEvent) {
+        System.out.println("hi");
+        Stage reqMenu = new Stage();
+        Pane pane = new Pane();
+        pane.setMinWidth(300);
+        pane.setMinHeight(400);
+        Scene scene = new Scene(pane);
+        VBox reqs = new VBox();
+        reqs.setAlignment(Pos.CENTER);
+        for (String req : User.getLoggedInUser().getRequests()){
+            HBox hBox = new HBox(5);
+            String[] reqParts = req.split("\\.");
+            Label labelName = new Label(reqParts[0]);
+            hBox.getChildren().add(labelName);
+            Button accept = new Button("Accept");
+            accept.setOnMouseClicked(event -> {
+                User.getLoggedInUser().addFriend(reqParts[0]);
+                User.getLoggedInUser().getRequests().remove(req);
+            });
+            hBox.getChildren().add(accept);
+            Button reject = new Button("Accept");
+            accept.setOnMouseClicked(event -> {
+                User.getLoggedInUser().getRequests().remove(req);
+            });
+            hBox.getChildren().addAll(accept, reject);
+            reqs.getChildren().add(hBox);
+        }
+        Button exit = new Button("exit");
+        reqs.getChildren().add(exit);
+        exit.setOnMouseClicked(event -> {
+            reqMenu.close();
+        });
+        pane.getChildren().add(reqs);
+        reqMenu.setScene(scene);
+        reqMenu.show();
     }
 }
