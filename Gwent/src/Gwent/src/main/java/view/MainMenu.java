@@ -7,18 +7,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -47,6 +46,7 @@ public class MainMenu extends Application {
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        root.setBackground(new Background(createBackgroundImage()));
         stage.show();
         User.getLoggedInUser().client.sendMessage(User.getLoggedInUser().getNickname());
     }
@@ -146,5 +146,18 @@ public class MainMenu extends Application {
         pane.getChildren().add(reqs);
         reqMenu.setScene(scene);
         reqMenu.show();
+    }
+    private BackgroundImage createBackgroundImage () {
+        Image image = new Image(Game.class.getResource("/Images/background.jpg").toExternalForm(), 1280 ,768, false, false);
+        ImageView imageView = new ImageView(image);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image bwImage = imageView.snapshot(params, null);
+        BackgroundImage backgroundImage = new BackgroundImage(bwImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        return backgroundImage;
     }
 }

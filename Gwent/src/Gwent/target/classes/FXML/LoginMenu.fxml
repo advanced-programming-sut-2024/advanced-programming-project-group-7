@@ -11,10 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import model.Leader?>
-<BorderPane prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginMenu">
-    <center>
-        <VBox alignment="CENTER" maxWidth="494.0" prefHeight="768.0" prefWidth="464.0" spacing="10">
+<BorderPane prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginMenu">
+   <bottom>
+        <VBox alignment="CENTER" maxWidth="494.0" prefHeight="768.0" prefWidth="464.0" spacing="10" BorderPane.alignment="CENTER">
          <Pane minHeight="40.0" prefHeight="155.0" prefWidth="494.0" />
             <Label text="Welcome To Gwent">
                 <font>
@@ -69,31 +68,30 @@
                     <Font name="YuMincho Medium" size="20.0" />
                 </font></TextField>
             <HBox alignment="CENTER" minHeight="50.0" spacing="10">
-                <Pane minHeight="50.0" minWidth="100.0">
-                    <Label  textFill="black" alignment="CENTER" fx:id="hybridButt" onMouseClicked="#signUp" text="Login">
+                <Pane fx:id="hybridButtPane" minHeight="50.0" minWidth="100.0">
+                    <Label fx:id="hybridButt" alignment="CENTER" onMouseClicked="#signUp" prefHeight="50.0" prefWidth="100.0" text="Login" textFill="black">
                         <font>
-                            <Font name="Tiro Gurmukhi" size="24.0" />
+                            <Font name="Tiro Gurmukhi" size="30.0" />
                         </font>
                     </Label>
                 </Pane>
-                <Pane minHeight="50.0" minWidth="100.0">
-                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" onMouseClicked="#Switch" text="switch" textFill="black">
+                <Pane fx:id="switchPane" minHeight="50.0" minWidth="100.0">
+                    <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#Switch" prefHeight="50.0" prefWidth="100.0" text="switch" textFill="black">
                         <font>
-                            <Font name="Tiro Gurmukhi" size="24.0" />
+                            <Font name="Tiro Gurmukhi" size="30.0" />
                         </font>
                     </Label>
                 </Pane>
             </HBox>
-            <Pane minHeight="50.0">
-                <Label alignment="CENTER" textFill="black" fx:id="forgotPWD" onMouseClicked="#recoverPSWD" text="Forgot Password" visible="true">
+            <Pane fx:id="forgotPasswordPane" minHeight="50.0">
+                <Label fx:id="forgotPWD" alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="3.0" onMouseClicked="#recoverPSWD" prefHeight="50.0" prefWidth="300.0" text="Forgot Password" textAlignment="CENTER" textFill="black" visible="true">
                     <font>
-                        <Font name="Tiro Gurmukhi" size="24.0" />
+                        <Font name="Tiro Gurmukhi" size="30.0" />
                     </font>
                 </Label>
             </Pane>
          <Pane minHeight="40.0" prefHeight="139.0" prefWidth="494.0" />
         </VBox>
-
-    </center>
+   </bottom>
 
 </BorderPane>

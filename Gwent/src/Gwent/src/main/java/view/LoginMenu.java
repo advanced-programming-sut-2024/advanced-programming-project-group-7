@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import model.Game;
 import model.User;
 
+import java.awt.*;
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -41,6 +42,9 @@ public class LoginMenu extends Application {
     public TextField confirmPWD;
     public Label forgotPWD;
     public Button PassGen;
+    public Pane switchPane;
+    public Pane forgotPasswordPane;
+    public Pane hybridButtPane;
 
     public static void main(String[] args) {
         launch(args);
@@ -48,7 +52,6 @@ public class LoginMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         if (!hasMusic) {
             Media music = new Media(LoginMenu.class.getResource("/Sounds/01 No Escape.mp3").toExternalForm());
             mediaPlayer = new MediaPlayer(music);
