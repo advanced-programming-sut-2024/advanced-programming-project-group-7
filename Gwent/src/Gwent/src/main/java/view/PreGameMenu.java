@@ -47,7 +47,7 @@ public class PreGameMenu extends Application {
     public Label specialCards;
     public Label totalUnitCardStrength;
     public Label heroCards;
-    public Stage stage = new Stage();
+    public Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -58,6 +58,7 @@ public class PreGameMenu extends Application {
         stage.setTitle("pregame menu");
         stage.show();
         stage.setFullScreen(true);
+        this.stage = stage;
     }
 
     @FXML
@@ -305,9 +306,11 @@ public class PreGameMenu extends Application {
 
     public void goToVeto(MouseEvent mouseEvent) {
         try {
+            Deck.currentDeck = currentDeck; // todo 1
+            Deck.currentDeck.shuffleDeck();
 
-            GameLauncher gameLauncher = new GameLauncher();
-            gameLauncher.start(stage);
+            VetoCard gameLauncher = new VetoCard();
+            gameLauncher.start(LoginMenu.stage);
         } catch (Exception e) {
             e.printStackTrace();
         }

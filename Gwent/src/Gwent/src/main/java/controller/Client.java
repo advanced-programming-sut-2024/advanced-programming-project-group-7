@@ -149,8 +149,6 @@ public class Client extends Thread {
         }
     }
 
-
-
     private void establishConnection(String address, int port) {
         try {
             socket = new Socket(address, port);

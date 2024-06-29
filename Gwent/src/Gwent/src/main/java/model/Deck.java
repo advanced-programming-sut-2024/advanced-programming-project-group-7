@@ -78,10 +78,12 @@ public class Deck {
                     System.out.println(" bullshit" + card.getCardName());
             }
         }
-        //Collections.shuffle(shuffledDeck);
+        Collections.shuffle(shuffledDeck);
         deckAsArrayList=shuffledDeck;
+        hand.clear();
         hand.addAll(shuffledDeck.subList(0,10));
-//        reservedCards.addAll(shuffledDeck.subList(10, shuffledDeck.size()));
+        System.out.println(hand.size());
+        reservedCards.addAll(shuffledDeck.subList(10, shuffledDeck.size())); //todo 3
     }
     public void calculateDeck(){
          int totalCardsInDeck=0;

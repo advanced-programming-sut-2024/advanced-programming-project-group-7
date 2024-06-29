@@ -11,9 +11,6 @@ import java.net.Socket;
 public class GameServer extends Thread {
 
     private Socket socket1;
-    public static Card lastCard;
-    private Game game;
-    private int connectedPlayers =0;
     private Socket socket2;
 
     public static void main(String[] args) {

@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class VetoCard  extends Application {
     private Pane pane;
-    public Deck deck = new Deck(new Monsters("hi"), new MonstersLeaders("eredin silver","hi", "monsters"));
+    public Deck deck;
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     private int totalClick=0;
@@ -39,7 +39,6 @@ public class VetoCard  extends Application {
     private Card substitue1 = new Horn("horn", 3 , true, 0, "special",123,false);
     private Card substitue2 = new Horn("horn", 3 , true, 0, "special",123,false);
     private boolean First = true;
-    public static Deck staticDeck;
 
 
     public void showVetoMenu() {
@@ -60,9 +59,8 @@ public class VetoCard  extends Application {
         vBox.setMaxWidth(200);
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
-            staticDeck = deck;
-            vetoMenu.close();
             stage.close();
+            vetoMenu.close();
             GameLauncher gameLauncher = new GameLauncher();
             try {
                 gameLauncher.start(MainMenu.stage);
@@ -84,8 +82,7 @@ public class VetoCard  extends Application {
 
     private void setCards() {
         gridpane.getChildren().clear();
-         deck.hand.clear();
-         deck.hand.addAll(update);
+
         for (Card card : deck.hand) {
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
@@ -98,12 +95,14 @@ public class VetoCard  extends Application {
             pane.setOnMouseClicked(event -> {
                 update.remove(card); // Use iterator to remove the card
                 if (First) {
-//                    update.add(substitue2);
+                    update.add(substitue2);
                     First = false;
                 }
                 else {
-//                    update.add(substitue1);
+                    update.add(substitue1);
                 }
+                deck.hand.clear();
+                deck.hand.addAll(update);
                 setCards();
             });
             gridpane.add(pane, count % 5, count / 5);
@@ -138,20 +137,22 @@ public class VetoCard  extends Application {
     public void start(Stage stage) throws Exception {
         pane = new Pane();
 
-        this.stage = new Stage();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setResizable(false);
-        Deck.currentDeck.shuffleDeck();
-        deck.hand.addAll(Deck.currentDeck.hand);
+
+        Deck.currentDeck.shuffleDeck(); // todo 2
+        deck = Deck.currentDeck;
         update.addAll(deck.hand);
-//        substitue1 = deck.reservedCards.get(0);
-//        substitue2 = deck.reservedCards.get(1);
+
+        substitue1 = deck.reservedCards.get(0);
+        substitue2 = deck.reservedCards.get(1);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
         showVetoMenu();
+        this.stage = stage;
     }
 }

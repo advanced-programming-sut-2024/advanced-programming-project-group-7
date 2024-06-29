@@ -56,7 +56,7 @@ public class CardPlacementAnimation extends Transition {
                 st.append("card:").append(card.getCardName()).append(".").append(String.valueOf(card.getCountOfCard())).append(".").append(String.valueOf(card.isSpecial()))
                                 .append(".").append(String.valueOf(card.getPower())).append(".").append(card.getFactionName()).append(".").append(String.valueOf(card.rows))
                         .append(".").append(String.valueOf(card.isHero()));
-                st.append(".").append(String.valueOf(GameLauncher.enemyPosition(card.rows)));
+                st.append(".").append(String.valueOf(GameLauncher.enemyPosition(card.rows))); //todo change this
                 System.out.println(st.toString());
 
                 game.client.sendMessage(st.toString());
