@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import model.Card;
 import model.Game;
 import model.User;
@@ -14,7 +15,7 @@ public class GameServer extends Thread {
 
     private Socket oldSoc;
     private Socket newSoc;
-    public static HashMap<String, Socket> onlineUsers = new HashMap<>();
+    public static HashMap<String, Socket> onlineUsers=new HashMap<>();
 
     public static void main(String[] args) {
         GameServer gameServer = new GameServer();
@@ -23,11 +24,15 @@ public class GameServer extends Thread {
 
     @Override
     public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(8090)) {
+        try (ServerSocket serverSocket = new ServerSocket(34600)) {
             System.out.println("Server is listening on port 34600");
             while (true) {
                 newSoc = serverSocket.accept();
                 if (newSoc != null) {
+//                    DataInputStream dataInputStream1 = new DataInputStream(newSoc.getInputStream());
+//                    String initialConnection = dataInputStream1.readUTF();
+//                    onlineUsers.put(initialConnection, newSoc);
+//                    System.out.println(initialConnection);
                     UserThread userThread = new UserThread(newSoc);
                     userThread.run();
                     newSoc = null;

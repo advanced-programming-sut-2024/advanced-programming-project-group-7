@@ -208,6 +208,11 @@ public class User {
     userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
         userTest.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
+
+        User userTest1=new User("a","a","Ebim","amir2023@gmail.com");
+        userTest1.setSecurityQuestionNumber(1);
+        userTest1.setAnswerOfSecurityQuestion("red");
+        userTest1.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
     }
 
     public ArrayList<BattleInfo> getBattleLog() {

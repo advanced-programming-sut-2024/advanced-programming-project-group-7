@@ -136,7 +136,8 @@ public class Client extends Thread {
     DataOutputStream sendBuffer;
     DataInputStream receiveBuffer;
 
-    public Client(Game game, User loggedInUser) {this.game = game;
+    public Client(Game game, User loggedInUser) {
+        this.game = game;
         this.user = loggedInUser;
     }
 
@@ -156,6 +157,7 @@ public class Client extends Thread {
             socket = new Socket(address, port);
             sendBuffer = new DataOutputStream(socket.getOutputStream());
             receiveBuffer = new DataInputStream(socket.getInputStream());
+            sendBuffer.writeUTF(user.getUsername());
         } catch (IOException e) {
             System.err.println("unable to initialize socket");
             throw new RuntimeException(e);
@@ -171,13 +173,13 @@ public class Client extends Thread {
     }
 
     public void dir() throws IOException, InterruptedException {
-        this.establishConnection("127.0.0.1", 8090);
+        establishConnection("127.0.0.1", 34600);
         Scanner scanner = new Scanner(System.in);
         String input;
-        this.getMessageFromOtherClient();
+        getMessageFromOtherClient();
         while (true) {
             TimeUnit.SECONDS.sleep(1);
-            this.sendMessage(scanner.nextLine());
+            sendMessage(scanner.nextLine());
         }
     }
 
@@ -194,7 +196,9 @@ public class Client extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    responseToCard(message);
+                    System.out.println(message);
+                   responseToCard(message);
+
                 }
             }
         }).start();

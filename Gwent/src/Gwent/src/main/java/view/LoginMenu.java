@@ -53,11 +53,10 @@ public class LoginMenu extends Application {
             mediaPlayer = new MediaPlayer(music);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
-            GameLauncher gameLauncher = new GameLauncher();
-            Game game = new Game(gameLauncher);
-            Client client = new Client(game, User.getLoggedInUser());
-            client.start();
-            User.getLoggedInUser().client = client;
+//            GameLauncher gameLauncher = new GameLauncher();
+//            Game game = new Game(gameLauncher);
+////            Client client = new Client(game, User.getLoggedInUser());
+////            client.start();
         }
 
         LoginMenu.stage = stage;
