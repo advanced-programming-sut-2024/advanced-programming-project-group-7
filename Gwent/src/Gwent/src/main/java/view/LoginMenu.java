@@ -36,7 +36,7 @@ public class LoginMenu extends Application {
     public TextField nicknameText;
     public Label emailLabel;
     public TextField emailText;
-    public Button hybridButt;
+    public Label hybridButt;
     public boolean isLoggingIN = true;
     public TextField confirmPWD;
     public Label forgotPWD;

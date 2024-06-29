@@ -64,6 +64,33 @@
             <font>
                <Font name="Baloo Bhai 2 Bold" size="25.0" />
             </font></Label>
+            <TextField fx:id="emailText" maxWidth="370.0" minHeight="35.0" prefHeight="35.0" prefWidth="370.0" promptText="email" visible="false">
+                <font>
+                    <Font name="YuMincho Medium" size="20.0" />
+                </font></TextField>
+            <HBox alignment="CENTER" minHeight="50.0" spacing="10">
+                <Pane minHeight="50.0" minWidth="100.0">
+                    <Label  textFill="black" alignment="CENTER" fx:id="hybridButt" onMouseClicked="#signUp" text="Login">
+                        <font>
+                            <Font name="Tiro Gurmukhi" size="24.0" />
+                        </font>
+                    </Label>
+                </Pane>
+                <Pane minHeight="50.0" minWidth="100.0">
+                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" onMouseClicked="#Switch" text="switch" textFill="black">
+                        <font>
+                            <Font name="Tiro Gurmukhi" size="24.0" />
+                        </font>
+                    </Label>
+                </Pane>
+            </HBox>
+            <Pane minHeight="50.0">
+                <Label alignment="CENTER" textFill="black" fx:id="forgotPWD" onMouseClicked="#recoverPSWD" text="Forgot Password" visible="true">
+                    <font>
+                        <Font name="Tiro Gurmukhi" size="24.0" />
+                    </font>
+                </Label>
+            </Pane>
          <Pane minHeight="40.0" prefHeight="139.0" prefWidth="494.0" />
         </VBox>
 
