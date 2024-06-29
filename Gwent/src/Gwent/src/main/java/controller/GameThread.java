@@ -26,18 +26,20 @@ public class GameThread extends  Thread{
             DataOutputStream dataOutputStream2 = new DataOutputStream(socket2.getOutputStream());
 
             while (true) {
-                String command1 = dataInputStream1.readUTF(); // Read the command from the client
-                String[] parts1 = command1.split(":");
-                String command2 = dataInputStream2.readUTF(); // Read the command from the client
-                String[] parts2 = command2.split(":");
 
                 if (turn % 2 == 1) {
+                    String command1 = dataInputStream1.readUTF(); // Read the command from the client
+                    String[] parts1 = command1.split(":");
                     if (parts1[0].equals("card")) {
                         dataOutputStream2.writeUTF("card1 is" + parts1[1]);
+                        turn++;
                     }
                 } else if (turn % 2 == 0) {
+                    String command2 = dataInputStream2.readUTF(); // Read the command from the client
+                    String[] parts2 = command2.split(":");
                     if (parts2[0].equals("card")) {
-                        dataOutputStream1.writeUTF("card2 is" + parts1[1]);
+                        dataOutputStream1.writeUTF("card2 is" + parts2[1]);
+                        turn++;
                     }
                 }
                 dataOutputStream1.flush();

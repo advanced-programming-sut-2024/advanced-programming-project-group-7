@@ -47,7 +47,7 @@ public class PreGameMenu extends Application {
     public Label specialCards;
     public Label totalUnitCardStrength;
     public Label heroCards;
-    public Stage stage;
+    public Stage stage = new Stage();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -302,10 +302,13 @@ public class PreGameMenu extends Application {
         totalCardInDeck.setTextFill(Color.BLACK);
         totalUnitCardStrength.setTextFill(Color.BLACK);
    }
-    public void startGame(MouseEvent mouseEvent) {
+
+
+    public void goToVeto(MouseEvent mouseEvent) {
         try {
-            GameLauncher gameLauncher = new GameLauncher();
-            gameLauncher.start(LoginMenu.stage);
+            Deck.currentDeck = currentDeck;
+            VetoCard vetoCard = new VetoCard();
+            vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
