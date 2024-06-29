@@ -24,8 +24,8 @@ public class GameServer extends Thread {
 
     @Override
     public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(34600)) {
-            System.out.println("Server is listening on port 34600");
+        try (ServerSocket serverSocket = new ServerSocket(34800)) {
+            System.out.println("Server is listening on port 34800");
             while (true) {
                 newSoc = serverSocket.accept();
 //                    DataInputStream dataInputStream1 = new DataInputStream(newSoc.getInputStream());

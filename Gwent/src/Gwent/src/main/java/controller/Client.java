@@ -173,7 +173,7 @@ public class Client extends Thread {
     }
 
     public void dir() throws IOException, InterruptedException {
-        establishConnection("127.0.0.1", 34600);
+        establishConnection("127.0.0.1", 34800);
         Scanner scanner = new Scanner(System.in);
         String input;
         getMessageFromOtherClient();
