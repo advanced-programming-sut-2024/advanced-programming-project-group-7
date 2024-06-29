@@ -24,11 +24,16 @@ public class GameServer extends Thread {
             System.out.println("Server is listening on port 34600");
             while (true) {
                 socket1 = serverSocket.accept();
+<<<<<<< Updated upstream
                 if (socket1 != null) {
+=======
+                System.out.println("ajab");
+                if (socket1 !=null) {
+>>>>>>> Stashed changes
                     System.out.println(1);
                     while (true) {
                         socket2 = serverSocket.accept();
-                        System.out.println("player1 connected");
+                        System.out.println("player2 connected");
                         if (socket2 != null) {
                             System.out.println(2);
                             GameThread gameThread = new GameThread(socket1, socket2);
