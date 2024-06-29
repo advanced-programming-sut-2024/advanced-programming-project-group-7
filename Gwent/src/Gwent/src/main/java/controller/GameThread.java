@@ -31,19 +31,23 @@ public class GameThread extends  Thread{
                     String command1 = dataInputStream1.readUTF(); // Read the command from the client
                     String[] parts1 = command1.split(":");
                     if (parts1[0].equals("card")) {
-                        dataOutputStream2.writeUTF("card1 is" + parts1[1]);
+                        dataOutputStream2.writeUTF( parts1[1]);
                         turn++;
+                        System.out.println("pluused");
+                        dataOutputStream1.flush();
+                        dataOutputStream2.flush();
                     }
                 } else if (turn % 2 == 0) {
                     String command2 = dataInputStream2.readUTF(); // Read the command from the client
                     String[] parts2 = command2.split(":");
                     if (parts2[0].equals("card")) {
-                        dataOutputStream1.writeUTF("card2 is" + parts2[1]);
+                        dataOutputStream1.writeUTF(parts2[1]);
                         turn++;
+                        System.out.println("pluused");
+                        dataOutputStream1.flush();
+                        dataOutputStream2.flush();
                     }
                 }
-                dataOutputStream1.flush();
-                dataOutputStream2.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();

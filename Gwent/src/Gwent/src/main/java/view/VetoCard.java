@@ -13,12 +13,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.Card;
-import model.Deck;
-import model.Game;
+import model.*;
+import model.cards.Horn;
+import model.factions.Monsters;
+import model.leaders.MonstersLeaders;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -34,6 +36,9 @@ public class VetoCard  extends Application {
     private int count =0;
     private Stage stage;
     private ArrayList<Card> update = new ArrayList<>();
+    private Card substitue1 = new Horn("horn", 3 , true, 0, "special",123,false);
+    private Card substitue2 = new Horn("horn", 3 , true, 0, "special",123,false);
+    private boolean First = true;
 
 
     public void showVetoMenu() {
@@ -54,11 +59,11 @@ public class VetoCard  extends Application {
         vBox.setMaxWidth(200);
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
-            vetoMenu.close();
             stage.close();
+            vetoMenu.close();
             GameLauncher gameLauncher = new GameLauncher();
             try {
-                gameLauncher.start(LoginMenu.stage);
+                gameLauncher.start(MainMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -72,15 +77,13 @@ public class VetoCard  extends Application {
         gridpane.setLayoutX(250);
         gridpane.setLayoutY(100);
         vetoMenu.setScene(scene);
-        vetoMenu.showAndWait();
+        vetoMenu.show();
     }
 
     private void setCards() {
         gridpane.getChildren().clear();
-         deck.hand = update;
-        int bound = deck.reservedCards.size() - 1;
-        for (Iterator<Card> iterator = deck.hand.iterator(); iterator.hasNext(); ) {
-            Card card = iterator.next();
+
+        for (Card card : deck.hand) {
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
@@ -90,16 +93,17 @@ public class VetoCard  extends Application {
             rectangle.setArcWidth(20);
             pane.getChildren().add(rectangle);
             pane.setOnMouseClicked(event -> {
-                update.remove(card);// Use iterator to remove the card
-                Random random = new Random();
-                Card card1 = deck.reservedCards.get(random.nextInt(0, bound));
-                update.add(card1);
-                deck.reservedCards.add(card);
-                setCards();
-                for(Card tmpCard:deck.hand){
-                    for(Card tmpcard1: deck.hand)
-                        if(tmpCard==tmpcard1) System.out.println(tmpCard+":"+tmpCard.getCardName()+"\n"+tmpcard1+":"+tmpcard1.getCardName());
+                update.remove(card); // Use iterator to remove the card
+                if (First) {
+                    update.add(substitue2);
+                    First = false;
                 }
+                else {
+                    update.add(substitue1);
+                }
+                deck.hand.clear();
+                deck.hand.addAll(update);
+                setCards();
             });
             gridpane.add(pane, count % 5, count / 5);
             count++;
@@ -132,18 +136,23 @@ public class VetoCard  extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         pane = new Pane();
-        this.stage = new Stage();
+
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setResizable(false);
+
+        Deck.currentDeck.shuffleDeck(); // todo 2
         deck = Deck.currentDeck;
-        deck.shuffleDeck();
-        update = deck.hand;
+        update.addAll(deck.hand);
+
+        substitue1 = deck.reservedCards.get(0);
+        substitue2 = deck.reservedCards.get(1);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
         showVetoMenu();
+        this.stage = stage;
     }
 }

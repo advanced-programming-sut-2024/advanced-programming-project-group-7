@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import model.Card;
 import model.Game;
 import model.cards.*;
+import view.GameLauncher;
 import view.PreGameMenu;
 
 import java.util.Iterator;
@@ -49,8 +50,18 @@ public class CardPlacementAnimation extends Transition {
         double x = card.getLayoutX() + vx;
         if (Math.abs(x - endX) <= 10 && Math.abs(y - endY) <= 10) {
             pane.getChildren().remove(card);
-            if (!card.getCardName().equals("clear"))
+            if (!card.getCardName().equals("clear")) {
+                StringBuilder st = new StringBuilder();
+//                String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHero
+                st.append("card:").append(card.getCardName()).append(".").append(String.valueOf(card.getCountOfCard())).append(".").append(String.valueOf(card.isSpecial()))
+                                .append(".").append(String.valueOf(card.getPower())).append(".").append(card.getFactionName()).append(".").append(String.valueOf(card.rows))
+                        .append(".").append(String.valueOf(card.isHero()));
+                st.append(".").append(String.valueOf(GameLauncher.enemyPosition(card.rows))); //todo change this
+                System.out.println(st.toString());
+
+                game.client.sendMessage(st.toString());
                 game.selectedBox.getChildren().add(card);
+            }
             card.setOnMouseClicked(event -> {
                 if (game.selected instanceof Decoy) {
                     game.playerHand.getChildren().add(card);
@@ -104,7 +115,7 @@ public class CardPlacementAnimation extends Transition {
                 game.removeDominantCard();
                 game.selectedBox.getChildren().remove(card);
             } else if (card instanceof MoralBoost) {
-                game.boostRow(game.selectedBox, game);
+                game.boostRow(game.selectedBox,game);
             } else if (card instanceof Spy) {
                 game.spyACard();
             } else if (card instanceof TightBond) {

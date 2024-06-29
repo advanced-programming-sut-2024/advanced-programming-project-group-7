@@ -47,18 +47,18 @@ public class PreGameMenu extends Application {
     public Label specialCards;
     public Label totalUnitCardStrength;
     public Label heroCards;
-    public Stage stage = new Stage();
+    public Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
         URL url = LoginMenu.class.getResource("/FXML/PreGameMenu.fxml");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
-        this.stage = stage;
         stage.setScene(scene);
         stage.setTitle("pregame menu");
         stage.show();
         stage.setFullScreen(true);
+        this.stage = stage;
     }
 
     @FXML
@@ -306,10 +306,11 @@ public class PreGameMenu extends Application {
 
     public void goToVeto(MouseEvent mouseEvent) {
         try {
-            Deck.currentDeck = currentDeck;
-//            for(Card card:Deck.currentDeck.getCardsInDeck().keySet()) System.out.println(card.getCardName()+ currentDeck.getCardsInDeck().get(card));
-            VetoCard vetoCard = new VetoCard();
-            vetoCard.start(LoginMenu.stage);
+            Deck.currentDeck = currentDeck; // todo 1
+            Deck.currentDeck.shuffleDeck();
+
+            VetoCard gameLauncher = new VetoCard();
+            gameLauncher.start(LoginMenu.stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
