@@ -117,12 +117,12 @@ import javafx.application.Platform;
 import javafx.scene.layout.HBox;
 import model.Card;
 import model.Game;
+import model.User;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -131,17 +131,19 @@ public class Client extends Thread {
 
 
     public Game game;
+    public User user;
     Socket socket;
     DataOutputStream sendBuffer;
     DataInputStream receiveBuffer;
 
-    public Client(Game game) {this.game = game;
+    public Client(Game game, User loggedInUser) {this.game = game;
+        this.user = loggedInUser;
     }
 
     @Override
     public void run(){
         try {
-            this.dir();
+            dir();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
@@ -154,6 +156,7 @@ public class Client extends Thread {
             socket = new Socket(address, port);
             sendBuffer = new DataOutputStream(socket.getOutputStream());
             receiveBuffer = new DataInputStream(socket.getInputStream());
+            sendBuffer.writeUTF(user.getUsername());
         } catch (IOException e) {
             System.err.println("unable to initialize socket");
             throw new RuntimeException(e);
@@ -202,16 +205,20 @@ public class Client extends Thread {
         Card card = null;
         AtomicReference<HBox> target = new AtomicReference<>();
         String[] components = response.split("\\.");
-        card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
-        Card finalCard = card;
-        Platform.runLater(() -> {
-            System.out.println(finalCard.getCardName());
+        if (components.length == 8) {
+            card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
+            Card finalCard = card;
+            Platform.runLater(() -> {
+                System.out.println(finalCard.getCardName());
 //            game.hBoxes.get(7).getChildren().add(finalCard);
-                    target.set(game.hBoxes.get(Integer.parseInt(components[7])));
+                target.set(game.hBoxes.get(Integer.parseInt(components[7])));
 
-            target.get().getChildren().add(finalCard);
-            game.calculateLabels(game.playerFourthRow);
-        });
+                target.get().getChildren().add(finalCard);
+                game.calculateLabels(game.playerFourthRow);
+            });
+        } else if (components.length == 1) {
+            User.getLoggedInUser().addReq(components[0]);
+        }
     }
 }
 

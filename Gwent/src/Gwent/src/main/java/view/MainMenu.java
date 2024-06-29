@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -127,6 +128,12 @@ public class MainMenu extends Application {
         reqs.getChildren().add(exit);
         exit.setOnMouseClicked(event -> {
             reqMenu.close();
+        });
+        TextField textField = new TextField("username");
+        textField.setMaxWidth(200);
+        Button sendReq = new Button("send");
+        sendReq.setOnMouseClicked(event -> {
+            User.getLoggedInUser().client.sendMessage("req:" + textField.getText());
         });
         pane.getChildren().add(reqs);
         reqMenu.setScene(scene);

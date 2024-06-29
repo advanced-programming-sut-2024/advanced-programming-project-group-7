@@ -55,7 +55,7 @@ public class LoginMenu extends Application {
             mediaPlayer.play();
             GameLauncher gameLauncher = new GameLauncher();
             Game game = new Game(gameLauncher);
-            Client client = new Client(game);
+            Client client = new Client(game, User.getLoggedInUser());
             client.start();
         }
 
