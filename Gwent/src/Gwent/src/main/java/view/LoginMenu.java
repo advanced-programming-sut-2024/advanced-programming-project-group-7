@@ -57,6 +57,7 @@ public class LoginMenu extends Application {
             Game game = new Game(gameLauncher);
             Client client = new Client(game, User.getLoggedInUser());
             client.start();
+            User.getLoggedInUser().client = client;
         }
 
         LoginMenu.stage = stage;

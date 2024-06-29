@@ -19,6 +19,9 @@ public class UserThread extends Thread {
         try {
             dataInputStream1 = new DataInputStream(socket.getInputStream());
             dataOutputStream1 = new DataOutputStream(socket.getOutputStream());
+            String initialConnection = dataInputStream1.readUTF();
+            GameServer.onlineUsers.put(initialConnection, socket);
+            System.out.println(initialConnection);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

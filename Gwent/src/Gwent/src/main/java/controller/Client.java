@@ -156,7 +156,6 @@ public class Client extends Thread {
             socket = new Socket(address, port);
             sendBuffer = new DataOutputStream(socket.getOutputStream());
             receiveBuffer = new DataInputStream(socket.getInputStream());
-            sendBuffer.writeUTF(user.getUsername());
         } catch (IOException e) {
             System.err.println("unable to initialize socket");
             throw new RuntimeException(e);
@@ -172,7 +171,7 @@ public class Client extends Thread {
     }
 
     public void dir() throws IOException, InterruptedException {
-        this.establishConnection("127.0.0.1", 34600);
+        this.establishConnection("127.0.0.1", 8090);
         Scanner scanner = new Scanner(System.in);
         String input;
         this.getMessageFromOtherClient();

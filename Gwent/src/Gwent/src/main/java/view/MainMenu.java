@@ -41,6 +41,7 @@ public class MainMenu extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        User.getLoggedInUser().client.sendMessage(User.getLoggedInUser().getNickname());
     }
 
     @FXML
