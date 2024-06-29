@@ -223,7 +223,7 @@ public class Client extends Thread {
             });
         } else if (components.length == 2 && components[1].equals("startGame")) {
             Platform.runLater(()-> {
-                pregameMenu.goToVetoMenu();
+                //pregameMenu.goToVetoMenu();
             });
         } else if (components.length == 1) {
             User.getLoggedInUser().addReq(components[0]);
