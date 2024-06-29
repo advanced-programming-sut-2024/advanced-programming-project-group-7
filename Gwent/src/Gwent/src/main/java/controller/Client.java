@@ -117,63 +117,33 @@ import javafx.application.Platform;
 import javafx.scene.layout.HBox;
 import model.Card;
 import model.Game;
+import model.User;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Client extends Thread {
-<<<<<<< Updated upstream
-=======
-    private final String serverName = "127.0.0.1";
-    private final int serverPort = 9200;
-    private Game game;
->>>>>>> Stashed changes
 
 
-    private Game game;
+    public Game game;
+    public User user;
     Socket socket;
     DataOutputStream sendBuffer;
     DataInputStream receiveBuffer;
 
-    public Client(Game game) {this.game = game;
+    public Client(Game game, User loggedInUser) {this.game = game;
+        this.user = loggedInUser;
     }
 
     @Override
     public void run(){
-<<<<<<< Updated upstream
         try {
-            this.dir();
-=======
-        this.dick();
-    }
-    public void dick() {
-        try (Socket socket = new Socket(serverName, serverPort);
-             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
-
-            while (true) {
-                System.out.print("Enter command: ");
-                String commandToSend = consoleReader.readLine(); //here
-                if (commandToSend.equalsIgnoreCase("exit")) {
-                    break;
-                }
-
-                dataOutputStream.writeUTF(commandToSend);
-                dataOutputStream.flush();
-
-                String response = dataInputStream.readUTF();
-                responseToCard(response);
-                System.out.println("Server response: " + response);
-            }
-
->>>>>>> Stashed changes
+            dir();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
@@ -186,6 +156,7 @@ public class Client extends Thread {
             socket = new Socket(address, port);
             sendBuffer = new DataOutputStream(socket.getOutputStream());
             receiveBuffer = new DataInputStream(socket.getInputStream());
+            sendBuffer.writeUTF(user.getUsername());
         } catch (IOException e) {
             System.err.println("unable to initialize socket");
             throw new RuntimeException(e);
@@ -232,24 +203,22 @@ public class Client extends Thread {
 
     private void responseToCard(String response) {
         Card card = null;
-<<<<<<< Updated upstream
         AtomicReference<HBox> target = new AtomicReference<>();
         String[] components = response.split("\\.");
-        card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
-=======
-        String[] components = response.split("\\.");
-        if (components[0].equals("card"))
-            card = new Card(components[1], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
->>>>>>> Stashed changes
-        Card finalCard = card;
-        Platform.runLater(() -> {
-            System.out.println(finalCard.getCardName());
+        if (components.length == 8) {
+            card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
+            Card finalCard = card;
+            Platform.runLater(() -> {
+                System.out.println(finalCard.getCardName());
 //            game.hBoxes.get(7).getChildren().add(finalCard);
-                    target.set(game.hBoxes.get(Integer.parseInt(components[7])));
+                target.set(game.hBoxes.get(Integer.parseInt(components[7])));
 
-            target.get().getChildren().add(finalCard);
-            game.calculateLabels(game.playerFourthRow);
-        });
+                target.get().getChildren().add(finalCard);
+                game.calculateLabels(game.playerFourthRow);
+            });
+        } else if (components.length == 1) {
+            User.getLoggedInUser().addReq(components[0]);
+        }
     }
 }
 

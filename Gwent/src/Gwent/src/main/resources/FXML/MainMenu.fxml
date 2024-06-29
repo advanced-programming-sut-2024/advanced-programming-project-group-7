@@ -2,16 +2,31 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
     <center>
         <VBox alignment="CENTER" maxWidth="300" spacing="10">
             <Label fx:id="Username" text="Default" />
-            <Button onMouseEntered="#mouseEnteredSound" onMouseClicked="#goToProfileMenu" text="Profile menu" minWidth="180" minHeight="50"/>
-            <Button onMouseEntered="#mouseEnteredSound" onMouseClicked="#startNewGame" text="Start new game" minWidth="180" minHeight="50"/>
-            <Button onMouseEntered="#mouseEnteredSound" onMouseClicked="#Logout" text="Log out" minWidth="180" minHeight="50"/>
-            <Button onMouseEntered="#mouseEnteredSound" onMouseClicked="#exitGame" text="Exit game" />
+            <Button minHeight="50" minWidth="180" onMouseClicked="#goToProfileMenu" onMouseEntered="#mouseEnteredSound" text="Profile menu" />
+            <Button minHeight="50" minWidth="180" onMouseClicked="#startNewGame" onMouseEntered="#mouseEnteredSound" text="Start new game" />
+            <Button minHeight="50" minWidth="180" onMouseClicked="#Logout" onMouseEntered="#mouseEnteredSound" text="Log out" />
+            <Button onMouseClicked="#exitGame" onMouseEntered="#mouseEnteredSound" text="Exit game" />
         </VBox>
     </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="200.0" minWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+             <ImageView fitWidth="70 " fitHeight="70" onMouseClicked="#showRequests">
+                 <Image url="@../Images/icons/email.png"/>
+             </ImageView>
+         </children>
+      </VBox>
+   </right>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
 
 </BorderPane>

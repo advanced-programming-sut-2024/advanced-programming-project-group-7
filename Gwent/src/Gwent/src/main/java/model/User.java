@@ -1,11 +1,17 @@
 package model;
 
+
+import controller.Client;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
+    public Client client;
+    private ArrayList<String> requests = new ArrayList<>();
+    private ArrayList<String> friends;
 
     public ArrayList<Deck> getDecks() {
         return decks;
@@ -206,5 +212,17 @@ public class User {
 
     public ArrayList<BattleInfo> getBattleLog() {
         return battleLog;
+    }
+
+    public ArrayList<String> getRequests() {
+        return requests;
+    }
+    public void addReq (String req){
+        requests.add(req);
+    }
+
+    public void addFriend(String reqPart) {
+        friends.add(reqPart);
+        System.out.println(reqPart);
     }
 }

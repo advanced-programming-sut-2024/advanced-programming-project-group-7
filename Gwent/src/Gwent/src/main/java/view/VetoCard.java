@@ -62,7 +62,7 @@ public class VetoCard  extends Application {
             vetoMenu.close();
             GameLauncher gameLauncher = new GameLauncher();
             try {
-                gameLauncher.start(MainMenu.stage);
+                gameLauncher.start(LoginMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

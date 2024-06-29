@@ -3,6 +3,7 @@ package view;
 import controller.Client;
 import controller.GameServer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -17,10 +18,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.Card;
-import model.Deck;
-import model.Game;
-import model.Leader;
+import model.*;
 import model.cards.*;
 import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
@@ -69,9 +67,8 @@ public class GameLauncher extends Application {
 
         game = new Game(this);
         stage = new Stage();
-        Client client = new Client(game);
-        client.start();
-        game.client = client;
+        game.client = User.getLoggedInUser().client;
+        User.getLoggedInUser().client.game = game;
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
@@ -423,8 +420,12 @@ public class GameLauncher extends Application {
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-        for (Card card : Deck.currentDeck.hand)
-            playerHand.getChildren().add(card);
+        Platform.runLater(()-> {
+            for (Card card : Deck.currentDeck.hand)
+                playerHand.getChildren().add(card);
+        });
+//        for (Card card : Deck.currentDeck.hand)
+//            playerHand.getChildren().add(card);
 
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
