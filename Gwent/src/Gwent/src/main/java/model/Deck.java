@@ -1,5 +1,7 @@
 package model;
 
+import model.cards.*;
+
 import java.util.*;
 
 public class Deck {
@@ -12,12 +14,10 @@ public class Deck {
     public int totalHeroCard;
     public int totalUnitCard;
     public int totalUnitCardStrength;
-
     public ArrayList<Card> hand=new ArrayList<>();
-
     public  ArrayList<Card> deckAsArrayList=new ArrayList<>();
-
     public List<Card> reservedCards=new ArrayList<>();
+
     public Deck(Faction deckFaction, Leader deckLeader) {
         this.deckFaction = deckFaction;
         this.deckLeader = deckLeader;
@@ -44,13 +44,33 @@ public class Deck {
     public void shuffleDeck(){
         ArrayList<Card> shuffledDeck=new ArrayList<>();
         for (Card card:cardsInDeck.keySet()){
-            for(int i=0;i<cardsInDeck.get(card);i++)
-                shuffledDeck.add(card);
+            for(int i=0;i<cardsInDeck.get(card);i++) {
+                if (card.getClass().getSimpleName().equals("Agile")) shuffledDeck.add(new Agile(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Berserker")) shuffledDeck.add(new Berserker(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Cow")) shuffledDeck.add(new Cow(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Decoy")) shuffledDeck.add(new Decoy(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Horn")) shuffledDeck.add(new Horn(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Mardroeme")) shuffledDeck.add(new Mardroeme(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Medic")) shuffledDeck.add(new Medic(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("MoralBoost")) shuffledDeck.add(new MoralBoost(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Muster")) shuffledDeck.add(new Muster(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Scorch")) shuffledDeck.add(new Scorch(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Spy")) shuffledDeck.add(new Spy(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("TightBond")) shuffledDeck.add(new TightBond(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else if (card.getClass().getSimpleName().equals("Card")) shuffledDeck.add(new Card(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+                else System.out.println("khak bar saret");
+            }
+
+
         }
         Collections.shuffle(shuffledDeck);
         deckAsArrayList=shuffledDeck;
         hand.addAll(shuffledDeck.subList(0,10));
         reservedCards.addAll(shuffledDeck.subList(10, shuffledDeck.size()));
+        for(Card card:hand) System.out.println(card+card.getCardName());
+        System.out.println("---------------------");
+        for(Card card:reservedCards) System.out.println(card+card.getCardName());
+        System.out.println("0000000000000000000000");
     }
     public void calculateDeck(){
          int totalCardsInDeck=0;

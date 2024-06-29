@@ -66,7 +66,6 @@ public class GameLauncher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         game = new Game(this);
         this.stage = stage;
         Client client = new Client(game);

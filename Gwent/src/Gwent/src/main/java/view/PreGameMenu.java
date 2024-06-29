@@ -307,6 +307,7 @@ public class PreGameMenu extends Application {
     public void goToVeto(MouseEvent mouseEvent) {
         try {
             Deck.currentDeck = currentDeck;
+//            for(Card card:Deck.currentDeck.getCardsInDeck().keySet()) System.out.println(card.getCardName()+ currentDeck.getCardsInDeck().get(card));
             VetoCard vetoCard = new VetoCard();
             vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {

@@ -21,7 +21,7 @@ public class Card extends Pane {
     private Circle powerIcon = new Circle();
     public Label powerLabel = new Label();
     private int power;
-    private int rows; //hi
+    public int rows; //hi
     private boolean isHero;
 
     public boolean isWeak = false;

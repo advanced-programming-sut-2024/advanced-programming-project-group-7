@@ -22,9 +22,9 @@ public class Client extends Thread {
 
     @Override
     public void run(){
-
+        this.dick();
     }
-    public void start() {
+    public void dick() {
         try (Socket socket = new Socket(serverName, serverPort);
              BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
              DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());

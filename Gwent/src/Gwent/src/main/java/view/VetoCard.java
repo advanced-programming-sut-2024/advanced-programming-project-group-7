@@ -90,12 +90,16 @@ public class VetoCard  extends Application {
             rectangle.setArcWidth(20);
             pane.getChildren().add(rectangle);
             pane.setOnMouseClicked(event -> {
-                deck.hand.remove(card); // Use iterator to remove the card
+                update.remove(card);// Use iterator to remove the card
                 Random random = new Random();
                 Card card1 = deck.reservedCards.get(random.nextInt(0, bound));
                 update.add(card1);
                 deck.reservedCards.add(card);
                 setCards();
+                for(Card tmpCard:deck.hand){
+                    for(Card tmpcard1: deck.hand)
+                        if(tmpCard==tmpcard1) System.out.println(tmpCard+":"+tmpCard.getCardName()+"\n"+tmpcard1+":"+tmpcard1.getCardName());
+                }
             });
             gridpane.add(pane, count % 5, count / 5);
             count++;
@@ -128,15 +132,12 @@ public class VetoCard  extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         pane = new Pane();
-
         this.stage = new Stage();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setResizable(false);
-
-
         deck = Deck.currentDeck;
         deck.shuffleDeck();
         update = deck.hand;
