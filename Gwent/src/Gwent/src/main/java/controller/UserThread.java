@@ -17,12 +17,14 @@ public class UserThread extends Thread {
     @Override
     public void run(){
         try {
+//            System.out.println("run");
             dataInputStream1 = new DataInputStream(socket.getInputStream());
             dataOutputStream1 = new DataOutputStream(socket.getOutputStream());
             DataInputStream dataInputStream1 = new DataInputStream(socket.getInputStream());
             String initialConnection = dataInputStream1.readUTF();
             GameServer.onlineUsers.put(initialConnection, socket);
-            dataOutputStream1.writeUTF("you entered");
+//            dataOutputStream1.writeUTF("you entered"+initialConnection);
+//            dataOutputStream1.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -32,10 +34,12 @@ public class UserThread extends Thread {
                 command1 = dataInputStream1.readUTF();
                 String[] parts1 = command1.split(":");
                 if (parts1[0].equals("req")) {
+//                    System.out.println(GameServer.onlineUsers.size());
                     if (GameServer.onlineUsers.containsKey(parts1[1])){
                         try {
                             DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                             targetUser.writeUTF(parts1[2]);
+                            targetUser.flush();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

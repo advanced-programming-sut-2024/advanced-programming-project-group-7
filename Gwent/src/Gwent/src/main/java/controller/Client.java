@@ -197,6 +197,7 @@ public class Client extends Thread {
                         throw new RuntimeException(e);
                     }
                     System.out.println(message);
+
                    responseToCard(message);
 
                 }
@@ -220,6 +221,7 @@ public class Client extends Thread {
                 game.calculateLabels(game.playerFourthRow);
             });
         } else if (components.length == 1) {
+            System.out.println("hoo");
             User.getLoggedInUser().addReq(components[0]);
         }
     }

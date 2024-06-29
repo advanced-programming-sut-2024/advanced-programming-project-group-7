@@ -41,6 +41,7 @@ public class MainMenu extends Application {
         GameLauncher gameLauncher = new GameLauncher();
         Game game = new Game(gameLauncher);
         Client client = new Client(game, User.getLoggedInUser());
+        User.getLoggedInUser().client=client;
         client.start();
 
         URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
@@ -123,8 +124,7 @@ public class MainMenu extends Application {
                 User.getLoggedInUser().addFriend(reqParts[0]);
                 User.getLoggedInUser().getRequests().remove(req);
             });
-            hBox.getChildren().add(accept);
-            Button reject = new Button("Accept");
+            Button reject = new Button("Reject");
             accept.setOnMouseClicked(event -> {
                 User.getLoggedInUser().getRequests().remove(req);
             });
@@ -140,8 +140,9 @@ public class MainMenu extends Application {
         textField.setMaxWidth(200);
         Button sendReq = new Button("send");
         sendReq.setOnMouseClicked(event -> {
-            User.getLoggedInUser().client.sendMessage("req:" + textField.getText());
+            User.getLoggedInUser().client.sendMessage("req:" + textField.getText() + ":" + User.getLoggedInUser().getUsername());
         });
+        reqs.getChildren().addAll(textField, sendReq);
         pane.getChildren().add(reqs);
         reqMenu.setScene(scene);
         reqMenu.show();
