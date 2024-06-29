@@ -1,42 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginMenu">
+<?import model.Leader?>
+<BorderPane prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginMenu">
     <center>
-        <VBox alignment="CENTER" maxWidth="494.0" prefHeight="400.0" prefWidth="440.0" spacing="10">
+        <VBox alignment="CENTER" maxWidth="494.0" prefHeight="768.0" prefWidth="464.0" spacing="10">
+         <Pane minHeight="40.0" prefHeight="155.0" prefWidth="494.0" />
             <Label text="Welcome To Gwent">
                 <font>
-                    <Font name="Arabic Typesetting" size="24.0" />
+                    <Font size="35.0" />
                 </font></Label>
-            <Label text="Username" />
-            <TextField fx:id="nameField" maxWidth="300.0" promptText="your beautiful name" />
-            <Label text="Password" />
-         <HBox maxWidth="410.0" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
+            <Label text="Username">
+                    <font>
+                        <Font name="Baloo Bhaina 2 Bold" size="25.0" />
+                    </font>
+            </Label>
+            <TextField fx:id="nameField" maxWidth="370.0" minHeight="35.0" prefHeight="35.0" prefWidth="370.0" promptText="your beautiful name">
+            <font>
+               <Font name="YuMincho Medium" size="20.0" />
+            </font></TextField>
+            <Label text="Password">
+            <font>
+               <Font name="Baloo Bhaina 2 Bold" size="25.0" />
+            </font></Label>
+         <HBox maxWidth="518.0" prefHeight="35.0" prefWidth="442.0" spacing="6.0">
             <children>
-               <Button fx:id="PassGen" mnemonicParsing="false" onMouseClicked="#genratePassforSignup" prefHeight="20" prefWidth="30" visible="false">
+               <Button fx:id="PassGen" minHeight="30.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#genratePassforSignup" prefHeight="30.0" prefWidth="56.0" visible="false">
                    <graphic>
                        <ImageView fitHeight="20" fitWidth="30">
                            <Image url="@../Images/icons/key.jpg" />
                        </ImageView>
                    </graphic>
                </Button>
-                  <TextField fx:id="password" maxWidth="340.0" prefHeight="26.0" prefWidth="301.0" promptText="enter password" />
+                  <TextField fx:id="password" maxWidth="370.0" minHeight="35.0" prefHeight="35.0" prefWidth="370.0" promptText="enter password">
+                  <font>
+                     <Font name="YuMincho Medium" size="20.0" />
+                  </font></TextField>
             </children>
          </HBox>
-         <TextField fx:id="confirmPWD" maxWidth="300.0" promptText="confirm password" visible="false" />
-         <Label fx:id="nicknameLable" text="Nickname" visible="false" />
-         <TextField fx:id="nicknameText" maxWidth="300.0" visible="false" />
-         <Label fx:id="emailLabel" text="Email" visible="false" />
-         <TextField fx:id="emailText" maxWidth="300.0" visible="false" />
-            <HBox alignment="CENTER" spacing="10">
-                <Button fx:id="hybridButt" onMouseClicked="#signUp" text="Login" />
-                <Button onMouseClicked="#Switch" text="switch" />
+         <TextField fx:id="confirmPWD" maxWidth="370.0" minHeight="35.0" prefHeight="35.0" prefWidth="370.0" promptText="confirm password" visible="false">
+            <font>
+               <Font name="YuMincho Medium" size="20.0" />
+            </font></TextField>
+         <Label fx:id="nicknameLable" text="Nickname" visible="false">
+            <font>
+               <Font name="Baloo Bhai 2 Bold" size="25.0" />
+            </font></Label>
+         <TextField fx:id="nicknameText" maxWidth="370.0" minHeight="35.0" prefHeight="35.0" prefWidth="370.0" promptText="nickname" visible="false">
+            <font>
+               <Font name="YuMincho Medium" size="20.0" />
+            </font></TextField>
+         <Label fx:id="emailLabel" text="Email" visible="false">
+            <font>
+               <Font name="Baloo Bhai 2 Bold" size="25.0" />
+            </font></Label>
+         <TextField fx:id="emailText" maxWidth="370.0" minHeight="35.0" prefHeight="35.0" prefWidth="370.0" promptText="email" visible="false">
+            <font>
+               <Font name="YuMincho Medium" size="20.0" />
+            </font></TextField>
+            <HBox alignment="CENTER" minHeight="50.0" spacing="10">
+                <Button fx:id="hybridButt" minHeight="50.0" minWidth="100.0" onMouseClicked="#signUp" text="Login">
+               <font>
+                  <Font name="Tiro Gurmukhi" size="24.0" />
+               </font>
+                </Button>
+                <Pane minHeight="50.0" minWidth="100.0">
+                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" onMouseClicked="#Switch" text="switch" textFill="black">
+                        <font>
+                            <Font name="Tiro Gurmukhi" size="24.0" />
+                        </font>
+                    </Label>
+                </Pane>
             </HBox>
-            <Button fx:id="forgotPWD" onMouseClicked="#recoverPSWD" text="Forgot Password" visible="true" />
+            <Pane minHeight="50.0">
+                <Label alignment="BASELINE_CENTER" textFill="black" fx:id="forgotPWD" onMouseClicked="#recoverPSWD" text="Forgot Password" visible="true">
+                    <font>
+                        <Font name="Tiro Gurmukhi" size="24.0" />
+                    </font>
+                </Label>
+            </Pane>
+         <Pane minHeight="40.0" prefHeight="139.0" prefWidth="494.0" />
         </VBox>
 
     </center>

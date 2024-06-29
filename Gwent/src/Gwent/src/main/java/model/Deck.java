@@ -6,24 +6,23 @@ import java.util.*;
 
 public class Deck {
     public static Deck currentDeck;
+    private LinkedHashMap<Card, Integer> cardsInDeck=new LinkedHashMap<>();
     private Faction deckFaction;
     private Leader deckLeader;
-    private LinkedHashMap<Card, Integer> cardsInDeck=new LinkedHashMap<>();
     public int totalCardsInDeck;
     public int totalSpecialCardInDeck;
     public int totalHeroCard;
     public int totalUnitCard;
     public int totalUnitCardStrength;
-
-    public ArrayList<Card> hand=new ArrayList<>();
-
     public  ArrayList<Card> deckAsArrayList=new ArrayList<>();
-
+    public ArrayList<Card> hand=new ArrayList<>();
     public ArrayList<Card> reservedCards=new ArrayList<>();
+
     public Deck(Faction deckFaction, Leader deckLeader) {
         this.deckFaction = deckFaction;
         this.deckLeader = deckLeader;
     }
+
     public LinkedHashMap<Card, Integer> getCardsInDeck() {
         return cardsInDeck;
     }
@@ -31,23 +30,25 @@ public class Deck {
     public void setCardsInDeck(LinkedHashMap<Card, Integer> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }
+
     public void addToDeck(Card card){
         if(cardsInDeck.containsKey(card))
             cardsInDeck.put(card,cardsInDeck.get(card)+1);
         else
             cardsInDeck.put(card,1);
     }
+
     public void deleteCardFromDeck(Card card){
         if(cardsInDeck.get(card)==1)
             cardsInDeck.remove(card);
         else
             cardsInDeck.put(card,cardsInDeck.get(card)-1);
     }
+
     public void shuffleDeck(){
         ArrayList<Card> shuffledDeck=new ArrayList<>();
         for (Card card:cardsInDeck.keySet()){
             for(int i=0;i<cardsInDeck.get(card);i++) {
-                System.out.println(card.getClass().getSimpleName() );
                 if (card.getClass().getSimpleName().equals("Spy"))
                     shuffledDeck.add(new Spy(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
                 else if (card.getClass().getSimpleName().equals("Horn"))
@@ -79,12 +80,12 @@ public class Deck {
             }
         }
         Collections.shuffle(shuffledDeck);
-        deckAsArrayList=shuffledDeck;
+        deckAsArrayList.addAll(shuffledDeck);
         hand.clear();
         hand.addAll(shuffledDeck.subList(0,10));
-        System.out.println(hand.size());
-        reservedCards.addAll(shuffledDeck.subList(10, shuffledDeck.size())); //todo 3
+        reservedCards.addAll(shuffledDeck.subList(10, shuffledDeck.size()));//todo 3
     }
+
     public void calculateDeck(){
          int totalCardsInDeck=0;
          int totalSpecialCardInDeck=0;
@@ -103,5 +104,21 @@ public class Deck {
          this.totalUnitCard=totalUnitCard;
          this.totalSpecialCardInDeck=totalSpecialCardInDeck;
          this.totalUnitCardStrength=totalUnitCardStrength;
+    }
+
+    public Faction getDeckFaction() {
+        return deckFaction;
+    }
+
+    public void setDeckFaction(Faction deckFaction) {
+        this.deckFaction = deckFaction;
+    }
+
+    public Leader getDeckLeader() {
+        return deckLeader;
+    }
+
+    public void setDeckLeader(Leader deckLeader) {
+        this.deckLeader = deckLeader;
     }
 }

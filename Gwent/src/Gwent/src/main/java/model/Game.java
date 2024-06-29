@@ -186,4 +186,17 @@ public class Game {
         totalRow2Power.setText("0");
         totalRow1Power.setText("0");
     }
+    public String setCardToString(Card card,HBox target){
+        String fullInformation = "";
+        fullInformation+="card"+".";
+        fullInformation=card.getCardName()+"."+String.valueOf(card.getCountOfCard())+".";
+        if(card.isSpecial())fullInformation+="true";
+        else fullInformation+="false";
+        fullInformation+=("."+String.valueOf(card.getPower())+"."+card.getFactionName()+"."+String.valueOf(card.getRows())+".");
+        if(card.isHero())fullInformation+="true";
+        else fullInformation+="false";
+        fullInformation+=("."+target.getClass().getSimpleName());
+        return fullInformation;
+    }
+
 }
