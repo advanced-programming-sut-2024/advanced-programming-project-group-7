@@ -3,25 +3,29 @@ package view;
 //import controller.LoginMenuController;
 import controller.Client;
 import controller.LoginMenuController;
-import controller.ProfileMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
 
+import java.awt.*;
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -35,19 +39,21 @@ public class LoginMenu extends Application {
     public TextField nicknameText;
     public Label emailLabel;
     public TextField emailText;
-    public Button hybridButt;
+    public Label hybridButt;
     public boolean isLoggingIN = true;
     public TextField confirmPWD;
-    public Button forgotPWD;
+    public Label forgotPWD;
     public Button PassGen;
-
+    public Pane switchPane=new Pane();
+    public Pane forgotPasswordPane;
+    public Pane hybridButtPane;
+    public Rectangle buttonBack = new Rectangle(100,50);
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-
         if (!hasMusic) {
             Media music = new Media(LoginMenu.class.getResource("/Sounds/01 No Escape.mp3").toExternalForm());
             mediaPlayer = new MediaPlayer(music);
@@ -59,6 +65,11 @@ public class LoginMenu extends Application {
 ////            client.start();
         }
 
+        buttonBack.setFill(new ImagePattern(new Image(LoginMenu.class.getResource("/Images/buttonimage.jpg").toExternalForm())));
+        Label switchL = new Label("Switch");
+        switchPane.getChildren().add(buttonBack);
+        switchPane.getChildren().add(switchL);
+        switchL.setLayoutX(1);
         LoginMenu.stage = stage;
         URL url = LoginMenu.class.getResource("/FXML/LoginMenu.fxml");
         Image icon = new Image(LoginMenu.class.getResource("/Images/icons/gwent.jpg").toExternalForm());
@@ -66,6 +77,7 @@ public class LoginMenu extends Application {
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        root.setBackground(new Background(createBackgroundImage()));
         stage.show();
     }
 
@@ -251,6 +263,8 @@ public class LoginMenu extends Application {
             PassGen.setVisible(false);
             forgotPWD.setVisible(true);
             hybridButt.setText("login");
+//            hybridButt.setOpacity(0.1);
+//            hybridButt.setTextFill(Color.rgb(1,1,1,1));
         } else {
             confirmPWD.setVisible(true);
             forgotPWD.setVisible(false);
@@ -268,6 +282,20 @@ public class LoginMenu extends Application {
         password.setText(autoPass);
         confirmPWD.setText(autoPass);
     }
+    private BackgroundImage createBackgroundImage () {
+        Image image = new Image(Game.class.getResource("/Images/background.jpg").toExternalForm(), 1280 ,768, false, false);
+        ImageView imageView = new ImageView(image);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image bwImage = imageView.snapshot(params, null);
+        BackgroundImage backgroundImage = new BackgroundImage(bwImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        return backgroundImage;
+    }
 }
+
 
 

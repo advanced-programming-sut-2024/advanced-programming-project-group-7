@@ -30,7 +30,6 @@ public class VetoCard  extends Application {
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     private int totalClick=0;
-
     private Stage vetoMenu;
     private GridPane gridpane = new GridPane();
     private int count =0;
@@ -68,6 +67,14 @@ public class VetoCard  extends Application {
                 throw new RuntimeException(e);
             }
         });
+//        System.out.println("hand's card");
+//        for(Card card: deck.hand){
+//            System.out.println(card+" : "+card.getCardName());
+//        }
+//        System.out.println("00000000000000000000000");
+//        System.out.println("update card");
+//        for(Card card:update) System.out.println(card+" : "+card.getCardName());
+//        System.out.println("00000000000000000000000");
         setCards();
         root.getChildren().add(gridpane);
         root.getChildren().add(confirm);
@@ -82,7 +89,6 @@ public class VetoCard  extends Application {
 
     private void setCards() {
         gridpane.getChildren().clear();
-
         for (Card card : deck.hand) {
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
@@ -92,6 +98,14 @@ public class VetoCard  extends Application {
             rectangle.setArcHeight(20);
             rectangle.setArcWidth(20);
             pane.getChildren().add(rectangle);
+//            System.out.println("hand's card");
+//            for(Card card2: deck.hand){
+//                System.out.println(card2+" : "+card2.getCardName());
+//            }
+//            System.out.println("00000000000000000000000");
+//            System.out.println("update card");
+//            for(Card card2:update) System.out.println(card2+" : "+card2.getCardName());
+//            System.out.println("00000000000000000000000");
             pane.setOnMouseClicked(event -> {
                 update.remove(card); // Use iterator to remove the card
                 if (First) {
@@ -103,6 +117,10 @@ public class VetoCard  extends Application {
                 }
                 deck.hand.clear();
                 deck.hand.addAll(update);
+                for (Card card1:update) System.out.println(card+" : "+card1.getCardName());
+                System.out.println("---------------------");
+//                deck.hand.clear();
+//                deck.hand.addAll(update);
                 setCards();
             });
             gridpane.add(pane, count % 5, count / 5);
@@ -116,13 +134,11 @@ public class VetoCard  extends Application {
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         Image bwImage = imageView.snapshot(params, null);
-
         BackgroundImage backgroundImage = new BackgroundImage(bwImage,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-
         return backgroundImage;
     }
 
@@ -136,23 +152,37 @@ public class VetoCard  extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         pane = new Pane();
-
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setResizable(false);
-
-        Deck.currentDeck.shuffleDeck(); // todo 2
+//        Deck.currentDeck.shuffleDeck(); // todo 2 don't need it.we already shuffled it.
         deck = Deck.currentDeck;
-        update.addAll(deck.hand);
-
-        substitue1 = deck.reservedCards.get(0);
-        substitue2 = deck.reservedCards.get(1);
+        update.addAll(deck.hand);//todo update is new hand
+        System.out.println("hand's card");
+        for(Card card: deck.hand){
+            System.out.println(card+" : "+card.getCardName());
+        }
+        System.out.println("00000000000000000000000");
+        System.out.println("update card");
+        for(Card card:update) System.out.println(card+" : "+card.getCardName());
+        System.out.println("00000000000000000000000");//todo we get correct hand here
+//        substitue1 = deck.reservedCards.get(0);
+//        substitue2 = deck.reservedCards.get(1);
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
         showVetoMenu();
+//        System.out.println(substitue1+"\n"+substitue2);
         this.stage = stage;
+    }
+
+    public int getTotalClick() {
+        return totalClick;
+    }
+
+    public void setTotalClick(int totalClick) {
+        this.totalClick = totalClick;
     }
 }

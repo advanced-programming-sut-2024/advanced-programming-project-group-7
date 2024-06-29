@@ -117,6 +117,7 @@ public class PreGameMenu extends Application {
             pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
+//                System.out.println(card+" : "+card.getCardName());
                 int cardLeft = Integer.parseInt(label.getText());
                 if (cardLeft > 0) {
                     label.setText(String.valueOf(cardLeft - 1));
@@ -124,11 +125,12 @@ public class PreGameMenu extends Application {
                     setCardsInDeck();
                     calculateLabels();
                 }
-                for(Card card1:currentDeck.getCardsInDeck().keySet()) System.out.println(card1.getCardName()+" "+currentDeck.getCardsInDeck().get(card1));
+//                for(Card card1:currentDeck.getCardsInDeck().keySet()) System.out.println(card1.getCardName()+" "+currentDeck.getCardsInDeck().get(card1));
             });
             count++;
         }
     }
+
     public void setCardsInDeck(){
         rightGrid.getChildren().clear();
         int count=0;
@@ -156,6 +158,7 @@ public class PreGameMenu extends Application {
                             setCardsAndCommander();
                             setCardsInDeck();
                             calculateLabels();
+//                            for(Card card1:currentDeck.getCardsInDeck().keySet()) System.out.println(card1+" : "+card1.getCardName());
                         }
                     });
                     rightGrid.add(pane, count % 3, count / 3);
@@ -164,6 +167,7 @@ public class PreGameMenu extends Application {
             }
         }
     }
+
     public void showLeaderMenu(MouseEvent mouseEvent) {
         leaders = new ArrayList<>();
         leaders = currentFaction.getLeaders();
@@ -221,6 +225,7 @@ public class PreGameMenu extends Application {
         leaderMenu.setScene(scene);
         leaderMenu.showAndWait();
     }
+
     public void showFactionMenu(MouseEvent mouseEvent) {
         factionMenu = new Stage();
         Pane root = new Pane();
@@ -283,6 +288,7 @@ public class PreGameMenu extends Application {
         factionMenu.setScene(scene);
         factionMenu.showAndWait();
     }
+
     public void calculateLabels(){
         currentDeck.calculateDeck();
         totalCardInDeck.setText(String.valueOf(currentDeck.totalCardsInDeck));
@@ -303,14 +309,12 @@ public class PreGameMenu extends Application {
         totalUnitCardStrength.setTextFill(Color.BLACK);
    }
 
-
     public void goToVeto(MouseEvent mouseEvent) {
         try {
-            Deck.currentDeck = currentDeck; // todo 1
+            Deck.currentDeck = currentDeck;// todo 1
             Deck.currentDeck.shuffleDeck();
-
-            VetoCard gameLauncher = new VetoCard();
-            gameLauncher.start(LoginMenu.stage);
+            VetoCard vetoCard = new VetoCard();
+            vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
