@@ -358,7 +358,7 @@ public class PreGameMenu extends Application {
                 client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() );
                 inviteMenu.close();
                 Deck.currentDeck = currentDeck;
-
+                Deck.currentDeck.shuffleDeck();
                 vetoCard.start(LoginMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -368,6 +368,8 @@ public class PreGameMenu extends Application {
     public void goToVetoMenu() {
         VetoCard vetoCard = new VetoCard();
         try {
+            Deck.currentDeck = currentDeck;
+            Deck.currentDeck.shuffleDeck();
             vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
