@@ -5,13 +5,14 @@ import controller.Client;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
     public Client client;
     private ArrayList<String> requests = new ArrayList<>();
-    private ArrayList<String> friends;
+    private ArrayList<String> friends = new ArrayList<>();
 
     public ArrayList<Deck> getDecks() {
         return decks;
@@ -234,5 +235,9 @@ public class User {
     public void addFriend(String reqPart) {
         friends.add(reqPart);
         System.out.println(reqPart);
+    }
+
+    public ArrayList<String > getFriends() {
+        return friends;
     }
 }

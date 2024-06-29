@@ -118,6 +118,7 @@ import javafx.scene.layout.HBox;
 import model.Card;
 import model.Game;
 import model.User;
+import view.PreGameMenu;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -132,6 +133,7 @@ public class Client extends Thread {
 
     public Game game;
     public User user;
+    public PreGameMenu pregameMenu;
     Socket socket;
     DataOutputStream sendBuffer;
     DataInputStream receiveBuffer;
@@ -166,6 +168,7 @@ public class Client extends Thread {
 
     public void sendMessage(String command) {
         try {
+            System.out.println(command);
             sendBuffer.writeUTF(command);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -197,15 +200,13 @@ public class Client extends Thread {
                         throw new RuntimeException(e);
                     }
                     System.out.println(message);
-
-                   responseToCard(message);
-
+                   serverResponseToAction(message);
                 }
             }
         }).start();
     }
 
-    private void responseToCard(String response) {
+    private void serverResponseToAction(String response) {
         Card card = null;
         AtomicReference<HBox> target = new AtomicReference<>();
         String[] components = response.split("\\.");
@@ -220,9 +221,16 @@ public class Client extends Thread {
                 target.get().getChildren().add(finalCard);
                 game.calculateLabels(game.playerFourthRow);
             });
+        } else if (components.length == 2 && components[1].equals("startGame")) {
+            Platform.runLater(()-> {
+                pregameMenu.goToVetoMenu();
+            });
         } else if (components.length == 1) {
-            System.out.println("hoo");
             User.getLoggedInUser().addReq(components[0]);
+        } else if (components.length == 2) {
+            Platform.runLater(()-> {
+                pregameMenu.showInvitation(components[0]);
+            });
         }
     }
 }

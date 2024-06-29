@@ -141,6 +141,7 @@ public class MainMenu extends Application {
         textField.setMaxWidth(200);
         Button sendReq = new Button("send");
         sendReq.setOnMouseClicked(event -> {
+            User.getLoggedInUser().addFriend(textField.getText());
             User.getLoggedInUser().client.sendMessage("req:" + textField.getText() + ":" + User.getLoggedInUser().getUsername());
         });
         reqs.getChildren().addAll(textField, sendReq);
