@@ -330,9 +330,10 @@ public class PreGameMenu extends Application {
         TextField opponentName = new TextField();
         Button invite = new Button("invite");
         invite.setOnMouseClicked(event -> {
-            if (User.getLoggedInUser().getFriends().contains(opponentName.getText())) {
-                client.sendMessage("invite:" + opponentName.getText() + ":" + User.getLoggedInUser().getUsername());
-            }
+//            if (User.getLoggedInUser().getFriends().contains(opponentName.getText())) {
+//                client.sendMessage("invite:" + opponentName.getText() + ":" + User.getLoggedInUser().getUsername());
+//            }
+            client.sendMessage("invite:" + opponentName.getText() + ":" + User.getLoggedInUser().getUsername());
         });
         challengeLabel.setVisible(false);
         challengeLabel.setTextFill(Color.WHITE);
@@ -355,10 +356,11 @@ public class PreGameMenu extends Application {
         accept.setOnMouseClicked(event ->  {
             VetoCard vetoCard = new VetoCard();
             try {
+                User.getLoggedInUser().currentOponentName = opponent;
                 client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() );
                 inviteMenu.close();
                 Deck.currentDeck = currentDeck;
-                Deck.currentDeck.shuffleDeck();
+//                Deck.currentDeck.shuffleDeck();
                 vetoCard.start(LoginMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -369,7 +371,8 @@ public class PreGameMenu extends Application {
         VetoCard vetoCard = new VetoCard();
         try {
             Deck.currentDeck = currentDeck;
-            Deck.currentDeck.shuffleDeck();
+//            Deck.currentDeck.shuffleDeck();
+            inviteMenu.close();
             vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);

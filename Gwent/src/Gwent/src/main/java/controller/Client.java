@@ -124,6 +124,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -210,20 +211,17 @@ public class Client extends Thread {
         Card card = null;
         AtomicReference<HBox> target = new AtomicReference<>();
         String[] components = response.split("\\.");
-        if (components.length == 8) {
+        System.out.println(Arrays.toString(components) + "reached response");
+        if (components.length == 7) {
             card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
             Card finalCard = card;
             Platform.runLater(() -> {
-                System.out.println(finalCard.getCardName());
-//            game.hBoxes.get(7).getChildren().add(finalCard);
-                target.set(game.hBoxes.get(Integer.parseInt(components[7])));
-
-                target.get().getChildren().add(finalCard);
-                game.calculateLabels(game.playerFourthRow);
+                game.enemyPlaceCard(finalCard, game.hBoxes.get(Integer.parseInt(components[5])));
             });
         } else if (components.length == 2 && components[1].equals("startGame")) {
             Platform.runLater(()-> {
-                //pregameMenu.goToVetoMenu();
+                User.getLoggedInUser().currentOponentName = components[0];
+                pregameMenu.goToVetoMenu();
             });
         } else if (components.length == 1) {
             User.getLoggedInUser().addReq(components[0]);

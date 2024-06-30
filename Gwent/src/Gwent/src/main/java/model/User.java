@@ -11,6 +11,7 @@ import java.util.HashMap;
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
     public Client client;
+    public String currentOponentName;
     private ArrayList<String> requests = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
 

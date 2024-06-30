@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class GameLauncher extends Application {
     public  ArrayList<HBox>hBoxes=new ArrayList<HBox>();
-
-
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     public HBox playerHand = new HBox();
@@ -96,7 +94,7 @@ public class GameLauncher extends Application {
         cardx.setLayoutY(555);
         cardx.setLayoutX(178);
 
-        Label playerName=new Label("player1");
+        Label playerName=new Label(User.getLoggedInUser().getUsername());
         playerName.setLayoutY(600);
         playerName.setLayoutX(200);
         playerName.setTextFill(Color.YELLOW);
@@ -202,7 +200,7 @@ public class GameLauncher extends Application {
         cardxOpponent.setLayoutY(270);
         cardxOpponent.setLayoutX(178);
 
-        Label playerNameOpponent=new Label("player2");
+        Label playerNameOpponent=new Label(User.getLoggedInUser().currentOponentName);
         playerNameOpponent.setLayoutY(315);
         playerNameOpponent.setLayoutX(200);
         playerNameOpponent.setTextFill(Color.YELLOW);
@@ -349,7 +347,7 @@ public class GameLauncher extends Application {
         buttonPass.setText("Pass");
         buttonPass.setLayoutX(320);
         buttonPass.setLayoutY(750);
-        buttonPass.setOnMouseClicked(event -> game.waitForEnemy(game));
+
 
 
         Button buttonPassOpponent=new Button();
@@ -391,21 +389,21 @@ public class GameLauncher extends Application {
         stage.show();
         stage.setFullScreen(true);
 
+        hBoxes.add(playerFirstRowHorn);
+        hBoxes.add(playerSixthRow);
+        hBoxes.add(playerFifthRow);
+        hBoxes.add(playerFourthRow);
         hBoxes.add(playerFirstRow);
         hBoxes.add(playerSecondRow);
         hBoxes.add(playerThirdRow);
-        hBoxes.add(playerFourthRow);
-        hBoxes.add(playerFifthRow);
-        hBoxes.add(playerSixthRow);
-
-        hBoxes.add(playerFirstRowHorn);
+        hBoxes.add(game.weatherBox);
         hBoxes.add(playerSecondRowHorn);
         hBoxes.add(playerThirdRowHorn);
         hBoxes.add(playerFourthRowHorn);
         hBoxes.add(playerFifthRowHorn);
         hBoxes.add(playerSixthRowHorn);
-        hBoxes.add(game.weatherBox);
 
+        game.hBoxes =hBoxes;
 //        Deck.currentDeck.hand.clear();
         playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
         playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
@@ -494,12 +492,9 @@ public class GameLauncher extends Application {
         CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, game, card, vx, vy, endY, endX);
         cardPlacementAnimation.play();
     }
-
     private HBox createHbox() {
         HBox rootHBox = new HBox();
         rootHBox.setAlignment(Pos.BOTTOM_CENTER);
-
-
 
         // Create the left VBox (equivalent to the first <VBox> in FXML)
         VBox leftVBox = new VBox();
