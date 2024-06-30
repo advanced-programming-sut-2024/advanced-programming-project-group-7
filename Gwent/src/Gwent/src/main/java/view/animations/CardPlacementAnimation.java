@@ -13,9 +13,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.Card;
 import model.Game;
-import model.User;
 import model.cards.*;
-import view.GameLauncher;
 import view.PreGameMenu;
 
 import java.util.Iterator;
@@ -29,7 +27,6 @@ public class CardPlacementAnimation extends Transition {
     private final double endX;
     private final double endY;
     private final Pane pane;
-    private HBox playerRow;
     private final Game game;
 
     public CardPlacementAnimation(Pane pane, Game game, Card card, double vx, double vy, double endY, double endX) {
@@ -95,7 +92,7 @@ public class CardPlacementAnimation extends Transition {
                     }
                 }
             } else if (card instanceof Medic) {
-                if (!game.graveYard.getChildren().isEmpty())
+                if (!game.graveyard.getChildren().isEmpty())
                     showMedicMenu(game);
             } else if (card instanceof Scorch) {
                 game.removeDominantCard();
@@ -134,7 +131,7 @@ public class CardPlacementAnimation extends Transition {
         root.setMinWidth(800);
         GridPane gridPane = new GridPane();
         int count = 0;
-        for (Node deadCard : game.graveYard.getChildren()) {
+        for (Node deadCard : game.graveyard.getChildren()) {
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));

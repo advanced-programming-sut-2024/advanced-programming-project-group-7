@@ -35,7 +35,7 @@ public class AnnihilationAnimation extends Transition {
                 row.getChildren().remove(card);
                 card.rectangle.setFill(new ImagePattern(new Image(AnnihilationAnimation
                         .class.getResource(card.smPathCreator(card.getCardName(), card.getFactionName())).toExternalForm())));
-                game.graveYard.getChildren().add(card);
+                game.graveyard.getChildren().add(card);
                 card.rectangle.toBack();
             }
         });

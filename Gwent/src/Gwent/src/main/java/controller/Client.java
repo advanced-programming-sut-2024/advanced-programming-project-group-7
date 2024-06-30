@@ -216,7 +216,10 @@ public class Client extends Thread {
             card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
             Card finalCard = card;
             Platform.runLater(() -> {
-                game.enemyPlaceCard(finalCard, game.hBoxes.get(Integer.parseInt(components[5])));
+                if ( Integer.parseInt(components[5]) != 7)
+                    game.enemyPlaceCard(finalCard, game.hBoxes.get(Integer.parseInt(components[5])));
+                else
+                    game.enemyPlaceCard(finalCard, game.hBoxes.get(0));
             });
         } else if (components.length == 2 && components[1].equals("startGame")) {
             Platform.runLater(()-> {
