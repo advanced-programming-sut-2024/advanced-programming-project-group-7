@@ -148,7 +148,7 @@ public class MainMenu extends Application {
         reqMenu.show();
     }
     private BackgroundImage createBackgroundImage () {
-        Image image = new Image(Game.class.getResource("/Images/background.jpg").toExternalForm(), 1280 ,768, false, false);
+        Image image = new Image(Game.class.getResource("/Images/mainmenubackground.jpg").toExternalForm(), 1280 ,768, false, false);
         ImageView imageView = new ImageView(image);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);

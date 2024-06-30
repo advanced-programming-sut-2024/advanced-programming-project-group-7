@@ -6,13 +6,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.BattleInfo;
+import model.Game;
 import model.User;
 
 import java.net.URL;
@@ -39,6 +44,7 @@ public class ProfileMenu extends Application {
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        root.setBackground(new Background(createBackgroundImage()));
         stage.show();
     }
     @FXML
@@ -132,5 +138,18 @@ public class ProfileMenu extends Application {
             contextMenu.getItems().add(menuItem);
         }
         contextMenu.show((Node) mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+    }
+    private BackgroundImage createBackgroundImage () {
+        Image image = new Image(Game.class.getResource("/Images/profilemenubackground.jpg").toExternalForm(), 1280 ,768, false, false);
+        ImageView imageView = new ImageView(image);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image bwImage = imageView.snapshot(params, null);
+        BackgroundImage backgroundImage = new BackgroundImage(bwImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        return backgroundImage;
     }
 }

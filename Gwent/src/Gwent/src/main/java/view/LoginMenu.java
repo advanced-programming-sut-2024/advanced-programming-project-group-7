@@ -19,6 +19,8 @@ import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
@@ -42,10 +44,10 @@ public class LoginMenu extends Application {
     public TextField confirmPWD;
     public Label forgotPWD;
     public Button PassGen;
-    public Pane switchPane;
+    public Pane switchPane=new Pane();
     public Pane forgotPasswordPane;
     public Pane hybridButtPane;
-
+    public Rectangle buttonBack = new Rectangle(100,50);
     public static void main(String[] args) {
         launch(args);
     }
@@ -63,6 +65,11 @@ public class LoginMenu extends Application {
 ////            client.start();
         }
 
+        buttonBack.setFill(new ImagePattern(new Image(LoginMenu.class.getResource("/Images/buttonimage.jpg").toExternalForm())));
+        Label switchL = new Label("Switch");
+        switchPane.getChildren().add(buttonBack);
+        switchPane.getChildren().add(switchL);
+        switchL.setLayoutX(1);
         LoginMenu.stage = stage;
         URL url = LoginMenu.class.getResource("/FXML/LoginMenu.fxml");
         Image icon = new Image(LoginMenu.class.getResource("/Images/icons/gwent.jpg").toExternalForm());
