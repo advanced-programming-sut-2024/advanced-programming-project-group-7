@@ -98,7 +98,7 @@ public class MainMenu extends Application {
         exitGameRec.setVisible(false);
         profileMenuLabel=new Label("Profile menu");
         profileMenuLabel.setFont(new Font("Tiro Gurmukhi",30));
-        profileMenuLabel.setTextFill(Color.BLACK);
+        profileMenuLabel.setTextFill(Color.WHITE);
         profileMenuLabel.setLayoutX(20);
         profileMenuLabel.setOnMouseClicked(this::goToProfileMenu);
         profileMenuLabel.setOnMouseEntered(event -> {
@@ -107,13 +107,13 @@ public class MainMenu extends Application {
             indicator1rec.setVisible(true);
         });
         profileMenuLabel.setOnMouseExited(event -> {
-            profileMenuLabel.setTextFill(Color.BLACK);
+            profileMenuLabel.setTextFill(Color.WHITE);
             profileMenuRec.setVisible(false);
             indicator1rec.setVisible(false);
         });
         startNewGameLabel=new Label("Start new game");
         startNewGameLabel.setFont(new Font("Tiro Gurmukhi",30));
-        startNewGameLabel.setTextFill(Color.BLACK);
+        startNewGameLabel.setTextFill(Color.WHITE);
         startNewGameLabel.setOnMouseClicked(this::startNewGame);
         startNewGameLabel.setOnMouseEntered(event -> {
             startNewGameLabel.setTextFill(new Color(0.538,0.51,0.002,1));
@@ -121,13 +121,13 @@ public class MainMenu extends Application {
             indicator2rec.setVisible(true);
         });
         startNewGameLabel.setOnMouseExited(event -> {
-            startNewGameLabel.setTextFill(Color.BLACK);
+            startNewGameLabel.setTextFill(Color.WHITE);
             startNewGameRec.setVisible(false);
             indicator2rec.setVisible(false);
         });
         logOutRLabel=new Label("Log out");
         logOutRLabel.setFont(new Font("Tiro Gurmukhi",30));
-        logOutRLabel.setTextFill(Color.BLACK);
+        logOutRLabel.setTextFill(Color.WHITE);
         logOutRLabel.setLayoutX(50);
         logOutRLabel.setOnMouseClicked(this::Logout);
         logOutRLabel.setOnMouseEntered(event -> {
@@ -136,13 +136,13 @@ public class MainMenu extends Application {
             indicator3rec.setVisible(true);
         });
         logOutRLabel.setOnMouseExited(event -> {
-            logOutRLabel.setTextFill(Color.BLACK);
+            logOutRLabel.setTextFill(Color.WHITE);
             logOutRec.setVisible(false);
             indicator3rec.setVisible(false);
         });
         exitGameLabel=new Label("Exit game");
         exitGameLabel.setFont(new Font("Tiro Gurmukhi",30));
-        exitGameLabel.setTextFill(Color.BLACK);
+        exitGameLabel.setTextFill(Color.WHITE);
         exitGameLabel.setLayoutX(40);
         exitGameLabel.setOnMouseClicked(this::exitGame);
         exitGameLabel.setOnMouseEntered(event -> {
@@ -151,7 +151,7 @@ public class MainMenu extends Application {
             indicator4rec.setVisible(true);
         });
         exitGameLabel.setOnMouseExited(event -> {
-            exitGameLabel.setTextFill(Color.BLACK);
+            exitGameLabel.setTextFill(Color.WHITE);
             exitGameRec.setVisible(false);
             indicator4rec.setVisible(false);
         });
