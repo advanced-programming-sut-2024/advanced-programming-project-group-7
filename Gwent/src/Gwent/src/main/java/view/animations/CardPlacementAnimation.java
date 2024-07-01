@@ -13,6 +13,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.Card;
 import model.Game;
+import model.User;
 import model.cards.*;
 import view.GameLauncher;
 import view.PreGameMenu;
@@ -22,14 +23,14 @@ import java.util.Iterator;
 public class CardPlacementAnimation extends Transition {
 
     private final int duration = 100;
-    private Card card;
-    private double vy;
-    private double vx;
-    private double endX;
-    private double endY;
-    private Pane pane;
+    private final Card card;
+    private final double vy;
+    private final double vx;
+    private final double endX;
+    private final double endY;
+    private final Pane pane;
     private HBox playerRow;
-    private Game game;
+    private final Game game;
 
     public CardPlacementAnimation(Pane pane, Game game, Card card, double vx, double vy, double endY, double endX) {
         this.card = card;
@@ -51,36 +52,23 @@ public class CardPlacementAnimation extends Transition {
         if (Math.abs(x - endX) <= 10 && Math.abs(y - endY) <= 10) {
             pane.getChildren().remove(card);
             if (!card.getCardName().equals("clear")) {
-                StringBuilder st = new StringBuilder();
-//                String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHero
-                st.append("card:").append(card.getCardName()).append(".").append(String.valueOf(card.getCountOfCard())).append(".").append(String.valueOf(card.isSpecial()))
-                                .append(".").append(String.valueOf(card.getPower())).append(".").append(card.getFactionName()).append(".").append(String.valueOf(card.rows))
-                        .append(".").append(String.valueOf(card.isHero()));
-                st.append(".").append(String.valueOf(GameLauncher.enemyPosition(card.rows))); //todo change this
-                System.out.println(st.toString());
-
-                game.client.sendMessage(st.toString());
-                game.selectedBox.getChildren().add(card);
+                game.placeCard(card, game.selectedBox);
             }
             card.setOnMouseClicked(event -> {
                 if (game.selected instanceof Decoy) {
                     game.playerHand.getChildren().add(card);
                     if (card.getRows().contains(3)) {
-                        game.playerThirdRow.getChildren().add(game.selected);
-                        game.calculateLabels(game.playerThirdRow);
+                        game.placeCard(game.selected, game.playerThirdRow);
                     }
                     else if (card.getRows().contains(2)) {
-                        game.playerSecondRow.getChildren().add(game.selected);
-                        game.calculateLabels(game.playerSecondRow);
+                        game.placeCard(game.selected, game.playerSecondRow);
                     }
                     else if (card.getRows().contains(1)) {
-                        game.playerFirstRow.getChildren().add(game.selected);
-                        game.calculateLabels(game.playerFirstRow);
+                        game.placeCard(game.selected, game.playerFirstRow);
                     }
                     game.selected = null;
                 }
             });
-            game.calculateLabels(game.selectedBox);
             this.stop();
             if (card instanceof Muster) {
                 Iterator<Node> iterator = game.playerHand.getChildren().iterator();
@@ -88,20 +76,18 @@ public class CardPlacementAnimation extends Transition {
                     Node card1 = iterator.next();
                     if (card1 instanceof Muster || card.getCardName().equals(((Card) card1).getCardName())) {
                         iterator.remove();
-                        game.selectedBox.getChildren().add(card1);
+                        game.placeCard((Card) card1, game.selectedBox);
                     }
-                }
-                if (game.remainingDeck != null) {
+                }if (game.remainingDeck != null) {
                     Iterator<Node> iterator1 = game.remainingDeck.getChildren().iterator();
                     while (iterator.hasNext()) {
                         Node card1 = iterator.next();
                         if (card1 instanceof Muster || card.getCardName().equals(((Card) card1).getCardName())) {
                             iterator1.remove();
-                            game.selectedBox.getChildren().add(card1);
+                            game.placeCard((Card) card1, game.selectedBox);
                         }
                     }
                 }
-                game.calculateLabels(game.selectedBox);
             } else if (card instanceof Mardroeme) {
                 for (Node card1 : game.selectedBox.getChildren()) {
                     if ( card1 instanceof Berserker) {
@@ -114,8 +100,6 @@ public class CardPlacementAnimation extends Transition {
             } else if (card instanceof Scorch) {
                 game.removeDominantCard();
                 game.selectedBox.getChildren().remove(card);
-            } else if (card instanceof MoralBoost) {
-                game.boostRow(game.selectedBox,game);
             } else if (card instanceof Spy) {
                 game.spyACard();
             } else if (card instanceof TightBond) {

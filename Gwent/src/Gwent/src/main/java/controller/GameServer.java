@@ -24,19 +24,17 @@ public class GameServer extends Thread {
 
     @Override
     public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(34600)) {
-            System.out.println("Server is listening on port 34600");
+        try (ServerSocket serverSocket = new ServerSocket(34800)) {
+            System.out.println("Server is listening on port 34800");
             while (true) {
                 newSoc = serverSocket.accept();
-                if (newSoc != null) {
 //                    DataInputStream dataInputStream1 = new DataInputStream(newSoc.getInputStream());
 //                    String initialConnection = dataInputStream1.readUTF();
 //                    onlineUsers.put(initialConnection, newSoc);
 //                    System.out.println(initialConnection);
                     UserThread userThread = new UserThread(newSoc);
-                    userThread.run();
-                    newSoc = null;
-                }
+                    userThread.start();
+
 //                            GameThread gameThread = new GameThread(socket1, socket2);
 //                            System.out.println("should be only");
 //                            gameThread.run(); // may here

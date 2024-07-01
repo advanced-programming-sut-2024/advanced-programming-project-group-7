@@ -22,7 +22,7 @@ public class UserThread extends Thread {
             DataInputStream dataInputStream1 = new DataInputStream(socket.getInputStream());
             String initialConnection = dataInputStream1.readUTF();
             GameServer.onlineUsers.put(initialConnection, socket);
-            dataOutputStream1.writeUTF("you entered");
+            dataOutputStream1.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -30,15 +30,45 @@ public class UserThread extends Thread {
             String command1 = null; // Read the command from the client
             try {
                 command1 = dataInputStream1.readUTF();
+                System.out.println("command1: " + command1);
                 String[] parts1 = command1.split(":");
                 if (parts1[0].equals("req")) {
                     if (GameServer.onlineUsers.containsKey(parts1[1])){
                         try {
                             DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                             targetUser.writeUTF(parts1[2]);
+                            targetUser.flush();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
+                    }
+                } else if (parts1[0].equals("invite")) {
+                    System.out.println(parts1);
+                    if (GameServer.onlineUsers.containsKey(parts1[1])){
+                        try {
+                            DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                            targetUser.writeUTF(parts1[2] + ".invite");
+                            System.out.println("part12: " +parts1[2]);
+                            targetUser.flush();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (parts1[0].equals("accept")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(parts1[2] +".startGame");
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (parts1[0].equals("card")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(parts1[2]);
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             } catch (IOException e) {

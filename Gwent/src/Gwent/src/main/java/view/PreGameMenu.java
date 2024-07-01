@@ -1,13 +1,15 @@
 package view;
 
+import controller.Client;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -23,8 +25,6 @@ import model.factions.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class PreGameMenu extends Application {
 
@@ -48,6 +48,12 @@ public class PreGameMenu extends Application {
     public Label totalUnitCardStrength;
     public Label heroCards;
     public Stage stage;
+    private Client client;
+    private Label challengeLabel = new Label("VS");
+    private Button accept = new Button("accept");
+    private Button reject = new Button("reject");
+    private Stage inviteMenu;
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -68,6 +74,8 @@ public class PreGameMenu extends Application {
         setCardsAndCommander();
         setCardsInDeck();
         calculateLabels();
+        client = User.getLoggedInUser().client;
+        client.pregameMenu = this;
     }
 
     private void setCurrentFactionInfo() {
@@ -309,14 +317,73 @@ public class PreGameMenu extends Application {
         totalUnitCardStrength.setTextFill(Color.BLACK);
    }
 
-    public void goToVeto(MouseEvent mouseEvent) {
-        try {
-            Deck.currentDeck = currentDeck;// todo 1
-            Deck.currentDeck.shuffleDeck();
+    public void inviteMenu(MouseEvent mouseEvent) {
+        inviteMenu = new Stage();
+        Pane root = new Pane();
+        Scene scene = new Scene(root);
+        inviteMenu.initStyle(StageStyle.UNDECORATED);
+        inviteMenu.initStyle(StageStyle.TRANSPARENT);
+        root.setBackground(Background.EMPTY);
+        scene.setFill(Color.rgb(1,1,1, 0.7));
+        root.setMinHeight(500);
+        root.setMinWidth(800);
+        TextField opponentName = new TextField();
+        Button invite = new Button("invite");
+        invite.setOnMouseClicked(event -> {
+//            if (User.getLoggedInUser().getFriends().contains(opponentName.getText())) {
+//                client.sendMessage("invite:" + opponentName.getText() + ":" + User.getLoggedInUser().getUsername());
+//            }
+            client.sendMessage("invite:" + opponentName.getText() + ":" + User.getLoggedInUser().getUsername());
+        });
+        challengeLabel.setVisible(false);
+        challengeLabel.setTextFill(Color.WHITE);
+        accept.setVisible(false);
+        reject.setVisible(false);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(opponentName, invite, challengeLabel, accept, reject);
+        root.getChildren().add(vBox);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setLayoutX(250);
+        vBox.setLayoutY(300);
+        inviteMenu.setScene(scene);
+        inviteMenu.show();
+    }
+    public void showInvitation(String opponent) {
+        challengeLabel.setVisible(true);
+        challengeLabel.setText(opponent + " challenged you");
+        accept.setVisible(true);
+        reject.setVisible(true);
+        accept.setOnMouseClicked(event ->  {
             VetoCard vetoCard = new VetoCard();
+            try {
+                User.getLoggedInUser().currentOponentName = opponent;
+                client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() );
+                inviteMenu.close();
+                Deck.currentDeck = currentDeck;
+//                Deck.currentDeck.shuffleDeck();
+                vetoCard.start(LoginMenu.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+    public void goToVetoMenu() {
+        VetoCard vetoCard = new VetoCard();
+        try {
+            Deck.currentDeck = currentDeck;
+//            Deck.currentDeck.shuffleDeck();
+            inviteMenu.close();
             vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }
+//try {
+//        Deck.currentDeck = currentDeck;// todo 1
+//        Deck.currentDeck.shuffleDeck();
+//        VetoCard vetoCard = new VetoCard();
+//        vetoCard.start(LoginMenu.stage);
+//        } catch (Exception e) {
+//        e.printStackTrace();
+//        }

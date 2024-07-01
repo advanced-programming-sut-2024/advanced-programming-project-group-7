@@ -1,14 +1,12 @@
 package model;
 
 import controller.Client;
-import controller.GameServer;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
-import model.cards.Spy;
 import view.GameLauncher;
 
 import java.time.LocalDate;
@@ -46,8 +44,9 @@ public class Game {
     public Card selected;
     public HBox playerFifthRow;
     public HBox playerSixthRow;
-    public ArrayList<HBox> hBoxes=new ArrayList<HBox>();
+    public ArrayList<HBox> hBoxes;
     public Client client;
+    public String opponentName;
 
     public Game(GameLauncher gameLauncher) {
         this.playerHand = gameLauncher.playerHand;
@@ -63,14 +62,10 @@ public class Game {
         this.playerFourthRowHorn =gameLauncher.playerFourthRowHorn;
         this.playerFifthRowHorn = gameLauncher.playerFifthRowHorn;
         this.playerSixthRowHorn = gameLauncher.playerSixthRowHorn;
-        hBoxes=gameLauncher.hBoxes;
 
-        hBoxes.add(playerSixthRow);
-//        this.graveYard.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
-//        this.graveYard.getChildren().add(new Card("tibor",1,false,10,"nilfgaard",2,true));
     }
     public Group cardGroup = new Group();
-    private LocalDate date= LocalDate.now();
+    private final LocalDate date= LocalDate.now();
     private Integer[][] roundsPoints=new Integer[][]{{20,10},{10,20},{20,10}};
     private int[] finalPoints=new int[]{50,40};
     private User winner=User.getLoggedInUser();
@@ -104,58 +99,47 @@ public class Game {
         //todo
     }
 
-    public void boostRow(HBox selectedBox, Game game) {
-        for (Node card : selectedBox.getChildren()) {
-            ((Card) card).boostLevel++;
-        }
-        game.calculateLabels(selectedBox);
-    }
-
     public void spyACard() {
         //todo
     }
 
     public void handleBond(HBox selectedBox, Card card, Game game) {
-        for (Node card1 : selectedBox.getChildren()) {
-            if (((Card) card1).getCardName().equals(card.getCardName()))
-                ((Card) card1).bondLevel++;
-        }
-        game.calculateLabels(selectedBox);
+
     }
 
-    public void calculateLabels(HBox selectedBox) {
+    public void calculateLabels() {
         int result = 0;
-        for (Node card : selectedBox.getChildren()) {
-            ((Card) card).calculatePower();
-            result += Integer.parseInt(((Card) card).powerLabel.getText());
+        for (HBox hBox : hBoxes) {
+            for (Node card : hBox.getChildren()) {
+                ((Card) card).calculatePower();
+            }
         }
-        if (selectedBox.equals(playerFirstRow))
-            totalRow1Power.setText(String.valueOf(result));
-        else if (selectedBox.equals(playerSecondRow))
-            totalRow2Power.setText(String.valueOf(result));
-        else if (selectedBox.equals(playerThirdRow))
-            totalRow3Power.setText(String.valueOf(result));
-        else if (selectedBox.equals(playerFourthRow))
-            totalRow3PowerOpponent.setText(String.valueOf(result));
-        else if (selectedBox.equals(playerFifthRow))
-            totalRow2PowerOpponent.setText(String.valueOf(result));
-        else if (selectedBox.equals(playerSixthRow))
-            totalRow3Power.setText(String.valueOf(result));
-        totalPowerOpponent.setText(String.valueOf(Integer.parseInt(totalRow2PowerOpponent.getText())
-                + Integer.parseInt(totalRow1PowerOpponent.getText())
-                + Integer.parseInt(totalRow3PowerOpponent.getText())));
-        totalPower.setText(String.valueOf(Integer.parseInt(totalRow1Power.getText())
-                + Integer.parseInt(totalRow2Power.getText())
-                + Integer.parseInt(totalRow3Power.getText())));
+//        totalRow1Power.setText(String.valueOf(result));
+//        totalRow2Power.setText(String.valueOf(result));
+//        totalRow3Power.setText(String.valueOf(result));
+//        totalRow3PowerOpponent.setText(String.valueOf(result));
+//        totalRow2PowerOpponent.setText(String.valueOf(result));
+//        totalRow3Power.setText(String.valueOf(result));
+//        totalPowerOpponent.setText(String.valueOf(Integer.parseInt(totalRow2PowerOpponent.getText())
+//                + Integer.parseInt(totalRow1PowerOpponent.getText())
+//                + Integer.parseInt(totalRow3PowerOpponent.getText())));
+//        totalPower.setText(String.valueOf(Integer.parseInt(totalRow1Power.getText())
+//                + Integer.parseInt(totalRow2Power.getText())
+//                + Integer.parseInt(totalRow3Power.getText())));
     }
-
-    public void waitForEnemy(Game game) {
-
-        Platform.runLater(() -> {
-        });
-        calculateLabels(playerFourthRow);
+    public void placeCard(Card card, HBox hBox){
+        hBox.getChildren().add(card);
+        String st = "card:" + User.getLoggedInUser().currentOponentName + ":" + card.getCardName() + "."
+                + card.getCountOfCard() + "." + card.isSpecial() + "." + card.getPower() + "." + card.getFactionName()
+                + "." + card.rows + "." + card.isHero();
+        System.out.println(st);
+        client.sendMessage(st);
+        calculateLabels();
     }
-
+    public void enemyPlaceCard(Card finalCard, HBox hBox) {
+        hBox.getChildren().add(finalCard);
+        calculateLabels();
+    }
     public void newRound(Game game) {
         if (Integer.parseInt(totalPower.getText()) < Integer.parseInt(totalPowerOpponent.getText())) {
             life2.setVisible(false);
@@ -185,18 +169,6 @@ public class Game {
         totalRow3Power.setText("0");
         totalRow2Power.setText("0");
         totalRow1Power.setText("0");
-    }
-    public String setCardToString(Card card,HBox target){
-        String fullInformation = "";
-        fullInformation+="card"+".";
-        fullInformation=card.getCardName()+"."+String.valueOf(card.getCountOfCard())+".";
-        if(card.isSpecial())fullInformation+="true";
-        else fullInformation+="false";
-        fullInformation+=("."+String.valueOf(card.getPower())+"."+card.getFactionName()+"."+String.valueOf(card.getRows())+".");
-        if(card.isHero())fullInformation+="true";
-        else fullInformation+="false";
-        fullInformation+=("."+target.getClass().getSimpleName());
-        return fullInformation;
     }
 
 }

@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class GameLauncher extends Application {
     public  ArrayList<HBox>hBoxes=new ArrayList<HBox>();
-
-
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     public HBox playerHand = new HBox();
@@ -60,6 +58,7 @@ public class GameLauncher extends Application {
     private boolean yourTurn = true;
     private Deck deck;
     private  Stage stage;
+    private Client client;
 
 
     @Override
@@ -68,7 +67,9 @@ public class GameLauncher extends Application {
         game = new Game(this);
         stage = new Stage();
         game.client = User.getLoggedInUser().client;
-        User.getLoggedInUser().client.game = game;
+
+        client = User.getLoggedInUser().client;
+        client.game = game;
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
@@ -93,7 +94,7 @@ public class GameLauncher extends Application {
         cardx.setLayoutY(555);
         cardx.setLayoutX(178);
 
-        Label playerName=new Label("player1");
+        Label playerName=new Label(User.getLoggedInUser().getUsername());
         playerName.setLayoutY(600);
         playerName.setLayoutX(200);
         playerName.setTextFill(Color.YELLOW);
@@ -199,7 +200,7 @@ public class GameLauncher extends Application {
         cardxOpponent.setLayoutY(270);
         cardxOpponent.setLayoutX(178);
 
-        Label playerNameOpponent=new Label("player2");
+        Label playerNameOpponent=new Label(User.getLoggedInUser().currentOponentName);
         playerNameOpponent.setLayoutY(315);
         playerNameOpponent.setLayoutX(200);
         playerNameOpponent.setTextFill(Color.YELLOW);
@@ -346,7 +347,7 @@ public class GameLauncher extends Application {
         buttonPass.setText("Pass");
         buttonPass.setLayoutX(320);
         buttonPass.setLayoutY(750);
-        buttonPass.setOnMouseClicked(event -> game.waitForEnemy(game));
+
 
 
         Button buttonPassOpponent=new Button();
@@ -388,47 +389,49 @@ public class GameLauncher extends Application {
         stage.show();
         stage.setFullScreen(true);
 
+        hBoxes.add(playerFirstRowHorn);
+        hBoxes.add(playerSixthRow);
+        hBoxes.add(playerFifthRow);
+        hBoxes.add(playerFourthRow);
         hBoxes.add(playerFirstRow);
         hBoxes.add(playerSecondRow);
         hBoxes.add(playerThirdRow);
-        hBoxes.add(playerFourthRow);
-        hBoxes.add(playerFifthRow);
-        hBoxes.add(playerSixthRow);
-
-        hBoxes.add(playerFirstRowHorn);
+        hBoxes.add(game.weatherBox);
         hBoxes.add(playerSecondRowHorn);
         hBoxes.add(playerThirdRowHorn);
         hBoxes.add(playerFourthRowHorn);
         hBoxes.add(playerFifthRowHorn);
         hBoxes.add(playerSixthRowHorn);
-        hBoxes.add(game.weatherBox);
 
+        game.hBoxes =hBoxes;
 //        Deck.currentDeck.hand.clear();
-//        Deck.currentDeck.hand.add(new Horn("horn", 3, true, 0, "special",12,false));
-//        Deck.currentDeck.hand.add(new Card("philippa", 1 , false, 10, "realms",2,true));
-//        Deck.currentDeck.hand.add(new Card("clear", 2 , true, 0, "weather",7,false));
-//        Deck.currentDeck.hand.add(new Decoy("decoy", 3 , true, 0, "special",123,false));
-//        Deck.currentDeck.hand.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-//        Deck.currentDeck.hand.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
-//        Deck.currentDeck.hand.add(new Spy("stennis", 1 , false, 5, "realms",3,false));
-//        Deck.currentDeck.hand.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-//        Deck.currentDeck.hand.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-//        Deck.currentDeck.hand.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-//        Deck.currentDeck.hand.add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
-////        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
+        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
+        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
+        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
+        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
+        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+        playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",3,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
+//        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
 //        playerHand.getChildren().add(medic);
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-        Platform.runLater(()-> {
-            for (Card card : Deck.currentDeck.hand)
-                playerHand.getChildren().add(card);
-        });
+
+//            for (Card card : Deck.currentDeck.hand)
+//                playerHand.getChildren().add(card);
+
 //        for (Card card : Deck.currentDeck.hand)
 //            playerHand.getChildren().add(card);
 
+
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
+                System.out.println("Caed has life");
                 if (yourTurn) {
                     if (card instanceof Decoy) {
                         game.selected = (Card) card;
@@ -489,12 +492,9 @@ public class GameLauncher extends Application {
         CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, game, card, vx, vy, endY, endX);
         cardPlacementAnimation.play();
     }
-
     private HBox createHbox() {
         HBox rootHBox = new HBox();
         rootHBox.setAlignment(Pos.BOTTOM_CENTER);
-
-
 
         // Create the left VBox (equivalent to the first <VBox> in FXML)
         VBox leftVBox = new VBox();
@@ -547,11 +547,9 @@ public class GameLauncher extends Application {
             if (selected instanceof Horn)
                 target = horn;
             else target = playerRow;
-
             if (selected != null && fitsBox(selected, target)) {
                 pane.getChildren().remove(showCardRectangle);
                 game.selectedBox = target;
-                System.out.println("hi");
                 game.playerHand.getChildren().remove(selected);
                 addCardToPane(selected, event.getSceneY(), event.getSceneX());
             }

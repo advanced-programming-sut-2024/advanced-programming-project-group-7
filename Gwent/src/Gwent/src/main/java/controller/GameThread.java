@@ -26,7 +26,6 @@ public class GameThread extends  Thread{
             DataOutputStream dataOutputStream2 = new DataOutputStream(socket2.getOutputStream());
 
             while (true) {
-
                 if (turn % 2 == 1) {
                     String command1 = dataInputStream1.readUTF(); // Read the command from the client
                     String[] parts1 = command1.split(":");
