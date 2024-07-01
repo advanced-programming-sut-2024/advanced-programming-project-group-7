@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
-<BorderPane prefHeight="768" prefWidth="1280" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="768" prefWidth="1280" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
     <center>
-        <VBox alignment="CENTER" maxWidth="300" spacing="10">
+        <VBox alignment="CENTER" maxWidth="300" spacing="15.0">
             <Label fx:id="Username" text="Default" />
-            <Button minHeight="50" minWidth="180" onMouseClicked="#goToProfileMenu" onMouseEntered="#mouseEnteredSound" text="Profile menu" />
-            <Button minHeight="50" minWidth="180" onMouseClicked="#startNewGame" onMouseEntered="#mouseEnteredSound" text="Start new game" />
-            <Button minHeight="50" minWidth="180" onMouseClicked="#Logout" onMouseEntered="#mouseEnteredSound" text="Log out" />
-            <Button onMouseClicked="#exitGame" onMouseEntered="#mouseEnteredSound" text="Exit game" />
+         <Pane maxHeight="50.0" maxWidth="150.0" prefHeight="200.0" prefWidth="0.0" />
+         <Pane maxHeight="50.0" maxWidth="150.0" prefHeight="200.0" prefWidth="200.0" />
+         <Pane maxHeight="50.0" maxWidth="150.0" prefHeight="200.0" prefWidth="200.0" />
+            <Button alignment="TOP_LEFT" onMouseClicked="#exitGame" onMouseEntered="#mouseEnteredSound" text="Exit game" />
         </VBox>
     </center>
    <right>
-      <VBox alignment="CENTER" prefHeight="200.0" minWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" minWidth="100.0" prefHeight="200.0" BorderPane.alignment="CENTER">
          <children>
-             <ImageView fitWidth="70 " fitHeight="70" onMouseClicked="#showRequests">
-                 <Image url="@../Images/icons/email.png"/>
+             <ImageView fitHeight="70" fitWidth="70 " onMouseClicked="#showRequests">
+                 <Image url="@../Images/icons/email.png" />
              </ImageView>
          </children>
       </VBox>

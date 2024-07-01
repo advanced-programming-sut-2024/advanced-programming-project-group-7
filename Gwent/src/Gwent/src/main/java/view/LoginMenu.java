@@ -1,9 +1,9 @@
 package view;
 
 //import controller.LoginMenuController;
-import controller.Client;
 import controller.LoginMenuController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,11 +21,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
 
-import java.awt.*;
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -35,19 +35,22 @@ public class LoginMenu extends Application {
     public TextField nameField;
     public boolean hasMusic = false;
     public TextField password;
-    public Label nicknameLable;
+    public Label nicknameLabel;
     public TextField nicknameText;
     public Label emailLabel;
     public TextField emailText;
-    public Label hybridButt;
     public boolean isLoggingIN = true;
     public TextField confirmPWD;
-    public Label forgotPWD;
+    public Label switchButton;
+    public Label hybridButton;
+    public Label forgotPasswordButton;
     public Button PassGen;
-    public Pane switchPane=new Pane();
+    public Pane switchPane;
     public Pane forgotPasswordPane;
     public Pane hybridButtPane;
-    public Rectangle buttonBack = new Rectangle(100,50);
+    public Rectangle switchRectangle = new Rectangle(100,50);
+    public Rectangle hybridRectangle = new Rectangle(100,50);
+    public Rectangle forgotPasswordRectangle=new Rectangle(300,50);
     public static void main(String[] args) {
         launch(args);
     }
@@ -64,12 +67,6 @@ public class LoginMenu extends Application {
 ////            Client client = new Client(game, User.getLoggedInUser());
 ////            client.start();
         }
-
-        buttonBack.setFill(new ImagePattern(new Image(LoginMenu.class.getResource("/Images/buttonimage.jpg").toExternalForm())));
-        Label switchL = new Label("Switch");
-        switchPane.getChildren().add(buttonBack);
-        switchPane.getChildren().add(switchL);
-        switchL.setLayoutX(1);
         LoginMenu.stage = stage;
         URL url = LoginMenu.class.getResource("/FXML/LoginMenu.fxml");
         Image icon = new Image(LoginMenu.class.getResource("/Images/icons/gwent.jpg").toExternalForm());
@@ -80,7 +77,54 @@ public class LoginMenu extends Application {
         root.setBackground(new Background(createBackgroundImage()));
         stage.show();
     }
-
+    @FXML
+    public void initialize(){
+        hybridButton = new Label("Login");
+        hybridButton.setFont(new Font("Tiro Gurmukhi",30));
+        hybridButton.setTextFill(Color.BLACK);
+        hybridButton.setLayoutX(10);
+        hybridButton.setLayoutY(7);
+        hybridRectangle.setVisible(false);
+        hybridButton.setOnMouseClicked(this::signUp);
+        hybridButton.setOnMouseEntered(event -> {
+            hybridRectangle.setVisible(true);
+        });
+        hybridButton.setOnMouseExited(event -> {
+            hybridRectangle.setVisible(false);
+        });
+        hybridRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
+        hybridButtPane.getChildren().addAll(hybridRectangle, hybridButton);
+        switchButton = new Label("Switch");
+        switchButton.setFont(new Font("Tiro Gurmukhi",30));
+        switchButton.setTextFill(Color.BLACK);
+        switchButton.setLayoutX(10);
+        switchButton.setLayoutY(7);
+        switchRectangle.setVisible(false);
+        switchButton.setOnMouseClicked(this::Switch);
+        switchButton.setOnMouseEntered(event -> {
+            switchRectangle.setVisible(true);
+        });
+        switchButton.setOnMouseExited(event -> {
+            switchRectangle.setVisible(false);
+        });
+        switchRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
+        switchPane.getChildren().addAll(switchRectangle, switchButton);
+        forgotPasswordButton = new Label("Forgot password");
+        forgotPasswordButton.setFont(new Font("Tiro Gurmukhi",30));
+        forgotPasswordButton.setTextFill(Color.BLACK);
+        forgotPasswordButton.setLayoutX(38);
+        forgotPasswordButton.setLayoutY(8);
+        forgotPasswordRectangle.setVisible(false);
+        forgotPasswordButton.setOnMouseClicked(this::recoverPSWD);
+        forgotPasswordButton.setOnMouseEntered(event -> {
+            forgotPasswordRectangle.setVisible(true);
+        });
+        forgotPasswordButton.setOnMouseExited(event -> {
+            forgotPasswordRectangle.setVisible(false);
+        });
+        forgotPasswordRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
+        forgotPasswordPane.getChildren().addAll(forgotPasswordRectangle, forgotPasswordButton);
+    }
     public void signUp(MouseEvent mouseEvent) {
         Alert alert = null;
         if (!isLoggingIN) {
@@ -171,7 +215,6 @@ public class LoginMenu extends Application {
 
 
     public void recoverPSWD(MouseEvent mouseEvent) {
-
         User user = User.getUserByUsername(nameField.getText());
         if (user == null) {
             Alert alert  = new Alert(Alert.AlertType.WARNING);
@@ -180,16 +223,15 @@ public class LoginMenu extends Application {
         } else {
             Stage recoveryStage = new Stage();
             recoveryStage.setTitle("Password Recovery");
-
-            Label usernameLabel = new Label("Username:");
+            Label usernameLabel = new Label("Username");
+            usernameLabel.setFont(new Font("Baloo Bhaina 2 Bold",20));
             TextField usernameTextField = new TextField();
             usernameTextField.setMaxWidth(300);
-
             Label securityQuestion = new Label();
             TextField securityAnswerField = new TextField();
+            securityQuestion.setFont(new Font("Baloo Bhaina 2 Bold",20));
             securityQuestion.setText(user.getSecurityQuestion());
             securityAnswerField.setMaxWidth(300);
-
             Button confirmButton = new Button("Confirm");
             Button backButton = new Button("Back");
             confirmButton.setOnMouseClicked(event ->{
@@ -256,24 +298,22 @@ public class LoginMenu extends Application {
         isLoggingIN = !isLoggingIN;
         if (isLoggingIN) {
             confirmPWD.setVisible(false);
-            nicknameLable.setVisible(false);
+            nicknameLabel.setVisible(false);
             nicknameText.setVisible(false);
             emailLabel.setVisible(false);
             emailText.setVisible(false);
             PassGen.setVisible(false);
-            forgotPWD.setVisible(true);
-            hybridButt.setText("login");
-//            hybridButt.setOpacity(0.1);
-//            hybridButt.setTextFill(Color.rgb(1,1,1,1));
+            forgotPasswordButton.setVisible(true);
+            hybridButton.setText("login");
         } else {
             confirmPWD.setVisible(true);
-            forgotPWD.setVisible(false);
-            nicknameLable.setVisible(true);
+            forgotPasswordButton.setVisible(false);
+            nicknameLabel.setVisible(true);
             PassGen.setVisible(true);
             nicknameText.setVisible(true);
             emailLabel.setVisible(true);
             emailText.setVisible(true);
-            hybridButt.setText("signup");
+            hybridButton.setText("signup");
         }
     }
 

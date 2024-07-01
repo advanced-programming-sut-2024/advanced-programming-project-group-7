@@ -51,7 +51,7 @@
             <font>
                <Font name="YuMincho Medium" size="20.0" />
             </font></TextField>
-         <Label fx:id="nicknameLable" text="Nickname" visible="false">
+         <Label fx:id="nicknameLabel" text="Nickname" visible="false">
             <font>
                <Font name="Baloo Bhai 2 Bold" size="25.0" />
             </font></Label>
@@ -69,26 +69,14 @@
                 </font></TextField>
             <HBox alignment="CENTER" minHeight="50.0" spacing="10">
                 <Pane fx:id="hybridButtPane" minHeight="50.0" minWidth="100.0">
-                    <Label fx:id="hybridButt" alignment="CENTER" onMouseClicked="#signUp" prefHeight="50.0" prefWidth="100.0" text="Login" textFill="black">
-                        <font>
-                            <Font name="Tiro Gurmukhi" size="30.0" />
-                        </font>
-                    </Label>
+
                 </Pane>
                 <Pane fx:id="switchPane" minHeight="50.0" minWidth="100.0">
-                    <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#Switch" prefHeight="50.0" prefWidth="100.0" text="switch" textFill="black">
-                        <font>
-                            <Font name="Tiro Gurmukhi" size="30.0" />
-                        </font>
-                    </Label>
+
                 </Pane>
             </HBox>
-            <Pane fx:id="forgotPasswordPane" minHeight="50.0">
-                <Label fx:id="forgotPWD" alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="3.0" onMouseClicked="#recoverPSWD" prefHeight="50.0" prefWidth="300.0" text="Forgot Password" textAlignment="CENTER" textFill="black" visible="true">
-                    <font>
-                        <Font name="Tiro Gurmukhi" size="30.0" />
-                    </font>
-                </Label>
+            <Pane fx:id="forgotPasswordPane" maxHeight="50.0" maxWidth="300.0" minHeight="50.0" prefHeight="50.0" prefWidth="458.0">
+
             </Pane>
          <Pane minHeight="40.0" prefHeight="139.0" prefWidth="494.0" />
         </VBox>

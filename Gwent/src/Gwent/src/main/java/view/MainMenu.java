@@ -34,6 +34,10 @@ public class MainMenu extends Application {
     public static Stage stage;
     public Label Username;
     public Rectangle mail;
+    public Pane indicator1;
+    public Pane indicator2;
+    public Pane indicator3;
+    public Pane indicator4;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -48,7 +52,7 @@ public class MainMenu extends Application {
         stage.setScene(scene);
         root.setBackground(new Background(createBackgroundImage()));
         stage.show();
-        User.getLoggedInUser().client.sendMessage(User.getLoggedInUser().getNickname());
+//        User.getLoggedInUser().client.sendMessage(User.getLoggedInUser().getNickname());
     }
 
     @FXML
