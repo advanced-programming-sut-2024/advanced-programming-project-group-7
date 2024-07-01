@@ -19,7 +19,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
@@ -38,6 +40,22 @@ public class MainMenu extends Application {
     public Pane indicator2;
     public Pane indicator3;
     public Pane indicator4;
+    public Pane profileMenu;
+    public Pane startNewGame;
+    public Pane logOut;
+    public Pane exitGame;
+    public Rectangle indicator1rec=new Rectangle(50,50);
+    public Rectangle indicator2rec=new Rectangle(50,50);
+    public Rectangle indicator3rec=new Rectangle(50,50);
+    public Rectangle indicator4rec=new Rectangle(50,50);
+    public Rectangle profileMenuRec=new Rectangle(220,50);
+    public Rectangle startNewGameRec=new Rectangle(220,50);
+    public Rectangle logOutRec=new Rectangle(220,50);
+    public Rectangle exitGameRec=new Rectangle(220,50);
+    public Label profileMenuLabel;
+    public Label startNewGameLabel;
+    public Label logOutRLabel;
+    public Label exitGameLabel;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -46,12 +64,11 @@ public class MainMenu extends Application {
         Client client = new Client(game, User.getLoggedInUser());
         User.getLoggedInUser().client=client;
         client.start();
-
         URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
         BorderPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        root.setBackground(new Background(createBackgroundImage()));
+        root.setBackground(new Background(createBackgroundImage("/Images/mainmenubackground.jpg")));
         stage.show();
 //        User.getLoggedInUser().client.sendMessage(User.getLoggedInUser().getNickname());
     }
@@ -59,6 +76,89 @@ public class MainMenu extends Application {
     @FXML
     public void initialize() {
         setLabelText();
+        indicator1rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        indicator2rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        indicator3rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        indicator4rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        indicator1rec.setVisible(false);
+        indicator2rec.setVisible(false);
+        indicator3rec.setVisible(false);
+        indicator4rec.setVisible(false);
+        indicator1.getChildren().addAll(indicator1rec);
+        indicator2.getChildren().addAll(indicator2rec);
+        indicator3.getChildren().addAll(indicator3rec);
+        indicator4.getChildren().addAll(indicator4rec);
+        profileMenuRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        startNewGameRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        logOutRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        exitGameRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        profileMenuRec.setVisible(false);
+        startNewGameRec.setVisible(false);
+        logOutRec.setVisible(false);
+        exitGameRec.setVisible(false);
+        profileMenuLabel=new Label("Profile menu");
+        profileMenuLabel.setFont(new Font("Tiro Gurmukhi",30));
+        profileMenuLabel.setTextFill(Color.BLACK);
+        profileMenuLabel.setLayoutX(20);
+        profileMenuLabel.setOnMouseClicked(this::goToProfileMenu);
+        profileMenuLabel.setOnMouseEntered(event -> {
+            profileMenuLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+            profileMenuRec.setVisible(true);
+            indicator1rec.setVisible(true);
+        });
+        profileMenuLabel.setOnMouseExited(event -> {
+            profileMenuLabel.setTextFill(Color.BLACK);
+            profileMenuRec.setVisible(false);
+            indicator1rec.setVisible(false);
+        });
+        startNewGameLabel=new Label("Start new game");
+        startNewGameLabel.setFont(new Font("Tiro Gurmukhi",30));
+        startNewGameLabel.setTextFill(Color.BLACK);
+        startNewGameLabel.setOnMouseClicked(this::startNewGame);
+        startNewGameLabel.setOnMouseEntered(event -> {
+            startNewGameLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+            startNewGameRec.setVisible(true);
+            indicator2rec.setVisible(true);
+        });
+        startNewGameLabel.setOnMouseExited(event -> {
+            startNewGameLabel.setTextFill(Color.BLACK);
+            startNewGameRec.setVisible(false);
+            indicator2rec.setVisible(false);
+        });
+        logOutRLabel=new Label("Log out");
+        logOutRLabel.setFont(new Font("Tiro Gurmukhi",30));
+        logOutRLabel.setTextFill(Color.BLACK);
+        logOutRLabel.setLayoutX(50);
+        logOutRLabel.setOnMouseClicked(this::Logout);
+        logOutRLabel.setOnMouseEntered(event -> {
+            logOutRLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+            logOutRec.setVisible(true);
+            indicator3rec.setVisible(true);
+        });
+        logOutRLabel.setOnMouseExited(event -> {
+            logOutRLabel.setTextFill(Color.BLACK);
+            logOutRec.setVisible(false);
+            indicator3rec.setVisible(false);
+        });
+        exitGameLabel=new Label("Exit game");
+        exitGameLabel.setFont(new Font("Tiro Gurmukhi",30));
+        exitGameLabel.setTextFill(Color.BLACK);
+        exitGameLabel.setLayoutX(40);
+        exitGameLabel.setOnMouseClicked(this::exitGame);
+        exitGameLabel.setOnMouseEntered(event -> {
+            exitGameLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+            exitGameRec.setVisible(true);
+            indicator4rec.setVisible(true);
+        });
+        exitGameLabel.setOnMouseExited(event -> {
+            exitGameLabel.setTextFill(Color.BLACK);
+            exitGameRec.setVisible(false);
+            indicator4rec.setVisible(false);
+        });
+        profileMenu.getChildren().addAll(profileMenuRec,profileMenuLabel);
+        startNewGame.getChildren().addAll(startNewGameRec,startNewGameLabel);
+        logOut.getChildren().addAll(logOutRec,logOutRLabel);
+        exitGame.getChildren().addAll(exitGameRec,exitGameLabel);
     }
 
     public void setLabelText() {
@@ -153,8 +253,8 @@ public class MainMenu extends Application {
         reqMenu.setScene(scene);
         reqMenu.show();
     }
-    private BackgroundImage createBackgroundImage () {
-        Image image = new Image(Game.class.getResource("/Images/mainmenubackground.jpg").toExternalForm(), 1280 ,768, false, false);
+    private BackgroundImage createBackgroundImage (String address) {
+        Image image = new Image(Game.class.getResource(address).toExternalForm(), 1280 ,768, false, false);
         ImageView imageView = new ImageView(image);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);

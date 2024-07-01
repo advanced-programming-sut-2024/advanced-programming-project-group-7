@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.text.Font?>
 <BorderPane prefHeight="768" prefWidth="1280" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
     <center>
-        <VBox alignment="CENTER" maxWidth="300" spacing="15.0">
-            <Label fx:id="Username" text="Default" />
-         <Pane maxHeight="50.0" maxWidth="150.0" prefHeight="200.0" prefWidth="0.0" />
-         <Pane maxHeight="50.0" maxWidth="150.0" prefHeight="200.0" prefWidth="200.0" />
-         <Pane maxHeight="50.0" maxWidth="150.0" prefHeight="200.0" prefWidth="200.0" />
-            <Button alignment="TOP_LEFT" onMouseClicked="#exitGame" onMouseEntered="#mouseEnteredSound" text="Exit game" />
+        <VBox alignment="CENTER" maxWidth="300" spacing="20.0">
+            <Label fx:id="Username" text="Default" alignment="CENTER" textFill="black">
+                <font>
+                    <Font size="40" name="Baloo Bhaina 2 Bold"/>
+                </font>
+            </Label>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="140.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator1" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="profileMenu" maxWidth="220.0" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator2" maxHeight="70.0" maxWidth="137.0" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="startNewGame" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator3" maxHeight="70.0" maxWidth="280.0" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="logOut" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator4" maxHeight="70.0" maxWidth="280.0" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="exitGame" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
         </VBox>
     </center>
    <right>
