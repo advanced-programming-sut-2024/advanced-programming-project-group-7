@@ -63,11 +63,11 @@ public class Card extends Pane {
             powerLabel.setFont(new Font(20));
 
             Circle circle = new Circle(12.5);
-            if (this.rows == 3) {
+            if ((this.rows == 3)||(this.rows == 4)) {
                 circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_close.png").toExternalForm()))));
             } else if (this.rows == 2) {
                 circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_ranged.png").toExternalForm()))));
-            } else if (this.rows == 1) {
+            } else if( (this.rows == 1)||(this.rows == 6) ){
                 circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_siege.png").toExternalForm()))));
             } else if (this.rows == 23) {
                 circle.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/card_row_agile.png").toExternalForm()))));

@@ -11,32 +11,6 @@
 <?import javafx.scene.text.Font?>
 <BorderPane prefHeight="768" prefWidth="1280" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
     <center>
-<<<<<<< HEAD
-        <VBox alignment="CENTER" maxWidth="300" spacing="15.0">
-            <Label fx:id="Username" text="Default" />
-         <HBox maxHeight="70.0" maxWidth="280.0" prefHeight="100.0" prefWidth="140.0" spacing="10.0">
-            <children>
-               <Pane fx:id="indicator1" prefHeight="70.0" prefWidth="68.0" />
-               <Pane maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" />
-            </children>
-         </HBox>
-         <HBox maxHeight="70.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-            <children>
-               <Pane fx:id="indicator2" prefHeight="200.0" prefWidth="200.0" />
-               <Pane maxWidth="354.0" prefHeight="70.0" prefWidth="335.0" />
-            </children>
-         </HBox>
-         <HBox maxHeight="70.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-            <children>
-               <Pane fx:id="indicator3" maxHeight="70.0" maxWidth="280.0" prefHeight="70.0" prefWidth="68.0" />
-               <Pane prefHeight="200.0" prefWidth="200.0" />
-            </children>
-         </HBox>
-         <HBox maxHeight="70.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-            <children>
-               <Pane fx:id="indicator4" maxHeight="70.0" maxWidth="280.0" prefHeight="70.0" prefWidth="67.0" />
-               <Pane prefHeight="200.0" prefWidth="200.0" />
-=======
         <VBox alignment="CENTER" maxWidth="300" spacing="20.0">
             <Label fx:id="Username" text="Default" alignment="CENTER" textFill="black">
                 <font>
@@ -65,7 +39,6 @@
             <children>
                <Pane fx:id="indicator4" maxHeight="70.0" maxWidth="280.0" prefHeight="50.0" prefWidth="50.0" />
                <Pane fx:id="exitGame" prefHeight="50.0" prefWidth="220.0" />
->>>>>>> mohammad
             </children>
          </HBox>
         </VBox>
