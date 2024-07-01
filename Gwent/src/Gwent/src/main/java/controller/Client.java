@@ -221,6 +221,10 @@ public class Client extends Thread {
                 else
                     game.enemyPlaceCard(finalCard, game.hBoxes.get(0));
             });
+        } else if (components.length == 2 && components[1].equals("reaction")) {
+            Platform.runLater(()-> {
+                game.gameLauncher.getReaction(Integer.parseInt(components[0]));
+            });
         } else if (components.length == 2 && components[1].equals("startGame")) {
             Platform.runLater(()-> {
                 User.getLoggedInUser().currentOponentName = components[0];

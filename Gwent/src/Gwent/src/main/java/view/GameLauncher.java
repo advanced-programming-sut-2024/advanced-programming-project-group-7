@@ -2,6 +2,7 @@ package view;
 
 import controller.Client;
 import controller.GameServer;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -19,6 +20,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.*;
 import model.cards.*;
 import model.leaders.MonstersLeaders;
@@ -71,7 +73,6 @@ public class GameLauncher extends Application {
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
-
         Pane chatBoxPane=new Pane();
         chatBoxPane.setLayoutX(1280);
         chatBoxPane.setLayoutY(200);
@@ -130,22 +131,22 @@ public class GameLauncher extends Application {
             rectangle6.setVisible(false);
         });
         rectangle1.setOnMouseClicked(event -> {
-
+            sendReaction(1);
         });
         rectangle2.setOnMouseClicked(event -> {
-
+            sendReaction(2);
         });
         rectangle3.setOnMouseClicked(event -> {
-
+            sendReaction(3);
         });
         rectangle4.setOnMouseClicked(event -> {
-
+            sendReaction(4);
         });
         rectangle5.setOnMouseClicked(event -> {
-
+            sendReaction(5);
         });
         rectangle6.setOnMouseClicked(event -> {
-
+            sendReaction(6);
         });
         chatBoxPane.getChildren().addAll(rectangle1,rectangle2,rectangle3,rectangle4,rectangle5,rectangle6,circle);
 
@@ -529,6 +530,33 @@ public class GameLauncher extends Application {
         stage.show();
         stage.setFullScreen(true);
         playerHandMouseSetter();
+    }
+
+    private void sendReaction(int i) {
+        Rectangle rectangle = new Rectangle(150,40);
+        rectangle.setLayoutY(640);
+        rectangle.setLayoutX(100);
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel"+i+".png")))));
+        pane.getChildren().add(rectangle);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(8), rectangle);
+        fadeTransition.setFromValue(1.0); // Fully opaque
+        fadeTransition.setToValue(0.0); // Completely transparent
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(false);
+        fadeTransition.play();
+        client.sendMessage("reation:"+User.getLoggedInUser().currentOponentName+":1.reaction");
+    }public void getReaction(int i) {
+        Rectangle rectangle = new Rectangle(150,40);
+        rectangle.setLayoutY(200);
+        rectangle.setLayoutX(100);
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel"+i+".png")))));
+        pane.getChildren().add(rectangle);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(8), rectangle);
+        fadeTransition.setFromValue(1.0); // Fully opaque
+        fadeTransition.setToValue(0.0); // Completely transparent
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(false);
+        fadeTransition.play();
     }
 
     public void playerHandMouseSetter() {
