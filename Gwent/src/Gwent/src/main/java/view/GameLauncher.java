@@ -25,12 +25,11 @@ import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class GameLauncher extends Application {
+
+    public ArrayList<Card> reservedCards = new ArrayList<>();
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
@@ -53,8 +52,6 @@ public class GameLauncher extends Application {
     private Card selected;
     private double sceneX;
     private double sceneY;
-
-
     public Rectangle showCardRectangle = new Rectangle();
     private boolean yourTurn = true;
     private Deck deck;
@@ -233,7 +230,6 @@ public class GameLauncher extends Application {
         weatherBox.setMinHeight(98);
         weatherBox.setMinWidth(235);
         weatherBox.setOnMouseClicked(event ->  {
-            System.out.println(selected);
             if (selected != null && fitsBox(selected, weatherBox)) {
                 game.selectedBox = weatherBox;
                 game.playerHand.getChildren().remove(selected);
@@ -246,6 +242,9 @@ public class GameLauncher extends Application {
             playerFirstRowHorn.setStyle("");
             playerSecondRowHorn.setStyle("");
             playerThirdRowHorn.setStyle("");
+            playerFourthRow.setStyle("");
+            playerFifthRow.setStyle("");
+            playerSixthRow.setStyle("");
             weatherBox.setStyle("");
             selected = null;
         });
@@ -256,9 +255,6 @@ public class GameLauncher extends Application {
         realmForAvatar.setWidth(50);
         realmForAvatar.setLayoutY(550);
         realmForAvatar.setLayoutX(75);
-
-
-
 
         Label labelForNumberOfCardsOpponent=new Label(String.valueOf(10));
         labelForNumberOfCardsOpponent.setLayoutY(285);
@@ -509,10 +505,20 @@ public class GameLauncher extends Application {
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
+        playerHand.getChildren().add(new TightBond("young emissary",1,false,5,"nilfgaard",3,false));
+        playerHand.getChildren().add(new TightBond("young emissary 1",1,false,5,"nilfgaard",3,false));
+
+
+        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        reservedCards.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+        reservedCards.add(new Spy("stennis", 1 , false, 5, "realms",4,false));
+        reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+
 //        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
 //        playerHand.getChildren().add(medic);
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+
         playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 
 //            for (Card card : Deck.currentDeck.hand)
@@ -520,11 +526,12 @@ public class GameLauncher extends Application {
 
 //        for (Card card : Deck.currentDeck.hand)
 //            playerHand.getChildren().add(card);
-
-
         stage.show();
         stage.setFullScreen(true);
+        playerHandMouseSetter();
+    }
 
+    public void playerHandMouseSetter() {
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
                 if (yourTurn) {
@@ -573,6 +580,7 @@ public class GameLauncher extends Application {
             });
         }
     }
+
     public void addCardToPane(Card card, double endY, double endX){
         pane.getChildren().add(card);
         card.setLayoutY(this.sceneY);
@@ -649,9 +657,8 @@ public class GameLauncher extends Application {
                 addCardToPane(selected, event.getSceneY(), event.getSceneX());
             }
             pane.getChildren().remove(showCardRectangle);
-            playerFirstRow.setStyle("");
-            playerSecondRow.setStyle("");
-            playerThirdRow.setStyle("");
+            for (EnhancedHBox hBox : hBoxes)
+                hBox.setStyle("");
             playerFirstRowHorn.setStyle("");
             playerSecondRowHorn.setStyle("");
             playerThirdRowHorn.setStyle("");

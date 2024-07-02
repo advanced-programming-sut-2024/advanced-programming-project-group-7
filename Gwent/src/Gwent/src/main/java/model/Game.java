@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import model.cards.Horn;
 import model.cards.MoralBoost;
+import model.cards.TightBond;
 import view.GameLauncher;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,9 +48,11 @@ public class Game {
     public ArrayList<EnhancedHBox> hBoxes;
     public Client client;
     public String opponentName;
+    public GameLauncher gameLauncher;
     public Rectangle highScorePlayer = new Rectangle() ;
 
     public Game(GameLauncher gameLauncher) {
+        this.gameLauncher = gameLauncher;
         this.playerHand = gameLauncher.playerHand;
         this.playerThirdRow = gameLauncher.playerThirdRow;
         this.playerSecondRow = gameLauncher.playerSecondRow;
@@ -64,7 +67,6 @@ public class Game {
         this.playerFifthRowHorn = gameLauncher.playerFifthRowHorn;
         this.playerSixthRowHorn = gameLauncher.playerSixthRowHorn;
         this.weatherBox = gameLauncher.weatherBox;
-
     }
     public Group cardGroup = new Group();
     private final LocalDate date= LocalDate.now();
@@ -102,11 +104,19 @@ public class Game {
     }
 
     public void spyACard() {
-        //todo
+        Card card = gameLauncher.reservedCards.get(0);
+        playerHand.getChildren().add(card);
+        gameLauncher.reservedCards.remove(card);
     }
 
     public void handleBond(EnhancedHBox selectedBox, Card card, Game game) {
-
+        for (Node card1 : selectedBox.getChildren()){
+            if ( card1 instanceof TightBond && !card1.equals(card)) {
+                ((Card) card1).bondLevel++;
+                card.bondLevel++;
+            }
+        }
+        game.calculateLabels();
     }
 
     public void calculateLabels() {
@@ -210,6 +220,7 @@ public class Game {
             } else {
                 hBox.getChildren().add(card);
                 calculateLabels();
+                gameLauncher.playerHandMouseSetter();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
