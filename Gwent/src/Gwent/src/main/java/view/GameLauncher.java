@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -64,7 +65,6 @@ public class GameLauncher extends Application {
 
     @Override
     public void start(Stage stage1) throws Exception {
-
         game = new Game(this);
         stage = new Stage();
 //        game.client = User.getLoggedInUser().client; todo onlination
@@ -74,6 +74,84 @@ public class GameLauncher extends Application {
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
+
+        Pane chatBoxPane=new Pane();
+        chatBoxPane.setLayoutX(1280);
+        chatBoxPane.setLayoutY(200);
+        chatBoxPane.setMinHeight(300);
+        chatBoxPane.setMaxHeight(300);
+        chatBoxPane.setMinWidth(150);
+        chatBoxPane.setMaxWidth(150);
+        Rectangle rectangle1=new Rectangle(150,30);
+        rectangle1.setLayoutX(0);
+        rectangle1.setLayoutY(0);
+        Rectangle rectangle2=new Rectangle(150,30);
+        rectangle2.setLayoutX(0);
+        rectangle2.setLayoutY(40);
+        Rectangle rectangle3=new Rectangle(150,30);
+        rectangle3.setLayoutX(0);
+        rectangle3.setLayoutY(80);
+        Rectangle rectangle4=new Rectangle(150,30);
+        rectangle4.setLayoutX(0);
+        rectangle4.setLayoutY(180);
+        Rectangle rectangle5=new Rectangle(150,30);
+        rectangle5.setLayoutX(0);
+        rectangle5.setLayoutY(220);
+        Rectangle rectangle6=new Rectangle(150,30);
+        rectangle6.setLayoutX(0);
+        rectangle6.setLayoutY(260);
+        Circle circle=new Circle(30);
+        circle.setLayoutX(70);
+        circle.setLayoutY(149);
+        rectangle1.setVisible(false);
+        rectangle2.setVisible(false);
+        rectangle3.setVisible(false);
+        rectangle4.setVisible(false);
+        rectangle5.setVisible(false);
+        rectangle6.setVisible(false);
+        circle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/anim_horn.png")))));
+        rectangle1.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+        rectangle2.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel2.png")))));
+        rectangle3.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel3.png")))));
+        rectangle4.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel4.png")))));
+        rectangle5.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel5.png")))));
+        rectangle6.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel6.png")))));
+        circle.setOnMouseEntered(event -> {
+            rectangle1.setVisible(true);
+            rectangle2.setVisible(true);
+            rectangle3.setVisible(true);
+            rectangle4.setVisible(true);
+            rectangle5.setVisible(true);
+            rectangle6.setVisible(true);
+        });
+        chatBoxPane.setOnMouseExited(event -> {
+            rectangle1.setVisible(false);
+            rectangle2.setVisible(false);
+            rectangle3.setVisible(false);
+            rectangle4.setVisible(false);
+            rectangle5.setVisible(false);
+            rectangle6.setVisible(false);
+        });
+        rectangle1.setOnMouseClicked(event -> {
+
+        });
+        rectangle2.setOnMouseClicked(event -> {
+
+        });
+        rectangle3.setOnMouseClicked(event -> {
+
+        });
+        rectangle4.setOnMouseClicked(event -> {
+
+        });
+        rectangle5.setOnMouseClicked(event -> {
+
+        });
+        rectangle6.setOnMouseClicked(event -> {
+
+        });
+        chatBoxPane.getChildren().addAll(rectangle1,rectangle2,rectangle3,rectangle4,rectangle5,rectangle6,circle);
+
 
         Label labelForNumberOfCards=new Label(String.valueOf(10));
         labelForNumberOfCards.setLayoutY(570);
@@ -395,7 +473,7 @@ public class GameLauncher extends Application {
                 playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
                 ,game.totalRow1Power,game.totalRow2Power,game.totalRow3Power,game.totalRow1PowerOpponent,game.totalRow2PowerOpponent,game.totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
-                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent);
+                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent,chatBoxPane);
 
 
         Scene scene = new Scene(pane);
