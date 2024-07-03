@@ -3,6 +3,7 @@ package controller;
 import javafx.scene.control.Alert;
 import model.User;
 
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -23,7 +24,7 @@ public class LoginMenuController {
         }
     }
 
-    public static Alert userRegister( String username,String password,String passwordConfirm,String nickname,String email){
+    public static Alert userRegister( String username,String password,String passwordConfirm,String nickname,String email) throws IOException {
 //        if(username.isEmpty()){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("empty username");return alert;}
         if(isUsernameDuplicate(username)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username is taken");return alert;}
         else if(! isUsernameValid(username)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid username");return alert;}

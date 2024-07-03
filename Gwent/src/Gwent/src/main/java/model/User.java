@@ -1,15 +1,22 @@
 package model;
 
 
+//import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.Client;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
+    ObjectMapper objectMapper=new ObjectMapper();
     public Client client;
     public String currentOponentName;
     private ArrayList<String> requests = new ArrayList<>();
@@ -80,12 +87,28 @@ public class User {
 
     private String userCurrentMenu;
 
-    public User(String username, String password, String nickname, String emailAddress) {
+    public User(String username, String password, String nickname, String emailAddress) throws IOException {
         this.username=username;
         this.password=password;
         this.nickname=nickname;
         this.emailAddress=emailAddress;
         addUser(this);
+        addToFile(this);
+    }
+
+    private void addToFile(User user) throws IOException {
+        File file = new File("/Users/apple/Desktop/data/dir");
+        if (file.exists() && file.length() != 0) {
+            // Read existing students into a list
+            List<User> existingStudents = objectMapper.readValue(file, new TypeReference<List<User>>() {});
+            existingStudents.add(user); // Add new user
+            objectMapper.writeValue(file, existingStudents); // Write updated list
+        } else {
+            // If file doesn't exist or is empty, create a new list with this user
+            List<User> newStudentList = new ArrayList<>();
+            newStudentList.add(user);
+            objectMapper.writeValue(file, newStudentList);
+        }
     }
 
     public static void addUser(User user){
@@ -206,17 +229,32 @@ public class User {
     }
 
     static {
-    User userTest=new User("","","Ebim","s.mohammad.e.1383@gmail.com");
-    userTest.setSecurityQuestionNumber(1);
+        User userTest= null;
+        try {
+            userTest = new User("","","Ebim","s.mohammad.e.1383@gmail.com");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
         userTest.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
 
-        User userTest1=new User("a","a","mr a","amir2023@gmail.com");
+        User userTest1= null;
+        try {
+            userTest1 = new User("a","a","mr a","amir2023@gmail.com");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         userTest1.setSecurityQuestionNumber(1);
         userTest1.setAnswerOfSecurityQuestion("red");
         userTest1.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
 
-        User userTest2=new User("b","b","mr b","amir2023@gmail.com");
+        User userTest2= null;
+        try {
+            userTest2 = new User("b","b","mr b","amir2023@gmail.com");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         userTest2.setSecurityQuestionNumber(1);
         userTest2.setAnswerOfSecurityQuestion("red");
         userTest2.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));

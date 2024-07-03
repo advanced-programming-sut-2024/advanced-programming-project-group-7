@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import model.Game;
 import model.User;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -123,7 +124,14 @@ public class LoginMenu extends Application {
         hybridButton.setLayoutX(10);
         hybridButton.setLayoutY(7);
         hybridRectangle.setVisible(false);
-        hybridButton.setOnMouseClicked(this::signUp);
+        hybridButton.setOnMouseClicked(event -> {
+            try {
+                signUp(event);
+            } catch (IOException e) {
+                e.printStackTrace(); // Or handle the exception as you see fit
+            }
+        });
+//        hybridButton.setOnMouseClicked(this::signUp);
         hybridButton.setOnMouseEntered(event -> {
             hybridRectangle.setVisible(true);
         });
@@ -163,7 +171,7 @@ public class LoginMenu extends Application {
         forgotPasswordRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
         forgotPasswordPane.getChildren().addAll(forgotPasswordRectangle, forgotPasswordButton);
     }
-    public void signUp(MouseEvent mouseEvent) {
+    public void signUp(MouseEvent mouseEvent) throws IOException {
         Alert alert = null;
         if (!isLoggingIN) {
         alert = LoginMenuController.userRegister(nameField.getText()
