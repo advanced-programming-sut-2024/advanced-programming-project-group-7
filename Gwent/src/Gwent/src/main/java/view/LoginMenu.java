@@ -1,6 +1,7 @@
 package view;
 
-//import controller.LoginMenuController;
+import controller.LoginMenuController;
+import controller.GmailSender;
 import controller.LoginMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -132,6 +133,8 @@ public class LoginMenu extends Application {
                 , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
             if (alert == null) {
                 try {
+                    GmailSender gmailSender=new  GmailSender(emailText.getText());
+                    gmailSender.send();
                     Stage recoveryStage = new Stage();
                     recoveryStage.setTitle("Password Recovery");
 

@@ -3,6 +3,8 @@ module Gwent {
     requires javafx.fxml;
     requires javafx.media;
     requires java.desktop;
+    requires jakarta.mail;
+    requires javax.servlet.api;
 
     exports view;
     opens view to javafx.fxml;
