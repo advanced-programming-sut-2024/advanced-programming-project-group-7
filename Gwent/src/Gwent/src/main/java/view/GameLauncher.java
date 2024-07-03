@@ -4,17 +4,22 @@ import controller.Client;
 import controller.GameServer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -24,12 +29,12 @@ import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameLauncher extends Application {
+
+    public ArrayList<Card> reservedCards = new ArrayList<>();
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
@@ -52,19 +57,16 @@ public class GameLauncher extends Application {
     private Card selected;
     private double sceneX;
     private double sceneY;
-
-
     public Rectangle showCardRectangle = new Rectangle();
     private boolean yourTurn = true;
     private Deck deck;
     private  Stage stage;
     private Client client;
-    private EnhancedHBox weatherBox = new EnhancedHBox();
+    public EnhancedHBox weatherBox = new EnhancedHBox();
 
 
     @Override
     public void start(Stage stage1) throws Exception {
-
         game = new Game(this);
         stage = new Stage();
 //        game.client = User.getLoggedInUser().client; todo onlination
@@ -74,6 +76,116 @@ public class GameLauncher extends Application {
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
+
+//        Pane pane=new Pane();
+//        VBox chatBoxVbox=new VBox(10);
+//        ScrollPane scrollPane=new ScrollPane(chatBoxVbox);
+//        scrollPane.setPrefViewportHeight(240);
+//        scrollPane.setPrefViewportWidth(200);
+//        scrollPane.setMaxHeight(150);
+//        scrollPane.setMinHeight(150);
+//        scrollPane.setMaxWidth(150);
+//        scrollPane.setMinWidth(150);
+//        scrollPane.setLayoutX(500);
+//        scrollPane.setLayoutY(500);
+//        scrollPane.setFocusTraversable(true);
+//        scrollPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+//        Rectangle rectangle8=new Rectangle(200,60);
+//        rectangle8.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        Rectangle rectangle9=new Rectangle(200,60);
+//        rectangle9.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        Rectangle rectangle10=new Rectangle(200,60);
+//        rectangle10.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        Rectangle rectangle11=new Rectangle(200,60);
+//        rectangle11.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        chatBoxVbox.getChildren().addAll(rectangle8,rectangle9,rectangle10,rectangle11);
+//        pane.getChildren().add(scrollPane);
+//        pane.setOnScroll(event -> {
+//            rectangle8.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel2.png")))));
+//        });
+
+
+
+
+
+
+        Pane chatBoxPane=new Pane();
+        chatBoxPane.setLayoutX(1280);
+        chatBoxPane.setLayoutY(200);
+        chatBoxPane.setMinHeight(300);
+        chatBoxPane.setMaxHeight(300);
+        chatBoxPane.setMinWidth(150);
+        chatBoxPane.setMaxWidth(150);
+        Rectangle rectangle1=new Rectangle(150,40);
+        rectangle1.setLayoutX(0);
+        rectangle1.setLayoutY(0);
+        Rectangle rectangle2=new Rectangle(150,40);
+        rectangle2.setLayoutX(0);
+        rectangle2.setLayoutY(40);
+        Rectangle rectangle3=new Rectangle(150,40);
+        rectangle3.setLayoutX(0);
+        rectangle3.setLayoutY(80);
+        Rectangle rectangle4=new Rectangle(150,40);
+        rectangle4.setLayoutX(0);
+        rectangle4.setLayoutY(180);
+        Rectangle rectangle5=new Rectangle(150,40);
+        rectangle5.setLayoutX(0);
+        rectangle5.setLayoutY(220);
+        Rectangle rectangle6=new Rectangle(150,40);
+        rectangle6.setLayoutX(0);
+        rectangle6.setLayoutY(260);
+        Circle circle=new Circle(30);
+        circle.setLayoutX(70);
+        circle.setLayoutY(149);
+        rectangle1.setVisible(false);
+        rectangle2.setVisible(false);
+        rectangle3.setVisible(false);
+        rectangle4.setVisible(false);
+        rectangle5.setVisible(false);
+        rectangle6.setVisible(false);
+        circle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/anim_horn.png")))));
+        rectangle1.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+        rectangle2.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel2.png")))));
+        rectangle3.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel3.png")))));
+        rectangle4.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel4.png")))));
+        rectangle5.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel5.png")))));
+        rectangle6.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel6.png")))));
+        circle.setOnMouseEntered(event -> {
+            rectangle1.setVisible(true);
+            rectangle2.setVisible(true);
+            rectangle3.setVisible(true);
+            rectangle4.setVisible(true);
+            rectangle5.setVisible(true);
+            rectangle6.setVisible(true);
+        });
+        chatBoxPane.setOnMouseExited(event -> {
+            rectangle1.setVisible(false);
+            rectangle2.setVisible(false);
+            rectangle3.setVisible(false);
+            rectangle4.setVisible(false);
+            rectangle5.setVisible(false);
+            rectangle6.setVisible(false);
+        });
+        rectangle1.setOnMouseClicked(event -> {
+
+        });
+        rectangle2.setOnMouseClicked(event -> {
+
+        });
+        rectangle3.setOnMouseClicked(event -> {
+
+        });
+        rectangle4.setOnMouseClicked(event -> {
+
+        });
+        rectangle5.setOnMouseClicked(event -> {
+
+        });
+        rectangle6.setOnMouseClicked(event -> {
+
+        });
+        chatBoxPane.getChildren().addAll(rectangle1,rectangle2,rectangle3,rectangle4,rectangle5,rectangle6,circle);
+
 
         Label labelForNumberOfCards=new Label(String.valueOf(10));
         labelForNumberOfCards.setLayoutY(570);
@@ -149,16 +261,14 @@ public class GameLauncher extends Application {
         highScore.setLayoutY(590);
         highScore.setLayoutX(347);
 
-        game.weatherBox = new EnhancedHBox();
-        game.weatherBox.setLayoutY(385);
-        game.weatherBox.setLayoutX(120);
-        game.weatherBox.setMinHeight(98);
-        game.weatherBox.setMinWidth(235);
-        game.weatherBox.setOnMouseClicked(event ->  {
-            EnhancedHBox target;
-            target = weatherBox;
-            if (selected != null && fitsBox(selected, target)) {
-                game.selectedBox = target;
+        weatherBox = new EnhancedHBox();
+        weatherBox.setLayoutY(385);
+        weatherBox.setLayoutX(120);
+        weatherBox.setMinHeight(98);
+        weatherBox.setMinWidth(235);
+        weatherBox.setOnMouseClicked(event ->  {
+            if (selected != null && fitsBox(selected, weatherBox)) {
+                game.selectedBox = weatherBox;
                 game.playerHand.getChildren().remove(selected);
                 addCardToPane(selected, event.getSceneY(), event.getSceneX());
             }
@@ -169,7 +279,10 @@ public class GameLauncher extends Application {
             playerFirstRowHorn.setStyle("");
             playerSecondRowHorn.setStyle("");
             playerThirdRowHorn.setStyle("");
-            game.weatherBox.setStyle("");
+            playerFourthRow.setStyle("");
+            playerFifthRow.setStyle("");
+            playerSixthRow.setStyle("");
+            weatherBox.setStyle("");
             selected = null;
         });
 
@@ -179,9 +292,6 @@ public class GameLauncher extends Application {
         realmForAvatar.setWidth(50);
         realmForAvatar.setLayoutY(550);
         realmForAvatar.setLayoutX(75);
-
-
-
 
         Label labelForNumberOfCardsOpponent=new Label(String.valueOf(10));
         labelForNumberOfCardsOpponent.setLayoutY(285);
@@ -266,7 +376,7 @@ public class GameLauncher extends Application {
 
 
 
-        Rectangle realmForAvatarOpponent=new Rectangle();
+        Rectangle realmForAvatarOpponent=new Rectangle();//todo needs 5 else if for player's faction
         realmForAvatarOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_monsters.png").toExternalForm()))));
         realmForAvatarOpponent.setHeight(50);
         realmForAvatarOpponent.setWidth(50);
@@ -282,6 +392,7 @@ public class GameLauncher extends Application {
         frostedRow.setWidth(680);
         frostedRow.setLayoutY(360);
         frostedRow.setLayoutX(590);
+        playerThirdRow.badConditionEffect = frostedRow;
 
         Rectangle frostedRowOpponent=new Rectangle();
         frostedRowOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_frost.png").toExternalForm()))));
@@ -289,6 +400,7 @@ public class GameLauncher extends Application {
         frostedRowOpponent.setWidth(680);
         frostedRowOpponent.setLayoutY(245);
         frostedRowOpponent.setLayoutX(590);
+        playerFourthRow.badConditionEffect = frostedRowOpponent;
 
         Rectangle foggedRow=new Rectangle();
         foggedRow.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_fog.png").toExternalForm()))));
@@ -296,6 +408,7 @@ public class GameLauncher extends Application {
         foggedRow.setWidth(680);
         foggedRow.setLayoutY(470);
         foggedRow.setLayoutX(590);
+        playerSecondRow.badConditionEffect = foggedRow;
 
         Rectangle foggedRowOpponent=new Rectangle();
         foggedRowOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_fog.png").toExternalForm()))));
@@ -303,6 +416,7 @@ public class GameLauncher extends Application {
         foggedRowOpponent.setWidth(680);
         foggedRowOpponent.setLayoutY(135);
         foggedRowOpponent.setLayoutX(590);
+        playerFifthRow.badConditionEffect = foggedRowOpponent;
 
         Rectangle rainedRow=new Rectangle();
         rainedRow.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/overlay_rain.png").toExternalForm()))));
@@ -310,6 +424,7 @@ public class GameLauncher extends Application {
         rainedRow.setWidth(680);
         rainedRow.setLayoutY(580);
         rainedRow.setLayoutX(590);
+        playerFirstRow.badConditionEffect = rainedRow;
 
 
         Rectangle rainedRowOpponent=new Rectangle();
@@ -318,6 +433,7 @@ public class GameLauncher extends Application {
         rainedRowOpponent.setWidth(680);
         rainedRowOpponent.setLayoutY(25);
         rainedRowOpponent.setLayoutX(590);
+        playerSixthRow.badConditionEffect = rainedRowOpponent;
 
 
 
@@ -386,11 +502,11 @@ public class GameLauncher extends Application {
 
 
 
-        pane.getChildren().addAll(createHbox(),game.weatherBox, playerName,avatar,game.life1,game.life2, cardx,labelForNumberOfCards,game.totalPower,highScore,realmForAvatar,
+        pane.getChildren().addAll(createHbox(),weatherBox, playerName,avatar,game.life1,game.life2, cardx,labelForNumberOfCards,game.totalPower,highScore,realmForAvatar,
                 playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
                 ,game.totalRow1Power,game.totalRow2Power,game.totalRow3Power,game.totalRow1PowerOpponent,game.totalRow2PowerOpponent,game.totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
-                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent);
+                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent,chatBoxPane);
 
 
         Scene scene = new Scene(pane);
@@ -421,80 +537,87 @@ public class GameLauncher extends Application {
         playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
         playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
         playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
-        playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",4,false));//todo bug was here!
+        playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",4,false));
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
+        playerHand.getChildren().add(new TightBond("young emissary",1,false,5,"nilfgaard",3,false));
+        playerHand.getChildren().add(new TightBond("young emissary 1",1,false,5,"nilfgaard",3,false));
+
+
+        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        reservedCards.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+        reservedCards.add(new Spy("stennis", 1 , false, 5, "realms",4,false));
+        reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+
 //        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
 //        playerHand.getChildren().add(medic);
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 //        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-//        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
+
+        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
 
 //            for (Card card : Deck.currentDeck.hand)
 //                playerHand.getChildren().add(card);
 
 //        for (Card card : Deck.currentDeck.hand)
 //            playerHand.getChildren().add(card);
-
-
         stage.show();
         stage.setFullScreen(true);
+        playerHandMouseSetter();
+    }
 
+    public void playerHandMouseSetter() {
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
-                System.out.println("Caed has life");
                 if (yourTurn) {
                     if (card instanceof Decoy) {
                         game.selected = (Card) card;
                     } else {
-                        if (pane.getChildren().contains(showCardRectangle)) {
-                            pane.getChildren().remove(showCardRectangle);
-                        }
-//                        for (EnhancedHBox hBox : hBoxes) { todo onlination
-//                            hBox.setStyle("");
-//                        }
-                        sceneX = event.getSceneX();
-                        sceneY = event.getSceneY();
-                        selected = (Card) card;
+                        pane.getChildren().remove(showCardRectangle);
+                        for (EnhancedHBox hBox : hBoxes)
+                            hBox.setStyle("");
+                    }
+                    sceneX = event.getSceneX();
+                    sceneY = event.getSceneY();
+                    selected = (Card) card;
+
+                    showCardRectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(selected.getLgPath()).toExternalForm()))));
+                    showCardRectangle.setHeight(470);
+                    showCardRectangle.setWidth(235);
+                    showCardRectangle.setLayoutY(220);
+                    showCardRectangle.setLayoutX(1280);
+                    pane.getChildren().add(showCardRectangle);
 
 
-                        showCardRectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(selected.getLgPath()).toExternalForm()))));
-                        showCardRectangle.setHeight(470);
-                        showCardRectangle.setWidth(235);
-                        showCardRectangle.setLayoutY(220);
-                        showCardRectangle.setLayoutX(1280);
-                        pane.getChildren().add(showCardRectangle);
-
-
-                        if (selected.getCardName().equals("horn")) {
-                            playerFirstRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                            playerSecondRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                            playerThirdRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        } else if (selected.getRows().contains(2) && selected.getRows().contains(3)) {
-                            playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                            playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        } else if (selected.getRows().contains(2)) {
-                            playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        } else if (selected.getRows().contains(1)) {
-                            System.out.println(selected.getCardName());
-                            System.out.println(selected.getRows());
-                            playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        } else if (selected.getRows().contains(3)) {
-                            playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        } else if (selected.getRows().contains(7)) {
-                            game.weatherBox.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        }else if (selected.getRows().contains(4)) {
-                            playerFourthRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        }else if (selected.getRows().contains(6)) {
-                            playerSixthRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
-                        }
+                    if (selected.getCardName().equals("horn")) {
+                        playerFirstRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        playerSecondRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        playerThirdRowHorn.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(2) && selected.getRows().contains(3)) {
+                        playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                        playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(1)) {
+                        playerFirstRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(2)) {
+                        playerSecondRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(3)) {
+                        playerThirdRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(4)) {
+                        playerFourthRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(5)) {
+                        playerFifthRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(6)) {
+                        playerSixthRow.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
+                    } else if (selected.getRows().contains(7)) {
+                        weatherBox.setStyle("-fx-background-color: rgba(255, 255, 0, 0.2);");
                     }
                 }
             });
         }
     }
+
     public void addCardToPane(Card card, double endY, double endX){
         pane.getChildren().add(card);
         card.setLayoutY(this.sceneY);
@@ -571,9 +694,8 @@ public class GameLauncher extends Application {
                 addCardToPane(selected, event.getSceneY(), event.getSceneX());
             }
             pane.getChildren().remove(showCardRectangle);
-            playerFirstRow.setStyle("");
-            playerSecondRow.setStyle("");
-            playerThirdRow.setStyle("");
+            for (EnhancedHBox hBox : hBoxes)
+                hBox.setStyle("");
             playerFirstRowHorn.setStyle("");
             playerSecondRowHorn.setStyle("");
             playerThirdRowHorn.setStyle("");
@@ -600,22 +722,26 @@ public class GameLauncher extends Application {
     }
 
     private boolean fitsBox(Card selected, EnhancedHBox playerRow) {
+
         int selectedRow = 0;
-        if (playerRow.equals(playerFirstRow))
+        if (playerRow.equals(playerFirstRow)) {
             selectedRow = 1;
-        else if (playerRow.equals(playerSecondRow)) {
+        } else if (playerRow.equals(playerSecondRow)) {
             selectedRow = 2;
         } else if (playerRow.equals(playerThirdRow)) {
             selectedRow = 3;
+        } else if (playerRow.equals(playerFourthRow)) {
+            selectedRow = 4;
+        } else if (playerRow.equals(playerFifthRow)) {
+            selectedRow = 5;
+        } else if (playerRow.equals(playerSixthRow)) {
+            selectedRow = 6;
         } else if (selected instanceof Horn) {
             return true;
-        } else if (playerRow.equals(game.weatherBox)) {
+        } else if (playerRow.equals(weatherBox)) {
             selectedRow = 7;
         }
-        if (selected.getRows().contains(selectedRow)) {
-            return true;
-        }
-        return false;
+        return selected.getRows().contains(selectedRow);
     }
 
     private void setSize (Pane pane) {

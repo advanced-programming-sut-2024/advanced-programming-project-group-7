@@ -1,6 +1,7 @@
 package view.animations;
 
 import javafx.animation.Transition;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -47,26 +48,27 @@ public class CardPlacementAnimation extends Transition {
         double y = card.getLayoutY() + vy;
         double x = card.getLayoutX() + vx;
         if (Math.abs(x - endX) <= 10 && Math.abs(y - endY) <= 10) {
+            this.stop();
             pane.getChildren().remove(card);
-            if (!card.getCardName().equals("clear")) {
-                game.placeCard(card, game.selectedBox);
-            }
-            card.setOnMouseClicked(event -> {
-                if (game.selected instanceof Decoy) {
+                try {
+                    game.placeCard(card, game.selectedBox);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            if (game.selected instanceof Decoy) {
+                card.setOnMouseClicked(event -> {
                     game.playerHand.getChildren().add(card);
                     if (card.getRows().contains(3)) {
                         game.placeCard(game.selected, game.playerThirdRow);
-                    }
-                    else if (card.getRows().contains(2)) {
+                    } else if (card.getRows().contains(2)) {
                         game.placeCard(game.selected, game.playerSecondRow);
-                    }
-                    else if (card.getRows().contains(1)) {
+                    } else if (card.getRows().contains(1)) {
                         game.placeCard(game.selected, game.playerFirstRow);
                     }
                     game.selected = null;
-                }
-            });
-            this.stop();
+                });
+            }
             if (card instanceof Muster) {
                 Iterator<Node> iterator = game.playerHand.getChildren().iterator();
                 while (iterator.hasNext()) {
@@ -102,9 +104,12 @@ public class CardPlacementAnimation extends Transition {
             } else if (card instanceof TightBond) {
                 game.handleBond(game.selectedBox, card, game);
             } else if (card.getRows().contains(7)) {
-                for (Node card2 : game.selectedBox.getChildren()) {
-                    if (!card2.equals(card) && ((Card) card2).getCardName().equals(card.getCardName()) || card.getCardName().equals("clear")){
-                        game.selectedBox.getChildren().remove(card2);
+                Iterator<Node> iterator = game.selectedBox.getChildren().iterator();
+                while (iterator.hasNext()) {
+                    Node card2 = iterator.next();
+                    if ((!card2.equals(card) && ((Card) card2).getCardName().equals(card.getCardName()))
+                            || card.getCardName().equals("clear")) {
+                        iterator.remove(); // Safely remove the element
                         pane.getChildren().add(card2);
                         card2.setLayoutY(385);
                         card2.setLayoutX(125);
@@ -112,6 +117,7 @@ public class CardPlacementAnimation extends Transition {
                         helicopterAnimation.play();
                     }
                 }
+                game.calculateLabels();
             }
         }
         card.setLayoutX(x);

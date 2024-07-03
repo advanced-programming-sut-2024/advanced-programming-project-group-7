@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import model.cards.Horn;
 import model.cards.MoralBoost;
+import model.cards.TightBond;
 import view.GameLauncher;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,9 +48,11 @@ public class Game {
     public ArrayList<EnhancedHBox> hBoxes;
     public Client client;
     public String opponentName;
+    public GameLauncher gameLauncher;
     public Rectangle highScorePlayer = new Rectangle() ;
 
     public Game(GameLauncher gameLauncher) {
+        this.gameLauncher = gameLauncher;
         this.playerHand = gameLauncher.playerHand;
         this.playerThirdRow = gameLauncher.playerThirdRow;
         this.playerSecondRow = gameLauncher.playerSecondRow;
@@ -63,7 +66,7 @@ public class Game {
         this.playerFourthRowHorn =gameLauncher.playerFourthRowHorn;
         this.playerFifthRowHorn = gameLauncher.playerFifthRowHorn;
         this.playerSixthRowHorn = gameLauncher.playerSixthRowHorn;
-
+        this.weatherBox = gameLauncher.weatherBox;
     }
     public Group cardGroup = new Group();
     private final LocalDate date= LocalDate.now();
@@ -101,15 +104,59 @@ public class Game {
     }
 
     public void spyACard() {
-        //todo
+        Card card = gameLauncher.reservedCards.get(0);
+        playerHand.getChildren().add(card);
+        gameLauncher.reservedCards.remove(card);
     }
 
     public void handleBond(EnhancedHBox selectedBox, Card card, Game game) {
-
+        for (Node card1 : selectedBox.getChildren()){
+            if ( card1 instanceof TightBond && !card1.equals(card)) {
+                ((Card) card1).bondLevel++;
+                card.bondLevel++;
+            }
+        }
+        game.calculateLabels();
     }
 
     public void calculateLabels() {
-        for (EnhancedHBox hBox : hBoxes) {
+        for (Node card : hBoxes.get(0).getChildren()) {
+            System.out.println(((Card) card).getCardName());
+            switch (((Card) card).getCardName()) {
+                case "frost" -> {
+                    playerThirdRow.badConditionEffect.setVisible(true);
+                    playerThirdRow.badCondition = true;
+                    playerFourthRow.badConditionEffect.setVisible(true);
+                    playerFourthRow.badCondition = true;
+                }
+                case "fog" -> {
+                    playerSecondRow.badConditionEffect.setVisible(true);
+                    playerSecondRow.badCondition = true;
+                    playerFifthRow.badConditionEffect.setVisible(true);
+                    playerFifthRow.badCondition = true;
+                }
+                case "rain" -> {
+                    playerFirstRow.badConditionEffect.setVisible(true);
+                    playerFirstRow.badCondition = true;
+                    playerSixthRow.badConditionEffect.setVisible(true);
+                    playerSixthRow.badCondition = true;
+                }
+                case "storm" -> {
+                    playerSecondRow.badConditionEffect.setVisible(true);
+                    playerSecondRow.badCondition = true;
+                    playerFifthRow.badConditionEffect.setVisible(true);
+                    playerFifthRow.badCondition = true;
+                    playerFirstRow.badConditionEffect.setVisible(true);
+                    playerFirstRow.badCondition = true;
+                    playerSixthRow.badConditionEffect.setVisible(true);
+                    playerSixthRow.badCondition = true;
+                }
+            }
+        }
+        for (EnhancedHBox hBox : hBoxes)
+            hBox.badConditionEffect.toBack();
+        for (int i = 1; i < 7; i++) {
+            EnhancedHBox hBox = hBoxes.get(i);
             if (hBox.hornBox.getChildren().size() == 1)
                 hBox.isDoubled = true;
             for (Node card : hBox.getChildren()) {
@@ -124,9 +171,6 @@ public class Game {
         for (int i = 0; i < 7; i++) {
             EnhancedHBox hBox = hBoxes.get(i);
             int sum = 0;
-            if (hBox == null) {
-                System.out.println(hBox.toString());
-            }
             for (Node card : hBox.getChildren()) {
                 int currentPower = 0;
                 if (!((Card) card).isHero()) {
@@ -140,7 +184,6 @@ public class Game {
                 sum += currentPower;
             }
             hBox.powerSum.setText(String.valueOf(sum));
-            System.out.println(sum + " the box is " + hBox.toString());
             if (i > 3)
                 totalSumPlayer += sum;
             else
@@ -160,10 +203,25 @@ public class Game {
         }
     }
     public void placeCard(Card card, EnhancedHBox hBox){
-
         try {
-            hBox.getChildren().add(card);
-            calculateLabels();
+            if (card.getCardName().equals("clear")) {
+                playerThirdRow.badConditionEffect.setVisible(false);
+                playerThirdRow.badCondition = false;
+                playerFourthRow.badConditionEffect.setVisible(false);
+                playerFourthRow.badCondition = false;
+                playerSecondRow.badConditionEffect.setVisible(false);
+                playerSecondRow.badCondition = false;
+                playerFifthRow.badConditionEffect.setVisible(false);
+                playerFifthRow.badCondition = false;
+                playerFirstRow.badConditionEffect.setVisible(false);
+                playerFirstRow.badCondition = false;
+                playerSixthRow.badConditionEffect.setVisible(false);
+                playerSixthRow.badCondition = false;
+            } else {
+                hBox.getChildren().add(card);
+                calculateLabels();
+                gameLauncher.playerHandMouseSetter();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

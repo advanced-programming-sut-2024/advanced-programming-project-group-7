@@ -7,16 +7,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.text.Font?>
+
 <BorderPane prefHeight="768" prefWidth="1280" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
     <center>
-        <VBox alignment="CENTER" maxWidth="300" spacing="20.0">
-            <Label fx:id="Username" text="Default" alignment="CENTER" textFill="black">
-                <font>
-                    <Font size="40" name="Baloo Bhaina 2 Bold"/>
-                </font>
-            </Label>
+        <VBox alignment="CENTER" maxWidth="498.0" prefHeight="768.0" prefWidth="498.0" spacing="20.0">
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Pane prefHeight="100.0" prefWidth="115.0" />
+                  <Label fx:id="Username" alignment="CENTER" contentDisplay="RIGHT" prefHeight="91.0" prefWidth="316.0" text="Default" textFill="white">
+                      <font>
+                          <Font name="Baloo Bhaina 2 Bold" size="40" />
+                      </font>
+                  </Label>
+            </children>
+         </HBox>
          <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="140.0" spacing="10.0">
             <children>
                <Pane fx:id="indicator1" prefHeight="50.0" prefWidth="50.0" />

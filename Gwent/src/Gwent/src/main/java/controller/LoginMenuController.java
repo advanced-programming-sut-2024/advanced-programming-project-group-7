@@ -18,7 +18,7 @@ public class LoginMenuController {
             if (!isPasswordCorrect(user,password)) {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong password");return alert;}
             else {
                 User.setLoggedInUser(user);
-               return null;
+                return null;
             }
         }
     }
@@ -147,5 +147,11 @@ public class LoginMenuController {
         password.append(validLetters.charAt(random.nextInt(56,69)));
         for(int i=0;i<passwordLength-4;i++)password.append(validLetters.charAt(random.nextInt(0,validLetters.length())));
         return password.toString();
+    }
+    public static String generateRandomNumber(){
+        Random random=new Random();
+        StringBuilder twoFACode=new StringBuilder();
+        for(int i=0;i<6;i++) twoFACode.append(random.nextInt());
+        return twoFACode.toString();
     }
 }
