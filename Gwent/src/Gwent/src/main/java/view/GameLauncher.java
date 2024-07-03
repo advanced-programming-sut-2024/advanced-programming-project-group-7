@@ -4,11 +4,15 @@ import controller.Client;
 import controller.GameServer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
@@ -25,6 +29,7 @@ import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameLauncher extends Application {
@@ -72,6 +77,38 @@ public class GameLauncher extends Application {
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
 
+//        Pane pane=new Pane();
+//        VBox chatBoxVbox=new VBox(10);
+//        ScrollPane scrollPane=new ScrollPane(chatBoxVbox);
+//        scrollPane.setPrefViewportHeight(240);
+//        scrollPane.setPrefViewportWidth(200);
+//        scrollPane.setMaxHeight(150);
+//        scrollPane.setMinHeight(150);
+//        scrollPane.setMaxWidth(150);
+//        scrollPane.setMinWidth(150);
+//        scrollPane.setLayoutX(500);
+//        scrollPane.setLayoutY(500);
+//        scrollPane.setFocusTraversable(true);
+//        scrollPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+//        Rectangle rectangle8=new Rectangle(200,60);
+//        rectangle8.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        Rectangle rectangle9=new Rectangle(200,60);
+//        rectangle9.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        Rectangle rectangle10=new Rectangle(200,60);
+//        rectangle10.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        Rectangle rectangle11=new Rectangle(200,60);
+//        rectangle11.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
+//        chatBoxVbox.getChildren().addAll(rectangle8,rectangle9,rectangle10,rectangle11);
+//        pane.getChildren().add(scrollPane);
+//        pane.setOnScroll(event -> {
+//            rectangle8.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel2.png")))));
+//        });
+
+
+
+
+
+
         Pane chatBoxPane=new Pane();
         chatBoxPane.setLayoutX(1280);
         chatBoxPane.setLayoutY(200);
@@ -79,22 +116,22 @@ public class GameLauncher extends Application {
         chatBoxPane.setMaxHeight(300);
         chatBoxPane.setMinWidth(150);
         chatBoxPane.setMaxWidth(150);
-        Rectangle rectangle1=new Rectangle(150,30);
+        Rectangle rectangle1=new Rectangle(150,40);
         rectangle1.setLayoutX(0);
         rectangle1.setLayoutY(0);
-        Rectangle rectangle2=new Rectangle(150,30);
+        Rectangle rectangle2=new Rectangle(150,40);
         rectangle2.setLayoutX(0);
         rectangle2.setLayoutY(40);
-        Rectangle rectangle3=new Rectangle(150,30);
+        Rectangle rectangle3=new Rectangle(150,40);
         rectangle3.setLayoutX(0);
         rectangle3.setLayoutY(80);
-        Rectangle rectangle4=new Rectangle(150,30);
+        Rectangle rectangle4=new Rectangle(150,40);
         rectangle4.setLayoutX(0);
         rectangle4.setLayoutY(180);
-        Rectangle rectangle5=new Rectangle(150,30);
+        Rectangle rectangle5=new Rectangle(150,40);
         rectangle5.setLayoutX(0);
         rectangle5.setLayoutY(220);
-        Rectangle rectangle6=new Rectangle(150,30);
+        Rectangle rectangle6=new Rectangle(150,40);
         rectangle6.setLayoutX(0);
         rectangle6.setLayoutY(260);
         Circle circle=new Circle(30);

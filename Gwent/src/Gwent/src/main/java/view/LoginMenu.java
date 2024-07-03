@@ -78,7 +78,7 @@ public class LoginMenu extends Application {
         Image image=new Image(LoginMenu.class.getResource("/Images/icons/CursorDefault.png").toExternalForm());
         stage.setScene(scene);
         scene.setCursor(new ImageCursor(image));
-        root.setBackground(new Background(createBackgroundImage()));
+        root.setBackground(new Background(createBackgroundImage("/Images/background.jpg",1280,768)));
         stage.show();
     }
     @FXML
@@ -229,7 +229,67 @@ public class LoginMenu extends Application {
 
         alert = LoginMenuController.userLogin(nameField.getText(), password.getText());
             if (alert == null) {
-            goToMainMenu();
+                Stage twoFAStage=new Stage();
+                User user=User.getUserByUsername(nameField.getText());
+                Pane twoFAPane=new Pane();
+                VBox twoFAVbox=new VBox(20);
+                twoFAStage.setTitle("2FA");
+                Label label=new Label("Please inter the number that we sent to your email");
+                label.setFont(new Font("Baloo Bhaina 2 Bold",20));
+                TextField randomNumber=new TextField();
+                HBox confirmHbox=new HBox(10);
+                Pane indicator=new Pane();
+                Pane confirmPane=new Pane();
+                Rectangle indicatorRec=new Rectangle(30,30);
+                Rectangle confirmRec=new Rectangle(120,30);
+                Label confirmLabel=new Label("Confirm");
+                confirmLabel.setFont(new Font("Tiro Gurmukhi",20));
+                confirmLabel.setTextFill(Color.BLACK);
+                confirmLabel.setLayoutX(20);
+                confirmLabel.setLayoutY(2);
+                indicatorRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+                confirmRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+                confirmRec.setVisible(false);
+                indicatorRec.setVisible(false);
+                Rectangle helpRec=new Rectangle(30,30);
+                helpRec.setVisible(false);
+                indicator.getChildren().addAll(indicatorRec);
+                confirmPane.getChildren().addAll(confirmRec,confirmLabel);
+                confirmHbox.getChildren().addAll(indicator,confirmPane,helpRec);
+                confirmHbox.setAlignment(Pos.BASELINE_CENTER);
+                confirmHbox.setLayoutX(200);
+                confirmHbox.setLayoutY(300);
+                confirmHbox.setMaxHeight(60);
+                confirmHbox.setMinHeight(60);
+                twoFAVbox.setLayoutX(80);
+                twoFAVbox.setLayoutY(100);
+                twoFAVbox.getChildren().addAll(label,randomNumber,confirmHbox);
+                twoFAPane.getChildren().addAll(twoFAVbox);
+                confirmLabel.setOnMouseEntered(event -> {
+                    indicatorRec.setVisible(true);
+                    confirmRec.setVisible(true);
+                    confirmLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+                });
+                confirmLabel.setOnMouseExited(event -> {
+                    indicatorRec.setVisible(false);
+                    confirmRec.setVisible(false);
+                    confirmLabel.setTextFill(Color.BLACK);
+                });
+                confirmLabel.setOnMouseClicked(event -> {
+                    String randomEmailedNumber=LoginMenuController.generateRandomNumber();
+                    if(randomNumber.getText().equals(randomEmailedNumber)){
+                        goToMainMenu();
+                    }
+                    else{
+                        Alert alert2FA=new Alert(Alert.AlertType.WARNING);
+                        alert2FA.setHeaderText("this username is taken");
+                        alert2FA.show();
+                    }
+                });
+                Scene scene=new Scene(twoFAPane,600,400);
+                LoginMenu.stage.setScene(scene);
+                LoginMenu.stage.show();
+//                goToMainMenu();
             } else {
                 alert.show();
             }
@@ -266,18 +326,45 @@ public class LoginMenu extends Application {
             securityQuestion.setFont(new Font("Baloo Bhaina 2 Bold",20));
             securityQuestion.setText(user.getSecurityQuestion());
             securityAnswerField.setMaxWidth(300);
-            Button confirmButton = new Button("Confirm");
-            Button backButton = new Button("Back");
+//            Button confirmButton = new Button("Confirm");
+            HBox confirmHbox=new HBox(10);
+            Pane indicator=new Pane();
+            Pane confirmPane=new Pane();
+            Rectangle indicatorRec=new Rectangle(30,30);
+            Rectangle confirmRec=new Rectangle(120,30);
+            Label confirmLabel=new Label("Confirm");
+            confirmLabel.setFont(new Font("Tiro Gurmukhi",20));
+            confirmLabel.setTextFill(Color.BLACK);
+            confirmLabel.setLayoutX(20);
+            confirmLabel.setLayoutY(2);
+            indicatorRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+            confirmRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+            confirmRec.setVisible(false);
+            indicatorRec.setVisible(false);
+            Rectangle helpRec=new Rectangle(30,30);
+            helpRec.setVisible(false);
+            indicator.getChildren().addAll(indicatorRec);
+            confirmPane.getChildren().addAll(confirmRec,confirmLabel);
+            confirmHbox.getChildren().addAll(indicator,confirmPane,helpRec);
+            confirmHbox.setAlignment(Pos.BASELINE_CENTER);
+            confirmHbox.setLayoutX(200);
+            confirmHbox.setLayoutY(300);
+            confirmHbox.setMaxHeight(60);
+            confirmHbox.setMinHeight(60);
+            Pane backButtonPane = new Pane();
+            Rectangle backButtonRec=new Rectangle(40,40);
+            backButtonRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/backbuttonimage.png")))));
+            backButtonPane.getChildren().addAll(backButtonRec);
 //            vbox1.getChildren().addAll(usernameLabel,usernameTextField,securityQuestion,securityAnswerField,confirmButton,backButton);
 //            Scene scene1=new Scene(vbox1,600,400);
 //            stage.setScene(scene1);
 //            scene1.setFill(Color.BLACK);
-            confirmButton.setOnMouseClicked(event ->{
+            confirmLabel.setOnMouseClicked(event ->{
                     Alert alert = LoginMenuController.hasAnsweredCorrectly(usernameTextField.getText(), securityAnswerField.getText());
                     if (alert == null) {
                         User.setLoggedInUser(user);
-                        Stage newPass = new Stage();
-                        newPass.setTitle("Reset Password");
+//                        Stage newPass = new Stage();
+//                        newPass.setTitle("Reset Password");
                         TextField newPassTextField = new TextField();
                         newPassTextField.setMaxWidth(300);
                         Label newPassLabel = new Label("Enter new password");
@@ -307,7 +394,17 @@ public class LoginMenu extends Application {
                     } else
                         alert.show();
             });
-            backButton.setOnMouseClicked(event -> {
+            confirmLabel.setOnMouseEntered(event -> {
+                indicatorRec.setVisible(true);
+                confirmRec.setVisible(true);
+                confirmLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+            });
+            confirmLabel.setOnMouseExited(event -> {
+                indicatorRec.setVisible(false);
+                confirmRec.setVisible(false);
+                confirmLabel.setTextFill(Color.BLACK);
+            });
+            backButtonRec.setOnMouseClicked(event -> {
                 try {
                     hasMusic = true;
                     start(LoginMenu.stage);
@@ -315,18 +412,32 @@ public class LoginMenu extends Application {
                     e.printStackTrace();
                 }
             });
+            backButtonRec.setOnMouseEntered(event -> {
+                backButtonRec.setWidth(60);
+                backButtonRec.setHeight(60);
+            });
+            backButtonRec.setOnMouseExited(event -> {
+                backButtonRec.setWidth(40);
+                backButtonRec.setHeight(40);
+            });
 
-
-            VBox vbox = new VBox(10);
+            Pane changePasswprdPane=new Pane();
+            VBox vbox = new VBox(15);
             vbox.setAlignment(Pos.CENTER);
             vbox.setMaxWidth(300);
+            vbox.setLayoutX(200);
+            vbox.setLayoutX(180);
+            vbox.setLayoutY(50);
+            backButtonPane.setLayoutX(10);
+            backButtonPane.setLayoutY(10);
             vbox.getChildren().addAll(
                     usernameLabel, usernameTextField,
                     securityQuestion, securityAnswerField,
-                    confirmButton, backButton
+                    confirmHbox
             );
-
-            Scene scene = new Scene(vbox, 600, 400);
+            changePasswprdPane.getChildren().addAll(backButtonPane,vbox);
+            changePasswprdPane.setBackground(new Background(createBackgroundImage("/Images/forgotpasswordbackground.jpg",600,400)));
+            Scene scene = new Scene(changePasswprdPane, 600, 400);
             LoginMenu.stage.setScene(scene);
             LoginMenu.stage.show();
         }
@@ -360,8 +471,8 @@ public class LoginMenu extends Application {
         password.setText(autoPass);
         confirmPWD.setText(autoPass);
     }
-    private BackgroundImage createBackgroundImage () {
-        Image image = new Image(Game.class.getResource("/Images/background.jpg").toExternalForm(), 1280 ,768, false, false);
+    private BackgroundImage createBackgroundImage (String address,int width,int height) {
+        Image image = new Image(Game.class.getResource(address).toExternalForm(), width ,height, false, false);
         ImageView imageView = new ImageView(image);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
@@ -372,6 +483,12 @@ public class LoginMenu extends Application {
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         return backgroundImage;
+    }
+    private void setSize (Pane pane,double height,double width) {
+        pane.setMinHeight(height);
+        pane.setMaxHeight(height);
+        pane.setMinWidth(width);
+        pane.setMaxWidth(width);
     }
 }
 
