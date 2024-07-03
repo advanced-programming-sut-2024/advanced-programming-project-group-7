@@ -151,7 +151,7 @@ public class LoginMenuController {
     public static String generateRandomNumber(){
         Random random=new Random();
         StringBuilder twoFACode=new StringBuilder();
-        for(int i=0;i<6;i++) twoFACode.append(random.nextInt());
+        for(int i=0;i<6;i++) twoFACode.append(random.nextInt(0,9));
         return twoFACode.toString();
     }
 }

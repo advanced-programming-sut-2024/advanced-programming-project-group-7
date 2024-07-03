@@ -22,9 +22,11 @@ public class GmailSender {
     private static  String EMAIL_FROM = "kooroshimani2023@gmail.com";
     private   String EMAIL_TO ="s.mohammad.e.1383@gmail.com";
     private static  String APP_PASSWORD = "mrok fcmi tyky ipwt";
+    private String text;
 
-    public GmailSender(String EMAIL_TO) throws Exception {
+    public GmailSender(String EMAIL_TO, String text) throws Exception {
         this.EMAIL_TO = EMAIL_TO;
+        this.text=text;
 //        this.send();
     }
 
@@ -33,7 +35,7 @@ public class GmailSender {
         message.setFrom(new InternetAddress(EMAIL_FROM));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(this.EMAIL_TO));
         message.setSubject("Email subject");
-        message.setText( "\"http://www.example.com\" Click here ebi for gwent</a>\ntest it");
+        message.setText(text);
 //        String link = "<a href=\"http://www.example.com\">Click here</a>";
 //        String body = "Please verify your email address by clicking on this link: " + link;
 //        message.setText(body, "UTF-8", "html");

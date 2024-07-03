@@ -170,7 +170,7 @@ public class LoginMenu extends Application {
                 , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
             if (alert == null) {
                 try {
-                    GmailSender gmailSender=new  GmailSender(emailText.getText());
+                    GmailSender gmailSender=new  GmailSender(emailText.getText(),null);
                     gmailSender.send();
                     Stage recoveryStage = new Stage();
                     recoveryStage.setTitle("Password Recovery");
@@ -234,6 +234,7 @@ public class LoginMenu extends Application {
             if (alert == null) {
                 Stage twoFAStage=new Stage();
                 User user=User.getUserByUsername(nameField.getText());
+                System.out.println(user.getEmailAddress());
                 Pane twoFAPane=new Pane();
                 VBox twoFAVbox=new VBox(20);
                 twoFAStage.setTitle("2FA");
@@ -278,8 +279,15 @@ public class LoginMenu extends Application {
                     confirmRec.setVisible(false);
                     confirmLabel.setTextFill(Color.BLACK);
                 });
+                String randomEmailedNumber=LoginMenuController.generateRandomNumber();
+                try {
+                    GmailSender gmailSender=new GmailSender(user.getEmailAddress(),randomEmailedNumber);
+                    gmailSender.send();
+                    System.out.println(randomEmailedNumber);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 confirmLabel.setOnMouseClicked(event -> {
-                    String randomEmailedNumber=LoginMenuController.generateRandomNumber();
                     if(randomNumber.getText().equals(randomEmailedNumber)){
                         goToMainMenu();
                     }
