@@ -70,6 +70,14 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("reaction")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(parts1[2]);
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 //                else if(parts1[0].equals("newUser") && parts1[]){
 

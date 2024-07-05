@@ -2,17 +2,14 @@ package view;
 
 import controller.Client;
 import controller.GameServer;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.NodeOrientation;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
@@ -23,13 +20,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.*;
 import model.cards.*;
 import model.leaders.MonstersLeaders;
 import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameLauncher extends Application {
@@ -76,39 +73,6 @@ public class GameLauncher extends Application {
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
-
-//        Pane pane=new Pane();
-//        VBox chatBoxVbox=new VBox(10);
-//        ScrollPane scrollPane=new ScrollPane(chatBoxVbox);
-//        scrollPane.setPrefViewportHeight(240);
-//        scrollPane.setPrefViewportWidth(200);
-//        scrollPane.setMaxHeight(150);
-//        scrollPane.setMinHeight(150);
-//        scrollPane.setMaxWidth(150);
-//        scrollPane.setMinWidth(150);
-//        scrollPane.setLayoutX(500);
-//        scrollPane.setLayoutY(500);
-//        scrollPane.setFocusTraversable(true);
-//        scrollPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-//        Rectangle rectangle8=new Rectangle(200,60);
-//        rectangle8.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
-//        Rectangle rectangle9=new Rectangle(200,60);
-//        rectangle9.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
-//        Rectangle rectangle10=new Rectangle(200,60);
-//        rectangle10.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
-//        Rectangle rectangle11=new Rectangle(200,60);
-//        rectangle11.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel1.png")))));
-//        chatBoxVbox.getChildren().addAll(rectangle8,rectangle9,rectangle10,rectangle11);
-//        pane.getChildren().add(scrollPane);
-//        pane.setOnScroll(event -> {
-//            rectangle8.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel2.png")))));
-//        });
-
-
-
-
-
-
         Pane chatBoxPane=new Pane();
         chatBoxPane.setLayoutX(1280);
         chatBoxPane.setLayoutY(200);
@@ -116,22 +80,22 @@ public class GameLauncher extends Application {
         chatBoxPane.setMaxHeight(300);
         chatBoxPane.setMinWidth(150);
         chatBoxPane.setMaxWidth(150);
-        Rectangle rectangle1=new Rectangle(150,40);
+        Rectangle rectangle1=new Rectangle(150,30);
         rectangle1.setLayoutX(0);
         rectangle1.setLayoutY(0);
-        Rectangle rectangle2=new Rectangle(150,40);
+        Rectangle rectangle2=new Rectangle(150,30);
         rectangle2.setLayoutX(0);
         rectangle2.setLayoutY(40);
-        Rectangle rectangle3=new Rectangle(150,40);
+        Rectangle rectangle3=new Rectangle(150,30);
         rectangle3.setLayoutX(0);
         rectangle3.setLayoutY(80);
-        Rectangle rectangle4=new Rectangle(150,40);
+        Rectangle rectangle4=new Rectangle(150,30);
         rectangle4.setLayoutX(0);
         rectangle4.setLayoutY(180);
-        Rectangle rectangle5=new Rectangle(150,40);
+        Rectangle rectangle5=new Rectangle(150,30);
         rectangle5.setLayoutX(0);
         rectangle5.setLayoutY(220);
-        Rectangle rectangle6=new Rectangle(150,40);
+        Rectangle rectangle6=new Rectangle(150,30);
         rectangle6.setLayoutX(0);
         rectangle6.setLayoutY(260);
         Circle circle=new Circle(30);
@@ -167,22 +131,22 @@ public class GameLauncher extends Application {
             rectangle6.setVisible(false);
         });
         rectangle1.setOnMouseClicked(event -> {
-
+            sendReaction(1);
         });
         rectangle2.setOnMouseClicked(event -> {
-
+            sendReaction(2);
         });
         rectangle3.setOnMouseClicked(event -> {
-
+            sendReaction(3);
         });
         rectangle4.setOnMouseClicked(event -> {
-
+            sendReaction(4);
         });
         rectangle5.setOnMouseClicked(event -> {
-
+            sendReaction(5);
         });
         rectangle6.setOnMouseClicked(event -> {
-
+            sendReaction(6);
         });
         chatBoxPane.getChildren().addAll(rectangle1,rectangle2,rectangle3,rectangle4,rectangle5,rectangle6,circle);
 
@@ -566,6 +530,33 @@ public class GameLauncher extends Application {
         stage.show();
         stage.setFullScreen(true);
         playerHandMouseSetter();
+    }
+
+    private void sendReaction(int i) {
+        Rectangle rectangle = new Rectangle(150,40);
+        rectangle.setLayoutY(640);
+        rectangle.setLayoutX(100);
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel"+i+".png")))));
+        pane.getChildren().add(rectangle);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(8), rectangle);
+        fadeTransition.setFromValue(1.0); // Fully opaque
+        fadeTransition.setToValue(0.0); // Completely transparent
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(false);
+        fadeTransition.play();
+        client.sendMessage("reation:"+User.getLoggedInUser().currentOponentName+":1.reaction");
+    }public void getReaction(int i) {
+        Rectangle rectangle = new Rectangle(150,40);
+        rectangle.setLayoutY(200);
+        rectangle.setLayoutX(100);
+        rectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/goldLabel"+i+".png")))));
+        pane.getChildren().add(rectangle);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(8), rectangle);
+        fadeTransition.setFromValue(1.0); // Fully opaque
+        fadeTransition.setToValue(0.0); // Completely transparent
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(false);
+        fadeTransition.play();
     }
 
     public void playerHandMouseSetter() {
