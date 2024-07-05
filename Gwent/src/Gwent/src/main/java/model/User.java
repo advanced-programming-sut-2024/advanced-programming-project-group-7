@@ -17,7 +17,7 @@ import java.util.List;
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
     ObjectMapper objectMapper=new ObjectMapper();
-    public Client client;
+//    public Client client;
     public String currentOponentName;
     private ArrayList<String> requests = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
@@ -87,13 +87,16 @@ public class User {
 
     private String userCurrentMenu;
 
-    public User(String username, String password, String nickname, String emailAddress) throws IOException {
+    public User(String username, String password, String nickname, String emailAddress)  {
         this.username=username;
         this.password=password;
         this.nickname=nickname;
         this.emailAddress=emailAddress;
         addUser(this);
-        addToFile(this);
+//        addToFile(this);
+    }
+    public User(){
+
     }
 
     private void addToFile(User user) throws IOException {
@@ -176,6 +179,14 @@ public class User {
         this.highestScore = highestScore;
     }
 
+//    public Client getClient() {
+//        return client;
+//    }
+//
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
+
     public int getRank() {
         return rank;
     }
@@ -230,11 +241,11 @@ public class User {
 
     static {
         User userTest= null;
-        try {
+//        try {
             userTest = new User("","","Ebim","s.mohammad.e.1383@gmail.com");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
         userTest.setSecurityQuestionNumber(1);
     userTest.setAnswerOfSecurityQuestion("red");
         userTest.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
@@ -242,7 +253,7 @@ public class User {
         User userTest1= null;
         try {
             userTest1 = new User("a","a","mr a","amir2023@gmail.com");
-        } catch (IOException e) {
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
         userTest1.setSecurityQuestionNumber(1);
@@ -250,11 +261,11 @@ public class User {
         userTest1.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
 
         User userTest2= null;
-        try {
+//        try {
             userTest2 = new User("b","b","mr b","amir2023@gmail.com");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
         userTest2.setSecurityQuestionNumber(1);
         userTest2.setAnswerOfSecurityQuestion("red");
         userTest2.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
@@ -278,5 +289,61 @@ public class User {
 
     public ArrayList<String > getFriends() {
         return friends;
+    }
+
+    public ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public String getCurrentOponentName() {
+        return currentOponentName;
+    }
+
+    public void setCurrentOponentName(String currentOponentName) {
+        this.currentOponentName = currentOponentName;
+    }
+
+    public void setRequests(ArrayList<String> requests) {
+        this.requests = requests;
+    }
+
+    public void setFriends(ArrayList<String> friends) {
+        this.friends = friends;
+    }
+
+    public void setGames(ArrayList<Game> games) {
+        this.games = games;
+    }
+
+    public void setBattleLog(ArrayList<BattleInfo> battleLog) {
+        this.battleLog = battleLog;
+    }
+
+    public Leader getCurrentLeader() {
+        return currentLeader;
+    }
+
+    public void setCurrentLeader(Leader currentLeader) {
+        this.currentLeader = currentLeader;
+    }
+
+    public Faction getCurrentFaction() {
+        return currentFaction;
+    }
+
+    public void setCurrentFaction(Faction currentFaction) {
+        this.currentFaction = currentFaction;
+    }
+
+    public String getUserCurrentMenu() {
+        return userCurrentMenu;
+    }
+
+    public void setUserCurrentMenu(String userCurrentMenu) {
+        this.userCurrentMenu = userCurrentMenu;
     }
 }

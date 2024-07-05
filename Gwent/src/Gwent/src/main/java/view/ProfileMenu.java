@@ -315,7 +315,7 @@ public class ProfileMenu extends Application {
         Button sendReq = new Button("send");
         sendReq.setOnMouseClicked(event -> {
             User.getLoggedInUser().addFriend(textField.getText());
-            User.getLoggedInUser().client.sendMessage("req:" + textField.getText() + ":" + User.getLoggedInUser().getUsername());
+//            User.getLoggedInUser().client.sendMessage("req:" + textField.getText() + ":" + User.getLoggedInUser().getUsername());
         });
         reqs.getChildren().addAll(textField, sendReq);
         pane.getChildren().add(reqs);

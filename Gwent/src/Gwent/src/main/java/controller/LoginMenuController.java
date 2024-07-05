@@ -1,5 +1,6 @@
 package controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
 import model.User;
 
@@ -34,7 +35,17 @@ public class LoginMenuController {
         else if(isPasswordWeak(password)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation.toString());return alert;}
         else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("password is not confirmed correctly");return alert;}
         else{
-           User user=new User(username,password,nickname,email);
+            User user=new User(username,password,nickname,email);
+//            System.out.println(user.getUsername());
+//            Client client=new Client(null,user);
+//            client.start();
+            ObjectMapper objectMapper=new ObjectMapper();
+            String str=  objectMapper.writeValueAsString(user);
+            System.out.println(str);
+//           client.sendMessage("newUser:"+objectMapper.writeValueAsString(user));
+//           String[] parts=objectMapper.writeValueAsString(user).split(":");
+//            System.out.println(parts.length);
+
            User.setLoggedInUser(user);
             return null;
         }

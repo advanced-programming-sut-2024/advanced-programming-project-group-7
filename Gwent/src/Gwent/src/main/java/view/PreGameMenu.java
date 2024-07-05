@@ -74,7 +74,7 @@ public class PreGameMenu extends Application {
         setCardsAndCommander();
         setCardsInDeck();
         calculateLabels();
-        client = User.getLoggedInUser().client;
+//        client = User.getLoggedInUser().client;
         client.pregameMenu = this;
     }
 

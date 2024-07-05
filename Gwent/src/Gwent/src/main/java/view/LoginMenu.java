@@ -29,6 +29,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
+
+import java.io.IOException;
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -166,15 +168,19 @@ public class LoginMenu extends Application {
     }
 
 
-    public void signUp(MouseEvent mouseEvent) {
+    public void signUp(MouseEvent mouseEvent)  {
         Alert alert = null;
         if (!isLoggingIN) {
-        alert = LoginMenuController.userRegister(nameField.getText()
-                , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
+            try {
+                alert = LoginMenuController.userRegister(nameField.getText()
+                        , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if (alert == null) {
                 try {
-                    GmailSender gmailSender=new  GmailSender(emailText.getText(),null);
-                    gmailSender.send();
+//                    GmailSender gmailSender=new  GmailSender(emailText.getText(),null);
+//                    gmailSender.send();
                     Stage recoveryStage = new Stage();
                     recoveryStage.setTitle("Password Recovery");
                     Label usernameLabel = new Label("Answer one the questions below");
@@ -252,7 +258,6 @@ public class LoginMenu extends Application {
             e.printStackTrace();
         }
     }
-
 
     public void recoverPSWD(MouseEvent mouseEvent) {
         User user = User.getUserByUsername(nameField.getText());

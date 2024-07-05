@@ -63,7 +63,7 @@ public class MainMenu extends Application {
         GameLauncher gameLauncher = new GameLauncher();
         Game game = new Game(gameLauncher);
         Client client = new Client(game, User.getLoggedInUser());
-        User.getLoggedInUser().client=client;
+//        User.getLoggedInUser().client=client;
         client.start();
         URL url = LoginMenu.class.getResource("/FXML/MainMenu.fxml");
         BorderPane root = FXMLLoader.load(url);

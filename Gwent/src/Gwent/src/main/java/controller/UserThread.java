@@ -71,6 +71,9 @@ public class UserThread extends Thread {
                         throw new RuntimeException(e);
                     }
                 }
+//                else if(parts1[0].equals("newUser") && parts1[]){
+
+//                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
