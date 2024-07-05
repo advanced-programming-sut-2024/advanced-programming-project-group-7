@@ -5,6 +5,8 @@ module Gwent {
     requires java.desktop;
     requires jakarta.mail;
     requires javax.servlet.api;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
 
     exports view;
     opens view to javafx.fxml;
