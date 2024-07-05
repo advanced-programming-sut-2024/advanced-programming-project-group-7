@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.FlowPane?>
 <BorderPane prefHeight="768" prefWidth="1280" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
     <center>
         <VBox alignment="CENTER" maxWidth="498.0" prefHeight="768.0" prefWidth="498.0" spacing="20.0">
@@ -51,9 +52,10 @@
    <right>
       <VBox alignment="CENTER" minWidth="100.0" prefHeight="200.0" BorderPane.alignment="CENTER">
          <children>
-             <ImageView fitHeight="70" fitWidth="70 " onMouseClicked="#showRequests">
-                 <Image url="@../Images/icons/email.png" />
+             <ImageView fitHeight="70" fitWidth="70 ">
+                 <Image url="@../Images/icons/add-friend.png" />
              </ImageView>
+             <Pane fx:id="televisionPane"/>
          </children>
       </VBox>
    </right>
