@@ -56,6 +56,7 @@ public class MainMenu extends Application {
     public Label startNewGameLabel;
     public Label logOutRLabel;
     public Label exitGameLabel;
+    public Pane televisionPane;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -159,6 +160,33 @@ public class MainMenu extends Application {
         startNewGame.getChildren().addAll(startNewGameRec,startNewGameLabel);
         logOut.getChildren().addAll(logOutRec,logOutRLabel);
         exitGame.getChildren().addAll(exitGameRec,exitGameLabel);
+        Rectangle televisionRec=new Rectangle(40,40);
+        televisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
+        televisionRec.setLayoutY(200);
+        televisionPane.getChildren().add(televisionRec);
+        televisionPane.setOnMouseClicked(this::showTelevisionMenu);
+    }
+
+    private void showTelevisionMenu(MouseEvent mouseEvent) {
+        Stage televisionMenu=new Stage();
+        televisionMenu.setTitle("Television");
+        Pane pane=new Pane();
+        setSize(pane,400,600);
+        Scene scene=new Scene(pane);
+        VBox vBox=new VBox(10);
+        Pane buttonPane=new Pane();
+        Pane televisionPane=new Pane();
+        Button rankPlayerGames=new Button("rank");
+        Button myPreviousGame=new Button("my games");
+        buttonPane.getChildren().addAll(rankPlayerGames,myPreviousGame);
+        buttonPane.setMaxHeight(30);
+        rankPlayerGames.setLayoutX(10);
+        myPreviousGame.setLayoutX(100);
+        vBox.getChildren().addAll(buttonPane,televisionPane);
+        vBox.setAlignment(Pos.CENTER);
+        pane.getChildren().addAll(vBox);
+        televisionMenu.setScene(scene);
+        televisionMenu.show();
     }
 
     public void setLabelText() {
@@ -210,49 +238,6 @@ public class MainMenu extends Application {
         mediaPlayer.setAutoPlay(true);
     }
 
-    public void showRequests(MouseEvent mouseEvent) {
-        System.out.println("hi");
-        Stage reqMenu = new Stage();
-        Pane pane = new Pane();
-        pane.setMinWidth(300);
-        pane.setMinHeight(400);
-        Scene scene = new Scene(pane);
-        VBox reqs = new VBox();
-        reqs.setAlignment(Pos.CENTER);
-        for (String req : User.getLoggedInUser().getRequests()){
-            HBox hBox = new HBox(5);
-            String[] reqParts = req.split("\\.");
-            Label labelName = new Label(reqParts[0]);
-            hBox.getChildren().add(labelName);
-            Button accept = new Button("Accept");
-            accept.setOnMouseClicked(event -> {
-                User.getLoggedInUser().addFriend(reqParts[0]);
-                User.getLoggedInUser().getRequests().remove(req);
-            });
-            Button reject = new Button("Reject");
-            accept.setOnMouseClicked(event -> {
-                User.getLoggedInUser().getRequests().remove(req);
-            });
-            hBox.getChildren().addAll(accept, reject);
-            reqs.getChildren().add(hBox);
-        }
-        Button exit = new Button("exit");
-        reqs.getChildren().add(exit);
-        exit.setOnMouseClicked(event -> {
-            reqMenu.close();
-        });
-        TextField textField = new TextField("username");
-        textField.setMaxWidth(200);
-        Button sendReq = new Button("send");
-        sendReq.setOnMouseClicked(event -> {
-            User.getLoggedInUser().addFriend(textField.getText());
-            User.getLoggedInUser().client.sendMessage("req:" + textField.getText() + ":" + User.getLoggedInUser().getUsername());
-        });
-        reqs.getChildren().addAll(textField, sendReq);
-        pane.getChildren().add(reqs);
-        reqMenu.setScene(scene);
-        reqMenu.show();
-    }
     private BackgroundImage createBackgroundImage (String address) {
         Image image = new Image(Game.class.getResource(address).toExternalForm(), 1280 ,768, false, false);
         ImageView imageView = new ImageView(image);
@@ -265,5 +250,11 @@ public class MainMenu extends Application {
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         return backgroundImage;
+    }
+    private void setSize (Pane pane,double height,double width) {
+        pane.setMinHeight(height);
+        pane.setMaxHeight(height);
+        pane.setMinWidth(width);
+        pane.setMaxWidth(width);
     }
 }

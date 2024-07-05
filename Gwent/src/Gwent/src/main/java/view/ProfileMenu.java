@@ -4,6 +4,7 @@ import controller.ProfileMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -60,8 +61,8 @@ public class ProfileMenu extends Application {
     public Label changePasswordLabel;
     public Label changeNickNameLabel;
     public Label changeEmailLabel;
-    public Pane backButton;
-    public Rectangle backButtonRec=new Rectangle(100,100);
+    public Pane backButtonPane;
+    public Pane friendRequestPane;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -75,9 +76,6 @@ public class ProfileMenu extends Application {
     @FXML
 
     public void initialize() {
-        backButtonRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
-//        backButton.getChildren().addAll(backButtonRec);
-//        backButton.setLayoutY(2000);
         indicator1rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
         indicator2rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
         indicator3rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
@@ -165,6 +163,37 @@ public class ProfileMenu extends Application {
         nickname.setText("nickname");
         email.setText("email");
 
+
+        Rectangle backButtonRec=new Rectangle(60,60);
+        backButtonRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/backbuttonimage.png")))));
+        backButtonPane.getChildren().addAll(backButtonRec);
+        backButtonPane.setLayoutX(20);
+        backButtonPane.setLayoutY(20);
+        backButtonRec.setOnMouseClicked(this::backToMainMenu);
+        backButtonRec.setOnMouseEntered(event -> {
+            backButtonRec.setWidth(80);
+            backButtonRec.setHeight(80);
+        });
+        backButtonRec.setOnMouseExited(event -> {
+            backButtonRec.setWidth(60);
+            backButtonRec.setHeight(60);
+        });
+        Rectangle friendRequestRec=new Rectangle(60,60);
+        friendRequestRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/add-friend1.png")))));
+        friendRequestPane.getChildren().add(friendRequestRec);
+        friendRequestRec.setLayoutY(270);
+        friendRequestRec.setLayoutX(20);
+        friendRequestRec.setOnMouseClicked(this::showRequests);
+        friendRequestRec.setOnMouseEntered(event -> {
+            friendRequestRec.setWidth(80);
+            friendRequestRec.setHeight(80);
+        });
+        friendRequestRec.setOnMouseExited(event -> {
+            friendRequestRec.setWidth(60);
+            friendRequestRec.setHeight(60);
+        });
+
+
     }
 
     public void changeUsername(MouseEvent mouseEvent) {
@@ -248,6 +277,50 @@ public class ProfileMenu extends Application {
             contextMenu.getItems().add(menuItem);
         }
         contextMenu.show((Node) mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+    }
+
+    public void showRequests(MouseEvent mouseEvent) {
+        System.out.println("hi");
+        Stage reqMenu = new Stage();
+        Pane pane = new Pane();
+        pane.setMinWidth(300);
+        pane.setMinHeight(400);
+        Scene scene = new Scene(pane);
+        VBox reqs = new VBox();
+        reqs.setAlignment(Pos.CENTER);
+        for (String req : User.getLoggedInUser().getRequests()){
+            HBox hBox = new HBox(5);
+            String[] reqParts = req.split("\\.");
+            Label labelName = new Label(reqParts[0]);
+            hBox.getChildren().add(labelName);
+            Button accept = new Button("Accept");
+            accept.setOnMouseClicked(event -> {
+                User.getLoggedInUser().addFriend(reqParts[0]);
+                User.getLoggedInUser().getRequests().remove(req);
+            });
+            Button reject = new Button("Reject");
+            accept.setOnMouseClicked(event -> {
+                User.getLoggedInUser().getRequests().remove(req);
+            });
+            hBox.getChildren().addAll(accept, reject);
+            reqs.getChildren().add(hBox);
+        }
+        Button exit = new Button("exit");
+        reqs.getChildren().add(exit);
+        exit.setOnMouseClicked(event -> {
+            reqMenu.close();
+        });
+        TextField textField = new TextField("username");
+        textField.setMaxWidth(200);
+        Button sendReq = new Button("send");
+        sendReq.setOnMouseClicked(event -> {
+            User.getLoggedInUser().addFriend(textField.getText());
+            User.getLoggedInUser().client.sendMessage("req:" + textField.getText() + ":" + User.getLoggedInUser().getUsername());
+        });
+        reqs.getChildren().addAll(textField, sendReq);
+        pane.getChildren().add(reqs);
+        reqMenu.setScene(scene);
+        reqMenu.show();
     }
     private BackgroundImage createBackgroundImage () {
         Image image = new Image(Game.class.getResource("/Images/profilemenubackground.jpg").toExternalForm(), 1280 ,768, false, false);

@@ -29,7 +29,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
-
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -82,6 +81,8 @@ public class LoginMenu extends Application {
         root.setBackground(new Background(createBackgroundImage("/Images/background.jpg",1280,768)));
         stage.show();
     }
+
+
     @FXML
     public void initialize(){
         Pane pane=new Pane();
@@ -95,10 +96,10 @@ public class LoginMenu extends Application {
         Rectangle rectangle4=new Rectangle(200,30);
         Circle circle=new Circle(20);
         circle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
-        rectangle1.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
-        rectangle2.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
-        rectangle3.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
-        rectangle4.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
+        rectangle1.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
+        rectangle2.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
+        rectangle3.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
+        rectangle4.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
         pane.getChildren().addAll(circle,rectangle1,rectangle2,rectangle3,rectangle4);
 
 
@@ -130,7 +131,7 @@ public class LoginMenu extends Application {
         hybridButton.setOnMouseExited(event -> {
             hybridRectangle.setVisible(false);
         });
-        hybridRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
+        hybridRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
         hybridButtPane.getChildren().addAll(hybridRectangle, hybridButton);
         switchButton = new Label("Switch");
         switchButton.setFont(new Font("Tiro Gurmukhi",30));
@@ -145,7 +146,7 @@ public class LoginMenu extends Application {
         switchButton.setOnMouseExited(event -> {
             switchRectangle.setVisible(false);
         });
-        switchRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
+        switchRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
         switchPane.getChildren().addAll(switchRectangle, switchButton);
         forgotPasswordButton = new Label("Forgot password");
         forgotPasswordButton.setFont(new Font("Tiro Gurmukhi",30));
@@ -160,9 +161,11 @@ public class LoginMenu extends Application {
         forgotPasswordButton.setOnMouseExited(event -> {
             forgotPasswordRectangle.setVisible(false);
         });
-        forgotPasswordRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage.jpg")))));
+        forgotPasswordRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
         forgotPasswordPane.getChildren().addAll(forgotPasswordRectangle, forgotPasswordButton);
     }
+
+
     public void signUp(MouseEvent mouseEvent) {
         Alert alert = null;
         if (!isLoggingIN) {
@@ -232,80 +235,14 @@ public class LoginMenu extends Application {
 
         alert = LoginMenuController.userLogin(nameField.getText(), password.getText());
             if (alert == null) {
-                Stage twoFAStage=new Stage();
-                User user=User.getUserByUsername(nameField.getText());
-                System.out.println(user.getEmailAddress());
-                Pane twoFAPane=new Pane();
-                VBox twoFAVbox=new VBox(20);
-                twoFAStage.setTitle("2FA");
-                Label label=new Label("Please inter the number that we sent to your email");
-                label.setFont(new Font("Baloo Bhaina 2 Bold",20));
-                TextField randomNumber=new TextField();
-                HBox confirmHbox=new HBox(10);
-                Pane indicator=new Pane();
-                Pane confirmPane=new Pane();
-                Rectangle indicatorRec=new Rectangle(30,30);
-                Rectangle confirmRec=new Rectangle(120,30);
-                Label confirmLabel=new Label("Confirm");
-                confirmLabel.setFont(new Font("Tiro Gurmukhi",20));
-                confirmLabel.setTextFill(Color.BLACK);
-                confirmLabel.setLayoutX(20);
-                confirmLabel.setLayoutY(2);
-                indicatorRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
-                confirmRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
-                confirmRec.setVisible(false);
-                indicatorRec.setVisible(false);
-                Rectangle helpRec=new Rectangle(30,30);
-                helpRec.setVisible(false);
-                indicator.getChildren().addAll(indicatorRec);
-                confirmPane.getChildren().addAll(confirmRec,confirmLabel);
-                confirmHbox.getChildren().addAll(indicator,confirmPane,helpRec);
-                confirmHbox.setAlignment(Pos.BASELINE_CENTER);
-                confirmHbox.setLayoutX(200);
-                confirmHbox.setLayoutY(300);
-                confirmHbox.setMaxHeight(60);
-                confirmHbox.setMinHeight(60);
-                twoFAVbox.setLayoutX(80);
-                twoFAVbox.setLayoutY(100);
-                twoFAVbox.getChildren().addAll(label,randomNumber,confirmHbox);
-                twoFAPane.getChildren().addAll(twoFAVbox);
-                confirmLabel.setOnMouseEntered(event -> {
-                    indicatorRec.setVisible(true);
-                    confirmRec.setVisible(true);
-                    confirmLabel.setTextFill(new Color(0.538,0.51,0.002,1));
-                });
-                confirmLabel.setOnMouseExited(event -> {
-                    indicatorRec.setVisible(false);
-                    confirmRec.setVisible(false);
-                    confirmLabel.setTextFill(Color.BLACK);
-                });
-                String randomEmailedNumber=LoginMenuController.generateRandomNumber();
-                try {
-                    GmailSender gmailSender=new GmailSender(user.getEmailAddress(),randomEmailedNumber);
-                    gmailSender.send();
-                    System.out.println(randomEmailedNumber);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                confirmLabel.setOnMouseClicked(event -> {
-                    if(randomNumber.getText().equals(randomEmailedNumber)){
-                        goToMainMenu();
-                    }
-                    else{
-                        Alert alert2FA=new Alert(Alert.AlertType.WARNING);
-                        alert2FA.setHeaderText("this username is taken");
-                        alert2FA.show();
-                    }
-                });
-                Scene scene=new Scene(twoFAPane,600,400);
-                LoginMenu.stage.setScene(scene);
-                LoginMenu.stage.show();
-//                goToMainMenu();
+//                Stage twoFAStage=new Stage();
+                twoFA();
             } else {
                 alert.show();
             }
         }
     }
+
 
     private void goToMainMenu() {
         MainMenu mainMenu = new MainMenu();
@@ -324,10 +261,10 @@ public class LoginMenu extends Application {
             alert.setHeaderText("enter your username first");
             alert.show();
         } else {
-            Stage recoveryStage = new Stage();
+//            Stage recoveryStage = new Stage();
 //            VBox vbox1=new VBox(10);
 //            vbox1.setAlignment(Pos.CENTER);
-            recoveryStage.setTitle("Password Recovery");
+//            recoveryStage.setTitle("Password Recovery");
             Label usernameLabel = new Label("Username");
             usernameLabel.setFont(new Font("Baloo Bhaina 2 Bold",20));
             TextField usernameTextField = new TextField();
@@ -376,32 +313,7 @@ public class LoginMenu extends Application {
                         User.setLoggedInUser(user);
 //                        Stage newPass = new Stage();
 //                        newPass.setTitle("Reset Password");
-                        TextField newPassTextField = new TextField();
-                        newPassTextField.setMaxWidth(300);
-                        Label newPassLabel = new Label("Enter new password");
-                        TextField confirmNewPassTextField = new TextField();
-                        confirmNewPassTextField.setMaxWidth(300);
-                        Button randomPass = new Button("Generate Pass");
-                        randomPass.setOnMouseClicked(event1 -> {
-                            String autoPass = LoginMenuController.generatePassword();
-                            newPassTextField.setText(autoPass);
-                            confirmNewPassTextField.setText(autoPass);
-                        });
-                        Button confirmNewPass = new Button("Confirm");
-                        confirmNewPass.setOnMouseClicked(event1 -> {
-                           Alert alert1= LoginMenuController.setNewPassword(newPassTextField.getText(), confirmNewPassTextField.getText());
-                            if(alert1==null){
-                                User.setLoggedInUser(null);
-                                goToMainMenu();
-                            }else alert1.show();
-                        });
-                        VBox vbox = new VBox(10);
-                        vbox.setAlignment(Pos.CENTER);
-                        vbox.setMaxWidth(300);
-                        vbox.getChildren().addAll(newPassLabel, newPassTextField, confirmNewPassTextField, randomPass);
-                        Scene scene = new Scene(vbox, 600, 400);
-                        LoginMenu.stage.setScene(scene);
-                        LoginMenu.stage.show();
+                        setNewPassword();
                     } else
                         alert.show();
             });
@@ -454,6 +366,7 @@ public class LoginMenu extends Application {
         }
     }
 
+
     public void Switch(MouseEvent mouseEvent) {
         isLoggingIN = !isLoggingIN;
         if (isLoggingIN) {
@@ -477,11 +390,248 @@ public class LoginMenu extends Application {
         }
     }
 
+
+    public void setNewPassword(){
+        Label newPassLabel = new Label("Enter new password");
+        newPassLabel.setFont(new Font("Baloo Bhaina 2 Bold",20));
+        newPassLabel.setTextFill(Color.BLACK);
+        TextField newPassTextField = new TextField();
+        newPassTextField.setMaxWidth(300);
+        Label confirmNewPasswordLabel=new Label("Confirm new password");
+        confirmNewPasswordLabel.setFont(new Font("Baloo Bhaina 2 Bold",20));
+        confirmNewPasswordLabel.setTextFill(Color.BLACK);
+        TextField confirmNewPassTextField = new TextField();
+        confirmNewPassTextField.setMaxWidth(300);
+
+
+        HBox generatePassHbox=new HBox(10);
+        Pane indicator=new Pane();
+        Rectangle indicatorRec=new Rectangle(30,30);
+        indicatorRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        indicatorRec.setVisible(false);
+        indicator.getChildren().addAll(indicatorRec);
+        Pane generatePassPane=new Pane();
+        Rectangle generatePassRec=new Rectangle(190,30);
+        generatePassRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        Label generatePassLabel=new Label("Generate pass");
+        generatePassLabel.setFont(new Font("Tiro Gurmukhi",20));
+        generatePassLabel.setTextFill(Color.WHITE);
+        generatePassLabel.setLayoutX(10);
+        generatePassLabel.setLayoutY(2);
+        generatePassRec.setVisible(false);
+        Rectangle helpRec=new Rectangle(0,30);
+        helpRec.setVisible(false);
+        generatePassPane.getChildren().addAll(generatePassRec,generatePassLabel);
+        generatePassHbox.getChildren().addAll(helpRec,indicator,generatePassPane);
+        generatePassHbox.setAlignment(Pos.BASELINE_CENTER);
+        generatePassHbox.setLayoutX(300);
+        generatePassHbox.setLayoutY(300);
+        generatePassHbox.setMaxHeight(60);
+        generatePassHbox.setMinHeight(30);
+        generatePassLabel.setOnMouseEntered(event1 -> {
+            indicatorRec.setVisible(true);
+            generatePassRec.setVisible(true);
+            generatePassLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+        });
+        generatePassLabel.setOnMouseExited(event1 -> {
+            indicatorRec.setVisible(false);
+            generatePassRec.setVisible(false);
+            generatePassLabel.setTextFill(Color.WHITE);
+        });
+        generatePassLabel.setOnMouseClicked(event1 -> {
+            String autoPass = LoginMenuController.generatePassword();
+            newPassTextField.setText(autoPass);
+            confirmNewPassTextField.setText(autoPass);
+        });
+
+
+
+
+        HBox confirmHbox=new HBox(10);
+        Pane confirmPane=new Pane();
+        Rectangle confirmRec=new Rectangle(150,30);
+        confirmRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        confirmRec.setVisible(false);
+        Label confirmLabel=new Label("Confirm");
+        confirmLabel.setFont(new Font("Tiro Gurmukhi",20));
+        confirmLabel.setTextFill(Color.WHITE);
+        confirmLabel.setLayoutX(20);
+        confirmLabel.setLayoutY(2);
+        confirmPane.getChildren().addAll(confirmRec,confirmLabel);
+        Pane indicator1=new Pane();
+        Rectangle indicatorRec1=new Rectangle(30,30);
+        indicatorRec1.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        indicatorRec1.setVisible(false);
+        indicator1.getChildren().addAll(indicatorRec1);
+        Rectangle helpRec1=new Rectangle(0,30);
+        helpRec1.setVisible(false);
+        confirmHbox.getChildren().addAll(indicator1,confirmPane,helpRec);
+        confirmHbox.setAlignment(Pos.BASELINE_CENTER);
+        confirmHbox.setLayoutX(200);
+        confirmHbox.setLayoutY(300);
+        confirmHbox.setMaxHeight(60);
+        confirmHbox.setMinHeight(60);
+        confirmLabel.setOnMouseEntered(event1 -> {
+            indicatorRec1.setVisible(true);
+            confirmRec.setVisible(true);
+            confirmLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+        });
+        confirmLabel.setOnMouseExited(event1 -> {
+            indicatorRec1.setVisible(false);
+            confirmRec.setVisible(false);
+            confirmLabel.setTextFill(Color.WHITE);
+        });
+        confirmLabel.setOnMouseClicked(event1 -> {
+            Alert alert1= LoginMenuController.setNewPassword(newPassTextField.getText(), confirmNewPassTextField.getText());
+            if(alert1==null){
+                User.setLoggedInUser(null);
+                goToMainMenu();
+            }else alert1.show();
+        });
+        VBox vbox = new VBox(10);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setLayoutY(50);
+        vbox.setLayoutX(190);
+        vbox.setMaxWidth(400);
+        vbox.getChildren().addAll(newPassLabel, newPassTextField,confirmNewPasswordLabel,confirmNewPassTextField, generatePassHbox,confirmHbox);
+
+
+
+
+        Pane backButtonPane = new Pane();
+        Rectangle backButtonRec=new Rectangle(40,40);
+        backButtonRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/backbuttonimage.png")))));
+        backButtonPane.getChildren().addAll(backButtonRec);
+        backButtonPane.setLayoutX(10);
+        backButtonPane.setLayoutY(10);
+        backButtonRec.setOnMouseClicked(event -> {
+            try {
+                hasMusic = true;
+                start(LoginMenu.stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        backButtonRec.setOnMouseEntered(event -> {
+            backButtonRec.setWidth(60);
+            backButtonRec.setHeight(60);
+        });
+        backButtonRec.setOnMouseExited(event -> {
+            backButtonRec.setWidth(40);
+            backButtonRec.setHeight(40);
+        });
+
+
+        Pane changePasswordPane=new Pane();
+        changePasswordPane.getChildren().addAll(vbox,backButtonPane);
+        changePasswordPane.setBackground(new Background(createBackgroundImage("/Images/setnewpasswordbackground.jpg",600,400)));
+        Scene scene = new Scene(changePasswordPane, 600, 400);
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
+
+    }
+
+
+    public void twoFA(){
+        User user=User.getUserByUsername(nameField.getText());
+        Pane twoFAPane=new Pane();
+        VBox twoFAVbox=new VBox(20);
+//                twoFAStage.setTitle("2FA");
+        Label label=new Label("Please enter the number that we sent to your email");
+        label.setFont(new Font("Baloo Bhaina 2 Bold",20));
+        label.setTextFill(Color.WHITE);
+        TextField randomNumber=new TextField();
+        HBox confirmHbox=new HBox(10);
+        Pane indicator=new Pane();
+        Pane confirmPane=new Pane();
+        Rectangle indicatorRec=new Rectangle(30,30);
+        Rectangle confirmRec=new Rectangle(120,30);
+        Label confirmLabel=new Label("Confirm");
+        confirmLabel.setFont(new Font("Tiro Gurmukhi",20));
+        confirmLabel.setTextFill(Color.WHITE);
+        confirmLabel.setLayoutX(20);
+        confirmLabel.setLayoutY(2);
+        indicatorRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        confirmRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        confirmRec.setVisible(false);
+        indicatorRec.setVisible(false);
+        Rectangle helpRec=new Rectangle(30,30);
+        helpRec.setVisible(false);
+        indicator.getChildren().addAll(indicatorRec);
+        confirmPane.getChildren().addAll(confirmRec,confirmLabel);
+        confirmHbox.getChildren().addAll(indicator,confirmPane,helpRec);
+        confirmHbox.setAlignment(Pos.BASELINE_CENTER);
+        confirmHbox.setLayoutX(200);
+        confirmHbox.setLayoutY(300);
+        confirmHbox.setMaxHeight(60);
+        confirmHbox.setMinHeight(60);
+        twoFAVbox.setLayoutX(80);
+        twoFAVbox.setLayoutY(100);
+        Pane backButtonPane = new Pane();
+        Rectangle backButtonRec=new Rectangle(40,40);
+        backButtonRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/backbuttonimagewhite.png")))));
+        backButtonPane.getChildren().addAll(backButtonRec);
+        backButtonPane.setLayoutX(10);
+        backButtonPane.setLayoutY(10);
+        twoFAVbox.getChildren().addAll(label,randomNumber,confirmHbox);
+        twoFAPane.getChildren().addAll(twoFAVbox,backButtonPane);
+        confirmLabel.setOnMouseEntered(event -> {
+            indicatorRec.setVisible(true);
+            confirmRec.setVisible(true);
+            confirmLabel.setTextFill(new Color(0.538,0.51,0.002,1));
+        });
+        confirmLabel.setOnMouseExited(event -> {
+            indicatorRec.setVisible(false);
+            confirmRec.setVisible(false);
+            confirmLabel.setTextFill(Color.WHITE);
+        });
+//                String randomEmailedNumber=LoginMenuController.generateRandomNumber();
+//                try {
+//                    GmailSender gmailSender=new GmailSender(user.getEmailAddress(),randomEmailedNumber);
+//                    gmailSender.send();
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+        confirmLabel.setOnMouseClicked(event -> {
+//                    if(randomNumber.getText().equals(randomEmailedNumber)){
+            goToMainMenu();
+//                    }
+//                    else{
+//            Alert alert2FA=new Alert(Alert.AlertType.WARNING);
+//            alert2FA.setHeaderText("this username is taken");
+//            alert2FA.show();
+//                    }
+        });
+        backButtonRec.setOnMouseClicked(event -> {
+            try {
+                hasMusic = true;
+                start(LoginMenu.stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        backButtonRec.setOnMouseEntered(event -> {
+            backButtonRec.setWidth(60);
+            backButtonRec.setHeight(60);
+        });
+        backButtonRec.setOnMouseExited(event -> {
+            backButtonRec.setWidth(40);
+            backButtonRec.setHeight(40);
+        });
+        Scene scene=new Scene(twoFAPane,600,400);
+        twoFAPane.setBackground(new Background(createBackgroundImage("/Images/2fabackgroundimage.jpg",600,400)));
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
+    }
+
+
     public void genratePassforSignup(MouseEvent mouseEvent) {
         String autoPass = LoginMenuController.generatePassword();
         password.setText(autoPass);
         confirmPWD.setText(autoPass);
     }
+
+
     private BackgroundImage createBackgroundImage (String address,int width,int height) {
         Image image = new Image(Game.class.getResource(address).toExternalForm(), width ,height, false, false);
         ImageView imageView = new ImageView(image);
@@ -495,6 +645,8 @@ public class LoginMenu extends Application {
                 BackgroundSize.DEFAULT);
         return backgroundImage;
     }
+
+
     private void setSize (Pane pane,double height,double width) {
         pane.setMinHeight(height);
         pane.setMaxHeight(height);
