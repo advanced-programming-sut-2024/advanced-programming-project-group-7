@@ -1,13 +1,13 @@
 package view;
 
-import controller.LoginMenuController;
-import controller.GmailSender;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 import controller.LoginMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -31,6 +31,8 @@ import model.Game;
 import model.User;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -55,6 +57,8 @@ public class LoginMenu extends Application {
     public Rectangle switchRectangle = new Rectangle(100,50);
     public Rectangle hybridRectangle = new Rectangle(100,50);
     public Rectangle forgotPasswordRectangle=new Rectangle(300,50);
+    private boolean verified = false;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -652,12 +656,49 @@ public class LoginMenu extends Application {
         return backgroundImage;
     }
 
-
+    public void sendLink () { // todo add a new button that calls this
+        try {
+            HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+            server.createContext("/", new MyHandler());
+            server.createContext("/command", new CommandHandler());
+            server.setExecutor(null);
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void setSize (Pane pane,double height,double width) {
         pane.setMinHeight(height);
         pane.setMaxHeight(height);
         pane.setMinWidth(width);
         pane.setMaxWidth(width);
+    }
+
+    class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String response = "<html><head><title>My Server</title><script>function sendCommand() { fetch('/command', { method: 'POST' }).then(response => response.text()).then(data => console.log(data)).catch(error => console.error('Error:', error)); }</script></head><body><h1>Click to login!</h1><button onclick=\"sendCommand()\">Click Me</button></body></html>";
+            exchange.sendResponseHeaders(200, response.length());
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
+        }
+    }
+
+    class CommandHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if ("POST".equals(exchange.getRequestMethod())) {
+                verified = true;
+                String response = "Command received";
+                exchange.sendResponseHeaders(200, response.length());
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response.getBytes());
+                }
+            } else {
+                exchange.sendResponseHeaders(405, -1); // Method Not Allowed
+            }
+        }
     }
 }
 

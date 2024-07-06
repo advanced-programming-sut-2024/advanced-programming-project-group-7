@@ -26,17 +26,7 @@ public class GameServer extends Thread {
 
     @Override
     public void start() {
-        try {
-            HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-            server.createContext("/", new MyHandler()); // Map root context to our handler
-            server.createContext("/command", new CommandHandler()); // Map /command context to our handler
-            server.setExecutor(null); // Use the default executor
-            server.start();
-            System.out.println("HTTP server is running on port 8000");
-            System.out.println(server.getAddress());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         try (ServerSocket serverSocket = new ServerSocket(34800)) {
             System.out.println("Server is listening on port 34800");
             while (true) {
@@ -49,30 +39,5 @@ public class GameServer extends Thread {
         }
     }
 
-    class MyHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            String response = "<html><head><title>My Server</title><script>function sendCommand() { fetch('/command', { method: 'POST' }).then(response => response.text()).then(data => console.log(data)).catch(error => console.error('Error:', error)); }</script></head><body><h1>Hello, World!</h1><button onclick=\"sendCommand()\">Click Me</button></body></html>";
-            exchange.sendResponseHeaders(200, response.length());
-            try (OutputStream os = exchange.getResponseBody()) {
-                os.write(response.getBytes());
-            }
-        }
-    }
 
-    class CommandHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            if ("POST".equals(exchange.getRequestMethod())) {
-                System.out.println("Hello, World!");
-                String response = "Command received";
-                exchange.sendResponseHeaders(200, response.length());
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response.getBytes());
-                }
-            } else {
-                exchange.sendResponseHeaders(405, -1); // Method Not Allowed
-            }
-        }
-    }
 }
