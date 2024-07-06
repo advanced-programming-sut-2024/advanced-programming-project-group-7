@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 public class GameLauncher extends Application {
 
+    public ArrayList<Card> graveyardCard=new ArrayList<>();
     public ArrayList<Card> reservedCards = new ArrayList<>();
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
     private static final double HEIGHT = 900;
@@ -495,25 +496,38 @@ public class GameLauncher extends Application {
 
         game.hBoxes = hBoxes;
 //        Deck.currentDeck.hand.clear();
-        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
-        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
-        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
-        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
-        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+//        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
+//        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
+//        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
+//        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
+//        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
         playerHand.getChildren().add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
         playerHand.getChildren().add(new Spy("stennis", 1 , false, 5, "realms",4,false));
         playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+//        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+//        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         playerHand.getChildren().add(new Medic("banner nurse", 1 , false, 5, "realms",1,false));
-        playerHand.getChildren().add(new TightBond("young emissary",1,false,5,"nilfgaard",3,false));
+//        playerHand.getChildren().add(new TightBond("young emissary",1,false,5,"nilfgaard",3,false));
         playerHand.getChildren().add(new TightBond("young emissary 1",1,false,5,"nilfgaard",3,false));
+        playerHand.getChildren().add(new Scorch("villen",1,false,7,"neutral",3,false));
+        playerHand.getChildren().add(new Scorch("schirru", 1, false, 8, "scoiatael",1,false));
+//        playerHand.getChildren().add(new TightBond("catapult 1", 2 , false, 8, "realms",1,false));
+        playerHand.getChildren().add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
+        playerHand.getChildren().add(new Scorch("toad", 1, false, 7, "monsters",2,false));
+        playerHand.getChildren().add(new Spy("thaler", 1 , false, 1, "realms",6,false));
+
+
 
 
         reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        reservedCards.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
-        reservedCards.add(new Spy("stennis", 1 , false, 5, "realms",4,false));
-        reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+//        reservedCards.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+//        reservedCards.add(new Spy("stennis", 1 , false, 5, "realms",4,false));
+//        reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
 
 //        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
 //        playerHand.getChildren().add(medic);
@@ -545,7 +559,8 @@ public class GameLauncher extends Application {
         fadeTransition.setAutoReverse(false);
         fadeTransition.play();
         client.sendMessage("reation:"+User.getLoggedInUser().currentOponentName+":1.reaction");
-    }public void getReaction(int i) {
+    }
+    public void getReaction(int i) {
         Rectangle rectangle = new Rectangle(150,40);
         rectangle.setLayoutY(200);
         rectangle.setLayoutX(100);
@@ -562,6 +577,7 @@ public class GameLauncher extends Application {
     public void playerHandMouseSetter() {
         for (Node card : playerHand.getChildren()) {
             card.setOnMouseClicked(event -> {
+//                game.removeDominantCardsAllTable(0);
                 if (yourTurn) {
                     if (card instanceof Decoy) {
                         game.selected = (Card) card;

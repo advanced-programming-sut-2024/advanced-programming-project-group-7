@@ -1,7 +1,6 @@
 package view.animations;
 
 import javafx.animation.Transition;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,6 +14,7 @@ import javafx.util.Duration;
 import model.Card;
 import model.Game;
 import model.cards.*;
+import view.GameLauncher;
 import view.PreGameMenu;
 
 import java.util.Iterator;
@@ -87,23 +87,38 @@ public class CardPlacementAnimation extends Transition {
                         }
                     }
                 }
-            } else if (card instanceof Mardroeme) {
+            }
+            else if (card instanceof Mardroeme) {
                 for (Node card1 : game.selectedBox.getChildren()) {
                     if ( card1 instanceof Berserker) {
                         //todo change to bear
                     }
                 }
-            } else if (card instanceof Medic) {
+            }
+            else if (card instanceof Medic) {
                 if (!game.graveyard.getChildren().isEmpty())
-                    showMedicMenu(game);
-            } else if (card instanceof Scorch) {
-                game.removeDominantCard();
-                game.selectedBox.getChildren().remove(card);
-            } else if (card instanceof Spy) {
+                    game.medicACard();
+            }
+            else if (card instanceof Scorch) {
+                if(card.isSpecial()) {
+                    game.removeDominantCardsAllTable(0);
+                    game.selectedBox.getChildren().remove(card);
+                }else {
+                    if(card.getRows().size()==1) {
+                        game.removeDominantCardsAllTable(card.getRows().get(0));
+                    }
+                    else
+                        System.out.println("wtf!");
+                }
+
+            }
+            else if (card instanceof Spy) {
                 game.spyACard();
-            } else if (card instanceof TightBond) {
+            }
+            else if (card instanceof TightBond) {
                 game.handleBond(game.selectedBox, card, game);
-            } else if (card.getRows().contains(7)) {
+            }
+            else if (card.getRows().contains(7)) {
                 Iterator<Node> iterator = game.selectedBox.getChildren().iterator();
                 while (iterator.hasNext()) {
                     Node card2 = iterator.next();

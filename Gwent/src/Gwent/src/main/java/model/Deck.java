@@ -22,6 +22,8 @@ public class Deck {
         this.deckFaction = deckFaction;
         this.deckLeader = deckLeader;
     }
+    public Deck(){}
+
 
     public LinkedHashMap<Card, Integer> getCardsInDeck() {
         return cardsInDeck;
@@ -120,5 +122,77 @@ public class Deck {
 
     public void setDeckLeader(Leader deckLeader) {
         this.deckLeader = deckLeader;
+    }
+
+    public static Deck getCurrentDeck() {
+        return currentDeck;
+    }
+
+    public static void setCurrentDeck(Deck currentDeck) {
+        Deck.currentDeck = currentDeck;
+    }
+
+    public int getTotalCardsInDeck() {
+        return totalCardsInDeck;
+    }
+
+    public void setTotalCardsInDeck(int totalCardsInDeck) {
+        this.totalCardsInDeck = totalCardsInDeck;
+    }
+
+    public int getTotalSpecialCardInDeck() {
+        return totalSpecialCardInDeck;
+    }
+
+    public void setTotalSpecialCardInDeck(int totalSpecialCardInDeck) {
+        this.totalSpecialCardInDeck = totalSpecialCardInDeck;
+    }
+
+    public int getTotalHeroCard() {
+        return totalHeroCard;
+    }
+
+    public void setTotalHeroCard(int totalHeroCard) {
+        this.totalHeroCard = totalHeroCard;
+    }
+
+    public int getTotalUnitCard() {
+        return totalUnitCard;
+    }
+
+    public void setTotalUnitCard(int totalUnitCard) {
+        this.totalUnitCard = totalUnitCard;
+    }
+
+    public int getTotalUnitCardStrength() {
+        return totalUnitCardStrength;
+    }
+
+    public void setTotalUnitCardStrength(int totalUnitCardStrength) {
+        this.totalUnitCardStrength = totalUnitCardStrength;
+    }
+
+    public ArrayList<Card> getDeckAsArrayList() {
+        return deckAsArrayList;
+    }
+
+    public void setDeckAsArrayList(ArrayList<Card> deckAsArrayList) {
+        this.deckAsArrayList = deckAsArrayList;
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
+    }
+
+    public ArrayList<Card> getReservedCards() {
+        return reservedCards;
+    }
+
+    public void setReservedCards(ArrayList<Card> reservedCards) {
+        this.reservedCards = reservedCards;
     }
 }

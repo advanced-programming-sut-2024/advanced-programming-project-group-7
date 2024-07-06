@@ -1,7 +1,9 @@
 package model;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -22,6 +24,7 @@ public class Card extends Pane {
     public Label powerLabel = new Label();
     private int power;
     public int rows;
+    public HBox rowInGame;
     private boolean isHero;
     public boolean isWeak = false;
     public boolean isDoubeld = false;
@@ -173,5 +176,132 @@ public class Card extends Pane {
 
     public void setHero(boolean hero) {
         isHero = hero;
+    }
+
+    public void setRowInGame(HBox rowInGame) {
+        this.rowInGame = rowInGame;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public void setCountOfCard(int countOfCard) {
+        this.countOfCard = countOfCard;
+    }
+
+    public void setSpecial(boolean special) {
+        isSpecial = special;
+    }
+
+    public void setLgPath(String lgPath) {
+        this.lgPath = lgPath;
+    }
+
+    public void setFactionName(String factionName) {
+        this.factionName = factionName;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
+    public Circle getPowerIcon() {
+        return powerIcon;
+    }
+
+    public void setPowerIcon(Circle powerIcon) {
+        this.powerIcon = powerIcon;
+    }
+
+    public Label getPowerLabel() {
+        return powerLabel;
+    }
+
+    public void setPowerLabel(Label powerLabel) {
+        this.powerLabel = powerLabel;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public HBox getRowInGame() {
+        return rowInGame;
+    }
+
+    public boolean isWeak() {
+        return isWeak;
+    }
+
+    public void setWeak(boolean weak) {
+        isWeak = weak;
+    }
+
+    public boolean isDoubeld() {
+        return isDoubeld;
+    }
+
+    public void setDoubeld(boolean doubeld) {
+        isDoubeld = doubeld;
+    }
+
+    public int getBondLevel() {
+        return bondLevel;
+    }
+
+    public void setBondLevel(int bondLevel) {
+        this.bondLevel = bondLevel;
+    }
+
+    public int getBoostLevel() {
+        return boostLevel;
+    }
+
+    public void setBoostLevel(int boostLevel) {
+        this.boostLevel = boostLevel;
+    }
+
+    public Card(String cardName, int countOfCard, boolean isSpecial, String lgPath, String factionName, Rectangle rectangle, Circle powerIcon, Label powerLabel, int power, int rows, HBox rowInGame, boolean isHero, boolean isWeak, boolean isDoubeld, int bondLevel, int boostLevel) {
+        this.cardName = cardName;
+        this.countOfCard = countOfCard;
+        this.isSpecial = isSpecial;
+        this.lgPath = lgPath;
+        this.factionName = factionName;
+        this.rectangle = rectangle;
+        this.powerIcon = powerIcon;
+        this.powerLabel = powerLabel;
+        this.power = power;
+        this.rows = rows;
+        this.rowInGame = rowInGame;
+        this.isHero = isHero;
+        this.isWeak = isWeak;
+        this.isDoubeld = isDoubeld;
+        this.bondLevel = bondLevel;
+        this.boostLevel = boostLevel;
+    }
+
+    public Card(String cardName, int countOfCard, boolean isSpecial, String lgPath, String factionName, Rectangle rectangle, Circle powerIcon, Label powerLabel, int power, int rows, HBox rowInGame, boolean isHero, boolean isWeak, boolean isDoubeld, int bondLevel, int boostLevel, Node... nodes) {
+        super(nodes);
+        this.cardName = cardName;
+        this.countOfCard = countOfCard;
+        this.isSpecial = isSpecial;
+        this.lgPath = lgPath;
+        this.factionName = factionName;
+        this.rectangle = rectangle;
+        this.powerIcon = powerIcon;
+        this.powerLabel = powerLabel;
+        this.power = power;
+        this.rows = rows;
+        this.rowInGame = rowInGame;
+        this.isHero = isHero;
+        this.isWeak = isWeak;
+        this.isDoubeld = isDoubeld;
+        this.bondLevel = bondLevel;
+        this.boostLevel = boostLevel;
     }
 }

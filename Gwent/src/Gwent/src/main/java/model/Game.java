@@ -12,6 +12,7 @@ import model.cards.TightBond;
 import view.GameLauncher;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game {
     private final HBox playerThirdRowHorn;
@@ -95,23 +96,64 @@ public class Game {
         return winner;
     }
 
-    public int[] getFinalPoints() {
-        return finalPoints;
+    public int[] getFinalPoints() {return finalPoints;}
+
+    public void removeDominantCardsAllTable(int j) {
+        ArrayList<Card> dominantCards = new ArrayList<>();
+        int max = 0;
+        if(j==0) {
+            for (int i = 4; i <= 6; i++) {
+                Iterator<Node> iterator = hBoxes.get(i).getChildren().iterator();
+                while (iterator.hasNext()) {
+                    Node card1 = iterator.next();
+                    Card card2 = (Card) card1;
+                    if (!card2.isHero()) {
+                        if (getCurrentPower(card2) > max) {
+                            dominantCards.clear();
+                            dominantCards.add(card2);
+                            max = getCurrentPower(card2);
+                        } else if (getCurrentPower(card2) == max) {
+                            dominantCards.add(card2);
+                        }
+                    }
+                }
+            }
+        }else {
+            Iterator<Node> iterator = hBoxes.get(j).getChildren().iterator();
+            while (iterator.hasNext()) {
+                Node card1 = iterator.next();
+                Card card2 = (Card) card1;
+                if (!card2.isHero()) {
+                    if (getCurrentPower(card2) > max) {
+                        dominantCards.clear();
+                        dominantCards.add(card2);
+                        max = getCurrentPower(card2);
+                    } else if (getCurrentPower(card2) == max) {
+                        dominantCards.add(card2);
+                    }
+                }
+            }
+        }
+        for(Card card:dominantCards){
+            removeCard(card);
+        }
     }
 
-    public void removeDominantCard(){
-        //todo
+    private void removeCard(Card card) {
+        EnhancedHBox box = (EnhancedHBox) card.getParent();
+        box.getChildren().remove(card);
+        gameLauncher.graveyardCard.add(card);
     }
 
     public void spyACard() {
         Card card = gameLauncher.reservedCards.get(0);
-        playerHand.getChildren().add(card);
+        playerHand.getChildren().add(card);//todo why after adding we can't work
         gameLauncher.reservedCards.remove(card);
     }
 
     public void handleBond(EnhancedHBox selectedBox, Card card, Game game) {
         for (Node card1 : selectedBox.getChildren()){
-            if ( card1 instanceof TightBond && !card1.equals(card)) {
+            if ( card1 instanceof TightBond && !card1.equals(card)) {//todo maybe wrong bond
                 ((Card) card1).bondLevel++;
                 card.bondLevel++;
             }
@@ -173,12 +215,12 @@ public class Game {
             int sum = 0;
             for (Node card : hBox.getChildren()) {
                 int currentPower = 0;
-                if (!((Card) card).isHero()) {
+                if (!((Card) card).isHero()){
                     currentPower = hBox.badCondition ? 1 : ((Card) card).getPower();
                     currentPower += hBox.moralBoostLevel;
                     if (hBox.isDoubled)
                         currentPower *= 2;
-                } else
+                }else
                     currentPower = ((Card) card).getPower();
                 ((Card) card).setCardLabel(currentPower);
                 sum += currentPower;
@@ -266,4 +308,24 @@ public class Game {
         totalRow1Power.setText("0");
     }
 
+    public void medicACard() {
+        Card card = gameLauncher.graveyardCard.get(0);
+        playerHand.getChildren().add(card);//todo why after adding we can't work
+        gameLauncher.graveyardCard.remove(card);
+    }
+    public int getCurrentPower(Card card){
+        EnhancedHBox hBox = (EnhancedHBox) card.getParent();
+        for (Node card1 : hBox.getChildren()) {
+            if (card1 instanceof Horn)
+                hBox.isDoubled = true;
+            if (card1 instanceof MoralBoost)
+                hBox.moralBoostLevel++;
+        }
+        int currentPower = 0;
+        currentPower = hBox.badCondition ? 1 : (card).getPower();
+        currentPower += hBox.moralBoostLevel;
+        if (hBox.isDoubled)
+            currentPower *= 2;
+        return currentPower;
+    }
 }

@@ -1,5 +1,8 @@
 package view;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import controller.Client;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -20,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.*;
+import model.cards.Medic;
 import model.factions.*;
 
 import java.io.IOException;
@@ -75,7 +79,7 @@ public class PreGameMenu extends Application {
         setCardsInDeck();
         calculateLabels();
 //        client = User.getLoggedInUser().client;
-        client.pregameMenu = this;
+//        client.pregameMenu = this;
     }
 
     private void setCurrentFactionInfo() {
@@ -125,6 +129,11 @@ public class PreGameMenu extends Application {
             pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
+
+//                Gson gson = new Gson();
+//                currentDeck.deckAsArrayList.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+//                String jsonString = gson.toJson(currentDeck.deckAsArrayList);
+//                System.out.println(jsonString);
 //                System.out.println(card+" : "+card.getCardName());
                 int cardLeft = Integer.parseInt(label.getText());
                 if (cardLeft > 0) {
