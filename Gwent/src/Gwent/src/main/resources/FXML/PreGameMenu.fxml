@@ -11,6 +11,10 @@
     <center>
         <VBox alignment="CENTER" maxWidth="300" spacing="5.0">
             <children>
+                <HBox fillHeight="40">
+                    <Button text="save deck"/>
+                    <Button text="upload deck"/>
+                </HBox>
                 <HBox alignment="CENTER" prefHeight="75.0" prefWidth="294.0" spacing="10">
                     <Rectangle fx:id="factionLogo" height="75.0" width="75.0" />
                     <Label fx:id="factionName" text="Northern Realms" textFill="WHITE">
@@ -19,7 +23,7 @@
                         </font>
                     </Label>
                 </HBox>
-                <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="320" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                <Rectangle fx:id="LeaderImage" arcHeight="25" arcWidth="25" fill="DODGERBLUE" height="240" stroke="BLACK" strokeType="INSIDE" width="150.0" />
                 <Button mnemonicParsing="false" onMouseClicked="#showLeaderMenu" text="Change Leader" />
                 <Button mnemonicParsing="false" onMouseClicked="#showFactionMenu" text="Change Faction" />
             </children>
@@ -73,7 +77,7 @@
         </VBox>
     </center>
     <left>
-        <ScrollPane style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
+        <ScrollPane fx:id="leftGridScrollPane" style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
             <content>
                 <GridPane fx:id="leftGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
                     <Pane GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -168,7 +172,7 @@
 
     </left>
     <right>
-        <ScrollPane style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
+        <ScrollPane fx:id="rightGridScrollPane" style="-fx-background-color: darkslategray;" stylesheets="@white-border.css">
             <content>
                 <GridPane fx:id="rightGrid" hgap="10" style="-fx-background-color: darkslategray;" vgap="10">
                     <Pane GridPane.columnIndex="0" GridPane.rowIndex="1">

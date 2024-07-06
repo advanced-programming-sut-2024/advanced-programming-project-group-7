@@ -52,9 +52,6 @@
    <right>
       <VBox alignment="CENTER" minWidth="100.0" prefHeight="200.0" BorderPane.alignment="CENTER">
          <children>
-             <ImageView fitHeight="70" fitWidth="70 ">
-                 <Image url="@../Images/icons/add-friend.png" />
-             </ImageView>
              <Pane fx:id="televisionPane"/>
          </children>
       </VBox>

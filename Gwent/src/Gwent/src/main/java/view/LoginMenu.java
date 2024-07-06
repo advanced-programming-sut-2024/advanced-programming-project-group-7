@@ -229,6 +229,7 @@ public class LoginMenu extends Application {
                             confirmButton, backButton
                     );
                     Scene scene = new Scene(vbox, 600, 400);
+                    vbox.setBackground(new Background(createBackgroundImage("",600,400)));
                     LoginMenu.stage.setScene(scene);
                     LoginMenu.stage.show();
                 } catch (Exception e) {

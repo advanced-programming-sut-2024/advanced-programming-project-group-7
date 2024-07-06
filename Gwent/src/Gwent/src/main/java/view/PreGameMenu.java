@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 public class PreGameMenu extends Application {
 
     public Label factionName;
+    public ScrollPane leftGridScrollPane;
+    public ScrollPane rightGridScrollPane;
     private int factionIndex;
     public Rectangle LeaderImage;
     public ArrayList<Leader> leaders;
@@ -74,6 +77,8 @@ public class PreGameMenu extends Application {
     @FXML
     public void initialize() {
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
+        leftGridScrollPane.setFitToWidth(true);
+        rightGridScrollPane.setFitToWidth(true);
         setCurrentFactionInfo();
         setCardsAndCommander();
         setCardsInDeck();
