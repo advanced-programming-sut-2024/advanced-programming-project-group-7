@@ -439,6 +439,7 @@ public class GameLauncher extends Application {
         });
         leaderRec.setOnMouseClicked(event -> {
             leaderRec.setVisible(false);
+
         });
         leaderRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource(leader.getLgPath())))));
         leaderRec.setLayoutX(700);
