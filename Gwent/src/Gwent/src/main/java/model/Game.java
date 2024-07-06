@@ -10,6 +10,8 @@ import model.cards.Horn;
 import model.cards.MoralBoost;
 import model.cards.TightBond;
 import view.GameLauncher;
+import view.animations.AnnihilationAnimation;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -141,7 +143,9 @@ public class Game {
 
     private void removeCard(Card card) {
         EnhancedHBox box = (EnhancedHBox) card.getParent();
-        box.getChildren().remove(card);
+//        box.getChildren().remove(card);
+        AnnihilationAnimation animation = new AnnihilationAnimation(box, card, this);
+        animation.play();
         gameLauncher.graveyardCard.add(card);
     }
 
