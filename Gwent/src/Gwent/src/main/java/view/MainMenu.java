@@ -160,12 +160,22 @@ public class MainMenu extends Application {
         startNewGame.getChildren().addAll(startNewGameRec,startNewGameLabel);
         logOut.getChildren().addAll(logOutRec,logOutRLabel);
         exitGame.getChildren().addAll(exitGameRec,exitGameLabel);
-        Rectangle televisionRec=new Rectangle(40,40);
-        televisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
-        televisionRec.setLayoutY(200);
+        Rectangle televisionRec=new Rectangle(80,80);
+        televisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/television1.png")))));
+        televisionRec.setLayoutY(20);
+        televisionRec.setLayoutX(10);
         televisionPane.getChildren().add(televisionRec);
         televisionPane.setOnMouseClicked(this::showTelevisionMenu);
+        televisionRec.setOnMouseEntered(event -> {
+            televisionRec.setWidth(100);
+            televisionRec.setHeight(100);
+        });
+        televisionRec.setOnMouseExited(event -> {
+            televisionRec.setWidth(80);
+            televisionRec.setHeight(80);
+        });
     }
+
 
     private void showTelevisionMenu(MouseEvent mouseEvent) {
         Stage televisionMenu=new Stage();
@@ -176,8 +186,25 @@ public class MainMenu extends Application {
         VBox vBox=new VBox(10);
         Pane buttonPane=new Pane();
         Pane televisionPane=new Pane();
+        Pane rankTelevisionPane=new Pane();
+        Rectangle rankTelevisionRec=new Rectangle(600,400);
+        rankTelevisionRec.setFill(new ImagePattern(new Image(String.valueOf(MainMenu.class.getResource("/Images/buttonimage1.png")))));
+        rankTelevisionPane.getChildren().addAll(rankTelevisionRec);
+        televisionPane.getChildren().addAll(rankTelevisionPane);
+        Pane myPreviousGameTelevisionPane=new Pane();
+        Rectangle myPreviousGameTelevisionRec=new Rectangle(600,400);
+        myPreviousGameTelevisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        myPreviousGameTelevisionPane.getChildren().addAll(myPreviousGameTelevisionRec);
         Button rankPlayerGames=new Button("rank");
+        rankPlayerGames.setOnMouseClicked(event -> {
+            televisionPane.getChildren().clear();
+            televisionPane.getChildren().addAll(rankTelevisionPane);
+        });
         Button myPreviousGame=new Button("my games");
+        myPreviousGame.setOnMouseClicked(event -> {
+            televisionPane.getChildren().clear();
+            televisionPane.getChildren().addAll(myPreviousGameTelevisionPane);
+        });
         buttonPane.getChildren().addAll(rankPlayerGames,myPreviousGame);
         buttonPane.setMaxHeight(30);
         rankPlayerGames.setLayoutX(10);
@@ -189,9 +216,11 @@ public class MainMenu extends Application {
         televisionMenu.show();
     }
 
+
     public void setLabelText() {
         Username.setText("welcome "+ User.getLoggedInUser().getNickname());
     }
+
 
     public void goToProfileMenu(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/paper.mp3");
@@ -203,6 +232,7 @@ public class MainMenu extends Application {
         }
     }
 
+
     public void startNewGame(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/sword.mp3");
 
@@ -212,6 +242,7 @@ public class MainMenu extends Application {
             throw new RuntimeException(e);
         }
     }
+
 
     public void Logout(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/paper.mp3");
@@ -225,18 +256,23 @@ public class MainMenu extends Application {
         }
     }
 
+
     public void exitGame(MouseEvent mouseEvent) {
         LoginMenu.stage.close();
     }
 
+
     public void mouseEnteredSound(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/Tik.mp3");
     }
+
+
     private void soundPlayer(String path) {
         Media media = new Media(getClass().getResource(path).toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
     }
+
 
     private BackgroundImage createBackgroundImage (String address) {
         Image image = new Image(Game.class.getResource(address).toExternalForm(), 1280 ,768, false, false);
@@ -251,6 +287,8 @@ public class MainMenu extends Application {
                 BackgroundSize.DEFAULT);
         return backgroundImage;
     }
+
+
     private void setSize (Pane pane,double height,double width) {
         pane.setMinHeight(height);
         pane.setMaxHeight(height);

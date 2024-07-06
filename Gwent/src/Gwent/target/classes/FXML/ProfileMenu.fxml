@@ -109,7 +109,7 @@
             <Label text="Players info" />
             <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showPlayerInfo" text="Serach" />
             <TextField fx:id="searchBar" prefHeight="26.0" prefWidth="65.0" />
-            <Pane fx:id="friendRequestPane" prefHeight="469.0" prefWidth="100.0" />
+            <Pane fx:id="friendRequestPane" prefHeight="699.0" prefWidth="100.0" />
          </children>
       </VBox>
    </right>

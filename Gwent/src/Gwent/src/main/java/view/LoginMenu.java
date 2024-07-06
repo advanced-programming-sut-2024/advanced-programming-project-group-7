@@ -173,8 +173,8 @@ public class LoginMenu extends Application {
                 , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
             if (alert == null) {
                 try {
-                    GmailSender gmailSender=new  GmailSender(emailText.getText(),null);
-                    gmailSender.send();
+//                    GmailSender gmailSender=new  GmailSender(emailText.getText(),null);
+//                    gmailSender.send();
                     Stage recoveryStage = new Stage();
                     recoveryStage.setTitle("Password Recovery");
                     Label usernameLabel = new Label("Answer one the questions below");
@@ -223,6 +223,7 @@ public class LoginMenu extends Application {
                             confirmButton, backButton
                     );
                     Scene scene = new Scene(vbox, 600, 400);
+                    vbox.setBackground(new Background(createBackgroundImage("",600,400)));
                     LoginMenu.stage.setScene(scene);
                     LoginMenu.stage.show();
                 } catch (Exception e) {

@@ -467,6 +467,20 @@ public class GameLauncher extends Application {
         Leader leader=new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms");
         leader.setLayoutX(120);
         leader.setLayoutY(700);
+        Rectangle leaderRec=new Rectangle(210,330);
+        leaderRec.setVisible(false);
+        leader.setOnMouseClicked(event -> {
+            leaderRec.setVisible(true);
+        });
+        leaderRec.setOnMouseClicked(event -> {
+            leaderRec.setVisible(false);
+        });
+        leaderRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource(leader.getLgPath())))));
+        leaderRec.setLayoutX(700);
+        leaderRec.setLayoutY(200);
+        leaderRec.setArcWidth(20);
+        leaderRec.setArcHeight(20);
+
 
         Leader leaderOpponent=new MonstersLeaders("eredin silver","double the strength of all your ","monsters");
         leaderOpponent.setLayoutX(120);
@@ -506,7 +520,7 @@ public class GameLauncher extends Application {
                 playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
                 ,game.totalRow1Power,game.totalRow2Power,game.totalRow3Power,game.totalRow1PowerOpponent,game.totalRow2PowerOpponent,game.totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
-                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent,chatBoxPane);
+                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent,chatBoxPane,leaderRec);
 
 
         Scene scene = new Scene(pane);

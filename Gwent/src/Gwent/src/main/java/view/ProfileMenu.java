@@ -29,13 +29,14 @@ import java.util.Arrays;
 
 public class ProfileMenu extends Application {
 
+    public Stage friendsStage=new Stage();
     public TextField newName;
     public TextField newPassword;
     public TextField oldPassword;
     public TextField newNickname;
     public TextField newEmail;
     public ComboBox numberOfBattles;
-    public TextField searchBar;
+//    public TextField searchBar;
     public Label username;
     public Label nickname;
     public Label email;
@@ -73,8 +74,9 @@ public class ProfileMenu extends Application {
         root.setBackground(new Background(createBackgroundImage()));
         stage.show();
     }
-    @FXML
 
+
+    @FXML
     public void initialize() {
         indicator1rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
         indicator2rec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
@@ -178,12 +180,26 @@ public class ProfileMenu extends Application {
             backButtonRec.setWidth(60);
             backButtonRec.setHeight(60);
         });
+        Rectangle friendAcceptRec=new Rectangle(80,80);
+        friendAcceptRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/friendrequestaccept.png")))));
+        friendRequestPane.getChildren().add(friendAcceptRec);
+        friendAcceptRec.setLayoutY(200);
+        friendAcceptRec.setLayoutX(0);
+//        battleLogRec.setOnMouseClicked(this::showRequests);
+        friendAcceptRec.setOnMouseEntered(event -> {
+            friendAcceptRec.setWidth(100);
+            friendAcceptRec.setHeight(100);
+        });
+        friendAcceptRec.setOnMouseExited(event -> {
+            friendAcceptRec.setWidth(80);
+            friendAcceptRec.setHeight(80);
+        });
         Rectangle friendRequestRec=new Rectangle(60,60);
         friendRequestRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/add-friend1.png")))));
         friendRequestPane.getChildren().add(friendRequestRec);
-        friendRequestRec.setLayoutY(270);
+        friendRequestRec.setLayoutY(300);
         friendRequestRec.setLayoutX(20);
-        friendRequestRec.setOnMouseClicked(this::showRequests);
+//        friendRequestRec.setOnMouseClicked(this::showRequests);
         friendRequestRec.setOnMouseEntered(event -> {
             friendRequestRec.setWidth(80);
             friendRequestRec.setHeight(80);
@@ -192,9 +208,23 @@ public class ProfileMenu extends Application {
             friendRequestRec.setWidth(60);
             friendRequestRec.setHeight(60);
         });
-
-
+        friendRequestRec.setOnMouseClicked(this::showPlayerInfo);
+        Rectangle battleLogRec=new Rectangle(60,60);
+        battleLogRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/battlelog.png")))));
+        friendRequestPane.getChildren().add(battleLogRec);
+        battleLogRec.setLayoutY(400);
+        battleLogRec.setLayoutX(20);
+        battleLogRec.setOnMouseClicked(this::showRequests);
+        battleLogRec.setOnMouseEntered(event -> {
+            battleLogRec.setWidth(80);
+            battleLogRec.setHeight(80);
+        });
+        battleLogRec.setOnMouseExited(event -> {
+            battleLogRec.setWidth(60);
+            battleLogRec.setHeight(60);
+        });
     }
+
 
     public void changeUsername(MouseEvent mouseEvent) {
           Alert alert = ProfileMenuController.changeUsername(newName.getText());
@@ -204,12 +234,14 @@ public class ProfileMenu extends Application {
         }
     }
 
+
     public void changePassword(MouseEvent mouseEvent) {
         Alert alert= ProfileMenuController.changePassword(oldPassword.getText(),newPassword.getText());
         if (alert != null) {
             alert.show();
         }
     }
+
 
     public void backToMainMenu(MouseEvent mouseEvent) {
         MainMenu mainMenu = new MainMenu();
@@ -220,12 +252,14 @@ public class ProfileMenu extends Application {
         }
     }
 
+
     public void changeNickname(MouseEvent mouseEvent) {
         Alert alert = ProfileMenuController.changeNickname(newNickname.getText());
         if (alert != null) {
             alert.show();
         }
     }
+
 
     public void changeEmail(MouseEvent mouseEvent) {
         Alert alert = ProfileMenuController.changeEmail(email.getText());
@@ -234,29 +268,72 @@ public class ProfileMenu extends Application {
         }
     }
 
+
     public void showPlayerInfo(MouseEvent mouseEvent) {
-        String name = searchBar.getText();
-        User user = User.getUserByUsername(name);
-        if (user != null) {
-            ContextMenu contextMenu = new ContextMenu();
-            Label label1 = new Label("nick name: " + user.getNickname());
-            Label label2 = new Label("username: " + user.getUsername());
-            Label label3 = new Label("Rank: " + user.getRank());
-            label1.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
-            label2.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
-            label3.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
-            CustomMenuItem item1 = new CustomMenuItem(label1, false);
-            CustomMenuItem item2 = new CustomMenuItem(label2, false);
-            CustomMenuItem item3 = new CustomMenuItem(label3, false);
-            contextMenu.getItems().addAll(item1, item2, item3);
-            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                contextMenu.show(searchButton, mouseEvent.getScreenX() - 40, mouseEvent.getScreenY() + 20);
+        Pane showPlayerInfo=new Pane();
+        showPlayerInfo.setMinWidth(300);
+        showPlayerInfo.setMinHeight(400);
+        VBox vbox=new VBox(10);
+        Label showPlayerInfoLabel=new Label("show player info");
+        showPlayerInfoLabel.setFont(new Font("Baloo Bhai 2 Bold",20));
+//        showPlayerInfoLabel.setLayoutX(40);
+        HBox searchbarHbox=new HBox(10);
+        TextField searchBarTextField=new TextField();
+        Rectangle searchRec=new Rectangle(20,20);
+        searchbarHbox.getChildren().addAll(searchBarTextField,searchRec);
+        vbox.getChildren().addAll(showPlayerInfoLabel,searchbarHbox);
+        vbox.setLayoutX(70);
+        showPlayerInfo.getChildren().addAll(vbox);
+        searchRec.setOnMouseClicked(event -> {
+            String name = searchBarTextField.getText();
+            User user = User.getUserByUsername(name);
+            if(user!=null){
+                HBox userNameHbox=new HBox(10);
+                Label usernameLabel=new Label("username : "+user.getUsername());
+                Rectangle friendRequestRec=new Rectangle(20,20);
+                userNameHbox.getChildren().addAll(usernameLabel,friendRequestRec);
+                Label nickNameLabel=new Label("nickname : "+user.getNickname());
+                Label highestScore=new Label("highestScore : "+user.getHighestScore());
+                Label rank=new Label("rank : "+user.getHighestScore());
+                Label totalGame=new Label("total game : "+user.getTotalGame());
+                Label drawnGame=new Label("drawn game : "+user.getDrawnGame());
+                Label wonGame=new Label("won game : "+user.getWonGame());
+                Label lostGame=new Label("lost game : "+user.getLostGame());
+                vbox.getChildren().addAll(userNameHbox,nickNameLabel,highestScore,rank,totalGame,drawnGame,wonGame,lostGame);
+                showPlayerInfo.getChildren().addAll(vbox);
             }
-        }
+        });
+
+//        if (user != null) {
+//            ContextMenu contextMenu = new ContextMenu();
+//            Label nickName = new Label("nick name: " + user.getNickname());
+//            Label userName = new Label("username: " + user.getUsername());
+////            userName.setOnMouseClicked(event -> {
+////                User.getLoggedInUser().addFriend(user.getUsername());
+////                User.getLoggedInUser().client.sendMessage("req:" + user.getUsername() + ":" + User.getLoggedInUser().getUsername());
+////            });
+//            Label rank = new Label("Rank: " + user.getRank());
+//            nickName.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
+//            userName.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
+//            rank.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
+//            CustomMenuItem item1 = new CustomMenuItem(nickName, false);
+//            CustomMenuItem item2 = new CustomMenuItem(userName, false);
+//            CustomMenuItem item3 = new CustomMenuItem(rank, false);
+//            contextMenu.getItems().addAll(item1, item2, item3);
+//            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+//                contextMenu.show(searchButton, mouseEvent.getScreenX() - 40, mouseEvent.getScreenY() + 20);
+//            }
+//        }
+        Scene scene=new Scene(showPlayerInfo);
+        friendsStage.setScene(scene);
+        friendsStage.show();
     }
+
+
     public static void main(String[] args) {
         launch(args);
     }
+
 
     public void showBattleLog(MouseEvent mouseEvent) {
         User user = User.getLoggedInUser();
@@ -279,9 +356,9 @@ public class ProfileMenu extends Application {
         contextMenu.show((Node) mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
     }
 
+
     public void showRequests(MouseEvent mouseEvent) {
         System.out.println("hi");
-        Stage reqMenu = new Stage();
         Pane pane = new Pane();
         pane.setMinWidth(300);
         pane.setMinHeight(400);
@@ -308,7 +385,7 @@ public class ProfileMenu extends Application {
         Button exit = new Button("exit");
         reqs.getChildren().add(exit);
         exit.setOnMouseClicked(event -> {
-            reqMenu.close();
+            friendsStage.close();
         });
         TextField textField = new TextField("username");
         textField.setMaxWidth(200);
@@ -319,9 +396,11 @@ public class ProfileMenu extends Application {
         });
         reqs.getChildren().addAll(textField, sendReq);
         pane.getChildren().add(reqs);
-        reqMenu.setScene(scene);
-        reqMenu.show();
+        friendsStage.setScene(scene);
+        friendsStage.show();
     }
+
+
     private BackgroundImage createBackgroundImage () {
         Image image = new Image(Game.class.getResource("/Images/profilemenubackground.jpg").toExternalForm(), 1280 ,768, false, false);
         ImageView imageView = new ImageView(image);
