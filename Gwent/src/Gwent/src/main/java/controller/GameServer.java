@@ -1,19 +1,21 @@
 package controller;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 import javafx.application.Platform;
 import model.Card;
 import model.Game;
 import model.User;
 import model.factions.Monsters;
 
+import java.awt.*;
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.HashMap;
 
 public class GameServer extends Thread {
 
-    private Socket oldSoc;
     private Socket newSoc;
     public static HashMap<String, Socket> onlineUsers=new HashMap<>();
 
@@ -21,27 +23,38 @@ public class GameServer extends Thread {
         GameServer gameServer = new GameServer();
         gameServer.start();
     }
-
     @Override
     public void start() {
+        try {
+            HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+            server.createContext("/", new MyHandler()); // Map root context to our handler
+            server.setExecutor(null); // Use the default executor
+            server.start();
+            System.out.println("HTTP server is running on port 8000");
+            System.out.println(server.getAddress());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try (ServerSocket serverSocket = new ServerSocket(34800)) {
             System.out.println("Server is listening on port 34800");
             while (true) {
                 newSoc = serverSocket.accept();
-//                    DataInputStream dataInputStream1 = new DataInputStream(newSoc.getInputStream());
-//                    String initialConnection = dataInputStream1.readUTF();
-//                    onlineUsers.put(initialConnection, newSoc);
-//                    System.out.println(initialConnection);
-                    UserThread userThread = new UserThread(newSoc);
-                    userThread.start();
-
-//                            GameThread gameThread = new GameThread(socket1, socket2);
-//                            System.out.println("should be only");
-//                            gameThread.run(); // may here
+                UserThread userThread = new UserThread(newSoc);
+                userThread.start();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String response = "<html><body><h1>Hello, World!</h1></body></html>";
+            exchange.sendResponseHeaders(200, response.length());
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
+        }
+    }
 }
