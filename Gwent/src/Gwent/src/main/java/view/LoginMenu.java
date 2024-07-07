@@ -659,7 +659,6 @@ public class LoginMenu extends Application {
     public void sendLink () {
 
 
-
         // todo add a new button that calls this
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);

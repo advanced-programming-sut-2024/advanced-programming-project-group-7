@@ -446,7 +446,7 @@ public class GameLauncher extends Application {
 
 //        Leader leader=(new MonstersLeaders("eredin silver","double the strength of all your ","monsters"));
 //        Leader leader=(new MonstersLeaders("eredin bronze","restore a card from your discard pile to your hand","monsters"));
-//        Leader leader=(new MonstersLeaders("eredin gold","discard 2 card amd draw 1 card of your choise from your deck","monsters"));
+          Leader leader=(new MonstersLeaders("eredin gold","discard 2 card amd draw 1 card of your choise from your deck","monsters"));
 //        Leader leader=(new MonstersLeaders("eredin copper","pick any weather card from your deck and play it instantly","monsters"));
 //        Leader leader=(new MonstersLeaders("eredin the treacherous","doubles the strength of all spy cards(affects both players)","monsters"));
 
@@ -457,7 +457,7 @@ public class GameLauncher extends Application {
 //        Leader leader=(new ScoiataelLeaders("francesca hope of the aen seidhe","move agile units to whichever valid row maximizes their strength(don't move units in optimal row).","scoiatael"));
 
 //        Leader leader=(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks","skellige"));
-        Leader leader=(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions","skellige"));
+//        Leader leader=(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions","skellige"));
 
 
         leader.setLayoutX(120);

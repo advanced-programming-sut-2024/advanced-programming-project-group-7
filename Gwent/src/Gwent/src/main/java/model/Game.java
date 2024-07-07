@@ -4,12 +4,15 @@ import controller.Client;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.cards.*;
 import model.leaders.*;
 import view.GameLauncher;
+import view.PreGameMenu;
 import view.animations.AnnihilationAnimation;
 import view.animations.CardPlacementAnimation;
 
@@ -428,8 +431,17 @@ public class Game {
             hBoxes.get(4).isDoubled=true;
             calculateLabels();
         }else if(leader.getLeaderName().equals("eredin gold")){
-
-
+            boolean[] isClicked = {false};
+            for (Node card : playerHand.getChildren()) {
+                card.setOnMouseClicked(event -> {
+                    if (!isClicked[0]) {
+                        removeCard((Card) card);
+                        spyACard();
+                        spyACard();
+                        isClicked[0] = true;
+                    }
+                });
+            }
         }else if(leader.getLeaderName().equals("eredin copper")){
 
         }else if(leader.getLeaderName().equals("eredin bronze")){
@@ -456,49 +468,14 @@ public class Game {
       if (leader.getLeaderName().equals("foltest silver")){
           for(Card card:gameLauncher.reservedCards){
               if(card.getCardName().equals("fog")){
-//                 Card card1=new Card("fog", 3 , true, 0, "weather",7,false);
-//                 gameLauncher.addCardToPane(card,10,10);
-//                  CardPlacementAnimation cardPlacementAnimation=new CardPlacementAnimation(gameLauncher.pane,gameLauncher.game,card1,10,10,200,520);
-//                  Pane pane=gameLauncher.pane;
-//                  pane.getChildren().add(card);
-//                  card.setLayoutY(gameLauncher.sceneY);
-//                  card.setLayoutX(gameLauncher.sceneX);
-//                  double dx = 200 - gameLauncher.sceneX;
-//                  double dy = 300 - gameLauncher.sceneY;
-//                  double theta = Math.atan2(dy, dx);
-//                  double sinTheta = Math.sin(theta);
-//                  double cosTheta = Math.cos(theta);
-//                  double vy = sinTheta * 8;
-//                  double vx = cosTheta * 8;
-//                  CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, this, card, vx, vy, 10,10);
-//                  cardPlacementAnimation.play();
-//                  cardPlacementAnimation.play();
-//                  gameLauncher.pane.getChildren().add(card1);
                   hBoxes.get(0).getChildren().add(card);
                   gameLauncher.reservedCards.remove(card);
                   calculateLabels();
                   break;
               }
           }
-      }else if(leader.getLeaderName().equals("foltest gold")){//todo fucked
+      }else if(leader.getLeaderName().equals("foltest gold")){
           Card card=new Card("clear", 2 , true, 0, "weather",7,false);
-//          Card card=new Card("frost", 3 , true, 0, "weather",7,false);
-//          int endY=200;
-//          int endX=100;
-////          gameLauncher.addCardToPane(card,endY,endX);
-//                  Pane pane=gameLauncher.pane;
-//                  pane.getChildren().add(card);
-//                  card.setLayoutY(gameLauncher.sceneY);
-//                  card.setLayoutX(gameLauncher.sceneX);
-//                  double dx = 200 - gameLauncher.sceneX;
-//                  double dy = 100 - gameLauncher.sceneY;
-//                  double theta = Math.atan2(dy, dx);
-//                  double sinTheta = Math.sin(theta);
-//                  double cosTheta = Math.cos(theta);
-//                  double vy = sinTheta * 8;
-//                  double vx = cosTheta * 8;
-//                  CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, this, card, vx, vy, 200,100);
-//                  cardPlacementAnimation.play();
                   hBoxes.get(0).getChildren().add(card);
           playerThirdRow.badConditionEffect.setVisible(false);
           playerThirdRow.badCondition = false;
@@ -512,10 +489,8 @@ public class Game {
           playerFirstRow.badCondition = false;
           playerSixthRow.badConditionEffect.setVisible(false);
           playerSixthRow.badCondition = false;
-//          calculateLabels();
-//          placeCard(card,hBoxes.get(0));
+          hBoxes.get(0).getChildren().clear();
           calculateLabels();
-
       }else if(leader.getLeaderName().equals("foltest copper")){
           hBoxes.get(5).isDoubled=true;
           calculateLabels();
@@ -544,8 +519,7 @@ public class Game {
                   removeCard(card);
               }
           }
-
-      }else if (leader.getLeaderName().equals("foltest son of medell")){//todo test+
+      }else if (leader.getLeaderName().equals("foltest son of medell")){
           Iterator<Node> iterator = hBoxes.get(2).getChildren().iterator();
           int max=0;
           int sum=0;
