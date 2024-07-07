@@ -527,9 +527,6 @@ public class GameLauncher extends Application {
                 throw new RuntimeException(e);
             }
         }
-        playerHand.getChildren().add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
-        playerHand.getChildren().add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
-        playerHand.getChildren().add(new Scorch("scorch", 3 , true, 0, "special",123456,false));
 
         stage.show();
 //        stage.setFullScreen(true);

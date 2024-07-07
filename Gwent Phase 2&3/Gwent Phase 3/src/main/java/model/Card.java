@@ -25,6 +25,8 @@ public class Card extends Pane {
     public int rows;
     private boolean isHero;
     public int bondLevel = 1;
+    public Circle fireEmoji = new Circle(20);
+    public Circle sleepyEmoji = new Circle(20);
 
     public Card(String cardName, int countOfCard, boolean isSpecial, int power, String factionName,int rows,boolean isHero) {
         this.cardName = cardName;
@@ -72,7 +74,15 @@ public class Card extends Pane {
             }
             circle.setCenterX(60);
             circle.setCenterY(85);
-            this.getChildren().add(circle);
+            fireEmoji.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/fire.png").toExternalForm()))));
+            fireEmoji.setLayoutX(10);
+            fireEmoji.setLayoutY(35);
+            fireEmoji.setVisible(false);
+            sleepyEmoji.setFill(new ImagePattern(new Image(String.valueOf(Card.class.getResource("/Images/icons/sleepy.png").toExternalForm()))));
+            sleepyEmoji.setLayoutX(40);
+            sleepyEmoji.setLayoutY(35);
+            sleepyEmoji.setVisible(false);
+            this.getChildren().addAll(circle, fireEmoji, sleepyEmoji);
         }
     }
 

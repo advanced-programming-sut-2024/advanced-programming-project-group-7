@@ -1,7 +1,9 @@
 package controller;
 
 
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -12,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import model.Card;
 import model.Deck;
 import model.Game;
@@ -153,6 +156,17 @@ public class Client extends Thread {
             Platform.runLater(()-> {
                 User.getLoggedInUser().currentOponentName = components[0];
                 pregameMenu.goToVetoMenu();
+            });
+        } else if (components.length == 2 && components[1].equals("emoji")) {
+            Platform.runLater(()-> {
+                Node emoji = components[0].equals("fire") ? game.yourLastCard.fireEmoji : game.yourLastCard.sleepyEmoji;
+                emoji.setVisible(true);
+                FadeTransition fadeTransition = new FadeTransition(Duration.seconds(7), emoji);
+                fadeTransition.setFromValue(1.0); // Fully opaque
+                fadeTransition.setToValue(0.0); // Completely transparent
+                fadeTransition.setCycleCount(1);
+                fadeTransition.setAutoReverse(false);
+                fadeTransition.play();
             });
         } else if (components.length == 2 && components[0].equals("rejectInvite")) {
             PreGameMenu.hasActiveInvitation = false;

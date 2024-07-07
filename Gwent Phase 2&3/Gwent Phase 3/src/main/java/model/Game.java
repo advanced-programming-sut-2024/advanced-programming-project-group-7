@@ -68,6 +68,8 @@ public class Game {
     private int yourLives = 2;
     private int opponentLives = 2;
     private int roundCount = 0;
+    public Card lastPlacedCard;
+    public Card yourLastCard;
 
     public Game(GameLauncher gameLauncher) {
         this.gameLauncher = gameLauncher;
@@ -356,6 +358,7 @@ public class Game {
                 playerSixthRow.badConditionEffect.setVisible(false);
                 playerSixthRow.badCondition = false;
             }  else {
+                yourLastCard = card;
                 hBox.getChildren().add(card);
                 calculateLabels();
                 gameLauncher.playerHandMouseSetter();
@@ -371,6 +374,26 @@ public class Game {
     }
     public void enemyPlaceCard(Card finalCard, EnhancedHBox hBox) {
         hBox.getChildren().add(finalCard);
+        if (lastPlacedCard != null){
+            lastPlacedCard.setOnMouseEntered(event -> {
+
+            });
+        }
+        finalCard.setOnMouseEntered(event -> {
+            finalCard.fireEmoji.setVisible(true);
+            finalCard.fireEmoji.setOnMouseClicked(event1 -> {
+                client.sendMessage("emoji:" + User.getLoggedInUser().currentOponentName+":fire");
+            });
+            finalCard.sleepyEmoji.setVisible(true);
+            finalCard.sleepyEmoji.setOnMouseClicked(event1 -> {
+                client.sendMessage("emoji:" + User.getLoggedInUser().currentOponentName+":sleepy");
+            });
+        });
+        finalCard.setOnMouseExited(event -> {
+            finalCard.fireEmoji.setVisible(false);
+            finalCard.sleepyEmoji.setVisible(false);
+        });
+        lastPlacedCard = finalCard;
         calculateLabels();
     }
     public void newRound(Game game) {
