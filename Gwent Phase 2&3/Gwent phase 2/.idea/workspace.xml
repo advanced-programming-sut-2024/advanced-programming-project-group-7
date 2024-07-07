@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8a9e3a91-da38-44d5-830c-3c4b9411f1ea" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="module-info" />
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/view/MainMenu.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/view/ProfileMenu.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/FXML/MainMenu.fxml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/FXML/ProfileMenu.fxml" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2haZD9yRwmsL5hXb80IYVYstrjC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/T.moobile/Downloads/servlet-api-3.0-alpha-1.jar&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="controller" />
+      <recent name="view.animations" />
+      <recent name="model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.GameLauncher">
+    <configuration name="GameLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.GameLauncher" />
+      <module name="Gwent" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="controller.GameServer" />
+      <module name="Gwent" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.LoginMenu" />
+      <module name="Gwent" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.MainMenu" />
+      <module name="Gwent" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PreGameMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.PreGameMenu" />
+      <module name="Gwent" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GameLauncher" />
+        <item itemvalue="Application.LoginMenu" />
+        <item itemvalue="Application.GameServer" />
+        <item itemvalue="Application.PreGameMenu" />
+        <item itemvalue="Application.MainMenu" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8a9e3a91-da38-44d5-830c-3c4b9411f1ea" name="Changes" comment="" />
+      <created>1717834159429</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717834159429</updated>
+      <workItem from="1717834216920" duration="9533000" />
+      <workItem from="1717846894487" duration="2291000" />
+      <workItem from="1717852033067" duration="43000" />
+      <workItem from="1718090208700" duration="5596000" />
+      <workItem from="1718352731145" duration="7292000" />
+      <workItem from="1718391599062" duration="11604000" />
+      <workItem from="1718424323737" duration="405000" />
+      <workItem from="1718424857007" duration="4849000" />
+      <workItem from="1718435242478" duration="4356000" />
+      <workItem from="1718439665912" duration="2209000" />
+      <workItem from="1718442483361" duration="1183000" />
+      <workItem from="1718599880136" duration="2402000" />
+      <workItem from="1718603358477" duration="724000" />
+      <workItem from="1718872623061" duration="12649000" />
+      <workItem from="1718886858894" duration="24751000" />
+      <workItem from="1719126488245" duration="21178000" />
+      <workItem from="1719195654009" duration="1686000" />
+      <workItem from="1719197460388" duration="6095000" />
+      <workItem from="1719208050441" duration="5292000" />
+      <workItem from="1719309636547" duration="13544000" />
+      <workItem from="1719325142143" duration="14119000" />
+      <workItem from="1719347426356" duration="4469000" />
+      <workItem from="1719435370541" duration="574000" />
+      <workItem from="1719438597346" duration="9854000" />
+      <workItem from="1719449608472" duration="16347000" />
+      <workItem from="1719468046804" duration="53819000" />
+      <workItem from="1719592887318" duration="6183000" />
+      <workItem from="1719601918699" duration="4746000" />
+      <workItem from="1719607405541" duration="216000" />
+      <workItem from="1719607655006" duration="1070000" />
+      <workItem from="1719629631936" duration="19182000" />
+      <workItem from="1719663784730" duration="21874000" />
+      <workItem from="1719746745459" duration="28607000" />
+      <workItem from="1719803760779" duration="2397000" />
+      <workItem from="1719806407832" duration="23697000" />
+      <workItem from="1719902231377" duration="11706000" />
+      <workItem from="1719946071058" duration="2246000" />
+      <workItem from="1719985800775" duration="1265000" />
+      <workItem from="1720001122668" duration="654000" />
+      <workItem from="1720256488721" duration="7843000" />
+      <workItem from="1720270806758" duration="433000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Samyar" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Gwent$LoginMenu.ic" NAME="LoginMenu Coverage Results" MODIFIED="1719596482284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>view.*</FILTER>
+    </SUITE>
+  </component>
+</project>
