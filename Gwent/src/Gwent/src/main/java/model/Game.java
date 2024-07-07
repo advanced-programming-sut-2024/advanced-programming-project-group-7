@@ -616,10 +616,9 @@ public class Game {
     }
 
     public void removeAllCloseKombatsCheat() {
-            Iterator<Node> iterator = hBoxes.get(4).getChildren().iterator();
-            while (iterator.hasNext()) {
-                
-            }
+        Iterator<Node> iterator = hBoxes.get(4).getChildren().iterator();
+        while (iterator.hasNext()) {
+
         }
     }
 }
