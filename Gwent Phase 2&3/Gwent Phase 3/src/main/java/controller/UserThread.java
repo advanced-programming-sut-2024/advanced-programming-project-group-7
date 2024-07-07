@@ -156,7 +156,7 @@ public class UserThread extends Thread {
                 } else if (parts1[0].equals("accept")) {
                     try {
                         GameServer.ongoingGames.put(parts1[1]+"-"+parts1[2],
-                                new OngoingGame(parts1[1], parts1[2], Boolean.valueOf(parts1[3])));
+                                new OngoingGame(parts1[1], parts1[2], Boolean.valueOf(parts1[3]), "friendly"));
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         targetUser.writeUTF(parts1[2] +".startGame");
                         targetUser.flush();
@@ -164,17 +164,20 @@ public class UserThread extends Thread {
                         throw new RuntimeException(e);
                     }
                 } else if (parts1[0].equals("random")) {
-                    if (GameServer.randomChallenger == null)
+                    String dude = GameServer.randomChallenger;
+                    if (dude == null)
                         GameServer.randomChallenger = parts1[1];
                     else
                         try {
                             DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
-                            targetUser.writeUTF(GameServer.randomChallenger +".startGame");
+                            targetUser.writeUTF(dude +".startGame");
                             targetUser.flush();
-                            DataOutputStream random = new DataOutputStream(GameServer.onlineUsers.get(GameServer.randomChallenger).getOutputStream());
+                            DataOutputStream random = new DataOutputStream(GameServer.onlineUsers.get(dude).getOutputStream());
                             random.writeUTF(parts1[1] +".startGame");
                             random.flush();
                             GameServer.randomChallenger = null;
+                            GameServer.ongoingGames.put(dude+"-"+parts1[1],
+                                    new OngoingGame(dude, parts1[1], Boolean.valueOf(parts1[3]), "random"));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

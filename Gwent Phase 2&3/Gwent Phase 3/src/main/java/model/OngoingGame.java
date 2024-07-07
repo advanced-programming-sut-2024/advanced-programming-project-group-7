@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class OngoingGame {
     private final Boolean isPublic;
+    private final String type;
     public Socket socket1;
     public String player1;
     public String player2;
@@ -14,10 +15,11 @@ public class OngoingGame {
     public ArrayList<Socket> watchers = new ArrayList<>();
     public ArrayList<String> moves = new ArrayList<>();
 
-    public OngoingGame(String player1, String player2, Boolean isPublic) {
+    public OngoingGame(String player1, String player2, Boolean isPublic, String type) {
         this.isPublic = isPublic;
         this.player1 = player1;
         this.player2 = player2;
+        this.type = type;
     }
 
     public void saveMove(String move){
