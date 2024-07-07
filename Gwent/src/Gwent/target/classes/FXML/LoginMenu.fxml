@@ -67,7 +67,13 @@
                 <font>
                     <Font name="YuMincho Medium" size="20.0" />
                 </font></TextField>
-            <HBox alignment="CENTER" minHeight="50.0" spacing="10">
+            <HBox alignment="CENTER_LEFT" minHeight="50.0" spacing="10">
+                <Pane fx:id="helpRec" minWidth="70">
+
+                </Pane>
+                <Pane fx:id="sendEmail" minHeight="50" minWidth="50">
+
+                </Pane>
                 <Pane fx:id="hybridButtPane" minHeight="50.0" minWidth="100.0">
 
                 </Pane>

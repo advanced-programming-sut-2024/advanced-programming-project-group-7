@@ -53,6 +53,10 @@ public class LoginMenu extends Application {
     public Rectangle switchRectangle = new Rectangle(100,50);
     public Rectangle hybridRectangle = new Rectangle(100,50);
     public Rectangle forgotPasswordRectangle=new Rectangle(300,50);
+    public Pane sendEmail;
+    public Rectangle sendEmailRec=new Rectangle(50,50);
+    public Pane helpRec;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -163,6 +167,8 @@ public class LoginMenu extends Application {
         });
         forgotPasswordRectangle.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/buttonimage2.png")))));
         forgotPasswordPane.getChildren().addAll(forgotPasswordRectangle, forgotPasswordButton);
+        sendEmailRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/email.png")))));
+        sendEmail.getChildren().addAll(sendEmailRec);
     }
 
 
