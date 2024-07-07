@@ -190,7 +190,9 @@ public class LoginMenu extends Application {
             server.createContext("/command", new CommandHandler());
             server.setExecutor(null);
             server.start();
-            GmailSender gmailSender=new GmailSender(email,"<a href=\"http://localhost:8000\">click me for gwent</a>\n");
+            String link = "<a href=\\\"http://localhost:8000\\\">Click here</a>";
+            String body = "Please verify your email address by clicking on this link: " + link;
+            GmailSender gmailSender=new GmailSender(email,body);
             gmailSender.send();
             System.out.println("sent");
 
@@ -218,13 +220,14 @@ public class LoginMenu extends Application {
         if (!isLoggingIN) {
             if (!isLoggingIN && verified) {
                 try {
+                    System.out.println("its good");
                     alert = LoginMenuController.userRegister(nameField.getText()
                             , password.getText(), confirmPWD.getText(), nicknameText.getText(), emailText.getText());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }else if(!verified){
-                Alert alert3=new Alert(Alert.AlertType.WARNING);alert3.setHeaderText("verify your gmail first");alert3.show();
+                 alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("verify your gmail first");alert.show();
             }
 //            try {
 //                alert = LoginMenuController.userRegister(nameField.getText()
@@ -233,6 +236,7 @@ public class LoginMenu extends Application {
 //                throw new RuntimeException(e);
 //            }
             if (alert == null) {
+                System.out.println("yo");
                 try {
 
                     Stage recoveryStage = new Stage();

@@ -23,6 +23,7 @@ public class Card extends Pane {
     private Circle powerIcon = new Circle();
     public Label powerLabel = new Label();
     private int power;
+    private static ArrayList<Card> cards=new ArrayList<>();
     public int rows;
     public HBox rowInGame;
     private boolean isHero;
@@ -79,6 +80,14 @@ public class Card extends Pane {
             circle.setCenterY(85);
             this.getChildren().add(circle);
         }
+        cards.add(this);
+    }
+
+    public static Card getCardByName(Card card) {
+        for(Card card1:cards){
+           if(card1.cardName.equals(card.cardName))return  card1;
+        }
+        return null;
     }
 
     public String getCardName() {

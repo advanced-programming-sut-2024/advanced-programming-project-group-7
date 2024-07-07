@@ -4,17 +4,14 @@ import controller.Client;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.cards.*;
+import model.factions.NorthernRealms;
 import model.leaders.*;
 import view.GameLauncher;
-import view.PreGameMenu;
 import view.animations.AnnihilationAnimation;
-import view.animations.CardPlacementAnimation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -567,6 +564,62 @@ public class Game {
 
         }else if (leader.getLeaderName().equals("emhyr invader of the north")){
 
+        }
+    }
+
+    public void addCardToHandcheat() {
+//        gameLauncher.playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        gameLauncher.playerHand.getChildren().add(new TightBond("catapult 1", 2 , false, 8, "realms",1,false));
+    }
+    public void addClearWeatherCheat(){
+        Card card=new Card("clear", 2 , true, 0, "weather",7,false);
+        hBoxes.get(0).getChildren().add(card);
+        playerThirdRow.badConditionEffect.setVisible(false);
+        playerThirdRow.badCondition = false;
+        playerFourthRow.badConditionEffect.setVisible(false);
+        playerFourthRow.badCondition = false;
+        playerSecondRow.badConditionEffect.setVisible(false);
+        playerSecondRow.badCondition = false;
+        playerFifthRow.badConditionEffect.setVisible(false);
+        playerFifthRow.badCondition = false;
+        playerFirstRow.badConditionEffect.setVisible(false);
+        playerFirstRow.badCondition = false;
+        playerSixthRow.badConditionEffect.setVisible(false);
+        playerSixthRow.badCondition = false;
+        hBoxes.get(0).getChildren().clear();
+        calculateLabels();
+    }
+    public void undoCardCheat(Card card) {
+        EnhancedHBox box = (EnhancedHBox) card.getParent();
+        box.getChildren().remove(card);
+        Card card1= Card.getCardByName(card);
+        gameLauncher.playerHand.getChildren().add(card1);
+    }
+
+    public void addHerosToGraveyardCheat() {
+        for(int i=0;i<=6;i++) {
+            for (Node card1 : hBoxes.get(i).getChildren()) {
+                Card card2 = (Card) card1;
+                if (card2.isHero()) {
+                    EnhancedHBox box = (EnhancedHBox) card2.getParent();
+//                    box.getChildren().remove(card2);
+                    AnnihilationAnimation animation = new AnnihilationAnimation(box, card2, this);
+                    animation.play();
+                    gameLauncher.graveyardCard.add(card2);
+                }
+            }
+        }
+        calculateLabels();
+    }
+    public void addHornToHandCheat(){
+        gameLauncher.playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special", 12, false));
+    }
+
+    public void removeAllCloseKombatsCheat() {
+            Iterator<Node> iterator = hBoxes.get(4).getChildren().iterator();
+            while (iterator.hasNext()) {
+                
+            }
         }
     }
 }
