@@ -174,7 +174,7 @@ public class LoginMenu extends Application {
 
     public void signUp(MouseEvent mouseEvent)  {
         Alert alert = null;
-        if (!isLoggingIN) {
+        if (!isLoggingIN && verified) {
             try {
                 alert = LoginMenuController.userRegister(nameField.getText()
                         , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
@@ -656,7 +656,11 @@ public class LoginMenu extends Application {
         return backgroundImage;
     }
 
-    public void sendLink () { // todo add a new button that calls this
+    public void sendLink () {
+
+
+
+        // todo add a new button that calls this
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
             server.createContext("/", new MyHandler());

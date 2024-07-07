@@ -5,12 +5,13 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import model.cards.Horn;
-import model.cards.MoralBoost;
-import model.cards.TightBond;
+import model.cards.*;
+import model.leaders.*;
 import view.GameLauncher;
 import view.animations.AnnihilationAnimation;
+import view.animations.CardPlacementAnimation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -100,11 +101,11 @@ public class Game {
 
     public int[] getFinalPoints() {return finalPoints;}
 
-    public void removeDominantCardsAllTable(int j) {
+    public void removeDominantCardsAllTable(int j){
         ArrayList<Card> dominantCards = new ArrayList<>();
         int max = 0;
         if(j==0) {
-            for (int i = 4; i <= 6; i++) {
+            for (int i = 0; i <= 6; i++) {
                 Iterator<Node> iterator = hBoxes.get(i).getChildren().iterator();
                 while (iterator.hasNext()) {
                     Node card1 = iterator.next();
@@ -139,6 +140,7 @@ public class Game {
         for(Card card:dominantCards){
             removeCard(card);
         }
+        calculateLabels();
     }
 
     private void removeCard(Card card) {
@@ -148,13 +150,13 @@ public class Game {
         animation.play();
         gameLauncher.graveyardCard.add(card);
     }
-
     public void spyACard() {
-        Card card = gameLauncher.reservedCards.get(0);
-        playerHand.getChildren().add(card);//todo why after adding we can't work
-        gameLauncher.reservedCards.remove(card);
+        if(!gameLauncher.reservedCards.isEmpty()) {
+            Card card = gameLauncher.reservedCards.get(0);
+            playerHand.getChildren().add(card);//todo why after adding we can't work
+            gameLauncher.reservedCards.remove(card);
+        }
     }
-
     public void handleBond(EnhancedHBox selectedBox, Card card, Game game) {
         for (Node card1 : selectedBox.getChildren()){
             if ( card1 instanceof TightBond && !card1.equals(card)) {//todo maybe wrong bond
@@ -222,7 +224,7 @@ public class Game {
                 if (!((Card) card).isHero()){
                     currentPower = hBox.badCondition ? 1 : ((Card) card).getPower();
                     currentPower += hBox.moralBoostLevel;
-                    if (hBox.isDoubled)
+                    if (hBox.isDoubled|| ((Card) card).isDoubeld)
                         currentPower *= 2;
                 }else
                     currentPower = ((Card) card).getPower();
@@ -313,9 +315,11 @@ public class Game {
     }
 
     public void medicACard() {
-        Card card = gameLauncher.graveyardCard.get(0);
-        playerHand.getChildren().add(card);//todo why after adding we can't work
-        gameLauncher.graveyardCard.remove(card);
+        if(!gameLauncher.graveyardCard.isEmpty()) {
+            Card card = gameLauncher.graveyardCard.get(0);
+            playerHand.getChildren().add(card);//todo why after adding we can't work
+            gameLauncher.graveyardCard.remove(card);
+        }
     }
     public int getCurrentPower(Card card){
         EnhancedHBox hBox = (EnhancedHBox) card.getParent();
@@ -331,5 +335,264 @@ public class Game {
         if (hBox.isDoubled)
             currentPower *= 2;
         return currentPower;
+    }
+
+    public void handleLeader(Leader leader) {
+        if(leader instanceof NorthernRealmsLeaders)handleNorthenRealmsLeader(leader);
+        else if (leader instanceof MonstersLeaders) handleMonstersLeadersLeader(leader);
+        else if (leader instanceof EmpireNilfgaardiansLeaders) handleEmpireNilfgaardiansLeader(leader);
+        else if (leader instanceof ScoiataelLeaders) handleScoiataelLeaders(leader);
+        else if (leader instanceof SkelligeLeaders) handleSkelligeLeaders(leader);
+
+    }
+
+    private void handleSkelligeLeaders(Leader leader) {
+        System.out.println("S");
+        if (leader.getLeaderName().equals("crach an craite")){
+            if(!gameLauncher.graveyardCard.isEmpty()) {
+                for (Card card : gameLauncher.graveyardCard) {
+                    gameLauncher.reservedCards.add(card);
+                }
+                gameLauncher.graveyardCard.clear();
+            }
+
+        }else if(leader.getLeaderName().equals("king bran")){
+
+        }
+
+    }
+
+    private void handleScoiataelLeaders(Leader leader) {
+        System.out.println("Sc");
+        if (leader.getLeaderName().equals("francesca silver")){
+            Iterator<Node> iterator = hBoxes.get(3).getChildren().iterator();
+            int max=0;
+            int sum=0;
+            ArrayList<Card> dominantCards = new ArrayList<>();
+            while (iterator.hasNext()) {
+                Node card1 = iterator.next();
+                Card card2 = (Card) card1;
+                if(!card2.isHero()) {
+                if(getCurrentPower(card2)>max){
+                    dominantCards.clear();
+                    dominantCards.add(card2);
+                    max=getCurrentPower(card2);
+                }else if(getCurrentPower(card2)==max){
+                    dominantCards.add(card2);
+                }
+                sum+=getCurrentPower(card2);
+                }
+            }
+            if(sum>=10){
+                for(Card card:dominantCards){
+                    removeCard(card);
+                }
+            }
+        }else if(leader.getLeaderName().equals("francesca gold")){
+            hBoxes.get(6).isDoubled=true;
+            calculateLabels();
+        }else if(leader.getLeaderName().equals("francesca copper")){//todo changed
+            spyACard();
+
+        }else if(leader.getLeaderName().equals("francesca bronze")){
+            for(Card card:gameLauncher.reservedCards){
+                if(card.getCardName().equals("frost")){
+                    hBoxes.get(0).getChildren().add(card);
+                    gameLauncher.reservedCards.remove(card);
+                    calculateLabels();
+                    break;
+                }
+                calculateLabels();
+            }
+
+
+        }else if (leader.getLeaderName().equals("francesca hope of the aen seidhe")){//todo changed
+            for(int i=0;i<=6;i++) {
+                Iterator<Node> iterator = hBoxes.get(i).getChildren().iterator();
+                while (iterator.hasNext()) {
+                    Node card1 = iterator.next();
+                    Card card2 = (Card) card1;
+                    if (card2 instanceof Agile) {
+                        card2.isDoubeld = true;
+                    }
+                }
+            }
+            calculateLabels();
+        }
+    }
+
+
+    private void handleMonstersLeadersLeader(Leader leader) {
+        System.out.println("M");
+        if (leader.getLeaderName().equals("eredin silver")){
+            hBoxes.get(4).isDoubled=true;
+            calculateLabels();
+        }else if(leader.getLeaderName().equals("eredin gold")){
+
+
+        }else if(leader.getLeaderName().equals("eredin copper")){
+
+        }else if(leader.getLeaderName().equals("eredin bronze")){
+            Card card = gameLauncher.discardPile.get(0);
+            playerHand.getChildren().add(card);
+            gameLauncher.discardPile.remove(card);
+
+        }else if (leader.getLeaderName().equals("eredin the treacherous")){//todo not working!
+            for(int i=0;i<=6;i++) {
+                Iterator<Node> iterator = hBoxes.get(i).getChildren().iterator();
+                while (iterator.hasNext()) {
+                    Node card1 = iterator.next();
+                    Card card2 = (Card) card1;
+                    if (card2 instanceof Spy) {
+                        card2.isDoubeld = true;
+                    }
+                }
+            }
+            calculateLabels();
+        }
+    }
+    private void handleNorthenRealmsLeader(Leader leader) {
+        System.out.println("R");
+      if (leader.getLeaderName().equals("foltest silver")){
+          for(Card card:gameLauncher.reservedCards){
+              if(card.getCardName().equals("fog")){
+//                 Card card1=new Card("fog", 3 , true, 0, "weather",7,false);
+//                 gameLauncher.addCardToPane(card,10,10);
+//                  CardPlacementAnimation cardPlacementAnimation=new CardPlacementAnimation(gameLauncher.pane,gameLauncher.game,card1,10,10,200,520);
+//                  Pane pane=gameLauncher.pane;
+//                  pane.getChildren().add(card);
+//                  card.setLayoutY(gameLauncher.sceneY);
+//                  card.setLayoutX(gameLauncher.sceneX);
+//                  double dx = 200 - gameLauncher.sceneX;
+//                  double dy = 300 - gameLauncher.sceneY;
+//                  double theta = Math.atan2(dy, dx);
+//                  double sinTheta = Math.sin(theta);
+//                  double cosTheta = Math.cos(theta);
+//                  double vy = sinTheta * 8;
+//                  double vx = cosTheta * 8;
+//                  CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, this, card, vx, vy, 10,10);
+//                  cardPlacementAnimation.play();
+//                  cardPlacementAnimation.play();
+//                  gameLauncher.pane.getChildren().add(card1);
+                  hBoxes.get(0).getChildren().add(card);
+                  gameLauncher.reservedCards.remove(card);
+                  calculateLabels();
+                  break;
+              }
+          }
+      }else if(leader.getLeaderName().equals("foltest gold")){//todo fucked
+          Card card=new Card("clear", 2 , true, 0, "weather",7,false);
+//          Card card=new Card("frost", 3 , true, 0, "weather",7,false);
+//          int endY=200;
+//          int endX=100;
+////          gameLauncher.addCardToPane(card,endY,endX);
+//                  Pane pane=gameLauncher.pane;
+//                  pane.getChildren().add(card);
+//                  card.setLayoutY(gameLauncher.sceneY);
+//                  card.setLayoutX(gameLauncher.sceneX);
+//                  double dx = 200 - gameLauncher.sceneX;
+//                  double dy = 100 - gameLauncher.sceneY;
+//                  double theta = Math.atan2(dy, dx);
+//                  double sinTheta = Math.sin(theta);
+//                  double cosTheta = Math.cos(theta);
+//                  double vy = sinTheta * 8;
+//                  double vx = cosTheta * 8;
+//                  CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, this, card, vx, vy, 200,100);
+//                  cardPlacementAnimation.play();
+                  hBoxes.get(0).getChildren().add(card);
+          playerThirdRow.badConditionEffect.setVisible(false);
+          playerThirdRow.badCondition = false;
+          playerFourthRow.badConditionEffect.setVisible(false);
+          playerFourthRow.badCondition = false;
+          playerSecondRow.badConditionEffect.setVisible(false);
+          playerSecondRow.badCondition = false;
+          playerFifthRow.badConditionEffect.setVisible(false);
+          playerFifthRow.badCondition = false;
+          playerFirstRow.badConditionEffect.setVisible(false);
+          playerFirstRow.badCondition = false;
+          playerSixthRow.badConditionEffect.setVisible(false);
+          playerSixthRow.badCondition = false;
+//          calculateLabels();
+//          placeCard(card,hBoxes.get(0));
+          calculateLabels();
+
+      }else if(leader.getLeaderName().equals("foltest copper")){
+          hBoxes.get(5).isDoubled=true;
+          calculateLabels();
+
+      }else if(leader.getLeaderName().equals("foltest bronze")){//todo better test
+          Iterator<Node> iterator = hBoxes.get(1).getChildren().iterator();
+          int max=0;
+          int sum=0;
+          ArrayList<Card> dominantCards = new ArrayList<>();
+          while (iterator.hasNext()) {
+              Node card1 = iterator.next();
+              Card card2 = (Card) card1;
+              if(!card2.isHero()) {
+                  if (getCurrentPower(card2) > max) {
+                      dominantCards.clear();
+                      dominantCards.add(card2);
+                      max = getCurrentPower(card2);
+                  } else if (getCurrentPower(card2) == max) {
+                      dominantCards.add(card2);
+                  }
+                  sum += getCurrentPower(card2);
+              }
+          }
+          if(sum>=10){
+              for(Card card:dominantCards){
+                  removeCard(card);
+              }
+          }
+
+      }else if (leader.getLeaderName().equals("foltest son of medell")){//todo test+
+          Iterator<Node> iterator = hBoxes.get(2).getChildren().iterator();
+          int max=0;
+          int sum=0;
+          ArrayList<Card> dominantCards = new ArrayList<>();
+          while (iterator.hasNext()) {
+              Node card1 = iterator.next();
+              Card card2 = (Card) card1;
+              if(!card2.isHero()) {
+                  if (getCurrentPower(card2) > max) {
+                      dominantCards.clear();
+                      dominantCards.add(card2);
+                      max = getCurrentPower(card2);
+                  } else if (getCurrentPower(card2) == max) {
+                      dominantCards.add(card2);
+                  }
+                  sum += getCurrentPower(card2);
+              }
+          }
+          if(sum>=10){
+              for(Card card:dominantCards){
+                  removeCard(card);
+              }
+          }
+      }
+    }
+    private void handleEmpireNilfgaardiansLeader(Leader leader) {
+        System.out.println("Ni");
+        if (leader.getLeaderName().equals("emhyr silver")){
+            if(!gameLauncher.reservedCards.isEmpty()) {
+                for (Card card : gameLauncher.reservedCards) {
+                    if (card.getCardName().equals("rain")) {
+                        hBoxes.get(0).getChildren().add(card);
+                        gameLauncher.reservedCards.remove(card);
+                        calculateLabels();
+                        break;
+                    }
+                }
+            }
+        }else if(leader.getLeaderName().equals("emhyr gold")){
+
+
+        }else if(leader.getLeaderName().equals("emhyr copper")){
+
+        }else if(leader.getLeaderName().equals("emhyr bronze")){
+
+        }else if (leader.getLeaderName().equals("emhyr invader of the north")){
+
+        }
     }
 }

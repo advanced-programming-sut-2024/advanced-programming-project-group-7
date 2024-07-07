@@ -23,8 +23,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 import model.cards.*;
-import model.leaders.MonstersLeaders;
-import model.leaders.NorthernRealmsLeaders;
+import model.leaders.*;
 import view.animations.CardPlacementAnimation;
 
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class GameLauncher extends Application {
 
     public ArrayList<Card> graveyardCard=new ArrayList<>();
     public ArrayList<Card> reservedCards = new ArrayList<>();
+    public ArrayList<Card> discardPile=new ArrayList<>();
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
@@ -51,15 +51,16 @@ public class GameLauncher extends Application {
     public EnhancedHBox playerSixthRow = new EnhancedHBox();
     public EnhancedHBox playerFifthRowHorn = new EnhancedHBox();
     public EnhancedHBox playerFifthRow = new EnhancedHBox();
-    private Pane pane = new Pane();
+    public Pane pane = new Pane();
     private Card selected;
-    private double sceneX;
-    private double sceneY;
+    public double sceneX;
+    public double sceneY;
     public Rectangle showCardRectangle = new Rectangle();
     private boolean yourTurn = true;
     private Deck deck;
     private  Stage stage;
     private Client client;
+    public boolean isLeaderDisabled=false;
     public EnhancedHBox weatherBox = new EnhancedHBox();
 
 
@@ -232,7 +233,7 @@ public class GameLauncher extends Application {
         weatherBox.setMinHeight(98);
         weatherBox.setMinWidth(235);
         weatherBox.setOnMouseClicked(event ->  {
-            if (selected != null && fitsBox(selected, weatherBox)) {
+            if (selected != null && fitsBox(selected, weatherBox)){
                 game.selectedBox = weatherBox;
                 game.playerHand.getChildren().remove(selected);
                 addCardToPane(selected, event.getSceneY(), event.getSceneX());
@@ -336,7 +337,7 @@ public class GameLauncher extends Application {
         game.highScorePlayer .setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/icon_high_score.png").toExternalForm()))));
         game.highScorePlayer .setHeight(63);
         game.highScorePlayer .setWidth(63);
-        game.highScorePlayer .setLayoutY(647);
+        game.highScorePlayer .setLayoutY(590);
         game.highScorePlayer .setLayoutX(347);
 
 
@@ -428,18 +429,49 @@ public class GameLauncher extends Application {
         numberOfRemainingCardsInDeckOpponent.setTextFill(Color.WHITE);
         numberOfRemainingCardsInDeckOpponent.setFont(new Font(30));
 
+//        Leader leader=new MonstersLeaders("eredin silver","double the strength of all your ","monsters");
+//        Leader leader=(new NorthernRealmsLeaders("foltest gold","clear any weather effects(resulting from biting frost, torrential rain or impenetrable fog cards) in play","realms"));
+//        Leader leader=(new NorthernRealmsLeaders("foltest copper","doubles the strength of all your siege units (unless a commander's horn is also present on that row).","realms"));
+//        Leader leader=(new NorthernRealmsLeaders("foltest bronze","destroy your enemy's strongest siege unit(s) if the combined strength of all his or her siege units is 10 or more.","realms"));
+//        Leader leader=(new NorthernRealmsLeaders("foltest son of medell","distroy your enemy's strongest ranged combat unit(s) if the combined strength of all his or her ranged combat units is 10 or more.","realms"));
+//        Leader leader=new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms");
 
-        Leader leader=new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms");
+
+//        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr silver","pick a torrential rain card from your deck and play it instantly","nilfgaard"));
+//        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr copper","look at 3 random cards from your opponent's hand","nilfgaard"));
+//        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr bronze","cansel your opponent's Leader ability","nilfgaard"));
+//        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr gold","draw a card from your opponent's discard pile","nilfgaard"));
+//        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr invader of the north","abilities that restore a unit to the battlefield restore a randomly-chosen unit.affects both players.","nilfgaard"));
+
+
+//        Leader leader=(new MonstersLeaders("eredin silver","double the strength of all your ","monsters"));
+//        Leader leader=(new MonstersLeaders("eredin bronze","restore a card from your discard pile to your hand","monsters"));
+//        Leader leader=(new MonstersLeaders("eredin gold","discard 2 card amd draw 1 card of your choise from your deck","monsters"));
+//        Leader leader=(new MonstersLeaders("eredin copper","pick any weather card from your deck and play it instantly","monsters"));
+//        Leader leader=(new MonstersLeaders("eredin the treacherous","doubles the strength of all spy cards(affects both players)","monsters"));
+
+//        Leader leader=(new ScoiataelLeaders("francesca silver","destroy your enemy's strongest close combat unit(s) if the combined strength of all his or her close combat units is 10 or more.","scoiatael"));
+//        Leader leader=(new ScoiataelLeaders("francesca gold","doubles the strength of all your ranged combat units (unless a commander's horn is also present on that row).","scoiatael"));
+//        Leader leader=(new ScoiataelLeaders("francesca copper","draw an extra card at the beginning of the battle.","scoiatael"));
+//        Leader leader=(new ScoiataelLeaders("francesca bronze","pick a biting frost card from your deck and play it instantly.","scoiatael"));
+//        Leader leader=(new ScoiataelLeaders("francesca hope of the aen seidhe","move agile units to whichever valid row maximizes their strength(don't move units in optimal row).","scoiatael"));
+
+//        Leader leader=(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks","skellige"));
+        Leader leader=(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions","skellige"));
+
+
         leader.setLayoutX(120);
         leader.setLayoutY(700);
         Rectangle leaderRec=new Rectangle(210,330);
         leaderRec.setVisible(false);
         leader.setOnMouseClicked(event -> {
+            if(yourTurn&& !isLeaderDisabled)
             leaderRec.setVisible(true);
         });
         leaderRec.setOnMouseClicked(event -> {
+            game.handleLeader(leader);
             leaderRec.setVisible(false);
-
+            leader.setVisible(false);
         });
         leaderRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource(leader.getLgPath())))));
         leaderRec.setLayoutX(700);
@@ -482,8 +514,8 @@ public class GameLauncher extends Application {
 
 
 
-        pane.getChildren().addAll(createHbox(),weatherBox, playerName,avatar,game.life1,game.life2, cardx,labelForNumberOfCards,game.totalPower,highScore,realmForAvatar,
-                playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,realmForAvatarOpponent,
+        pane.getChildren().addAll(createHbox(),weatherBox, playerName,avatar,game.life1,game.life2, cardx,labelForNumberOfCards,game.totalPower,realmForAvatar,
+                playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,game.highScorePlayer,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent
                 ,game.totalRow1Power,game.totalRow2Power,game.totalRow3Power,game.totalRow1PowerOpponent,game.totalRow2PowerOpponent,game.totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
                 ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent,buttonPass,buttonPassOpponent,chatBoxPane,leaderRec);
@@ -511,7 +543,7 @@ public class GameLauncher extends Application {
 
         game.hBoxes = hBoxes;
 //        Deck.currentDeck.hand.clear();
-//        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
+        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special",12,false));
 //        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
 //        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
 //        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
@@ -533,13 +565,11 @@ public class GameLauncher extends Application {
 
 
 
-
+        discardPile.add(new TightBond("catapult 1", 2 , false, 8, "realms",1,false));
         reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        reservedCards.add(new Card("ciri", 1 , false, 15, "neutral",3,true));
+        reservedCards.add(new Card("fog", 3 , true, 0, "weather",7,false));
+        reservedCards.add((new Card("rain", 2 , true, 0, "weather",7,false)));
+        reservedCards.add(new Card("frost", 3 , true, 0, "weather",7,false));
 //        reservedCards.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
 //        reservedCards.add(new Spy("stennis", 1 , false, 5, "realms",4,false));
 //        reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
