@@ -180,26 +180,30 @@ public class ProfileMenu extends Application {
             backButtonRec.setWidth(60);
             backButtonRec.setHeight(60);
         });
-        Rectangle friendAcceptRec=new Rectangle(80,80);
-        friendAcceptRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/friendrequestaccept.png")))));
-        friendRequestPane.getChildren().add(friendAcceptRec);
-        friendAcceptRec.setLayoutY(200);
-        friendAcceptRec.setLayoutX(0);
-//        battleLogRec.setOnMouseClicked(this::showRequests);
-        friendAcceptRec.setOnMouseEntered(event -> {
-            friendAcceptRec.setWidth(100);
-            friendAcceptRec.setHeight(100);
+
+
+        Rectangle friendsManagerRec=new Rectangle(80,80);
+        friendsManagerRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/friendrequestaccept.png")))));
+        friendRequestPane.getChildren().add(friendsManagerRec);
+        friendsManagerRec.setLayoutY(200);
+        friendsManagerRec.setLayoutX(10);
+        friendsManagerRec.setOnMouseClicked(this::friendsManager);
+        friendsManagerRec.setOnMouseEntered(event -> {
+            friendsManagerRec.setWidth(100);
+            friendsManagerRec.setHeight(100);
         });
-        friendAcceptRec.setOnMouseExited(event -> {
-            friendAcceptRec.setWidth(80);
-            friendAcceptRec.setHeight(80);
+        friendsManagerRec.setOnMouseExited(event -> {
+            friendsManagerRec.setWidth(80);
+            friendsManagerRec.setHeight(80);
         });
+
+
         Rectangle friendRequestRec=new Rectangle(60,60);
-        friendRequestRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/add-friend1.png")))));
+        friendRequestRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/community.png")))));
         friendRequestPane.getChildren().add(friendRequestRec);
         friendRequestRec.setLayoutY(300);
         friendRequestRec.setLayoutX(20);
-//        friendRequestRec.setOnMouseClicked(this::showRequests);
+        friendRequestRec.setOnMouseClicked(this::showPlayerInfo);
         friendRequestRec.setOnMouseEntered(event -> {
             friendRequestRec.setWidth(80);
             friendRequestRec.setHeight(80);
@@ -208,13 +212,13 @@ public class ProfileMenu extends Application {
             friendRequestRec.setWidth(60);
             friendRequestRec.setHeight(60);
         });
-        friendRequestRec.setOnMouseClicked(this::showPlayerInfo);
+
+
         Rectangle battleLogRec=new Rectangle(60,60);
         battleLogRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/battlelog.png")))));
         friendRequestPane.getChildren().add(battleLogRec);
         battleLogRec.setLayoutY(400);
         battleLogRec.setLayoutX(20);
-        battleLogRec.setOnMouseClicked(this::showRequests);
         battleLogRec.setOnMouseEntered(event -> {
             battleLogRec.setWidth(80);
             battleLogRec.setHeight(80);
@@ -273,17 +277,45 @@ public class ProfileMenu extends Application {
         Pane showPlayerInfo=new Pane();
         showPlayerInfo.setMinWidth(300);
         showPlayerInfo.setMinHeight(400);
-        VBox vbox=new VBox(10);
-        Label showPlayerInfoLabel=new Label("show player info");
+        VBox vbox=new VBox(15);
+        Label showPlayerInfoLabel=new Label("   show player info");
         showPlayerInfoLabel.setFont(new Font("Baloo Bhai 2 Bold",20));
-//        showPlayerInfoLabel.setLayoutX(40);
         HBox searchbarHbox=new HBox(10);
         TextField searchBarTextField=new TextField();
         Rectangle searchRec=new Rectangle(20,20);
+        Pane backButtonPane=new Pane();
+        Rectangle backButtonRec=new Rectangle(30,30);
+        backButtonRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/backbuttonimage.png")))));
+        backButtonPane.getChildren().addAll(backButtonRec);
+        backButtonPane.setLayoutX(10);
+        backButtonPane.setLayoutY(10);
+        backButtonRec.setOnMouseClicked(event -> {
+            friendsStage.close();
+        });
+        backButtonRec.setOnMouseEntered(event -> {
+            backButtonRec.setWidth(40);
+            backButtonRec.setHeight(40);
+        });
+        backButtonRec.setOnMouseExited(event -> {
+            backButtonRec.setWidth(30);
+            backButtonRec.setHeight(30);
+        });
+        backButtonRec.setOnMouseClicked(event -> {
+            friendsStage.close();
+        });
+        searchRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/magnifire.png")))));
+        searchRec.setOnMouseEntered(event -> {
+            searchRec.setWidth(30);
+            searchRec.setHeight(30);
+        });
+        searchRec.setOnMouseExited(event -> {
+            searchRec.setWidth(20);
+            searchRec.setHeight(20);
+        });
         searchbarHbox.getChildren().addAll(searchBarTextField,searchRec);
         vbox.getChildren().addAll(showPlayerInfoLabel,searchbarHbox);
         vbox.setLayoutX(70);
-        showPlayerInfo.getChildren().addAll(vbox);
+        showPlayerInfo.getChildren().addAll(vbox,backButtonPane);
         searchRec.setOnMouseClicked(event -> {
             String name = searchBarTextField.getText();
             User user = User.getUserByUsername(name);
@@ -291,6 +323,7 @@ public class ProfileMenu extends Application {
                 HBox userNameHbox=new HBox(10);
                 Label usernameLabel=new Label("username : "+user.getUsername());
                 Rectangle friendRequestRec=new Rectangle(20,20);
+                friendRequestRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/add-friend.png")))));
                 userNameHbox.getChildren().addAll(usernameLabel,friendRequestRec);
                 Label nickNameLabel=new Label("nickname : "+user.getNickname());
                 Label highestScore=new Label("highestScore : "+user.getHighestScore());
@@ -299,31 +332,16 @@ public class ProfileMenu extends Application {
                 Label drawnGame=new Label("drawn game : "+user.getDrawnGame());
                 Label wonGame=new Label("won game : "+user.getWonGame());
                 Label lostGame=new Label("lost game : "+user.getLostGame());
-                vbox.getChildren().addAll(userNameHbox,nickNameLabel,highestScore,rank,totalGame,drawnGame,wonGame,lostGame);
-                showPlayerInfo.getChildren().addAll(vbox);
+                friendRequestRec.setOnMouseClicked(event1 -> {
+                    User.getLoggedInUser().addFriend(user.getUsername());
+                    User.getLoggedInUser().client.sendMessage("req:" + user.getUsername() + ":" + User.getLoggedInUser().getUsername());
+                });
+                vbox.getChildren().clear();
+                vbox.getChildren().addAll(showPlayerInfoLabel,searchbarHbox,userNameHbox,nickNameLabel,highestScore,rank,totalGame,drawnGame,wonGame,lostGame);
+                showPlayerInfo.getChildren().clear();
+                showPlayerInfo.getChildren().addAll(vbox,backButtonPane);
             }
         });
-
-//        if (user != null) {
-//            ContextMenu contextMenu = new ContextMenu();
-//            Label nickName = new Label("nick name: " + user.getNickname());
-//            Label userName = new Label("username: " + user.getUsername());
-////            userName.setOnMouseClicked(event -> {
-////                User.getLoggedInUser().addFriend(user.getUsername());
-////                User.getLoggedInUser().client.sendMessage("req:" + user.getUsername() + ":" + User.getLoggedInUser().getUsername());
-////            });
-//            Label rank = new Label("Rank: " + user.getRank());
-//            nickName.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
-//            userName.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
-//            rank.setStyle("-fx-font-weight: bold; -fx-padding: 5;");
-//            CustomMenuItem item1 = new CustomMenuItem(nickName, false);
-//            CustomMenuItem item2 = new CustomMenuItem(userName, false);
-//            CustomMenuItem item3 = new CustomMenuItem(rank, false);
-//            contextMenu.getItems().addAll(item1, item2, item3);
-//            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-//                contextMenu.show(searchButton, mouseEvent.getScreenX() - 40, mouseEvent.getScreenY() + 20);
-//            }
-//        }
         Scene scene=new Scene(showPlayerInfo);
         friendsStage.setScene(scene);
         friendsStage.show();
@@ -357,45 +375,76 @@ public class ProfileMenu extends Application {
     }
 
 
-    public void showRequests(MouseEvent mouseEvent) {
+    public void friendsManager(MouseEvent mouseEvent) {
         System.out.println("hi");
-        Pane pane = new Pane();
-        pane.setMinWidth(300);
-        pane.setMinHeight(400);
-        Scene scene = new Scene(pane);
-        VBox reqs = new VBox();
-        reqs.setAlignment(Pos.CENTER);
-        for (String req : User.getLoggedInUser().getRequests()){
-            HBox hBox = new HBox(5);
-            String[] reqParts = req.split("\\.");
-            Label labelName = new Label(reqParts[0]);
-            hBox.getChildren().add(labelName);
-            Button accept = new Button("Accept");
-            accept.setOnMouseClicked(event -> {
-                User.getLoggedInUser().addFriend(reqParts[0]);
-                User.getLoggedInUser().getRequests().remove(req);
-            });
-            Button reject = new Button("Reject");
-            accept.setOnMouseClicked(event -> {
-                User.getLoggedInUser().getRequests().remove(req);
-            });
-            hBox.getChildren().addAll(accept, reject);
-            reqs.getChildren().add(hBox);
-        }
-        Button exit = new Button("exit");
-        reqs.getChildren().add(exit);
-        exit.setOnMouseClicked(event -> {
-            friendsStage.close();
+        Pane friendsManagerPane = new Pane();
+        friendsManagerPane.setMinWidth(300);
+        friendsManagerPane.setMinHeight(400);
+        VBox friendManagerVbox=new VBox(10);
+        HBox buttonsHbox=new HBox(20);
+        Rectangle friendsListRec=new Rectangle(100,60);
+        friendsListRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/friendsbutton.png")))));
+        Rectangle inboxesRec=new Rectangle(100,60);
+        inboxesRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/inboxbutton.png")))));
+        buttonsHbox.getChildren().addAll(friendsListRec,inboxesRec);
+        Pane friendsPane=new Pane();
+        Pane inboxesPane=new Pane();
+        friendManagerVbox.getChildren().addAll(buttonsHbox,friendsPane);
+        friendsManagerPane.getChildren().add(friendManagerVbox);
+        friendManagerVbox.setLayoutX(40);
+        inboxesRec.setOnMouseClicked(event -> {
+            VBox requests = new VBox();
+            for (String request : User.getLoggedInUser().getRequests()){
+                HBox hBox = new HBox(10);
+                String[] requestParts = request.split("\\.");
+                Label labelName = new Label(requestParts[0]);
+                hBox.getChildren().add(labelName);
+                Button accept = new Button("Accept");
+                accept.setOnMouseClicked(event1 -> {
+                    User.getLoggedInUser().addFriend(requestParts[0]);
+                    User.getLoggedInUser().getRequests().remove(request);
+                });
+                Button reject = new Button("Reject");
+                reject.setOnMouseClicked(event2 -> {
+                    User.getLoggedInUser().getRequests().remove(request);
+                });
+                hBox.getChildren().addAll(accept, reject);
+                requests.getChildren().add(hBox);
+            }
+            inboxesRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/inboxbuttonselected.png")))));
+            friendsListRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/friendsbutton.png")))));
+            buttonsHbox.getChildren().clear();
+            buttonsHbox.getChildren().addAll(friendsListRec,inboxesRec);
+            inboxesPane.getChildren().clear();
+            inboxesPane.getChildren().addAll(requests);
+            friendManagerVbox.getChildren().clear();
+            friendManagerVbox.getChildren().addAll(buttonsHbox,inboxesPane);
+            friendsManagerPane.getChildren().clear();
+            friendsManagerPane.getChildren().add(friendManagerVbox);
         });
-        TextField textField = new TextField("username");
-        textField.setMaxWidth(200);
-        Button sendReq = new Button("send");
-        sendReq.setOnMouseClicked(event -> {
-            User.getLoggedInUser().addFriend(textField.getText());
-//            User.getLoggedInUser().client.sendMessage("req:" + textField.getText() + ":" + User.getLoggedInUser().getUsername());
+        friendsListRec.setOnMouseClicked(event -> {
+            VBox friends=new VBox(10);
+            for(String friendName:User.getLoggedInUser().getFriends() ){
+                System.out.println(friendName);
+                Label friendNameLabel=new Label(friendName);
+                friends.getChildren().add(friendNameLabel);
+            }
+            inboxesRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/inboxbutton.png")))));
+            friendsListRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/friendsbuttonselected.png")))));
+            buttonsHbox.getChildren().clear();
+            buttonsHbox.getChildren().addAll(friendsListRec,inboxesRec);
+            friendsPane.getChildren().clear();
+            friendsPane.getChildren().addAll(friends);
+            friendManagerVbox.getChildren().clear();
+            friendManagerVbox.getChildren().addAll(buttonsHbox,friendsPane);
+            friendsManagerPane.getChildren().clear();
+            friendsManagerPane.getChildren().add(friendManagerVbox);
         });
-        reqs.getChildren().addAll(textField, sendReq);
-        pane.getChildren().add(reqs);
+        Scene scene = new Scene(friendsManagerPane);
+//        requests.getChildren().add(exit);
+//        exit.setOnMouseClicked(event -> {
+//            friendsStage.close();
+//        });
         friendsStage.setScene(scene);
         friendsStage.show();
     }
