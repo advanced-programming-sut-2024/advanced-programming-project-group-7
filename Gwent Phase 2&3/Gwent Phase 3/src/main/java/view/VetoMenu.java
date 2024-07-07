@@ -15,16 +15,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.*;
 import model.cards.Horn;
-import model.factions.Monsters;
-import model.leaders.MonstersLeaders;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
 
-public class VetoCard  extends Application {
+public class VetoMenu extends Application {
     private Pane pane;
     private Deck deck;
     private static final double HEIGHT = 900;

@@ -105,6 +105,14 @@ public class UserThread extends Thread {
                         dataOutputStream1.flush();
                     }
 
+                } else if (parts1[0].equals("rejectInvite")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF("rejectInvite.freeUp");
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("searchPlayer")) {
                     boolean found = false;
                     for (User user : GameServer.allUsers) {

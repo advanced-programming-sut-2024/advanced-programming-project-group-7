@@ -267,7 +267,7 @@ public class MainMenu extends Application {
         Pane pane = new Pane();
         pane.setMinWidth(300);
         Label label = new Label(opponent+" has challenged you");
-        label.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+        label.setStyle("-fx-font-weight: bold;");
         Button acceptButton = new Button("Accept");
         acceptButton.setOnMouseClicked(event -> {
             PreGameMenu preGameMenu = new PreGameMenu();
@@ -295,6 +295,7 @@ public class MainMenu extends Application {
         reqs.setLayoutX(100);
         reqs.setLayoutY(50);
         reqs.getChildren().add(hBox);
+        pane.getChildren().add(reqs);
         reqMenu.setScene(scene);
         reqMenu.show();
     }

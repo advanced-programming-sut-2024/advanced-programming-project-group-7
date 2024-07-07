@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -50,10 +49,11 @@ public class PreGameMenu extends Application {
     public Label heroCards;
     public Stage stage;
     private Client client;
-    private Label challengeLabel = new Label("VS");
-    private Button accept = new Button("accept");
-    private Button reject = new Button("reject");
+    private final Label challengeLabel = new Label("VS");
+    private final Button accept = new Button("accept");
+    private final Button reject = new Button("reject");
     private Stage inviteMenu;
+    public static boolean hasActiveInvitation = false;
 
 
     @Override
@@ -335,8 +335,11 @@ public class PreGameMenu extends Application {
             TextField opponentName = new TextField();
             Button invite = new Button("invite");
             invite.setOnMouseClicked(event -> {
-                client.sendMessage("invite:" + opponentName.getText()
-                        + ":" + User.getLoggedInUser().getUsername() + ":" + String.valueOf(isPublic.isSelected()));
+                if (!hasActiveInvitation) {
+                    client.sendMessage("invite:" + opponentName.getText()
+                            + ":" + User.getLoggedInUser().getUsername() + ":" + isPublic.isSelected());
+                    hasActiveInvitation = true;
+                }
             });
             challengeLabel.setVisible(false);
             challengeLabel.setTextFill(Color.WHITE);
@@ -362,56 +365,16 @@ public class PreGameMenu extends Application {
             goToVetoMenu();
         }
     }
-    public void showInvitation(String opponent) {
-        Stage stage = new Stage();
-        Pane root = new Pane();
-        root.setMinHeight(500);
-        root.setMinWidth(800);
-        Scene scene = new Scene(root);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        root.setBackground(Background.EMPTY);
-        scene.setFill(Color.rgb(1,1,1, 0.7));
-        Label label = new Label(opponent+" has challenged you");
-        label.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
-        Button acceptButton = new Button("Accept");
-        acceptButton.setOnMouseClicked(event -> {
-            PreGameMenu preGameMenu = new PreGameMenu();
-            try {
-                User.getLoggedInUser().currentOponentName = opponent;
-                client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() );
-                stage.close();
-                preGameMenu.start(LoginMenu.stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-        Button rejectButton = new Button("Reject");
-        rejectButton.setOnMouseClicked(event -> {
-            stage.close();
-            client.sendMessage("rejectInvite:" + opponent); // todo
-        });
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(label, acceptButton);
-        stage.show();
-    }
     public void goToVetoMenu() {
-        VetoCard vetoCard = new VetoCard();
+        VetoMenu vetoCard = new VetoMenu();
         try {
             Deck.currentDeck = currentDeck;
             Deck.currentDeck.shuffleDeck();
-            inviteMenu.close();
+            if (inviteMenu != null)
+                inviteMenu.close();
             vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 }
-//try {
-//        Deck.currentDeck = currentDeck;// todo 1
-//        Deck.currentDeck.shuffleDeck();
-//        VetoCard vetoCard = new VetoCard();
-//        vetoCard.start(LoginMenu.stage);
-//        } catch (Exception e) {
-//        e.printStackTrace();
-//        }

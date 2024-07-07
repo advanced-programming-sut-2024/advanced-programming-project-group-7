@@ -154,6 +154,8 @@ public class Client extends Thread {
                 User.getLoggedInUser().currentOponentName = components[0];
                 pregameMenu.goToVetoMenu();
             });
+        } else if (components.length == 2 && components[0].equals("rejectInvite")) {
+            PreGameMenu.hasActiveInvitation = false;
         } else if (components.length == 1) {
             User.getLoggedInUser().addReq(components[0]);
         } else if (components.length == 3 && components[1].equals("invite")) {
