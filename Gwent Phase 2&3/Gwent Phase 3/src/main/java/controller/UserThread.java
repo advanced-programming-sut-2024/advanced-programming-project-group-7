@@ -189,6 +189,14 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("vote")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(parts1[2] +".vote."+parts1[3]);
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("cup")) {
                     if (GameServer.cupPlayers.size() < 4)
                         GameServer.cupPlayers.add(parts1[1]);

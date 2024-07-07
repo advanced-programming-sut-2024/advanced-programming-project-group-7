@@ -15,10 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import model.Card;
-import model.Deck;
-import model.Game;
-import model.User;
+import model.*;
 import view.*;
 
 import java.io.DataInputStream;
@@ -167,6 +164,20 @@ public class Client extends Thread {
                 fadeTransition.setCycleCount(1);
                 fadeTransition.setAutoReverse(false);
                 fadeTransition.play();
+            });
+        } else if (components.length == 3 && components[1].equals("vote")) {
+            Platform.runLater(()-> {
+                for (Node messagePane : game.gameLauncher.chatsVBox.getChildren()) {
+                    if (((MessagePane) messagePane).time.getText().replace(':',' ').equals(components[0])){
+                        if (components[2].equals("like")) {
+                            ((MessagePane) messagePane).votes++;
+                            ((MessagePane) messagePane).vote.setText(String.valueOf(((MessagePane) messagePane).votes));
+                        } else {
+                            ((MessagePane) messagePane).votes--;
+                            ((MessagePane) messagePane).vote.setText(String.valueOf(((MessagePane) messagePane).votes));
+                        }
+                    }
+                }
             });
         } else if (components.length == 2 && components[0].equals("rejectInvite")) {
             PreGameMenu.hasActiveInvitation = false;

@@ -32,7 +32,7 @@ public class GameLauncher extends Application {
 
     public ArrayList<Card> reservedCards = new ArrayList<>();
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
-    private static final double HEIGHT = 900;
+    private static final double HEIGHT = 1000;
     private static final double WIDTH = 1600;
     public EnhancedHBox playerHand = new EnhancedHBox();
     public EnhancedHBox playerFirstRowHorn = new EnhancedHBox();
@@ -63,7 +63,7 @@ public class GameLauncher extends Application {
     private Client client;
     public EnhancedHBox weatherBox = new EnhancedHBox();
     private Pane globalChat;
-    private VBox chatsVBox;
+    public VBox chatsVBox;
     private String repliedInfoText;
     private String replyReciver;
     private TextField chatField;
@@ -529,7 +529,7 @@ public class GameLauncher extends Application {
         }
 
         stage.show();
-//        stage.setFullScreen(true);
+        stage.setFullScreen(true);
         playerHandMouseSetter();
         Button button = new Button( "back");
         pane.getChildren().add(button);
@@ -613,6 +613,18 @@ public class GameLauncher extends Application {
             client.sendMessage("chat:"+User.getLoggedInUser().currentOponentName+":"
                     +chatField.getText()+"."+message.text+"."+ User.getLoggedInUser().getUsername()+"."+message.sender); //todo onlination
             chatField.clear();
+        });
+        message.dislike.setOnMouseClicked(event -> {
+            message.votes--;
+            message.vote.setText(String.valueOf(message.votes));
+            client.sendMessage("vote:"+User.getLoggedInUser().currentOponentName+":"
+                    + message.time.getText().replace(':', ' ')+":dislike");
+        });
+        message.like.setOnMouseClicked(event -> {
+            message.votes++;
+            message.vote.setText(String.valueOf(message.votes));
+            client.sendMessage("vote:"+User.getLoggedInUser().currentOponentName+":"
+                    + message.time.getText().replace(':', ' ')+":like");
         });
         chatsVBox.getChildren().add(message);
         handleScroll();
