@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="768" prefWidth="1280" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
+    <center>
+        <VBox alignment="CENTER" maxWidth="498.0" prefHeight="768.0" prefWidth="498.0" spacing="20.0">
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Pane prefHeight="100.0" prefWidth="115.0" />
+                  <Label fx:id="Username" alignment="CENTER" contentDisplay="RIGHT" prefHeight="91.0" prefWidth="316.0" text="Default" textFill="white">
+                      <font>
+                          <Font name="Baloo Bhaina 2 Bold" size="40" />
+                      </font>
+                  </Label>
+            </children>
+         </HBox>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="140.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator1" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="profileMenu" maxWidth="220.0" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator2" maxHeight="70.0" maxWidth="137.0" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="startNewGame" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator3" maxHeight="70.0" maxWidth="280.0" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="logOut" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
+         <HBox maxHeight="50.0" maxWidth="280.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <children>
+               <Pane fx:id="indicator4" maxHeight="70.0" maxWidth="280.0" prefHeight="50.0" prefWidth="50.0" />
+               <Pane fx:id="exitGame" prefHeight="50.0" prefWidth="220.0" />
+            </children>
+         </HBox>
+        </VBox>
+    </center>
+   <right>
+      <VBox alignment="CENTER" minWidth="100.0" prefHeight="200.0" BorderPane.alignment="CENTER">
+         <children>
+             <ImageView fitHeight="70" fitWidth="70 " onMouseClicked="#showRequests">
+                 <Image url="@../Images/icons/email.png" />
+             </ImageView>
+         </children>
+      </VBox>
+   </right>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+         </children></VBox>
+   </left>
+
+</BorderPane>

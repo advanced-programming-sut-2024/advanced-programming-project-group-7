@@ -1,0 +1,6 @@
+
+.scroll-pane {
+    -fx-border-color: gray;
+    -fx-border-width: 5px;
+    -fx-border-style: solid;
+}
