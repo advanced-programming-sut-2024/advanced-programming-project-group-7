@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,7 +21,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Game;
 import model.User;
 
@@ -256,47 +254,45 @@ public class MainMenu extends Application {
                 BackgroundSize.DEFAULT);
         return backgroundImage;
     }
-
-    public void scrollChat(ScrollEvent scrollEvent) {
-        double constant = scrollEvent.getDeltaY() > 0 ? 1 : -1;
-        double y = chats.getLayoutY() + 20 * constant;
-        chats.setLayoutY(y);
-    }
-    public static void menuTest (String opponent, Client client){
-        Stage reqMenu = new Stage();
-        Pane pane = new Pane();
-        pane.setMinWidth(300);
-        Label label = new Label(opponent+" has challenged you");
-        label.setStyle("-fx-font-weight: bold;");
-        Button acceptButton = new Button("Accept");
-        acceptButton.setOnMouseClicked(event -> {
-            PreGameMenu preGameMenu = new PreGameMenu();
-            try {
-                User.getLoggedInUser().currentOponentName = opponent;
-                client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() );
+    public static void menuTest (String opponent, Client client, String isPublic){
+        if (User.getLoggedInUser().currentOponentName == null) {
+            Stage reqMenu = new Stage();
+            Pane pane = new Pane();
+            pane.setMinWidth(300);
+            Label label = new Label(opponent + " has challenged you");
+            label.setStyle("-fx-font-weight: bold;");
+            Button acceptButton = new Button("Accept");
+            acceptButton.setOnMouseClicked(event -> {
+                PreGameMenu preGameMenu = new PreGameMenu();
+                try {
+                    User.getLoggedInUser().currentOponentName = opponent;
+                    client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() + ";" + isPublic);
+                    reqMenu.close();
+                    preGameMenu.start(LoginMenu.stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            Button rejectButton = new Button("Reject");
+            rejectButton.setOnMouseClicked(event -> {
                 reqMenu.close();
-                preGameMenu.start(LoginMenu.stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-        Button rejectButton = new Button("Reject");
-        rejectButton.setOnMouseClicked(event -> {
-            reqMenu.close();
-            client.sendMessage("rejectInvite:" + opponent); // todo
-        });
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(label, acceptButton, rejectButton);
+                client.sendMessage("rejectInvite:" + opponent);
+            });
+            HBox hBox = new HBox();
+            hBox.getChildren().addAll(label, acceptButton, rejectButton);
 
-        pane.setMinHeight(400);
-        Scene scene = new Scene(pane);
-        VBox reqs = new VBox();
-        reqs.setAlignment(Pos.CENTER);
-        reqs.setLayoutX(100);
-        reqs.setLayoutY(50);
-        reqs.getChildren().add(hBox);
-        pane.getChildren().add(reqs);
-        reqMenu.setScene(scene);
-        reqMenu.show();
+            pane.setMinHeight(400);
+            Scene scene = new Scene(pane);
+            VBox reqs = new VBox();
+            reqs.setAlignment(Pos.CENTER);
+            reqs.setLayoutX(100);
+            reqs.setLayoutY(50);
+            reqs.getChildren().add(hBox);
+            pane.getChildren().add(reqs);
+            reqMenu.setScene(scene);
+            reqMenu.show();
+        } else {
+            client.sendMessage("rejectInvite:" + opponent);
+        }
     }
 }

@@ -161,7 +161,7 @@ public class Client extends Thread {
         } else if (components.length == 3 && components[1].equals("invite")) {
             System.out.println("reached stage");
             Platform.runLater(()-> {
-                MainMenu.menuTest(components[0], this);
+                MainMenu.menuTest(components[0], this, components[2]);
             });
         } else if (components.length == 4) {
             Platform.runLater(()-> {

@@ -25,7 +25,7 @@ public class GameServer extends Thread {
     private Socket newSoc;
     public static HashMap<String, Socket> onlineUsers = new HashMap<>();
     public static ArrayList<User> allUsers = new ArrayList<>();
-    public static ArrayList<OngoingGame> ongoingGames = new ArrayList<OngoingGame>();
+    public static HashMap<String, OngoingGame> ongoingGames = new HashMap<>();
 
     public static void main(String[] args) {
         GameServer gameServer = new GameServer();

@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.application.Platform;
+import model.OngoingGame;
 import model.User;
 
 import java.io.DataInputStream;
@@ -143,9 +144,19 @@ public class UserThread extends Thread {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
+                    } else {
+                        try {
+                            DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[2]).getOutputStream());
+                            targetUser.writeUTF("rejectInvite.freeUp");
+                            targetUser.flush();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 } else if (parts1[0].equals("accept")) {
                     try {
+                        GameServer.ongoingGames.put(parts1[1]+"-"+parts1[2],
+                                new OngoingGame(parts1[1], parts1[2], Boolean.valueOf(parts1[3])));
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         targetUser.writeUTF(parts1[2] +".startGame");
                         targetUser.flush();
