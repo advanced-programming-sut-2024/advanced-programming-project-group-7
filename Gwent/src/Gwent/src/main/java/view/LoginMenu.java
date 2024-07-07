@@ -1,5 +1,9 @@
 package view;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+import controller.GameServer;
 import controller.LoginMenuController;
 import controller.GmailSender;
 import controller.LoginMenuController;
@@ -29,6 +33,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.URL;
 
 public class LoginMenu extends Application {
@@ -50,6 +58,7 @@ public class LoginMenu extends Application {
     public Pane switchPane;
     public Pane forgotPasswordPane;
     public Pane hybridButtPane;
+    private boolean verified = false;
     public Rectangle switchRectangle = new Rectangle(100,50);
     public Rectangle hybridRectangle = new Rectangle(100,50);
     public Rectangle forgotPasswordRectangle=new Rectangle(300,50);
@@ -169,18 +178,63 @@ public class LoginMenu extends Application {
         forgotPasswordPane.getChildren().addAll(forgotPasswordRectangle, forgotPasswordButton);
         sendEmailRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/email.png")))));
         sendEmail.getChildren().addAll(sendEmailRec);
+        sendEmail.setVisible(false);
+        sendEmailRec.setOnMouseClicked(mouseEvent1 -> {
+            sendLink(emailText.getText());
+        });
+    }
+    public void sendLink (String email) {
+        try {
+            HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+            server.createContext("/", new MyHandler());
+            server.createContext("/command", new CommandHandler());
+            server.setExecutor(null);
+            server.start();
+            GmailSender gmailSender=new GmailSender(email,"<a href=\"http://localhost:8000\">click me for gwent</a>\n");
+            gmailSender.send();
+            System.out.println("sent");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String response = "<html><head><title>My Server</title><script>function sendCommand() { fetch('/command', { method: 'POST' }).then(response => response.text()).then(data => console.log(data)).catch(error => console.error('Error:', error)); }</script></head><body><h1>Click to login!</h1><button onclick=\"sendCommand()\">Click Me</button></body></html>";
+            exchange.sendResponseHeaders(200, response.length());
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
+        }
     }
 
 
     public void signUp(MouseEvent mouseEvent) {
+
         Alert alert = null;
         if (!isLoggingIN) {
-        alert = LoginMenuController.userRegister(nameField.getText()
-                , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
+            if (!isLoggingIN && verified) {
+                try {
+                    alert = LoginMenuController.userRegister(nameField.getText()
+                            , password.getText(), confirmPWD.getText(), nicknameText.getText(), emailText.getText());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else if(!verified){
+                Alert alert3=new Alert(Alert.AlertType.WARNING);alert3.setHeaderText("verify your gmail first");alert3.show();
+            }
+//            try {
+//                alert = LoginMenuController.userRegister(nameField.getText()
+//                        , password.getText(),confirmPWD.getText(), nicknameText.getText(), emailText.getText());
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
             if (alert == null) {
                 try {
-//                    GmailSender gmailSender=new  GmailSender(emailText.getText(),null);
-//                    gmailSender.send();
+
                     Stage recoveryStage = new Stage();
                     recoveryStage.setTitle("Password Recovery");
                     Label usernameLabel = new Label("Answer one the questions below");
@@ -257,6 +311,23 @@ public class LoginMenu extends Application {
             mainMenu.start(LoginMenu.stage);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    class CommandHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if ("POST".equals(exchange.getRequestMethod())) {
+                verified = true;
+                String response = "Command received";
+                System.out.println(response);
+                exchange.sendResponseHeaders(200, response.length());
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response.getBytes());
+                }
+            } else {
+                exchange.sendResponseHeaders(405, -1); // Method Not Allowed
+            }
         }
     }
 
@@ -377,6 +448,7 @@ public class LoginMenu extends Application {
     public void Switch(MouseEvent mouseEvent) {
         isLoggingIN = !isLoggingIN;
         if (isLoggingIN) {
+            sendEmail.setVisible(false);
             confirmPWD.setVisible(false);
             nicknameLabel.setVisible(false);
             nicknameText.setVisible(false);
@@ -386,6 +458,7 @@ public class LoginMenu extends Application {
             forgotPasswordButton.setVisible(true);
             hybridButton.setText("login");
         } else {
+            sendEmail.setVisible(true);
             confirmPWD.setVisible(true);
             forgotPasswordButton.setVisible(false);
             nicknameLabel.setVisible(true);

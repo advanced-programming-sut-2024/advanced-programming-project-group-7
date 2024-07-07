@@ -16,6 +16,7 @@ import java.util.List;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
+    public Client client;
     ObjectMapper objectMapper=new ObjectMapper();
 //    public Client client;
     public String currentOponentName;
