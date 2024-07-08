@@ -191,21 +191,8 @@ public class LoginMenu extends Application {
             server.createContext("/command", new CommandHandler());
             server.setExecutor(null);
             server.start();
-            String link = "<a href='http://localhost:8000'Click here/a>";
-//            String link = "<a href=\"https://example.com/redirect\">Click here</a>";
-//            String link = "{\"text\":\"Check out this link: <http://example.com>\"}";
-//            String link = "Please verify your email address by clicking on this link: <a href=\"#\" onclick=\"window.location.href='http://localhost:8000';\">Click here</a>";
-//            String link="Please verify your email address by clicking on this link: <a href=\"http://localhost:8000\">Click here</a>";
-//           String link= "<a href=\"http://yourlink.com\">here</a>";
-//            String link = "Please click <a href='http://yourlink.com'>here</a>.";
-
-
-
-
-//            String link = "<a href=\"" + URLEncoder.encode("http://localhost:8000", "UTF-8") + "\">Click here</a>";
-
+            String link = "<a href='http://localhost:8000'/a>";//todo or " instead of'
             String body = "Please verify your email address by clicking on this link: " + link;
-//            body.setText(body, "UTF-8", "html");
             GmailSender gmailSender=new GmailSender(email,body);
             gmailSender.send();
             System.out.println("sent");

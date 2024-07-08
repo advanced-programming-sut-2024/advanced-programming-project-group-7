@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Game {
+    public int life=2;
+    public int lifeOpponent =2;
+    public boolean isCowTransformed=false;
+    public boolean isKambiTransformed=false;
     private final HBox playerThirdRowHorn;
     private final HBox playerSecondRowHorn;
     private final HBox playerFirstRowHorn;
@@ -35,7 +39,7 @@ public class Game {
     public EnhancedHBox playerFourthRow;
     public EnhancedHBox selectedBox;
     public EnhancedHBox playerHand;
-    public EnhancedHBox remainingDeck;
+//    public EnhancedHBox remainingDeck;
     public EnhancedHBox graveyard = new EnhancedHBox(); //don't add hero
     public EnhancedHBox playerFirstRow;
     public Label totalRow3Power;
@@ -149,6 +153,14 @@ public class Game {
         animation.play();
         gameLauncher.graveyardCard.add(card);
     }
+    private void removeCardForEnemy(Card card) {
+        EnhancedHBox box = (EnhancedHBox) card.getParent();
+//        box.getChildren().remove(card);
+        AnnihilationAnimation animation = new AnnihilationAnimation(box, card, this);
+        animation.play();
+        gameLauncher.enemyGraveyardCard.add(card);
+    }
+
     public void spyACard() {
         if(!gameLauncher.reservedCards.isEmpty()) {
             Card card = gameLauncher.reservedCards.get(0);
@@ -288,36 +300,6 @@ public class Game {
     public void enemyPlaceCard(Card finalCard, EnhancedHBox hBox) {
         hBox.getChildren().add(finalCard);
         calculateLabels();
-    }
-    public void newRound(Game game) {
-        if (Integer.parseInt(totalPower.getText()) < Integer.parseInt(totalPowerOpponent.getText())) {
-            life2.setVisible(false);
-        } else if (Integer.parseInt(totalPower.getText()) > Integer.parseInt(totalPowerOpponent.getText())) {
-            life2Opponent.setVisible(false);
-        } else {
-            life2Opponent.setVisible(false);
-            life2.setVisible(false);
-        }
-        playerFirstRow.getChildren().clear(); // todo have to go to graveyard
-        playerSecondRow.getChildren().clear();
-        playerThirdRow.getChildren().clear();
-        playerFourthRow.getChildren().clear();
-        playerFifthRow.getChildren().clear();
-        playerSixthRow.getChildren().clear();
-        playerFirstRowHorn.getChildren().clear(); // todo have to go to graveyard
-        playerSecondRowHorn.getChildren().clear();
-        playerThirdRowHorn.getChildren().clear();
-        playerFourthRowHorn.getChildren().clear();
-        playerFifthRowHorn.getChildren().clear();
-        playerSixthRowHorn.getChildren().clear();
-        totalPower.setText("0");
-        totalPowerOpponent.setText("0");
-        totalRow3PowerOpponent.setText("0");
-        totalRow2PowerOpponent.setText("0");
-        totalRow1PowerOpponent.setText("0");
-        totalRow3Power.setText("0");
-        totalRow2Power.setText("0");
-        totalRow1Power.setText("0");
     }
 
     public void medicACard() {
@@ -707,15 +689,114 @@ public class Game {
         box.getChildren().removeIf(node -> node instanceof Card && ((Card) node) instanceof  Berserker);
 
     }
-    public void  transformCow(Card card){//todo while cleaning table not after!
-        removeCard(card);
+    public void  transformCow(Card card, boolean b){//todo while cleaning table not after!
         if(card.getCardName().equals("cow")){
-//            hBoxes.get(4).getChildren().add();
+            isCowTransformed=true;
+//            hBoxes.get(4).getChildren().add(new Card("chort", 1, false, 8, "neutral", 3, false));
         }else if(card.getCardName().equals("kambi")){
-//            hBoxes.get(4).getChildren().add();
+            isKambiTransformed=true;
+//            hBoxes.get(4).getChildren().add(new Card("hemdall", 1, false, 11, "skellige", 3, true));
         }
+    }
+    public void pass(){}
+
+    public void endGame(){
+
+    }
+
+    public void endRound(Game game) {
+        handleLives();
+
+        for(int i=0;i<=6;i++) {//weather
+            Iterator<Node> iterator = hBoxes.get(i).getChildren().iterator();
+            while (iterator.hasNext()) {
+                Node card1 = iterator.next();
+                Card card2 = (Card) card1;
+                if(card2 instanceof Cow){
+                    if(i>=4)
+                    transformCow(card2, true);
+                    else {
+//                        transformCow(card2, false);//todo handle later
+                    }
+                }
+                if(i>=4 || i==0) removeCard(card2);
+                if(i>0 && i<4)removeCardForEnemy(card2);
+            }
+        }
+        playerFirstRowHorn.getChildren().clear(); // todo have to go to graveyard?
+        playerSecondRowHorn.getChildren().clear();
+        playerThirdRowHorn.getChildren().clear();
+        playerFourthRowHorn.getChildren().clear();
+        playerFifthRowHorn.getChildren().clear();
+        playerSixthRowHorn.getChildren().clear();
+        totalPower.setText("0");
+        totalPowerOpponent.setText("0");
+        totalRow3PowerOpponent.setText("0");
+        totalRow2PowerOpponent.setText("0");
+        totalRow1PowerOpponent.setText("0");
+        totalRow3Power.setText("0");
+        totalRow2Power.setText("0");
+        totalRow1Power.setText("0");
+                 if(isCowTransformed){
+                     hBoxes.get(4).getChildren().add(new Card("chort", 1, false, 8, "neutral", 3, false));
+                     isCowTransformed=false;
+                 }
+                 if(isKambiTransformed) {
+                     hBoxes.get(4).getChildren().add(new Card("hemdall", 1, false, 11, "skellige", 3, true));
+                     isKambiTransformed=false;
+                 }
     }
 
 
+    public void handleLives(){
+        if (Integer.parseInt(totalPower.getText()) < Integer.parseInt(totalPowerOpponent.getText())) {
+            if(life==2) {
+                life2.setVisible(false);
+                life--;
+            }
+            else if(life==1){
+                life1.setVisible(false);
+                life--;
+                endGame();
+            }
+        } else if (Integer.parseInt(totalPower.getText()) > Integer.parseInt(totalPowerOpponent.getText())) {
+            if(lifeOpponent==2){
+                life2Opponent.setVisible(false);
+                lifeOpponent--;
+            }
+            else if(lifeOpponent==1){
+                life2Opponent.setVisible(false);
+                lifeOpponent--;
+                endGame();
+            }
+
+//            life2Opponent.setVisible(false);
+        } else {
+            if(life==2&& lifeOpponent==2){
+                life2Opponent.setVisible(false);
+                life2.setVisible(false);
+                life--;
+                lifeOpponent--;
+            }else if(life==1 && lifeOpponent==2){
+                life2Opponent.setVisible(false);
+                life1.setVisible(false);
+                life--;
+                lifeOpponent--;
+                endGame();
+            }else if(life==2 && lifeOpponent==1){
+                life2.setVisible(false);
+                life1Opponent.setVisible(false);
+                life--;
+                lifeOpponent--;
+                endGame();
+            } else if(life==1 && lifeOpponent==1){
+                life1.setVisible(false);
+                life1Opponent.setVisible(false);
+                life--;
+                lifeOpponent--;
+                endGame();
+            }
+        }
+    }
 
 }

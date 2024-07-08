@@ -18,6 +18,7 @@ import model.cards.*;
 import view.GameLauncher;
 import view.PreGameMenu;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CardPlacementAnimation extends Transition {
@@ -71,6 +72,7 @@ public class CardPlacementAnimation extends Transition {
                 });
             }
             if (card instanceof Muster) {
+                ArrayList<Card>staged=new ArrayList<>();
                 Iterator<Node> iterator = game.playerHand.getChildren().iterator();
                 while (iterator.hasNext()) {
                     Node card1 = iterator.next();
@@ -78,15 +80,16 @@ public class CardPlacementAnimation extends Transition {
                         iterator.remove();
                         game.placeCard((Card) card1, game.selectedBox);
                     }
-                }if (game.remainingDeck != null) {
-                    Iterator<Node> iterator1 = game.remainingDeck.getChildren().iterator();
-                    while (iterator.hasNext()) {
-                        Node card1 = iterator.next();
-                        if (card1 instanceof Muster || card.getCardName().equals(((Card) card1).getCardName())) {
-                            iterator1.remove();
-                            game.placeCard((Card) card1, game.selectedBox);
-                        }
-                    }
+                }if (game.gameLauncher.reservedCards.size()!=0) {
+                     for(Card card2:game.gameLauncher.reservedCards){
+                         if (card2 instanceof Muster || card.getCardName().equals(card2.getCardName())){
+                             game.placeCard(card2, game.selectedBox);
+                             staged.add(card2);
+                         }
+                     }
+                     for(Card cardForDelete:staged){
+                         game.gameLauncher.reservedCards.remove(cardForDelete);
+                     }
                 }
             }
             else if (card instanceof Mardroeme) {
