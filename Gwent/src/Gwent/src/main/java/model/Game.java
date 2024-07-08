@@ -722,6 +722,7 @@ public class Game {
                 if(i>=4 || i==0) removeCard(card2);
                 if(i>0 && i<4)removeCardForEnemy(card2);
             }
+            addClearWeatherCheat();
         }
         playerFirstRowHorn.getChildren().clear(); // todo have to go to graveyard?
         playerSecondRowHorn.getChildren().clear();
