@@ -19,18 +19,18 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class GmailSender {
-    private static  String EMAIL_FROM = "kooroshimani2023@gmail.com";
-    private   String EMAIL_TO ="s.mohammad.e.1383@gmail.com";
-    private static  String APP_PASSWORD = "mrok fcmi tyky ipwt";
+    private static String EMAIL_FROM = "kooroshimani2023@gmail.com";
+    private String EMAIL_TO;
+    private static String APP_PASSWORD = "yourAppPassword";//todo goto your email and find app password and generate one, then put it here
     private String text;
 
     public GmailSender(String EMAIL_TO, String text) throws Exception {
         this.EMAIL_TO = EMAIL_TO;
-        this.text=text;
+        this.text = text;
 //        this.send();
     }
 
-    public  void send() throws Exception {
+    public void send() throws Exception {
         Message message = new MimeMessage(getEmailSession());
         message.setFrom(new InternetAddress(EMAIL_FROM));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(this.EMAIL_TO));
@@ -59,12 +59,13 @@ public class GmailSender {
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         return prop;
     }
-    public class TrackingLinkGenerator {
-        public static String generateTrackingLink(String baseUrl, String userId) {
-            String uniqueId = UUID.randomUUID().toString();
-            return baseUrl + "?user=" + userId + "&id=" + uniqueId;
-        }
-    }
+}
+//    public class TrackingLinkGenerator {
+//        public static String generateTrackingLink(String baseUrl, String userId) {
+//            String uniqueId = UUID.randomUUID().toString();
+//            return baseUrl + "?user=" + userId + "&id=" + uniqueId;
+//        }
+//    }
 
 //    ActionCodeSettings actionCodeSettings = ActionCodeSettings.builder()
 //            .setUrl("https://www.example.com/checkout?cartId=1234")
@@ -75,4 +76,4 @@ public class GmailSender {
 //            .setAndroidMinimumVersion("12")
 //            .setDynamicLinkDomain("coolapp.page.link")
 //            .build();
-}
+
