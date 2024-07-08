@@ -586,6 +586,9 @@ public class GameLauncher extends Application {
 
 //        for (Card card : Deck.currentDeck.hand)
 //            playerHand.getChildren().add(card);
+        pane.setOnKeyPressed(p -> {
+            
+        });
         stage.show();
         stage.setFullScreen(true);
         playerHandMouseSetter();

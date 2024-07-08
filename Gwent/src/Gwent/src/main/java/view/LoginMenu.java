@@ -179,7 +179,16 @@ public class LoginMenu extends Application {
         sendEmailRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/email.png")))));
         sendEmail.getChildren().addAll(sendEmailRec);
         sendEmail.setVisible(false);
+        sendEmailRec.setOnMouseEntered(event -> {
+            sendEmailRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/whiteemail.png")))));
+        });
+        sendEmailRec.setOnMouseExited(event -> {
+            sendEmailRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/email.png")))));
+        });
         sendEmailRec.setOnMouseClicked(mouseEvent1 -> {
+            Alert alert=new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("link sent to your email");
+            alert.show();
             sendLink(emailText.getText());
         });
     }
@@ -190,7 +199,7 @@ public class LoginMenu extends Application {
             server.createContext("/command", new CommandHandler());
             server.setExecutor(null);
             server.start();
-            GmailSender gmailSender=new GmailSender(email,"<a href=\"http://localhost:8000\">click me for gwent</a>\n");
+            GmailSender gmailSender=new GmailSender(email,"<a href=http://localhost:8000>click me for gwent</a>");
             gmailSender.send();
             System.out.println("sent");
 
@@ -213,7 +222,6 @@ public class LoginMenu extends Application {
 
 
     public void signUp(MouseEvent mouseEvent) {
-
         Alert alert = null;
         if (!isLoggingIN) {
             if (!isLoggingIN && verified) {
@@ -224,7 +232,9 @@ public class LoginMenu extends Application {
                     throw new RuntimeException(e);
                 }
             }else if(!verified){
-                Alert alert3=new Alert(Alert.AlertType.WARNING);alert3.setHeaderText("verify your gmail first");alert3.show();
+                alert=new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("verify your gmail first");
+                alert.show();
             }
 //            try {
 //                alert = LoginMenuController.userRegister(nameField.getText()
@@ -234,7 +244,6 @@ public class LoginMenu extends Application {
 //            }
             if (alert == null) {
                 try {
-
                     Stage recoveryStage = new Stage();
                     recoveryStage.setTitle("Password Recovery");
                     Label usernameLabel = new Label("Answer one the questions below");
@@ -250,7 +259,6 @@ public class LoginMenu extends Application {
                         securityAnswerFields[i] = new TextField();
                         securityAnswerFields[i].setMaxWidth(300);
                     }
-
                     Button confirmButton = new Button("Confirm");
                     Button backButton = new Button("Back");
                     confirmButton.setOnMouseClicked(event -> {

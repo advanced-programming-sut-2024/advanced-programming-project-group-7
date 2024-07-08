@@ -174,6 +174,19 @@ public class MainMenu extends Application {
             televisionRec.setWidth(80);
             televisionRec.setHeight(80);
         });
+        Rectangle rankingRec=new Rectangle(80,80);
+        rankingRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/ranking.png")))));
+        rankingRec.setOnMouseEntered(event -> {
+            rankingRec.setWidth(100);
+            rankingRec.setHeight(100);
+        });
+        rankingRec.setOnMouseExited(event -> {
+            rankingRec.setWidth(80);
+            rankingRec.setHeight(80);
+        });
+        rankingRec.setLayoutY(120);
+        rankingRec.setLayoutX(10);
+        televisionPane.getChildren().add(rankingRec);
     }
 
 
