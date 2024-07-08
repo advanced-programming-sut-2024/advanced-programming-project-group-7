@@ -2,9 +2,10 @@ package model;
 
 import model.cards.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Deck {
+public class Deck implements Serializable {
     public static Deck currentDeck;
     private LinkedHashMap<Card, Integer> cardsInDeck=new LinkedHashMap<>();
     private Faction deckFaction;

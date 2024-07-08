@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GmailSender {
     private static String EMAIL_FROM = "kooroshimani2023@gmail.com";
     private String EMAIL_TO;
-    private static String APP_PASSWORD = "yourAppPassword";//todo goto your email and find app password and generate one, then put it here
+    private static String APP_PASSWORD = "mrok fcmi tyky ipwt";//todo goto your email and find app password and generate one, then put it here
     private String text;
 
     public GmailSender(String EMAIL_TO, String text) throws Exception {
@@ -34,7 +34,7 @@ public class GmailSender {
         Message message = new MimeMessage(getEmailSession());
         message.setFrom(new InternetAddress(EMAIL_FROM));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(this.EMAIL_TO));
-        message.setSubject("Email subject");
+        message.setSubject("Gwent");
         message.setText(text);
 //        String link = "<a href=\"http://www.example.com\">Click here</a>";
 //        String body = "Please verify your email address by clicking on this link: " + link;

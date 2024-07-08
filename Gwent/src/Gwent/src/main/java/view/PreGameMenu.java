@@ -27,7 +27,7 @@ import model.*;
 import model.cards.Medic;
 import model.factions.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -391,6 +391,28 @@ public class PreGameMenu extends Application {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public void saveDeck(Deck deck, String filename) {
+        try (FileOutputStream fileOut = new FileOutputStream(filename);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(deck);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+    public Deck loadDeck(String filename) {
+        Deck deck = null;
+        try (FileInputStream fileIn = new FileInputStream(filename);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            deck = (Deck) in.readObject();
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+        return deck;
+    }
+
+    public void saveDeckFunc(MouseEvent mouseEvent) {
+        saveDeck(currentDeck, "deck.ser");
     }
 }
 //try {

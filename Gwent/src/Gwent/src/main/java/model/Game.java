@@ -5,10 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import model.cards.*;
-import model.factions.NorthernRealms;
 import model.leaders.*;
 import view.GameLauncher;
 import view.animations.AnnihilationAnimation;
@@ -54,6 +52,7 @@ public class Game {
     public String opponentName;
     public GameLauncher gameLauncher;
     public Rectangle highScorePlayer = new Rectangle() ;
+    public boolean kingBran=false;
 
     public Game(GameLauncher gameLauncher) {
         this.gameLauncher = gameLauncher;
@@ -222,7 +221,14 @@ public class Game {
             for (Node card : hBox.getChildren()) {
                 int currentPower = 0;
                 if (!((Card) card).isHero()){
-                    currentPower = hBox.badCondition ? 1 : ((Card) card).getPower();
+                    if (hBox.badCondition) {
+                        if(!kingBran) {
+                            currentPower = 1;
+                        }else currentPower=((Card)card).getPower()/2;
+                    } else {
+                        currentPower = ((Card)card).getPower();
+                    }
+
                     currentPower += hBox.moralBoostLevel;
                     if (hBox.isDoubled|| ((Card) card).isDoubeld)
                         currentPower *= 2;
@@ -330,7 +336,14 @@ public class Game {
                 hBox.moralBoostLevel++;
         }
         int currentPower = 0;
-        currentPower = hBox.badCondition ? 1 : (card).getPower();
+        if (hBox.badCondition) {
+            if(!kingBran) {
+                currentPower = 1;
+            }else currentPower=card.getPower()/2;
+        } else {
+            currentPower = card.getPower();
+        }
+
         currentPower += hBox.moralBoostLevel;
         if (hBox.isDoubled)
             currentPower *= 2;
@@ -357,7 +370,8 @@ public class Game {
             }
 
         }else if(leader.getLeaderName().equals("king bran")){
-
+            kingBran=true;
+            calculateLabels();
         }
 
     }
@@ -429,24 +443,34 @@ public class Game {
             calculateLabels();
         }else if(leader.getLeaderName().equals("eredin gold")){
             boolean[] isClicked = {false};
-            for (Node card : playerHand.getChildren()) {
-                card.setOnMouseClicked(event -> {
-                    if (!isClicked[0]) {
-                        removeCard((Card) card);
-                        spyACard();
-                        spyACard();
-                        isClicked[0] = true;
-                    }
-                });
+            for(int i=4;i<=6;i++){
+                for (Node card : hBoxes.get(i).getChildren()) {
+                    card.setOnMouseClicked(event -> {
+                        if (!isClicked[0]) {
+                            removeCard((Card) card);
+                            spyACard();
+                            spyACard();
+                            isClicked[0] = true;
+                        }
+                    });
+                }
             }
         }else if(leader.getLeaderName().equals("eredin copper")){
+            for(Card card:gameLauncher.reservedCards){
+                if(card.getCardName().equals("fog")|| card.getCardName().equals("frost")|| card.getCardName().equals("rain")){
+                    hBoxes.get(0).getChildren().add(card);
+                    gameLauncher.reservedCards.remove(card);
+                    calculateLabels();
+                    break;
+                }
+            }
 
         }else if(leader.getLeaderName().equals("eredin bronze")){
             Card card = gameLauncher.discardPile.get(0);
             playerHand.getChildren().add(card);
             gameLauncher.discardPile.remove(card);
 
-        }else if (leader.getLeaderName().equals("eredin the treacherous")){//todo not working!
+        }else if (leader.getLeaderName().equals("eredin the treacherous")){
             for(int i=0;i<=6;i++) {
                 Iterator<Node> iterator = hBoxes.get(i).getChildren().iterator();
                 while (iterator.hasNext()) {
@@ -492,7 +516,7 @@ public class Game {
           hBoxes.get(5).isDoubled=true;
           calculateLabels();
 
-      }else if(leader.getLeaderName().equals("foltest bronze")){//todo better test
+      }else if(leader.getLeaderName().equals("foltest bronze")){
           Iterator<Node> iterator = hBoxes.get(1).getChildren().iterator();
           int max=0;
           int sum=0;
@@ -555,16 +579,26 @@ public class Game {
                     }
                 }
             }
-        }else if(leader.getLeaderName().equals("emhyr gold")){
-
+        }else if(leader.getLeaderName().equals("emhyr gold")){//todo remove for enemy
+            Card card = gameLauncher.enemyDiscardPile.get(0);
+            playerHand.getChildren().add(card);
+            gameLauncher.enemyDiscardPile.remove(card);
 
         }else if(leader.getLeaderName().equals("emhyr copper")){
+            for(int i=0;i<Math.min(3,gameLauncher.enemyHand.size());i++){
+                showCardName(gameLauncher.enemyHand.get(i));
+            }
 
-        }else if(leader.getLeaderName().equals("emhyr bronze")){
+        }else if(leader.getLeaderName().equals("emhyr bronze")){//todo for enemy
+            gameLauncher.isLeaderDisabled=true;
 
         }else if (leader.getLeaderName().equals("emhyr invader of the north")){
-
+            //empty!
         }
+    }
+
+    private void showCardName(Card card) {//todo handle for showing name
+
     }
 
     public void addCardToHandcheat() {
@@ -621,4 +655,67 @@ public class Game {
 
         }
     }
+
+    public void handleMardrome(Card card) {
+//        if(card.getCardName().equals("ermion")) {
+            int i = 0;
+            int k=0;
+            System.out.println("1");
+            EnhancedHBox box = (EnhancedHBox) card.getParent();
+            Iterator<Node> iterator = box.getChildren().iterator();
+            while (iterator.hasNext()) {
+                Node card1 = iterator.next();
+                Card card2 = (Card) card1;
+                System.out.println(card2.getCardName());
+                if (card2 instanceof Berserker) {
+                    System.out.println("found one");
+                    if (card2.getCardName().equals("young berserker")) {
+                        i++;
+                    }
+                    if(card2.getCardName().equals("berserker")){
+                        k++;
+                    }
+                }
+            }
+            for (int j = 0; j < i; j++) {
+                box.getChildren().add(new Card("young vildkaarl", 3, false, 8, "skellige", 2, false));
+            }
+            for (int j = 0; j < k; j++) {
+                box.getChildren().add(new Card("vildkaarl", 3, false, 14, "skellige", 3, false));
+            }
+
+            box.getChildren().removeIf(node -> node instanceof Card && ((Card) node) instanceof  Berserker);
+//            if(i>1)
+//            this.handleBond(box, new TightBond("young vildkaarl", 3, false, 8, "skellige", 2, false), this);
+//            if(k>0)
+//            this.(box,new MoralBoost("vildkaarl", 3, false, 14, "skellige", 3, false), this);
+
+//        }else{
+
+//        }
+        calculateLabels();
+    }
+
+    public void transformBerserker(Card card) {
+        EnhancedHBox box = (EnhancedHBox) card.getParent();
+        if (card.getCardName().equals("young berserker")) {
+            box.getChildren().add(new Card("young vildkaarl", 3, false, 8, "skellige", 2, false));
+
+        }else {
+            box.getChildren().add(new Card("vildkaarl", 3, false, 14, "skellige", 3, false));
+        }
+        box.getChildren().removeIf(node -> node instanceof Card && ((Card) node) instanceof  Berserker);
+
+    }
+    public void  transformCow(Card card){//todo while cleaning table not after!
+        removeCard(card);
+        if(card.getCardName().equals("cow")){
+//            hBoxes.get(4).getChildren().add();
+        }else if(card.getCardName().equals("kambi")){
+//            hBoxes.get(4).getChildren().add();
+        }
+    }
+
+
+
 }
