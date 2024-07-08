@@ -122,6 +122,24 @@ public class Client extends Thread {
                     throw new RuntimeException(e);
                 }
             });
+        } else if (components[0].equals("startCup")) {
+            Platform.runLater(()-> {
+                CupMenu.init(components[1], components[2], components[3], components[4],
+                        components[5], components[6], components[7], components[8], components[9]);
+                CupMenu cupMenu = new CupMenu();
+                try {
+                    cupMenu.start(LoginMenu.stage);
+                    user.isInCup = true;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } else if (components[0].equals("ready")) {
+            Platform.runLater(()-> {
+                CupMenu.setReady(components[1],components[2]);
+            });
+        } else if (components[0].equals("cupResult")) {
+            CupMenu.result(components[1], components[2], components[3]);
         } else if (components.length == 2 && components[1].equals("accepted")) {
             Platform.runLater(()-> {
                 User.getLoggedInUser().addFriend(components[0]);

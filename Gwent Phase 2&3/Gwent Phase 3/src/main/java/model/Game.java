@@ -18,10 +18,7 @@ import javafx.stage.StageStyle;
 import model.cards.Horn;
 import model.cards.MoralBoost;
 import model.cards.TightBond;
-import view.GameLauncher;
-import view.LoginMenu;
-import view.MainMenu;
-import view.PreGameMenu;
+import view.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -452,6 +449,9 @@ public class Game {
             showResult("win");
             User.getLoggedInUser().getBattleLog().add(new BattleInfo(User.getLoggedInUser().currentOponentName,
                     LocalDate.now(), roundsPoints, finalPoints, User.getLoggedInUser().getUsername()));
+            if (User.getLoggedInUser().isInCup) {
+                client.sendMessage("cupResult:"+"cupResult."+User.getLoggedInUser().getUsername()+"."+User.getLoggedInUser().currentOponentName+"."+ CupMenu.yourNode.nodeName);
+            }
         }
     }
 

@@ -3,11 +3,13 @@ package controller;
 import javafx.application.Platform;
 import model.OngoingGame;
 import model.User;
+import view.CupMenu;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UserThread extends Thread {
@@ -198,10 +200,59 @@ public class UserThread extends Thread {
                         throw new RuntimeException(e);
                     }
                 } else if (parts1[0].equals("cup")) {
-                    if (GameServer.cupPlayers.size() < 4)
+                    if (GameServer.cupPlayers.size() < 8)
                         GameServer.cupPlayers.add(parts1[1]);
-                    CupGame cupGame = new CupGame();
-                    //todo cup
+                    else {
+                        ArrayList<String> list = GameServer.cupPlayers;
+                        for (String cupPlayer : list){
+                            try {
+                                DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(cupPlayer).getOutputStream());
+                                targetUser.writeUTF("startCup."+ list.get(0) +"."+ list.get(1) +"."+ list.get(2) +"."
+                                        + list.get(3) +"."+ list.get(4) +"."+ list.get(5)+"."+ list.get(6)
+                                        +"."+ list.get(7)+"."+list.indexOf(cupPlayer));
+                                targetUser.flush();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                } else if (parts1[0].equals("ready")) {
+                    ArrayList<String> list = GameServer.cupPlayers;
+                    for (String cupPlayer : list) {
+                        try {
+                            DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(cupPlayer).getOutputStream());
+                            targetUser.writeUTF("ready." + parts1[1] + "." + parts1[2]);
+                            targetUser.flush();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                } else if (parts1[0].equals("cupGame")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(parts1[2]+".startGame");
+                        targetUser.flush();
+                        DataOutputStream random = new DataOutputStream(GameServer.onlineUsers.get(parts1[2]).getOutputStream());
+                        random.writeUTF(parts1[1] +".startGame");
+                        random.flush();
+                        GameServer.randomChallenger = null;
+                        GameServer.ongoingGames.put(parts1[1]+"-"+parts1[2],
+                                new OngoingGame(parts1[1], parts1[2], true, "cup"));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (parts1[0].equals("cupResult")) {
+                    ArrayList<String> list = GameServer.cupPlayers;
+                    for (String cupPlayer : list) {
+                        try {
+                            DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(cupPlayer).getOutputStream());
+                            targetUser.writeUTF(parts1[2]);
+                            targetUser.flush();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 } else if (parts1[0].equals("card")) {
                     try {
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());

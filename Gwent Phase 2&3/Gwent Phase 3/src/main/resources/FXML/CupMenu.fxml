@@ -103,27 +103,27 @@
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="240.0" layoutY="760.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P23" textAlignment="JUSTIFY">
+      <Label layoutX="240.0" layoutY="760.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P22" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
 
 
-      <Label layoutX="410.0" layoutY="395.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P24" textAlignment="JUSTIFY">
+      <Label layoutX="410.0" layoutY="395.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P23" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="410.0" layoutY="695.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P25" textAlignment="JUSTIFY">
+      <Label layoutX="410.0" layoutY="695.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P24" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
 
 
-      <Label layoutX="590.0" layoutY="545.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P26" textAlignment="JUSTIFY">
+      <Label layoutX="590.0" layoutY="545.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P25" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Rectangle fx:id="ready" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="134.0" layoutX="567.0" layoutY="139.0" width="138.0" />
+      <Rectangle fx:id="ready" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="130.0" layoutX="567.0" layoutY="139.0" width="130.0" />
       <Button fx:id="isPlaying" layoutX="675.0" layoutY="695.0" mnemonicParsing="false" text="?" />
       <TextField fx:id="searchBar" layoutX="589.0" layoutY="695.0" prefWidth="86.0" />
       <Button fx:id="watch" layoutX="615.0" layoutY="731.0" mnemonicParsing="false" text="Watch" />

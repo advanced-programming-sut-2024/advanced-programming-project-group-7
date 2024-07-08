@@ -11,119 +11,119 @@
          <font>
             <Font name="Arabic Typesetting" size="77.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="55.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="55.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P0" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="130.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="130.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P1" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="205.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="205.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P2" textAlignment="JUSTIFY">
       <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="280.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="280.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P3" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="355.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="355.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P4" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="430.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="430.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P5" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="505.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="505.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P6" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="570.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="1160.0" layoutY="570.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P7" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="970.0" layoutY="95.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="970.0" layoutY="95.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P8" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="970.0" layoutY="235.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="970.0" layoutY="235.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P9" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="970.0" layoutY="385.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="970.0" layoutY="385.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P10" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="970.0" layoutY="535.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label  layoutX="970.0" layoutY="535.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P11" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="780.0" layoutY="165.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="780.0" layoutY="165.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P12" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="780.0" layoutY="465.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="780.0" layoutY="465.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P13" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="589.0" layoutY="309.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-
-
-      <Label layoutX="50.0" layoutY="245.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-      <Label layoutX="50.0" layoutY="395.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-      <Label layoutX="50.0" layoutY="545.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-      <Label layoutX="50.0" layoutY="685.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="589.0" layoutY="309.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P14" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
 
 
-      <Label layoutX="240.0" layoutY="320.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="50.0" layoutY="245.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P15" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="240.0" layoutY="470.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="50.0" layoutY="395.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P16" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="240.0" layoutY="620.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="50.0" layoutY="545.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P17" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Label layoutX="240.0" layoutY="760.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-
-
-      <Label layoutX="410.0" layoutY="395.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-      <Label layoutX="410.0" layoutY="695.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="50.0" layoutY="685.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P18" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
 
 
-      <Label layoutX="590.0" layoutY="545.0" prefHeight="59.0" prefWidth="115.0" text="player 0" textAlignment="JUSTIFY">
+      <Label layoutX="240.0" layoutY="320.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P19" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />
          </font></Label>
-      <Rectangle fx:id="ready" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="134.0" layoutX="567.0" layoutY="139.0" width="144.0" />
+      <Label layoutX="240.0" layoutY="470.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P20" textAlignment="JUSTIFY">
+         <font>
+            <Font size="29.0" />
+         </font></Label>
+      <Label layoutX="240.0" layoutY="620.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P21" textAlignment="JUSTIFY">
+         <font>
+            <Font size="29.0" />
+         </font></Label>
+      <Label layoutX="240.0" layoutY="760.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P22" textAlignment="JUSTIFY">
+         <font>
+            <Font size="29.0" />
+         </font></Label>
+
+
+      <Label layoutX="410.0" layoutY="395.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P23" textAlignment="JUSTIFY">
+         <font>
+            <Font size="29.0" />
+         </font></Label>
+      <Label layoutX="410.0" layoutY="695.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P24" textAlignment="JUSTIFY">
+         <font>
+            <Font size="29.0" />
+         </font></Label>
+
+
+      <Label layoutX="590.0" layoutY="545.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P25" textAlignment="JUSTIFY">
+         <font>
+            <Font size="29.0" />
+         </font></Label>
+      <Rectangle fx:id="ready" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="134.0" layoutX="567.0" layoutY="139.0" width="138.0" />
       <Button fx:id="isPlaying" layoutX="675.0" layoutY="695.0" mnemonicParsing="false" text="?" />
       <TextField fx:id="searchBar" layoutX="589.0" layoutY="695.0" prefWidth="86.0" />
       <Button fx:id="watch" layoutX="615.0" layoutY="731.0" mnemonicParsing="false" text="Watch" />

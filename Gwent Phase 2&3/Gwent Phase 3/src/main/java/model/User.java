@@ -12,24 +12,9 @@ public class User {
     private static final ArrayList<User> users=new ArrayList<>();
     public Client client;
     public String currentOponentName;
+    public boolean isInCup = false;
     private ArrayList<String> requests = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
-
-    public ArrayList<Deck> getDecks() {
-        return decks;
-    }
-
-    public void setDecks(ArrayList<Deck> decks) {
-        this.decks = decks;
-    }
-
-    public Deck getCurrentDeck() {
-        return currentDeck;
-    }
-
-    public void setCurrentDeck(Deck currentDeck) {
-        this.currentDeck = currentDeck;
-    }
 
     private ArrayList<Deck> decks=new ArrayList<>();
     private ArrayList<Game> games=new ArrayList<>();
@@ -198,20 +183,6 @@ public class User {
 
     public ArrayList<Game> getGames() {
         return games;
-    }
-
-    static {
-    User userTest=new User("","","Ebim","amir2023@gmail.com");
-    userTest.setSecurityQuestionNumber(1);
-    userTest.setAnswerOfSecurityQuestion("red");
-
-        User userTest1=new User("a","a","mr a","amir2023@gmail.com");
-        userTest1.setSecurityQuestionNumber(1);
-        userTest1.setAnswerOfSecurityQuestion("red");
-
-        User userTest2=new User("b","b","mr b","amir2023@gmail.com");
-        userTest2.setSecurityQuestionNumber(1);
-        userTest2.setAnswerOfSecurityQuestion("red");
     }
 
     public ArrayList<BattleInfo> getBattleLog() {
