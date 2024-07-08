@@ -1,6 +1,8 @@
 package view;
 
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
 public class MatchNode {
     public String nodeName;
@@ -20,6 +22,7 @@ public class MatchNode {
         } else {
             if (!ready.equals(playerName)) {
                 CupMenu.client.sendMessage("cupGame:"+ready+":"+playerName);
+                CupMenu.ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
             }
         }
     }

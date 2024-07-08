@@ -3,6 +3,8 @@ package view;
 import controller.Client;
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,7 +35,7 @@ public class CupMenu extends Application {
     public Button watch;
     public TextField searchBar;
     public Button isPlaying;
-    public Rectangle ready;
+    public static Rectangle ready;
     public static Label P0;
     public static Label P2;
     public static Label P1;
@@ -144,10 +146,20 @@ public class CupMenu extends Application {
         tournament1.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/tournament.png")))));
         watch.setVisible(false);
         ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
-        RotateTransition rotate = new RotateTransition(Duration.seconds(5), ready);
-        rotate.setCycleCount(50);
-        rotate.setByAngle(360);
-        rotate.play();
+        ready.setOnMouseClicked(event -> {
+            yourNode.setReady(you);
+            RotateTransition rotate = new RotateTransition(Duration.seconds(3), ready);
+            rotate.setCycleCount(1);
+            rotate.setByAngle(360);
+            rotate.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/green-ready.png")))));
+                    yourNode.setReady(you);
+                }
+            });
+            rotate.play();
+        });
     }
     private BackgroundImage createBackgroundImage (String address) {
         Image image = new Image(Game.class.getResource(address).toExternalForm(), 1280 ,900, false, false);
