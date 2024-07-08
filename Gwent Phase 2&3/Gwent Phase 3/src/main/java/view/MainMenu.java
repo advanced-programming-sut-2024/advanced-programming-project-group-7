@@ -350,7 +350,7 @@ public class MainMenu extends Application {
     }
     private void createTV() {
         Rectangle televisionRec=new Rectangle(80,80);
-        televisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/green-ready.png")))));
+        televisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/tv.png")))));
         televisionRec.setLayoutY(20);
         televisionRec.setLayoutX(10);
         televisionPane.getChildren().add(televisionRec);
