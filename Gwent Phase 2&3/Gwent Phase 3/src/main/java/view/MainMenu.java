@@ -52,6 +52,8 @@ public class MainMenu extends Application {
     public Label logOutRLabel;
     public Label exitGameLabel;
     public VBox chats;
+    public Pane televisionPane;
+    private static VBox rankTelevisionVBox;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -150,7 +152,9 @@ public class MainMenu extends Application {
         startNewGame.getChildren().addAll(startNewGameRec,startNewGameLabel);
         logOut.getChildren().addAll(logOutRec,logOutRLabel);
         exitGame.getChildren().addAll(exitGameRec,exitGameLabel);
+        createTV();
     }
+
 
     public void setLabelText() {
         Username.setText("welcome "+ User.getLoggedInUser().getNickname());
@@ -295,4 +299,75 @@ public class MainMenu extends Application {
             client.sendMessage("rejectInvite:" + opponent);
         }
     }
+
+    private void showTelevisionMenu(MouseEvent mouseEvent) {
+        Stage televisionMenu=new Stage();
+        televisionMenu.setTitle("Television");
+        Pane pane=new Pane();
+        setSize(pane,400,600);
+        Scene scene=new Scene(pane);
+        VBox vBox=new VBox(10);
+        vBox.setAlignment(Pos.TOP_CENTER);
+        Pane buttonPane=new Pane();
+        Pane televisionPane=new Pane();
+        Pane rankTelevisionPane=new Pane();
+        rankTelevisionVBox = new VBox(10);
+        rankTelevisionVBox.setAlignment(Pos.TOP_CENTER);
+        rankTelevisionVBox.setMaxWidth(480);
+        rankTelevisionVBox.getChildren().add(new Label("test"));
+        rankTelevisionPane.getChildren().addAll(rankTelevisionVBox);
+        rankTelevisionVBox.setLayoutX(300);
+        televisionPane.getChildren().addAll(rankTelevisionPane);
+        Pane myPreviousGameTelevisionPane=new Pane();
+        Rectangle myPreviousGameTelevisionRec=new Rectangle(600,400);
+        myPreviousGameTelevisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
+        myPreviousGameTelevisionPane.getChildren().addAll(myPreviousGameTelevisionRec);
+        Button rankPlayerGames=new Button("rank");
+        rankPlayerGames.setOnMouseClicked(event -> {
+            televisionPane.getChildren().clear();
+            televisionPane.getChildren().addAll(rankTelevisionPane);
+        });
+        Button myPreviousGame=new Button("my games");
+        myPreviousGame.setOnMouseClicked(event -> {
+            televisionPane.getChildren().clear();
+            televisionPane.getChildren().addAll(myPreviousGameTelevisionPane);
+        });
+        buttonPane.getChildren().addAll(rankPlayerGames,myPreviousGame);
+        buttonPane.setMaxHeight(30);
+        rankPlayerGames.setLayoutX(10);
+        myPreviousGame.setLayoutX(100);
+        vBox.getChildren().addAll(buttonPane,televisionPane);
+        vBox.setAlignment(Pos.CENTER);
+        pane.getChildren().addAll(vBox);
+        televisionMenu.setScene(scene);
+        televisionMenu.show();
+    }
+    private void setSize(Pane pane,int height,int width){
+        pane.setMinHeight(height);
+        pane.setMaxHeight(height);
+        pane.setMinWidth(width);
+        pane.setMaxWidth(width);
+    }
+    private void createTV() {
+        Rectangle televisionRec=new Rectangle(80,80);
+        televisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/green-ready.png")))));
+        televisionRec.setLayoutY(20);
+        televisionRec.setLayoutX(10);
+        televisionPane.getChildren().add(televisionRec);
+        televisionPane.setOnMouseClicked(event -> {
+            User user =User.getLoggedInUser();
+            user.client.sendMessage("rankTV:"+user.getUsername());
+            showTelevisionMenu(event);
+        });
+        televisionRec.setOnMouseEntered(event -> {
+            televisionRec.setWidth(100);
+            televisionRec.setHeight(100);
+        });
+        televisionRec.setOnMouseExited(event -> {
+            televisionRec.setWidth(80);
+            televisionRec.setHeight(80);
+        });
+    }
+
+
 }

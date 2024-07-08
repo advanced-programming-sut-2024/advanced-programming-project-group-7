@@ -278,6 +278,20 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("rankTV")) {
+                    try {
+                        StringBuilder st = new StringBuilder();
+                        st.append(parts1[0]);
+                        for (String players : GameServer.ongoingGames.keySet()) {
+                            st.append(players).append(".");
+                        }
+                        st.append("end");
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(st.toString());
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("pass")) {
                     try {
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());

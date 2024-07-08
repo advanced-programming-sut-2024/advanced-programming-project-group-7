@@ -51,6 +51,9 @@
              <ImageView fitHeight="70" fitWidth="70 " onMouseClicked="#showRequests">
                  <Image url="@../Images/icons/email.png" />
              </ImageView>
+             <Pane fx:id="televisionPane">
+
+             </Pane>
          </children>
       </VBox>
    </right>

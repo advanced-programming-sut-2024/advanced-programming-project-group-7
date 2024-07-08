@@ -44,7 +44,7 @@ public class Client extends Thread {
     @Override
     public void run(){
         try {
-            socket = new Socket("127.0.0.1", 34800);
+            socket = new Socket("192.168.7.96", 34800);
             sendBuffer = new DataOutputStream(socket.getOutputStream());
             receiveBuffer = new DataInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -122,6 +122,8 @@ public class Client extends Thread {
                     throw new RuntimeException(e);
                 }
             });
+        } else if (components[0].equals("rankTV")) {
+            System.out.println(Arrays.toString(Arrays.stream(components).toArray()));
         } else if (components[0].equals("startCup")) {
             Platform.runLater(()-> {
                 CupMenu.init(components[1], components[2], components[3], components[4],
