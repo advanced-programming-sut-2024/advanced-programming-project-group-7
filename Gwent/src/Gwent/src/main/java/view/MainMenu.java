@@ -34,6 +34,7 @@ import java.net.URL;
 public class MainMenu extends Application {
 
     public static Stage stage;
+    public static Stage rankAndTelevisionstage=new Stage();
     public Label Username;
     public Rectangle mail;
     public Pane indicator1;
@@ -165,7 +166,7 @@ public class MainMenu extends Application {
         televisionRec.setLayoutY(20);
         televisionRec.setLayoutX(10);
         televisionPane.getChildren().add(televisionRec);
-        televisionPane.setOnMouseClicked(this::showTelevisionMenu);
+        televisionRec.setOnMouseClicked(this::showTelevisionMenu);
         televisionRec.setOnMouseEntered(event -> {
             televisionRec.setWidth(100);
             televisionRec.setHeight(100);
@@ -187,12 +188,29 @@ public class MainMenu extends Application {
         rankingRec.setLayoutY(120);
         rankingRec.setLayoutX(10);
         televisionPane.getChildren().add(rankingRec);
+        rankingRec.setOnMouseClicked(this::showRanking);
     }
 
+    private void showRanking(MouseEvent mouseEvent){
+        Pane rankingPane=new Pane();
+        VBox vbox=new VBox(20);
+        vbox.getChildren().clear();
+        Label rankingLabel=new Label("       Ranking");
+        rankingLabel.setFont(new Font("Baloo Bhai 2 Bold",20));
+        vbox.getChildren().add(rankingLabel);
+        setSize(rankingPane,400,300);
+        Scene scene=new Scene(rankingPane);
+        for(User user:User.userRanking()){
+            Label usernameLabel=new Label(user.getUsername());
+            vbox.getChildren().add(usernameLabel);
+        }
+        rankingPane.getChildren().addAll(vbox);
+        vbox.setLayoutX(80);
+        rankAndTelevisionstage.setScene(scene);
+        rankAndTelevisionstage.show();
+    }
 
     private void showTelevisionMenu(MouseEvent mouseEvent) {
-        Stage televisionMenu=new Stage();
-        televisionMenu.setTitle("Television");
         Pane pane=new Pane();
         setSize(pane,400,600);
         Scene scene=new Scene(pane);
@@ -225,8 +243,8 @@ public class MainMenu extends Application {
         vBox.getChildren().addAll(buttonPane,televisionPane);
         vBox.setAlignment(Pos.CENTER);
         pane.getChildren().addAll(vBox);
-        televisionMenu.setScene(scene);
-        televisionMenu.show();
+        rankAndTelevisionstage.setScene(scene);
+        rankAndTelevisionstage.show();
     }
 
 

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -63,6 +64,10 @@ public class GameLauncher extends Application {
     public boolean isLeaderDisabled=false;
     public EnhancedHBox weatherBox = new EnhancedHBox();
     public Card lastCardPlayed;
+    public Card handLastCard;
+    public GridPane graveYardGridPane=new GridPane();
+
+
 
 
     @Override
@@ -74,7 +79,7 @@ public class GameLauncher extends Application {
 //        client = User.getLoggedInUser().client; todo onlination
 //        client.game = game;todo onlination
         pane = new Pane();
-        setSize(pane);
+        setSize(pane,HEIGHT,WIDTH);
         pane.setBackground(new Background(createBackgroundImage()));
         Pane chatBoxPane = new Pane();
         chatBoxPane.setLayoutX(1280);
@@ -481,6 +486,17 @@ public class GameLauncher extends Application {
         leaderOpponent.setLayoutX(120);
         leaderOpponent.setLayoutY(75);
 
+//        Pane graveYardRoot=new Pane();
+////        Rectangle aaaaa=new Rectangle(600,400);
+////        graveYardRoot.getChildren().add(aaaaa);
+//        graveYardRoot.setLayoutX(600);
+//        graveYardRoot.setLayoutY(200);
+//        setSize(graveYardRoot,400,600);
+//        graveYardGridPane.setAlignment(Pos.CENTER);
+////        graveYardRoot.setVisible(false);
+
+
+
         Button buttonPass = new Button();
         buttonPass.setText("Pass");
         buttonPass.setLayoutX(320);
@@ -572,6 +588,17 @@ public class GameLauncher extends Application {
 
         playerHand.getChildren().add(new Card("frost", 3, true, 0, "weather", 7, false));
 
+
+        graveyardCard.add(new Scorch("scorch", 3, true, 0, "special", 123456, false));
+        graveyardCard.add(new Scorch("toad", 1, false, 7, "monsters", 2, false));
+        graveyardCard.add(new Spy("thaler", 1, false, 1, "realms", 6, false));
+        graveyardCard.add(new TightBond("catapult 1", 2, false, 8, "realms", 1, false));
+        graveyardCard.add(new Card("ciri", 1, false, 15, "neutral", 3, true));
+        graveyardCard.add(new Card("fog", 3, true, 0, "weather", 7, false));
+        graveyardCard.add((new Card("rain", 2, true, 0, "weather", 7, false)));
+        graveyardCard.add(new Card("frost", 3, true, 0, "weather", 7, false));
+//        graveYardRoot.getChildren().addAll(graveYardGridPane);
+
 //            for (Card card : Deck.currentDeck.hand)
 //                playerHand.getChildren().add(card);
 
@@ -580,14 +607,14 @@ public class GameLauncher extends Application {
 //        pane.setOnKeyTyped(a -> {
 //            System.out.println("aaaaa");
 //        });
-        pane.setOnKeyTyped(w -> {
-//           game.undoCardCheat(lastCardPlayed);
-//            game.addHerosToGraveyardCheat();
-//            game.addHornToHandCheat();
-              game.removeAllCloseKombatsCheat();
+        pane.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode()== KeyCode.Q)game.undoCardCheat(lastCardPlayed);
+            else if(keyEvent.getCode()==KeyCode.W)game.addCardToHandcheat();
+            else if(keyEvent.getCode()==KeyCode.E)game.addHerosToGraveyardCheat();
+            else if(keyEvent.getCode()==KeyCode.R)game.addClearWeatherCheat();
+            else if(keyEvent.getCode()==KeyCode.T)game.addHornToHandCheat();
+            else if(keyEvent.getCode()==KeyCode.Y)game.removeAllCloseKombatsCheat();
         });
-
-
         stage.show();
         stage.setFullScreen(true);
         playerHandMouseSetter();
@@ -673,7 +700,7 @@ public class GameLauncher extends Application {
     }
 
     public void addCardToPane(Card card, double endY, double endX){
-        lastCardPlayed=Card.getCardByName(card);
+        lastCardPlayed=card;
 //        System.out.println(lastCardPlayed.getCardName());
         pane.getChildren().add(card);
         card.setLayoutY(this.sceneY);
@@ -800,11 +827,11 @@ public class GameLauncher extends Application {
         return selected.getRows().contains(selectedRow);
     }
 
-    private void setSize (Pane pane) {
-        pane.setMinHeight(HEIGHT);
-        pane.setMaxHeight(HEIGHT);
-        pane.setMinWidth(WIDTH);
-        pane.setMaxWidth(WIDTH);
+    private void setSize (Pane pane,double height,double width) {
+        pane.setMinHeight(height);
+        pane.setMaxHeight(height);
+        pane.setMinWidth(width);
+        pane.setMaxWidth(width);
     }
     private BackgroundImage createBackgroundImage () {
         Image image = new Image(Game.class.getResource("/Images/board.jpg").toExternalForm(), WIDTH ,HEIGHT, false, false);
@@ -837,5 +864,45 @@ public class GameLauncher extends Application {
         if(i==12)return 12;
         return 0;
     }
-
+    public void setCardsInGraveYard(){
+        int count=0;
+        graveYardGridPane.getChildren().clear();
+        for (Card card : graveyardCard) {
+            Pane pane1 = new Pane();
+            Rectangle rectangle1 = new Rectangle();
+            rectangle1.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
+            rectangle1.setHeight(200);
+            rectangle1.setWidth(120);
+            rectangle1.setArcHeight(20);
+            rectangle1.setArcWidth(20);
+            pane.getChildren().add(rectangle1);
+//            System.out.println("hand's card");
+//            for(Card card2: deck.hand){
+//                System.out.println(card2+" : "+card2.getCardName());
+//            }
+//            System.out.println("00000000000000000000000");
+//            System.out.println("update card");
+//            for(Card card2:update) System.out.println(card2+" : "+card2.getCardName());
+//            System.out.println("00000000000000000000000");
+//            pane.setOnMouseClicked(event -> {
+//                update.remove(card); // Use iterator to remove the card
+//                if (First) {
+//                    update.add(substitue2);
+//                    First = false;
+//                }
+//                else {
+//                    update.add(substitue1);
+//                }
+//                deck.hand.clear();
+//                deck.hand.addAll(update);
+//                for (Card card1:update) System.out.println(card+" : "+card1.getCardName());
+//                System.out.println("---------------------");
+////                deck.hand.clear();
+////                deck.hand.addAll(update);
+//                setCards();
+//            });
+            graveYardGridPane.add(pane1, count % 5, count / 5);
+            count++;
+        }
+    }
 }

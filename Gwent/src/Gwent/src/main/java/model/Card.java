@@ -179,6 +179,10 @@ public class Card extends Pane {
         this.rows = rows;
     }
 
+    public int getrows(){
+        return this.rows;
+    }
+
     public boolean isHero() {
         return isHero;
     }
@@ -313,4 +317,5 @@ public class Card extends Pane {
         this.bondLevel = bondLevel;
         this.boostLevel = boostLevel;
     }
+
 }
