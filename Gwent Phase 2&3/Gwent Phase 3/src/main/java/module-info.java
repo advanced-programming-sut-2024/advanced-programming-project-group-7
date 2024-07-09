@@ -5,6 +5,8 @@ module Gwent {
     requires java.desktop;
     requires java.xml.bind;
     requires com.fasterxml.jackson.dataformat.xml;
+    requires java.sql;
+    requires com.google.gson;
 
     exports view;
     opens view to javafx.fxml;

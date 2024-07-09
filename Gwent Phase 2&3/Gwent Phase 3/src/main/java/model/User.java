@@ -31,7 +31,6 @@ public class User {
     private int drawnGame=0;
     private int wonGame=0;
     private int lostGame=0;
-    private Faction currentFaction;
     private  int securityQuestionNumber;
     private String answerOfSecurityQuestion;
     //private final String securityQuestionAnswer;
@@ -198,10 +197,13 @@ public class User {
 
     public void addFriend(String reqPart) {
         friends.add(reqPart);
-        System.out.println(reqPart);
     }
 
     public ArrayList<String > getFriends() {
         return friends;
+    }
+
+    public void setFriends(ArrayList<String> friends) {
+        this.friends = friends;
     }
 }

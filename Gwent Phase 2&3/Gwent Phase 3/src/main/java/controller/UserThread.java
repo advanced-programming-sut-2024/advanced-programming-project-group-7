@@ -34,6 +34,7 @@ public class UserThread extends Thread {
                 boolean legit = splits[4].matches("\\S+@\\S+.com");
                 if (legit) {
                     GameServer.allUsers.add(new User(splits[1], splits[2], splits[3], splits[4]));
+                    GameServer.saveUsers(GameServer.allUsers);
                     dataOutputStream1.writeUTF("registered." + splits[1] + "." + splits[2] + "." + splits[3] + "." + splits[4]);
                     GameServer.onlineUsers.put(splits[1], socket);
                     dataOutputStream1.flush();
