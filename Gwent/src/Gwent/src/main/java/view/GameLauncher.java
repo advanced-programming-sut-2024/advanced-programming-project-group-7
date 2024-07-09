@@ -12,6 +12,7 @@ import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -57,6 +58,7 @@ public class GameLauncher extends Application {
     public EnhancedHBox playerFifthRowHorn = new EnhancedHBox();
     public EnhancedHBox playerFifthRow = new EnhancedHBox();
     public Pane pane = new Pane();
+    public Card handLastCard;
     private Card selected;
     public double sceneX;
     public double sceneY;
@@ -576,11 +578,20 @@ public class GameLauncher extends Application {
         playerFirstRow.hornBox = playerFirstRowHorn;
 
         game.hBoxes = hBoxes;
-        pane.setOnKeyTyped(w -> {
-//           game.undoCardCheat(lastCardPlayed);
-//            game.addHerosToGraveyardCheat();
-//            game.addHornToHandCheat();
-              game.removeAllCloseKombatsCheat();
+        pane.setOnKeyPressed(keyEvent -> {
+
+            if(keyEvent.getCode()== KeyCode.Q)game.undoCardCheat(lastCardPlayed);
+
+            else if(keyEvent.getCode()==KeyCode.W)game.addCardToHandcheat();
+
+            else if(keyEvent.getCode()==KeyCode.E)game.addHerosToGraveyardCheat();
+
+            else if(keyEvent.getCode()==KeyCode.R)game.addClearWeatherCheat();
+
+            else if(keyEvent.getCode()==KeyCode.T)game.addHornToHandCheat();
+
+            else if(keyEvent.getCode()== KeyCode.Y)game.removeAllCloseKombatsCheat();
+
         });
 
 

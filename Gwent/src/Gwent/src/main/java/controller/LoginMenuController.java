@@ -26,7 +26,6 @@ public class LoginMenuController {
     }
 
     public static Alert userRegister( String username,String password,String passwordConfirm,String nickname,String email) throws IOException {
-//        if(username.isEmpty()){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("empty username");return alert;}
         if(isUsernameDuplicate(username)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username is taken");return alert;}
         else if(! isUsernameValid(username)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid username");return alert;}
         else if(! isEmailAddressValid(email)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid email");return alert;}
@@ -36,23 +35,13 @@ public class LoginMenuController {
         else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("password is not confirmed correctly");return alert;}
         else{
             User user=new User(username,password,nickname,email);
-//            System.out.println(user.getUsername());
-//            Client client=new Client(null,user);
-//            client.start();
-//            ObjectMapper objectMapper=new ObjectMapper();
-//            String str=  objectMapper.writeValueAsString(user);
-//            System.out.println(str);
-//           client.sendMessage("newUser:"+objectMapper.writeValueAsString(user));
-//           String[] parts=objectMapper.writeValueAsString(user).split(":");
-//            System.out.println(parts.length);
-
            User.setLoggedInUser(user);
             return null;
         }
     }
 
     public static boolean isNicknameValid(String nickname) {
-    return nickname.matches("\\S+");
+        return nickname.matches("\\S+");
     }
 
     public static boolean isUsernameDuplicate(String username){
@@ -106,15 +95,15 @@ public class LoginMenuController {
         return password.equals(passwordConfirm);
     }
 
-    private static boolean isPasswordCorrect(User user ,String password ) {
+    public static boolean isPasswordCorrect(User user ,String password ) {
         return user.getPassword().equals(password);
     }
 
-    public static boolean IsSecurityQuestionAnswered(String username,String answer){
-        User user=User.getUserByUsername(username);
-        if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
-        return false;
-    }
+//    public static boolean IsSecurityQuestionAnswered(String username,String answer){
+//        User user=User.getUserByUsername(username);
+//        if(answer.equals(user.getAnswerOfSecurityQuestion()))return true;
+//        return false;
+//    }
 
     public static Alert setNewPassword(String username, String pass){
         User user=User.getUserByUsername(username);
@@ -165,5 +154,8 @@ public class LoginMenuController {
         StringBuilder twoFACode=new StringBuilder();
         for(int i=0;i<6;i++) twoFACode.append(random.nextInt(0,9));
         return twoFACode.toString();
+    }
+    public int add(int a,int b){
+        return a+b;
     }
 }

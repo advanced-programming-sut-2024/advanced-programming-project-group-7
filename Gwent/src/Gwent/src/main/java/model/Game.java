@@ -166,6 +166,7 @@ public class Game {
             Card card = gameLauncher.reservedCards.get(0);
             playerHand.getChildren().add(card);//todo why after adding we can't work
             gameLauncher.reservedCards.remove(card);
+            gameLauncher.handLastCard=card;
         }
     }
     public void handleBond(EnhancedHBox selectedBox, Card card, Game game) {
@@ -307,6 +308,7 @@ public class Game {
             Card card = gameLauncher.graveyardCard.get(0);
             playerHand.getChildren().add(card);//todo why after adding we can't work
             gameLauncher.graveyardCard.remove(card);
+            gameLauncher.handLastCard=card;
         }
     }
     public int getCurrentPower(Card card){
@@ -606,10 +608,149 @@ public class Game {
         calculateLabels();
     }
     public void undoCardCheat(Card card) {
+
         EnhancedHBox box = (EnhancedHBox) card.getParent();
+
         box.getChildren().remove(card);
-        Card card1= Card.getCardByName(card);
-        gameLauncher.playerHand.getChildren().add(card1);
+
+        if (card.getClass().getSimpleName().equals("Spy")) {
+
+            gameLauncher.playerHand.getChildren().add(new Spy(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+
+            gameLauncher.playerHand.getChildren().remove(gameLauncher.handLastCard);
+
+        }
+
+        else if (card.getClass().getSimpleName().equals("Horn")) {
+
+            gameLauncher.playerHand.getChildren().add(new Horn(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+
+
+
+        }
+
+        else if (card.getClass().getSimpleName().equals("Medic")) {
+
+            gameLauncher.playerHand.getChildren().add(new Medic(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows, card.isHero()));
+
+            gameLauncher.playerHand.getChildren().remove(gameLauncher.handLastCard);
+
+        }
+
+        else if (card.getClass().getSimpleName().equals("Agile"))
+
+            gameLauncher.playerHand.getChildren().add(new Agile(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("Berserker"))
+
+            gameLauncher.playerHand.getChildren().add(new Berserker(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("Cow"))
+
+            gameLauncher.playerHand.getChildren().add(new Cow(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("Decoy"))
+
+            gameLauncher.playerHand.getChildren().add(new Decoy(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("Mardroeme"))
+
+            gameLauncher.playerHand.getChildren().add(new Mardroeme(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("MoralBoost"))
+
+            gameLauncher.playerHand.getChildren().add(new MoralBoost(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("Muster"))
+
+            gameLauncher.playerHand.getChildren().add(new Muster(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("Scorch"))
+
+            gameLauncher.playerHand.getChildren().add(new Scorch(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("TightBond"))
+
+            gameLauncher.playerHand.getChildren().add(new TightBond(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+        else if (card.getClass().getSimpleName().equals("Card")){
+
+            gameLauncher.playerHand.getChildren().add(new Card(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(), card.getFactionName(), card.rows , card.isHero()) );
+
+            switch (card.getCardName()) {
+
+                case "frost" -> {
+
+                    playerThirdRow.badConditionEffect.setVisible(false);
+
+                    playerThirdRow.badCondition = false;
+
+                    playerFourthRow.badConditionEffect.setVisible(false);
+
+                    playerFourthRow.badCondition = false;
+
+                }
+
+                case "fog" -> {
+
+                    playerSecondRow.badConditionEffect.setVisible(false);
+
+                    playerSecondRow.badCondition = false;
+
+                    playerFifthRow.badConditionEffect.setVisible(false);
+
+                    playerFifthRow.badCondition = false;
+
+                }
+
+                case "rain" -> {
+
+                    playerFirstRow.badConditionEffect.setVisible(false);
+
+                    playerFirstRow.badCondition = false;
+
+                    playerSixthRow.badConditionEffect.setVisible(false);
+
+                    playerSixthRow.badCondition = false;
+
+                }
+
+                case "storm" -> {
+
+                    playerSecondRow.badConditionEffect.setVisible(false);
+
+                    playerSecondRow.badCondition = false;
+
+                    playerFifthRow.badConditionEffect.setVisible(false);
+
+                    playerFifthRow.badCondition = false;
+
+                    playerFirstRow.badConditionEffect.setVisible(false);
+
+                    playerFirstRow.badCondition = false;
+
+                    playerSixthRow.badConditionEffect.setVisible(false);
+
+                    playerSixthRow.badCondition = false;
+
+                }
+
+            }
+
+            calculateLabels();
+
+        }
+
+        else
+
+            System.out.println(" bullshit" + card.getCardName());
+
+//        if(card instanceof TightBond) gameLauncher.playerHand.getChildren().add(new TightBond(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(),card.getFactionName(),card.getrows(), card.isHero()));
+
+//        else if(card instanceof Spy)gameLauncher.playerHand.getChildren().add(new TightBond(card.getCardName(), card.getCountOfCard(), card.isSpecial(), card.getPower(),card.getFactionName(),card.getrows(), card.isHero()));
+
+//        gameLauncher.playerHand.getChildren().add(card.clone());
+
     }
 
     public void addHerosToGraveyardCheat() {
@@ -701,6 +842,11 @@ public class Game {
     public void pass(){}
 
     public void endGame(){
+        String winner=null;
+        if(life==0 && lifeOpponent!=0)winner="you";
+        else if (life!=0 && lifeOpponent==0)winner="your enemy";
+        else winner="no one";
+    System.out.println("it's over."+winner+"won");
 
     }
 
