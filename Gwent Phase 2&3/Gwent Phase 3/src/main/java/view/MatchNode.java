@@ -22,7 +22,7 @@ public class MatchNode {
         } else {
             if (!ready.equals(playerName)) {
                 CupMenu.client.sendMessage("cupGame:"+ready+":"+playerName);
-                CupMenu.ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
+//                CupMenu.ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
             }
         }
     }

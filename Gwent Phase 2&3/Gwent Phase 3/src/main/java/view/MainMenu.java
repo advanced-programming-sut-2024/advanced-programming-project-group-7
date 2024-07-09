@@ -25,10 +25,13 @@ import model.Game;
 import model.User;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainMenu extends Application {
 
     public static Stage stage;
+    public static ArrayList<User> users = new ArrayList<>();
     public Label Username;
     public Rectangle mail;
     public Pane indicator1;
@@ -54,6 +57,8 @@ public class MainMenu extends Application {
     public VBox chats;
     public Pane televisionPane;
     private static VBox rankTelevisionVBox;
+    public Button refresh;
+    public Button leaderboard;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -223,6 +228,7 @@ public class MainMenu extends Application {
             accept.setOnMouseClicked(event -> {
                 User user = User.getLoggedInUser();
                 user.client.sendMessage("request accepted:"+reqParts[0]+":"+user.getUsername());
+                user.addFriend(reqParts[0]);
                 reqMenu.close();
             });
             Button reject = new Button("Reject");
@@ -259,44 +265,46 @@ public class MainMenu extends Application {
         return backgroundImage;
     }
     public static void menuTest (String opponent, Client client, String isPublic){
-        if (User.getLoggedInUser().currentOponentName == null) {
-            Stage reqMenu = new Stage();
-            Pane pane = new Pane();
-            pane.setMinWidth(300);
-            Label label = new Label(opponent + " has challenged you");
-            label.setStyle("-fx-font-weight: bold;");
-            Button acceptButton = new Button("Accept");
-            acceptButton.setOnMouseClicked(event -> {
-                PreGameMenu preGameMenu = new PreGameMenu();
-                try {
-                    User.getLoggedInUser().currentOponentName = opponent;
-                    client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() + ";" + isPublic);
+        if(User.getLoggedInUser().getFriends().contains(opponent)) {
+            if (User.getLoggedInUser().currentOponentName == null) {
+                Stage reqMenu = new Stage();
+                Pane pane = new Pane();
+                pane.setMinWidth(300);
+                Label label = new Label(opponent + " has challenged you");
+                label.setStyle("-fx-font-weight: bold;");
+                Button acceptButton = new Button("Accept");
+                acceptButton.setOnMouseClicked(event -> {
+                    PreGameMenu preGameMenu = new PreGameMenu();
+                    try {
+                        User.getLoggedInUser().currentOponentName = opponent;
+                        client.sendMessage("accept:" + opponent + ":" + User.getLoggedInUser().getUsername() + ":" + isPublic);
+                        reqMenu.close();
+                        preGameMenu.start(LoginMenu.stage);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                Button rejectButton = new Button("Reject");
+                rejectButton.setOnMouseClicked(event -> {
                     reqMenu.close();
-                    preGameMenu.start(LoginMenu.stage);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            Button rejectButton = new Button("Reject");
-            rejectButton.setOnMouseClicked(event -> {
-                reqMenu.close();
-                client.sendMessage("rejectInvite:" + opponent);
-            });
-            HBox hBox = new HBox();
-            hBox.getChildren().addAll(label, acceptButton, rejectButton);
+                    client.sendMessage("rejectInvite:" + opponent);
+                });
+                HBox hBox = new HBox();
+                hBox.getChildren().addAll(label, acceptButton, rejectButton);
 
-            pane.setMinHeight(400);
-            Scene scene = new Scene(pane);
-            VBox reqs = new VBox();
-            reqs.setAlignment(Pos.CENTER);
-            reqs.setLayoutX(100);
-            reqs.setLayoutY(50);
-            reqs.getChildren().add(hBox);
-            pane.getChildren().add(reqs);
-            reqMenu.setScene(scene);
-            reqMenu.show();
-        } else {
-            client.sendMessage("rejectInvite:" + opponent);
+                pane.setMinHeight(400);
+                Scene scene = new Scene(pane);
+                VBox reqs = new VBox();
+                reqs.setAlignment(Pos.CENTER);
+                reqs.setLayoutX(100);
+                reqs.setLayoutY(50);
+                reqs.getChildren().add(hBox);
+                pane.getChildren().add(reqs);
+                reqMenu.setScene(scene);
+                reqMenu.show();
+            } else {
+                client.sendMessage("rejectInvite:" + opponent);
+            }
         }
     }
 
@@ -370,4 +378,12 @@ public class MainMenu extends Application {
     }
 
 
+    public void refreshList(MouseEvent event) {
+        User.getLoggedInUser().client.sendMessage("refresh:"+User.getLoggedInUser().getUsername());
+    }
+
+    public void goToLeaderboard(MouseEvent event) {
+        Leaderboard board = new Leaderboard();
+        board.start(LoginMenu.stage);
+    }
 }

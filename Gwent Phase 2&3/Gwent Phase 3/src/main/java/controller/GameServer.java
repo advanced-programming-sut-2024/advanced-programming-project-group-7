@@ -22,7 +22,7 @@ public class GameServer extends Thread {
     public static ArrayList<String> sample = new ArrayList<>();
 
     public static void main(String[] args) {
-        loadUsers();
+//        loadUsers();
         GameServer gameServer = new GameServer();
         gameServer.start();
     }
@@ -35,6 +35,13 @@ public class GameServer extends Thread {
                 newSoc = serverSocket.accept();
                 UserThread userThread = new UserThread(newSoc);
                 userThread.start();
+                System.out.println("hi");
+                for (User user : allUsers) {
+                    if (onlineUsers.get(user.getUsername()) != null && !onlineUsers.get(user.getUsername()).isConnected()) {
+                        onlineUsers.get(user.getUsername()).close();
+                        user.isOnline = false;
+                    }
+                }
             }
         } catch (IOException e) {
         }

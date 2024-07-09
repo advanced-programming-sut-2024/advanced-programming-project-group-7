@@ -410,16 +410,19 @@ public class Game {
             opponentLives--;
         }
 
-        ArrayList<Node> remove = new ArrayList<>();
-        for (int i = 1; i < hBoxes.size(); i++) {
-            EnhancedHBox box = hBoxes.get(1);
-            remove.addAll(box.getChildren());
-            for (Node card: remove) {
-                box.getChildren().remove(card);
-                if (!((Card) card).isHero() || !((Card) card).isSpecial()) {
-                    graveyard.add(((Card) card));
-                }
-            }
+//        ArrayList<Node> remove = new ArrayList<>();
+//        for (int i = 1; i < hBoxes.size(); i++) {
+//            EnhancedHBox box = hBoxes.get(1);
+//            remove.addAll(box.getChildren());
+//            for (Node card: remove) {
+//                box.getChildren().remove(card);
+//                if (!((Card) card).isHero() || !((Card) card).isSpecial()) {
+//                    graveyard.add(((Card) card));
+//                }
+//            }
+//        }
+        for (EnhancedHBox box : hBoxes) {
+            box.getChildren().clear();
         }
         playerFirstRowHorn.getChildren().clear();
         playerSecondRowHorn.getChildren().clear();
@@ -436,7 +439,7 @@ public class Game {
         totalRow2Power.setText("0");
         totalRow1Power.setText("0");
         int[] finalPoints = {yourLives, opponentLives};
-        if (yourLives==0 && opponentLives == 0) {
+        if (yourLives==0 && opponentLives == 0) { // todo
             showResult("draw");
             User.getLoggedInUser().getBattleLog().add(new BattleInfo(User.getLoggedInUser().currentOponentName,
                     LocalDate.now(), roundsPoints, finalPoints, "draw"));
@@ -467,9 +470,14 @@ public class Game {
         root.setMinWidth(400);
         Button invite = new Button("continue");
         invite.setOnMouseClicked(event -> {
+            resultPop.close();
             MainMenu mainMenu = new MainMenu();
             try {
-                mainMenu.start(LoginMenu.stage);
+                User.getLoggedInUser().currentOponentName = null;
+                if (User.getLoggedInUser().isInCup){
+                    User.getLoggedInUser().cupMenu.start(LoginMenu.stage);
+                } else
+                    mainMenu.start(LoginMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

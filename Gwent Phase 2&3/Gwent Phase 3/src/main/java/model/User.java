@@ -2,7 +2,11 @@ package model;
 
 
 import controller.Client;
+import javafx.scene.control.Button;
+import view.CupMenu;
+import view.GameLauncher;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,43 +14,43 @@ import java.util.HashMap;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
-    public Client client;
-    public String currentOponentName;
-    public boolean isInCup = false;
-    private ArrayList<String> requests = new ArrayList<>();
-    private ArrayList<String> friends = new ArrayList<>();
-
-    private ArrayList<Deck> decks=new ArrayList<>();
-    private ArrayList<Game> games=new ArrayList<>();
-    private ArrayList<BattleInfo> battleLog =new ArrayList<>();
-    private Leader currentLeader;
+    public transient Client client;
+    public transient String currentOponentName;
+    public transient boolean isInCup = false;
+    public  Boolean isOnline = false;
+    public transient CupMenu cupMenu;
+    private transient ArrayList<String> requests = new ArrayList<>();
+    private transient ArrayList<String> friends = new ArrayList<>();
+    private transient ArrayList<Deck> decks=new ArrayList<>();
+    private transient ArrayList<Game> games=new ArrayList<>();
+    private transient ArrayList<BattleInfo> battleLog =new ArrayList<>();
+    private transient Leader currentLeader;
     private static User loggedInUser;
-    private String username;
+    public String username;
     private String password;
     private String nickname;
     private String emailAddress;
-    private int highestScore=0;
-    private int rank=1000;//todo init
-    private int totalGame=0;
-    private int drawnGame=0;
+    private transient int highestScore=0;
+    private transient int rank=1000;//todo init
+    private transient int totalGame=0;
+    private transient int drawnGame=0;
     private int wonGame=0;
-    private int lostGame=0;
-    private  int securityQuestionNumber;
-    private String answerOfSecurityQuestion;
-    //private final String securityQuestionAnswer;
-    private final static HashMap<Integer,String> securityQuestions=new HashMap<>();
-    private Deck currentDeck;
+    private transient int lostGame=0;
+    private transient   int securityQuestionNumber;
+    private transient String answerOfSecurityQuestion;
+    private transient final static HashMap<Integer,String> securityQuestions=new HashMap<>();
+    private transient Deck currentDeck;
     public User(String username, String password, String nickname, String emailAddress) {
         this.username=username;
         this.password=password;
         this.nickname=nickname;
         this.emailAddress=emailAddress;
     }
-    static{
-        securityQuestions.put(1, "What is your favorite color?");
-        securityQuestions.put(2, "What is your pet's name?");
-        securityQuestions.put(3,  "Where were you born?");
-    }
+//    static{
+//        securityQuestions.put(1, "What is your favorite color?");
+//        securityQuestions.put(2, "What is your pet's name?");
+//        securityQuestions.put(3,  "Where were you born?");
+//    }
 
     public int getSecurityQuestionNumber() {
         return securityQuestionNumber;
@@ -63,9 +67,6 @@ public class User {
     public String getAnswerOfSecurityQuestion() {
         return answerOfSecurityQuestion;
     }
-
-
-    private String userCurrentMenu;
 
     public static void addUser(User user){
         users.add(user);

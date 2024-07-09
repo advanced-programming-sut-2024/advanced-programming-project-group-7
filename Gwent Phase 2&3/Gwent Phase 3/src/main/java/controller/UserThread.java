@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import javafx.application.Platform;
 import model.OngoingGame;
 import model.User;
@@ -9,8 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class UserThread extends Thread {
     public Socket socket;
@@ -33,14 +33,14 @@ public class UserThread extends Thread {
             if (splits[0].equals("init")) {
                 boolean legit = splits[4].matches("\\S+@\\S+.com");
                 if (legit) {
-                    GameServer.allUsers.add(new User(splits[1], splits[2], splits[3], splits[4]));
-                    GameServer.saveUsers(GameServer.allUsers);
+                    User user = new User(splits[1], splits[2], splits[3], splits[4]);
+                    user.isOnline = true;
+                    GameServer.allUsers.add(user);
+//                    GameServer.saveUsers(GameServer.allUsers);
                     dataOutputStream1.writeUTF("registered." + splits[1] + "." + splits[2] + "." + splits[3] + "." + splits[4]);
                     GameServer.onlineUsers.put(splits[1], socket);
                     dataOutputStream1.flush();
-                    System.out.println(GameServer.allUsers.toString() + "all users be like");
                 } else {
-                    System.out.println("reached here though");
                     dataOutputStream1.writeUTF("unsuccessful." + splits[1]);
                     dataOutputStream1.flush();
                 }
@@ -117,8 +117,25 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("refresh")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        Gson gson = new Gson();
+                        User[] users = GameServer.allUsers.toArray(new User[GameServer.allUsers.size()]);
+                        String json = gson.toJson(users, User[].class);
+                        targetUser.writeUTF(json);
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("searchPlayer")) {
                     boolean found = false;
+                    Comparator<User> ranked = Comparator.comparingInt(User::getRank);
+                    Collections.sort(GameServer.allUsers, ranked);
+                    for (int i = 0; i < GameServer.allUsers.size(); i++) {
+                        User user = GameServer.allUsers.get(i);
+                        user.setRank(i+1);
+                    }
                     for (User user : GameServer.allUsers) {
                         if (user.getUsername().equals(parts1[1])) {
                             dataOutputStream1.writeUTF("searchResult." + user.getUsername()+"."+user.getRank()+"."+user.getWonGame());
@@ -168,7 +185,7 @@ public class UserThread extends Thread {
                     }
                 } else if (parts1[0].equals("random")) {
                     String dude = GameServer.randomChallenger;
-                    if (dude == null)
+                    if (dude == null || dude.equals(parts1[1]))
                         GameServer.randomChallenger = parts1[1];
                     else
                         try {

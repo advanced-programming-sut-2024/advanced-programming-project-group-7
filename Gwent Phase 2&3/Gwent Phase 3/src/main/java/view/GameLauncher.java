@@ -32,7 +32,7 @@ public class GameLauncher extends Application {
 
     public ArrayList<Card> reservedCards = new ArrayList<>();
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
-    private static final double HEIGHT = 1000;
+    private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
     public EnhancedHBox playerHand = new EnhancedHBox();
     public EnhancedHBox playerFirstRowHorn = new EnhancedHBox();
@@ -453,20 +453,26 @@ public class GameLauncher extends Application {
         buttonPass.setLayoutX(320);
         buttonPass.setLayoutY(750);
         buttonPass.setOnMouseClicked(event -> {
-            if (enemyIsDone && !hasPlayed) { //todo circle
-                game.newRound(game);
-                                client.sendMessage("pass:" //todo onlination
-                        + User.getLoggedInUser().currentOponentName + ":" + User.getLoggedInUser().getUsername() + ".newRound");
-            }
-            else if (hasPlayed) {
-                hasPassed = true;
-                client.sendMessage("pass:" //todo onlination
-                        + User.getLoggedInUser().currentOponentName + ":" + User.getLoggedInUser().getUsername() + ".passed");
-            } else {
+//            System.out.println("playes: "+hasPlayed);
+//            System.out.println("isDone: "+ isDone);
+//            System.out.println("enemy: "+enemyIsDone);
+//            System.out.println("has passed: " +hasPassed);
+            if (!hasPlayed)
                 isDone = true;
-                hasPassed = true;
+            if (enemyIsDone && isDone) { //todo circle
+                game.newRound(game);
+                client.sendMessage("pass:" //todo onlination
+                        + User.getLoggedInUser().currentOponentName + ":" + User.getLoggedInUser().getUsername() + ".newRound");
+            } else if (hasPlayed && enemyIsDone) {
+                hasPlayed = false;
+            } else if (isDone) {
                 client.sendMessage("pass:" //todo onlination
                         + User.getLoggedInUser().currentOponentName + ":" + User.getLoggedInUser().getUsername() + ".done");
+            } else {
+                System.out.println("playes: "+hasPlayed);
+                System.out.println("isDone: "+ isDone);
+                System.out.println("enemy: "+enemyIsDone);
+                System.out.println("has passed: " +hasPassed);
             }
         });
 
@@ -536,6 +542,7 @@ public class GameLauncher extends Application {
         button.setOnMouseClicked(event -> {
             MainMenu mainMenu = new MainMenu();
             try {
+                User.getLoggedInUser().currentOponentName = null;
                 mainMenu.start(LoginMenu.stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);

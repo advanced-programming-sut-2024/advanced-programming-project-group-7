@@ -35,33 +35,33 @@ public class CupMenu extends Application {
     public Button watch;
     public TextField searchBar;
     public Button isPlaying;
-    public static Rectangle ready;
-    public static Label P0;
-    public static Label P2;
-    public static Label P1;
-    public static Label P3;
-    public static Label P4 ;
-    public static Label P5 ;
-    public static Label P6;
-    public static Label P7 ;
-    public static Label P8;
-    public static Label P9;
-    public static Label P10;
-    public static Label P11;
-    public static Label P12;
-    public static Label P13;
-    public static Label P14;
-    public static Label P15;
-    public static Label P16;
-    public static Label P17;
-    public static Label P18;
-    public static Label P19;
-    public static Label P20;
-    public static Label P21;
-    public static Label P23;
-    public static Label P24;
-    public static Label P25;
-    public static Label P22;
+    public Rectangle ready;
+    public Label P0;
+    public Label P2;
+    public Label P1;
+    public Label P3;
+    public Label P4;
+    public Label P5;
+    public Label P6;
+    public Label P7;
+    public Label P8;
+    public Label P9;
+    public Label P10;
+    public Label P11;
+    public Label P12;
+    public Label P13;
+    public Label P14;
+    public Label P15;
+    public Label P16;
+    public Label P17;
+    public Label P18;
+    public Label P19;
+    public Label P20;
+    public Label P21;
+    public Label P23;
+    public Label P24;
+    public Label P25;
+    public Label P22;
     public static MatchNode yourNode;
     public static MatchNode M0;
     public static MatchNode M1;
@@ -79,6 +79,39 @@ public class CupMenu extends Application {
     private static ArrayList<MatchNode> nodes = new ArrayList<>();
     public static String  you = User.getLoggedInUser().getUsername();
     public static Client client = User.getLoggedInUser().client;
+
+    {
+        M0 = new MatchNode("m0", P0, P1);
+        M1 = new MatchNode("m1", P2, P3);
+        M2 = new MatchNode("m2", P4, P5);
+        M3 = new MatchNode("m3", P6, P7);
+        M4 = new MatchNode("m4", P8, P9);
+        M5 = new MatchNode("m5", P10, P11);
+        M6 = new MatchNode("m6", P12, P13);
+        M7 = new MatchNode("m7", P14, P25);
+        M8 = new MatchNode("m8", P15, P16);
+        M9 = new MatchNode("m9", P17, P18);
+        M10 = new MatchNode("m10", P19, P20);
+        M11 = new MatchNode("m11", P21, P22);
+        M12 = new MatchNode("m12", P23, P24);
+
+        CupMenu.nodes.add(M0);
+        CupMenu.nodes.add(M1);
+        CupMenu.nodes.add(M2);
+        CupMenu.nodes.add(M3);
+        CupMenu.nodes.add(M11);
+        CupMenu.nodes.add(M12);
+        CupMenu.nodes.add(M4);
+        CupMenu.nodes.add(M5);
+        CupMenu.nodes.add(M9);
+        CupMenu.nodes.add(M10);
+        CupMenu.nodes.add(M6);
+        CupMenu.nodes.add(M8);
+        CupMenu.nodes.add(M7);
+    }
+
+    public CupMenu() {
+    }
 
     public static void setReady(String player, String nodeName) {
         switch (nodeName) {
@@ -100,44 +133,13 @@ public class CupMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println("reached here: " + nodes.size() );
         URL url = LoginMenu.class.getResource("/FXML/CupMenu.fxml");
         AnchorPane root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         root.setBackground(new Background(createBackgroundImage("/Images/bracket.png")));
         stage.show();
-
-        M0 = new MatchNode("m0", P0, P1);
-        M1 = new MatchNode("m1", P2, P3);
-        M2 = new MatchNode("m2", P4, P5);
-        M3 = new MatchNode("m3", P6, P7);
-        M4 = new MatchNode("m4", P8, P9);
-        M5 = new MatchNode("m5", P10, P11);
-        M6 = new MatchNode("m6", P12, P13);
-        M7 = new MatchNode("m7", P14, P25);
-        M8 = new MatchNode("m8", P15, P16);
-        M9 = new MatchNode("m9", P17, P18);
-        M10 = new MatchNode("m10", P19, P20);
-        M11 = new MatchNode("m11", P21, P22);
-        M12 = new MatchNode("m12", P23, P24);
-
-        nodes.add(M0);
-        nodes.add(M1);
-        nodes.add(M2);
-        nodes.add(M3);
-        nodes.add(M11);
-        nodes.add(M12);
-        nodes.add(M4);
-        nodes.add(M5);
-        nodes.add(M9);
-        nodes.add(M10);
-        nodes.add(M6);
-        nodes.add(M8);
-        nodes.add(M7);
-
-        ready.setOnMouseClicked(event -> {
-            yourNode.setReady(you);
-        });
     }
 
     @FXML
@@ -160,6 +162,9 @@ public class CupMenu extends Application {
             });
             rotate.play();
         });
+        ready.setOnMouseClicked(event -> {
+            yourNode.setReady(you);
+        });
     }
     private BackgroundImage createBackgroundImage (String address) {
         Image image = new Image(Game.class.getResource(address).toExternalForm(), 1280 ,900, false, false);
@@ -174,7 +179,7 @@ public class CupMenu extends Application {
                 BackgroundSize.DEFAULT);
         return backgroundImage;
     }
-    public static void init(String p0, String p1, String p2, String p3, String p4, String p5, String p6, String p7, String seed) {
+    public void init(String p0, String p1, String p2, String p3, String p4, String p5, String p6, String p7, String seed) {
         P0.setText(p0);
         P1.setText(p1);
         P2.setText(p2);

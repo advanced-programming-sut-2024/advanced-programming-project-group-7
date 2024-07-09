@@ -13,7 +13,7 @@ module Gwent {
     exports controller;
     opens controller to javafx.fxml;
 
-    opens model to javafx.base;
+    opens model to javafx.base, com.google.gson;
     opens model.factions to javafx.base;
     opens model.cards to javafx.base;
 }

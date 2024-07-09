@@ -66,7 +66,7 @@ public class LoginMenu extends Application {
             Media music = new Media(LoginMenu.class.getResource("/Sounds/01 No Escape.mp3").toExternalForm());
             mediaPlayer = new MediaPlayer(music);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            mediaPlayer.play();
+//            mediaPlayer.play();
         }
 
         LoginMenu.stage = stage;

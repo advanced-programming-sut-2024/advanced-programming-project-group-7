@@ -54,6 +54,8 @@
              <Pane fx:id="televisionPane">
 
              </Pane>
+             <Button fx:id="refresh" text="refresh" onMouseClicked="#refreshList" />
+             <Button fx:id="leaderboard" onMouseClicked="#goToLeaderboard"/>
          </children>
       </VBox>
    </right>

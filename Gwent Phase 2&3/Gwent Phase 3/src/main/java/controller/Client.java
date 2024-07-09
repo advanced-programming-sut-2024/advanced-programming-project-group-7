@@ -1,6 +1,7 @@
 package controller;
 
 
+import com.google.gson.Gson;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -22,7 +23,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -44,7 +47,7 @@ public class Client extends Thread {
     @Override
     public void run(){
         try {
-            socket = new Socket("192.168.7.96", 34800);
+            socket = new Socket("127.0.0.1", 34800);
             sendBuffer = new DataOutputStream(socket.getOutputStream());
             receiveBuffer = new DataInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -122,15 +125,25 @@ public class Client extends Thread {
                     throw new RuntimeException(e);
                 }
             });
+        } else if (response.startsWith("[{")) {
+            System.out.println("reache ");
+            Platform.runLater(()-> {
+                Gson gson = new Gson();
+                User[] users = gson.fromJson(components[1], User[].class);
+                MainMenu.users = new ArrayList<>(Arrays.asList(users)); // todo can use list.of as well
+                System.out.println(MainMenu.users);
+            });
+
         } else if (components[0].equals("rankTV")) {
             System.out.println(Arrays.toString(Arrays.stream(components).toArray()));
         } else if (components[0].equals("startCup")) {
             Platform.runLater(()-> {
-                CupMenu.init(components[1], components[2], components[3], components[4],
-                        components[5], components[6], components[7], components[8], components[9]);
-                CupMenu cupMenu = new CupMenu();
                 try {
+                    CupMenu cupMenu = new CupMenu();
+                    user.cupMenu = cupMenu;
                     cupMenu.start(LoginMenu.stage);
+                    cupMenu.init(components[1], components[2], components[3], components[4],
+                            components[5], components[6], components[7], components[8], components[9]);
                     user.isInCup = true;
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -163,12 +176,18 @@ public class Client extends Thread {
                 game.gameLauncher.getReaction(Integer.parseInt(components[0]));
             });
         } else if (components.length == 2 && components[1].equals("passed")) {
+            Platform.runLater(()-> {
                 game.gameLauncher.hasPlayed = false;
                 game.gameLauncher.hasPassed = false;
+            });
         } else if (components.length == 2 && components[1].equals("newRound")) {
-                game.newRound(game);
-        } else if (components.length == 2 && components[1].equals("isDone")) {
+                Platform.runLater(()-> {
+                    game.newRound(game);
+                });
+        } else if (components.length == 2 && components[1].equals("done")) {
+            Platform.runLater(()-> {
                 game.gameLauncher.enemyIsDone = true;
+            });
         } else if (components.length == 2 && components[1].equals("startGame")) {
             Platform.runLater(()-> {
                 User.getLoggedInUser().currentOponentName = components[0];
