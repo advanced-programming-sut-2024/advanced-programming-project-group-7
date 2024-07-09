@@ -58,6 +58,8 @@ public class MainMenu extends Application {
     public Label logOutRLabel;
     public Label exitGameLabel;
     public Pane televisionPane;
+    public boolean hasMusic=false;
+    public static MediaPlayer mediaPlayer;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -71,6 +73,13 @@ public class MainMenu extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         root.setBackground(new Background(createBackgroundImage("/Images/mainmenubackground.jpg")));
+        if(!hasMusic) {
+            Media media = new Media(String.valueOf(LoginMenu.class.getResource("/Sounds/aen seidhe.mp3")));
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setVolume(0.05);
+            mediaPlayer.play();
+        }
         stage.show();
 //        User.getLoggedInUser().client.sendMessage(User.getLoggedInUser().getNickname());
     }
@@ -257,6 +266,7 @@ public class MainMenu extends Application {
         soundPlayer("/Sounds/paper.mp3");
         ProfileMenu profileMenu = new ProfileMenu();
         try {
+            mediaPlayer.stop();
             profileMenu.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -278,9 +288,9 @@ public class MainMenu extends Application {
     public void Logout(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/paper.mp3");
         MainMenuController.logout();
-        LoginMenu.mediaPlayer.stop();
         LoginMenu loginMenu = new LoginMenu();
         try {
+            mediaPlayer.stop();
             loginMenu.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);

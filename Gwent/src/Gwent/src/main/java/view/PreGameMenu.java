@@ -215,6 +215,7 @@ public class PreGameMenu extends Application {
         rectangle.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(currentLeader.getLgPath())))));
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
+            currentDeck.setDeckLeader(currentLeader);
             LeaderImage.setFill(rectangle.getFill());
             leaderMenu.close();
         });
@@ -272,6 +273,7 @@ public class PreGameMenu extends Application {
         confirm.setOnMouseClicked(event -> {
             factionMenu.close();
             currentFaction = Faction.getFactions().get(factionIndex);
+            currentDeck.setDeckFaction(currentFaction);
             currentLeader = (Leader) currentFaction.getLeaders().get(0);
             setCurrentFactionInfo();
             setCardsAndCommander();
@@ -320,15 +322,15 @@ public class PreGameMenu extends Application {
         totalUnitCardStrength.setText(String.valueOf(currentDeck.totalUnitCardStrength));
         heroCards.setText(String.valueOf(currentDeck.totalHeroCard));
         if(currentDeck.totalSpecialCardInDeck > 10) specialCards.setTextFill(Color.RED);
-        else specialCards.setTextFill(Color.BLACK);
+        else specialCards.setTextFill(Color.WHITE);
         if(currentDeck.totalUnitCard<22)numberOfUnitCard.setTextFill(Color.RED);
         else {
-            numberOfUnitCard.setTextFill(Color.BLACK);
+            numberOfUnitCard.setTextFill(Color.WHITE);
             numberOfUnitCard.setText(String.valueOf(currentDeck.totalUnitCard));
         }
-        heroCards.setTextFill(Color.BLACK);
-        totalCardInDeck.setTextFill(Color.BLACK);
-        totalUnitCardStrength.setTextFill(Color.BLACK);
+        heroCards.setTextFill(Color.WHITE);
+        totalCardInDeck.setTextFill(Color.WHITE);
+        totalUnitCardStrength.setTextFill(Color.WHITE);
    }
 
     public void inviteMenu(MouseEvent mouseEvent) {
@@ -385,8 +387,8 @@ public class PreGameMenu extends Application {
         VetoCard vetoCard = new VetoCard();
         try {
             Deck.currentDeck = currentDeck;
-//            Deck.currentDeck.shuffleDeck();
-            inviteMenu.close();
+            Deck.currentDeck.shuffleDeck();
+//            inviteMenu.close();
             vetoCard.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);

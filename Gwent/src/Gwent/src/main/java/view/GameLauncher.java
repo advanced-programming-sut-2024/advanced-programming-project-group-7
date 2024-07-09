@@ -70,7 +70,7 @@ public class GameLauncher extends Application {
     public Card lastCardPlayed;
     public Label labelForNumberOfCards = new Label();
     public Label numberOfRemainingCardsInDeck=new Label();
-    Label labelForNumberOfCardsOpponent = new Label(String.valueOf(10));
+    public Label labelForNumberOfCardsOpponent = new Label(String.valueOf(10));
 
 
 
@@ -83,6 +83,9 @@ public class GameLauncher extends Application {
 
 //        client = User.getLoggedInUser().client; todo onlination
 //        client.game = game;todo onlination
+        for(Card card:Deck.currentDeck.hand){
+            playerHand.getChildren().add(card);
+        }
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
@@ -171,24 +174,24 @@ public class GameLauncher extends Application {
 
 
 
-        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special", 12, false));
-        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
-        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
-        playerHand.getChildren().add(new Mardroeme("ermion", 1, false, 8, "skellige",2,true));
-        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
-        playerHand.getChildren().add(new Berserker("berserker", 1, false, 4, "skellige",3,false));
-        playerHand.getChildren().add(new Mardroeme("mardroeme", 3, true, 0, "special",123,false));
-        playerHand.getChildren().add(new Cow("cow", 1, false, 0, "neutral",2,false));
-        playerHand.getChildren().add(new Cow("kambi", 1, false, 0, "skellige",3,false));
-        playerHand.getChildren().add(new Medic("yennefer", 1, false, 7, "neutral", 2, true));
-        playerHand.getChildren().add(new Spy("stennis", 1, false, 5, "realms", 4, false));
-        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-        playerHand.getChildren().add(new Medic("banner nurse", 1, false, 5, "realms", 1, false));
-        playerHand.getChildren().add(new TightBond("young emissary 1", 1, false, 5, "nilfgaard", 3, false));
-        playerHand.getChildren().add(new Scorch("villen", 1, false, 7, "neutral", 3, false));
-        playerHand.getChildren().add(new Scorch("scorch", 3, true, 0, "special", 123456, false));
-        playerHand.getChildren().add(new Scorch("toad", 1, false, 7, "monsters", 2, false));
-        playerHand.getChildren().add(new Cow("cow",1,false,0,"neutral",2,false));
+//        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special", 12, false));
+//        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
+//        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
+//        playerHand.getChildren().add(new Mardroeme("ermion", 1, false, 8, "skellige",2,true));
+//        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
+//        playerHand.getChildren().add(new Berserker("berserker", 1, false, 4, "skellige",3,false));
+//        playerHand.getChildren().add(new Mardroeme("mardroeme", 3, true, 0, "special",123,false));
+//        playerHand.getChildren().add(new Cow("cow", 1, false, 0, "neutral",2,false));
+//        playerHand.getChildren().add(new Cow("kambi", 1, false, 0, "skellige",3,false));
+//        playerHand.getChildren().add(new Medic("yennefer", 1, false, 7, "neutral", 2, true));
+//        playerHand.getChildren().add(new Spy("stennis", 1, false, 5, "realms", 4, false));
+//        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+//        playerHand.getChildren().add(new Medic("banner nurse", 1, false, 5, "realms", 1, false));
+//        playerHand.getChildren().add(new TightBond("young emissary 1", 1, false, 5, "nilfgaard", 3, false));
+//        playerHand.getChildren().add(new Scorch("villen", 1, false, 7, "neutral", 3, false));
+//        playerHand.getChildren().add(new Scorch("scorch", 3, true, 0, "special", 123456, false));
+//        playerHand.getChildren().add(new Scorch("toad", 1, false, 7, "monsters", 2, false));
+//        playerHand.getChildren().add(new Cow("cow",1,false,0,"neutral",2,false));
 
 
         discardPile.add(new TightBond("catapult 1", 2, false, 8, "realms", 1, false));
@@ -304,7 +307,7 @@ public class GameLauncher extends Application {
         });
 
         Rectangle realmForAvatar = new Rectangle();//todo needs 5 else if for player's faction
-        realmForAvatar.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_realms.png").toExternalForm()))));
+        realmForAvatar.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(Deck.currentDeck.getDeckFaction().getShieldPic()).toExternalForm()))));
         realmForAvatar.setHeight(50);
         realmForAvatar.setWidth(50);
         realmForAvatar.setLayoutY(550);
@@ -450,7 +453,7 @@ public class GameLauncher extends Application {
 
 
         Rectangle cardInDeckBack = new Rectangle();//todo load png with currentdeck
-        cardInDeckBack.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_back_realms.jpg").toExternalForm()))));
+        cardInDeckBack.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(Deck.currentDeck.getDeckFaction().getFactionCardBackPic()).toExternalForm()))));
         cardInDeckBack.setHeight(110);
         cardInDeckBack.setWidth(80);
         cardInDeckBack.setLayoutY(690);
@@ -488,7 +491,7 @@ public class GameLauncher extends Application {
 //        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr invader of the north","abilities that restore a unit to the battlefield restore a randomly-chosen unit.affects both players.","nilfgaard"));
 //        Leader leader=(new MonstersLeaders("eredin silver","double the strength of all your ","monsters"));
 //        Leader leader=(new MonstersLeaders("eredin bronze","restore a card from your discard pile to your hand","monsters"));
-        Leader leader = (new MonstersLeaders("eredin gold", "discard 2 card amd draw 1 card of your choise from your deck", "monsters"));
+        Leader leader = Deck.currentDeck.getDeckLeader();
 //        Leader leader=(new MonstersLeaders("eredin copper","pick any weather card from your deck and play it instantly","monsters"));
 //        Leader leader=(new MonstersLeaders("eredin the treacherous","doubles the strength of all spy cards(affects both players)","monsters"));
 //        Leader leader=(new ScoiataelLeaders("francesca silver","destroy your enemy's strongest close combat unit(s) if the combined strength of all his or her close combat units is 10 or more.","scoiatael"));
@@ -585,7 +588,7 @@ public class GameLauncher extends Application {
 
 
         stage.show();
-        stage.setFullScreen(true);
+//        stage.setFullScreen(true);
         playerHandMouseSetter();
     }
 

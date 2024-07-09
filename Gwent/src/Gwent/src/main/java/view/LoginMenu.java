@@ -77,6 +77,7 @@ public class LoginMenu extends Application {
             Media music = new Media(LoginMenu.class.getResource("/Sounds/01 No Escape.mp3").toExternalForm());
             mediaPlayer = new MediaPlayer(music);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setVolume(0.01);
             mediaPlayer.play();
 //            GameLauncher gameLauncher = new GameLauncher();
 //            Game game = new Game(gameLauncher);
@@ -313,6 +314,7 @@ public class LoginMenu extends Application {
     private void goToMainMenu() {
         MainMenu mainMenu = new MainMenu();
         try {
+            mediaPlayer.stop();
             mainMenu.start(LoginMenu.stage);
         } catch (Exception e) {
             e.printStackTrace();

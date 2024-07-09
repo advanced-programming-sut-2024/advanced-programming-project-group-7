@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.jdi.IntegerValue;
 import controller.ProfileMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -24,7 +27,9 @@ import model.BattleInfo;
 import model.Game;
 import model.User;
 
+import javax.swing.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProfileMenu extends Application {
@@ -64,6 +69,8 @@ public class ProfileMenu extends Application {
     public Label changeEmailLabel;
     public Pane backButtonPane;
     public Pane friendRequestPane;
+    public static MediaPlayer mediaPlayer;
+    public boolean hasMusic=false;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -72,6 +79,13 @@ public class ProfileMenu extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         root.setBackground(new Background(createBackgroundImage()));
+        if(!hasMusic){
+            Media music = new Media(String.valueOf(LoginMenu.class.getResource("/Sounds/geralt of ciria.mp3")));
+            mediaPlayer = new MediaPlayer(music);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setVolume(0.05);
+            mediaPlayer.play();
+        }
         stage.show();
     }
 
@@ -227,6 +241,9 @@ public class ProfileMenu extends Application {
             battleLogRec.setWidth(60);
             battleLogRec.setHeight(60);
         });
+        battleLogRec.setOnMouseClicked(event -> {
+
+        });
     }
 
 
@@ -250,6 +267,7 @@ public class ProfileMenu extends Application {
     public void backToMainMenu(MouseEvent mouseEvent) {
         MainMenu mainMenu = new MainMenu();
         try {
+            mediaPlayer.stop();
             mainMenu.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -354,10 +372,26 @@ public class ProfileMenu extends Application {
 
 
     public void showBattleLog(MouseEvent mouseEvent) {
+        Pane showBattleLogPane=new Pane();
+        VBox showBattleLogVbox=new VBox(10);
+        Label showBattleLogLabel=new Label("Show battle log");
         User user = User.getLoggedInUser();
         int number = Integer.parseInt(numberOfBattles.getValue().toString());
         int listSize = user.getBattleLog().size();
         ContextMenu contextMenu = new ContextMenu();
+        JComboBox<Integer> comboBox=new JComboBox<>();
+        comboBox.addItem(1);
+        comboBox.addItem(2);
+        comboBox.addItem(3);
+        comboBox.addItem(4);
+        comboBox.addItem(5);
+        comboBox.addItem(6);
+        comboBox.addItem(7);
+        comboBox.addItem(8);
+        comboBox.addItem(9);
+        comboBox.addItem(10);
+        Button confirmButton=new Button("Confirm");
+//        showBattleLogVbox.getChildren().addAll((Node) showBattleLogLabel,contextMenu,confirmButton);
         int startIndex = Math.max(listSize - number, 0);
         for (int i = listSize - 1; i >= startIndex; i--) {
             BattleInfo battleInfo = user.getBattleLog().get(i);

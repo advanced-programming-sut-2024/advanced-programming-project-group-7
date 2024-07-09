@@ -9,6 +9,7 @@ module Gwent {
     requires com.fasterxml.jackson.databind;
     requires java.net.http;
     requires jdk.httpserver;
+    requires jdk.jdi;
 
     exports view;
     opens view to javafx.fxml;
