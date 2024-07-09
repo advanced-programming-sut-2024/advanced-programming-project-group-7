@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class LoginMenu extends Application {
     public static Stage stage;
@@ -190,7 +191,7 @@ public class LoginMenu extends Application {
             server.createContext("/command", new CommandHandler());
             server.setExecutor(null);
             server.start();
-            String link = "<a href=\\\"http://localhost:8000\\\">Click here</a>";
+            String link = "<a href='http://localhost:8000'/a>";//todo or " instead of'
             String body = "Please verify your email address by clicking on this link: " + link;
             GmailSender gmailSender=new GmailSender(email,body);
             gmailSender.send();

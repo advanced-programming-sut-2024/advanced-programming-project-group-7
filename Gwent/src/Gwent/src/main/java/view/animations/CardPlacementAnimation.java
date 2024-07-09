@@ -12,11 +12,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.Card;
+import model.EnhancedHBox;
 import model.Game;
 import model.cards.*;
 import view.GameLauncher;
 import view.PreGameMenu;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CardPlacementAnimation extends Transition {
@@ -70,6 +72,7 @@ public class CardPlacementAnimation extends Transition {
                 });
             }
             if (card instanceof Muster) {
+                ArrayList<Card>staged=new ArrayList<>();
                 Iterator<Node> iterator = game.playerHand.getChildren().iterator();
                 while (iterator.hasNext()) {
                     Node card1 = iterator.next();
@@ -77,23 +80,20 @@ public class CardPlacementAnimation extends Transition {
                         iterator.remove();
                         game.placeCard((Card) card1, game.selectedBox);
                     }
-                }if (game.remainingDeck != null) {
-                    Iterator<Node> iterator1 = game.remainingDeck.getChildren().iterator();
-                    while (iterator.hasNext()) {
-                        Node card1 = iterator.next();
-                        if (card1 instanceof Muster || card.getCardName().equals(((Card) card1).getCardName())) {
-                            iterator1.remove();
-                            game.placeCard((Card) card1, game.selectedBox);
-                        }
-                    }
+                }if (game.gameLauncher.reservedCards.size()!=0) {
+                     for(Card card2:game.gameLauncher.reservedCards){
+                         if (card2 instanceof Muster || card.getCardName().equals(card2.getCardName())){
+                             game.placeCard(card2, game.selectedBox);
+                             staged.add(card2);
+                         }
+                     }
+                     for(Card cardForDelete:staged){
+                         game.gameLauncher.reservedCards.remove(cardForDelete);
+                     }
                 }
             }
             else if (card instanceof Mardroeme) {
-                for (Node card1 : game.selectedBox.getChildren()) {
-                    if ( card1 instanceof Berserker) {
-                        //todo change to bear
-                    }
-                }
+                game.handleMardrome(card);
             }
             else if (card instanceof Medic) {
                 if (!game.graveyard.getChildren().isEmpty())
@@ -118,6 +118,18 @@ public class CardPlacementAnimation extends Transition {
             else if (card instanceof TightBond) {
                 game.handleBond(game.selectedBox, card, game);
             }
+            else if (card instanceof Berserker) {
+                EnhancedHBox box = (EnhancedHBox) card.getParent();
+                Iterator<Node> iterator = box.getChildren().iterator();
+                while (iterator.hasNext()) {
+                    Node card1 = iterator.next();
+                    Card card2 = (Card) card1;
+                    if (card2 instanceof Mardroeme) {
+                        game.transformBerserker(card);
+                        break;
+                    }
+                }
+            }
             else if (card.getRows().contains(7)) {
                 Iterator<Node> iterator = game.selectedBox.getChildren().iterator();
                 while (iterator.hasNext()) {
@@ -134,6 +146,7 @@ public class CardPlacementAnimation extends Transition {
                 }
                 game.calculateLabels();
             }
+
         }
         card.setLayoutX(x);
         card.setLayoutY(y);

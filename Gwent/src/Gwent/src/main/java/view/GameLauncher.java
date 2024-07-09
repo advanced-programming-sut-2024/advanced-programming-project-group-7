@@ -3,17 +3,15 @@ package view;
 import controller.Client;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
+import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -28,10 +26,16 @@ import model.leaders.*;
 import view.animations.CardPlacementAnimation;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameLauncher extends Application {
 
+
     public ArrayList<Card> graveyardCard=new ArrayList<>();
+    public ArrayList<Card> enemyGraveyardCard=new ArrayList<>();
+
+    public ArrayList<Card> enemyHand=new ArrayList<>();
+    public ArrayList<Card> enemyDiscardPile =new ArrayList<>();
     public ArrayList<Card> reservedCards = new ArrayList<>();
     public ArrayList<Card> discardPile=new ArrayList<>();
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
@@ -64,8 +68,9 @@ public class GameLauncher extends Application {
     public boolean isLeaderDisabled=false;
     public EnhancedHBox weatherBox = new EnhancedHBox();
     public Card lastCardPlayed;
-    public Card handLastCard;
-    public GridPane graveYardGridPane=new GridPane();
+    public Label labelForNumberOfCards = new Label();
+    public Label numberOfRemainingCardsInDeck=new Label();
+    Label labelForNumberOfCardsOpponent = new Label(String.valueOf(10));
 
 
 
@@ -79,8 +84,13 @@ public class GameLauncher extends Application {
 //        client = User.getLoggedInUser().client; todo onlination
 //        client.game = game;todo onlination
         pane = new Pane();
-        setSize(pane,HEIGHT,WIDTH);
+        setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
+
+
+
+
+        //CHAT BOX
         Pane chatBoxPane = new Pane();
         chatBoxPane.setLayoutX(1280);
         chatBoxPane.setLayoutY(200);
@@ -157,9 +167,44 @@ public class GameLauncher extends Application {
             sendReaction(6);
         });
         chatBoxPane.getChildren().addAll(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6, circle);
+        //CHAT BOX
 
 
-        Label labelForNumberOfCards = new Label(String.valueOf(10));
+
+        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special", 12, false));
+        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
+        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
+        playerHand.getChildren().add(new Mardroeme("ermion", 1, false, 8, "skellige",2,true));
+        playerHand.getChildren().add(new Berserker("young berserker", 3, false, 2, "skellige",2,false));
+        playerHand.getChildren().add(new Berserker("berserker", 1, false, 4, "skellige",3,false));
+        playerHand.getChildren().add(new Mardroeme("mardroeme", 3, true, 0, "special",123,false));
+        playerHand.getChildren().add(new Cow("cow", 1, false, 0, "neutral",2,false));
+        playerHand.getChildren().add(new Cow("kambi", 1, false, 0, "skellige",3,false));
+        playerHand.getChildren().add(new Medic("yennefer", 1, false, 7, "neutral", 2, true));
+        playerHand.getChildren().add(new Spy("stennis", 1, false, 5, "realms", 4, false));
+        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        playerHand.getChildren().add(new Medic("banner nurse", 1, false, 5, "realms", 1, false));
+        playerHand.getChildren().add(new TightBond("young emissary 1", 1, false, 5, "nilfgaard", 3, false));
+        playerHand.getChildren().add(new Scorch("villen", 1, false, 7, "neutral", 3, false));
+        playerHand.getChildren().add(new Scorch("scorch", 3, true, 0, "special", 123456, false));
+        playerHand.getChildren().add(new Scorch("toad", 1, false, 7, "monsters", 2, false));
+        playerHand.getChildren().add(new Cow("cow",1,false,0,"neutral",2,false));
+
+
+        discardPile.add(new TightBond("catapult 1", 2, false, 8, "realms", 1, false));
+        enemyDiscardPile.add(new Scorch("schirru", 1, false, 8, "scoiatael", 1, false));
+        reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        reservedCards.add(new Card("ciri", 1, false, 15, "neutral", 3, true));
+        reservedCards.add((new Card("rain", 2, true, 0, "weather", 7, false)));
+        reservedCards.add(new Card("fog", 3, true, 0, "weather", 7, false));
+        reservedCards.add(new Card("frost", 3, true, 0, "weather", 7, false));
+        enemyHand.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+        enemyHand.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+        enemyHand.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
+
+
+
+        labelForNumberOfCards.setText(String.valueOf(playerHand.getChildren().size()));
         labelForNumberOfCards.setLayoutY(570);
         labelForNumberOfCards.setLayoutX(210);
         labelForNumberOfCards.setTextFill(Color.YELLOW);
@@ -265,7 +310,6 @@ public class GameLauncher extends Application {
         realmForAvatar.setLayoutY(550);
         realmForAvatar.setLayoutX(75);
 
-        Label labelForNumberOfCardsOpponent = new Label(String.valueOf(10));
         labelForNumberOfCardsOpponent.setLayoutY(285);
         labelForNumberOfCardsOpponent.setLayoutX(210);
         labelForNumberOfCardsOpponent.setTextFill(Color.YELLOW);
@@ -419,7 +463,7 @@ public class GameLauncher extends Application {
         cardInDeckBackOpponent.setLayoutY(60);
         cardInDeckBackOpponent.setLayoutX(1440);
 
-        Label numberOfRemainingCardsInDeck = new Label(String.valueOf(25));
+        numberOfRemainingCardsInDeck.setText(String.valueOf(reservedCards.size()));
         numberOfRemainingCardsInDeck.setLayoutY(770);
         numberOfRemainingCardsInDeck.setLayoutX(1460);
         numberOfRemainingCardsInDeck.setTextFill(Color.WHITE);
@@ -437,27 +481,21 @@ public class GameLauncher extends Application {
 //        Leader leader=(new NorthernRealmsLeaders("foltest bronze","destroy your enemy's strongest siege unit(s) if the combined strength of all his or her siege units is 10 or more.","realms"));
 //        Leader leader=(new NorthernRealmsLeaders("foltest son of medell","distroy your enemy's strongest ranged combat unit(s) if the combined strength of all his or her ranged combat units is 10 or more.","realms"));
 //        Leader leader=new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms");
-
-
 //        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr silver","pick a torrential rain card from your deck and play it instantly","nilfgaard"));
 //        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr copper","look at 3 random cards from your opponent's hand","nilfgaard"));
 //        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr bronze","cansel your opponent's Leader ability","nilfgaard"));
 //        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr gold","draw a card from your opponent's discard pile","nilfgaard"));
 //        Leader leader=(new EmpireNilfgaardiansLeaders("emhyr invader of the north","abilities that restore a unit to the battlefield restore a randomly-chosen unit.affects both players.","nilfgaard"));
-
-
 //        Leader leader=(new MonstersLeaders("eredin silver","double the strength of all your ","monsters"));
 //        Leader leader=(new MonstersLeaders("eredin bronze","restore a card from your discard pile to your hand","monsters"));
         Leader leader = (new MonstersLeaders("eredin gold", "discard 2 card amd draw 1 card of your choise from your deck", "monsters"));
 //        Leader leader=(new MonstersLeaders("eredin copper","pick any weather card from your deck and play it instantly","monsters"));
 //        Leader leader=(new MonstersLeaders("eredin the treacherous","doubles the strength of all spy cards(affects both players)","monsters"));
-
 //        Leader leader=(new ScoiataelLeaders("francesca silver","destroy your enemy's strongest close combat unit(s) if the combined strength of all his or her close combat units is 10 or more.","scoiatael"));
 //        Leader leader=(new ScoiataelLeaders("francesca gold","doubles the strength of all your ranged combat units (unless a commander's horn is also present on that row).","scoiatael"));
 //        Leader leader=(new ScoiataelLeaders("francesca copper","draw an extra card at the beginning of the battle.","scoiatael"));
 //        Leader leader=(new ScoiataelLeaders("francesca bronze","pick a biting frost card from your deck and play it instantly.","scoiatael"));
 //        Leader leader=(new ScoiataelLeaders("francesca hope of the aen seidhe","move agile units to whichever valid row maximizes their strength(don't move units in optimal row).","scoiatael"));
-
 //        Leader leader=(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks","skellige"));
 //        Leader leader=(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions","skellige"));
 
@@ -486,17 +524,6 @@ public class GameLauncher extends Application {
         leaderOpponent.setLayoutX(120);
         leaderOpponent.setLayoutY(75);
 
-//        Pane graveYardRoot=new Pane();
-////        Rectangle aaaaa=new Rectangle(600,400);
-////        graveYardRoot.getChildren().add(aaaaa);
-//        graveYardRoot.setLayoutX(600);
-//        graveYardRoot.setLayoutY(200);
-//        setSize(graveYardRoot,400,600);
-//        graveYardGridPane.setAlignment(Pos.CENTER);
-////        graveYardRoot.setVisible(false);
-
-
-
         Button buttonPass = new Button();
         buttonPass.setText("Pass");
         buttonPass.setLayoutX(320);
@@ -509,7 +536,7 @@ public class GameLauncher extends Application {
         buttonPassOpponent.setLayoutY(110);
         buttonPassOpponent.setOnMouseClicked(event -> {
             yourTurn = true;
-            game.newRound(game);
+            game.endRound(game);
         });
 
         frostedRow.setVisible(false);
@@ -534,7 +561,6 @@ public class GameLauncher extends Application {
         stage.setResizable(false);
         stage.centerOnScreen();
 
-
         hBoxes.add(weatherBox);
         hBoxes.add(playerSixthRow);
         playerSixthRow.hornBox = playerSixthRowHorn;
@@ -550,71 +576,14 @@ public class GameLauncher extends Application {
         playerFirstRow.hornBox = playerFirstRowHorn;
 
         game.hBoxes = hBoxes;
-//        Deck.currentDeck.hand.clear();
-        playerHand.getChildren().add(new Horn("horn", 3, true, 0, "special", 12, false));
-//        playerHand.getChildren().add(new Card("philippa", 1 , false, 10, "realms",2,true));
-//        playerHand.getChildren().add(new Card("clear", 2 , true, 0, "weather",7,false));
-//        playerHand.getChildren().add(new Decoy("decoy", 3 , true, 0, "special",123,false));
-//        playerHand.getChildren().add(new Card("ciri", 1 , false, 15, "neutral",3,true));
-        playerHand.getChildren().add(new Medic("yennefer", 1, false, 7, "neutral", 2, true));
-        playerHand.getChildren().add(new Spy("stennis", 1, false, 5, "realms", 4, false));
-        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3, false, 4, "neutral", 2, false));
-//        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-//        playerHand.getChildren().add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-        playerHand.getChildren().add(new Medic("banner nurse", 1, false, 5, "realms", 1, false));
-//        playerHand.getChildren().add(new TightBond("young emissary",1,false,5,"nilfgaard",3,false));
-        playerHand.getChildren().add(new TightBond("young emissary 1", 1, false, 5, "nilfgaard", 3, false));
-        playerHand.getChildren().add(new Scorch("villen", 1, false, 7, "neutral", 3, false));
-        playerHand.getChildren().add(new Scorch("schirru", 1, false, 8, "scoiatael", 1, false));
-//        playerHand.getChildren().add(new TightBond("catapult 1", 2 , false, 8, "realms",1,false));
-        playerHand.getChildren().add(new Scorch("scorch", 3, true, 0, "special", 123456, false));
-        playerHand.getChildren().add(new Scorch("toad", 1, false, 7, "monsters", 2, false));
-        playerHand.getChildren().add(new Spy("thaler", 1, false, 1, "realms", 6, false));
-
-
-        discardPile.add(new TightBond("catapult 1", 2, false, 8, "realms", 1, false));
-        reservedCards.add(new Card("ciri", 1, false, 15, "neutral", 3, true));
-        reservedCards.add(new Card("fog", 3, true, 0, "weather", 7, false));
-        reservedCards.add((new Card("rain", 2, true, 0, "weather", 7, false)));
-        reservedCards.add(new Card("frost", 3, true, 0, "weather", 7, false));
-//        reservedCards.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
-//        reservedCards.add(new Spy("stennis", 1 , false, 5, "realms",4,false));
-//        reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
-
-//        Medic medic = new Medic("banner nurse", 1 , false, 5, "realms",1,false);
-//        playerHand.getChildren().add(medic);
-//        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-//        playerHand.getChildren().add(new Card("frost", 3 , true, 0, "weather",7,false));
-
-        playerHand.getChildren().add(new Card("frost", 3, true, 0, "weather", 7, false));
-
-
-        graveyardCard.add(new Scorch("scorch", 3, true, 0, "special", 123456, false));
-        graveyardCard.add(new Scorch("toad", 1, false, 7, "monsters", 2, false));
-        graveyardCard.add(new Spy("thaler", 1, false, 1, "realms", 6, false));
-        graveyardCard.add(new TightBond("catapult 1", 2, false, 8, "realms", 1, false));
-        graveyardCard.add(new Card("ciri", 1, false, 15, "neutral", 3, true));
-        graveyardCard.add(new Card("fog", 3, true, 0, "weather", 7, false));
-        graveyardCard.add((new Card("rain", 2, true, 0, "weather", 7, false)));
-        graveyardCard.add(new Card("frost", 3, true, 0, "weather", 7, false));
-//        graveYardRoot.getChildren().addAll(graveYardGridPane);
-
-//            for (Card card : Deck.currentDeck.hand)
-//                playerHand.getChildren().add(card);
-
-//        for (Card card : Deck.currentDeck.hand)
-//            playerHand.getChildren().add(card);
-//        pane.setOnKeyTyped(a -> {
-//            System.out.println("aaaaa");
-//        });
-        pane.setOnKeyPressed(keyEvent -> {
-            if(keyEvent.getCode()== KeyCode.Q)game.undoCardCheat(lastCardPlayed);
-            else if(keyEvent.getCode()==KeyCode.W)game.addCardToHandcheat();
-            else if(keyEvent.getCode()==KeyCode.E)game.addHerosToGraveyardCheat();
-            else if(keyEvent.getCode()==KeyCode.R)game.addClearWeatherCheat();
-            else if(keyEvent.getCode()==KeyCode.T)game.addHornToHandCheat();
-            else if(keyEvent.getCode()==KeyCode.Y)game.removeAllCloseKombatsCheat();
+        pane.setOnKeyTyped(w -> {
+//           game.undoCardCheat(lastCardPlayed);
+//            game.addHerosToGraveyardCheat();
+//            game.addHornToHandCheat();
+              game.removeAllCloseKombatsCheat();
         });
+
+
         stage.show();
         stage.setFullScreen(true);
         playerHandMouseSetter();
@@ -634,6 +603,7 @@ public class GameLauncher extends Application {
         fadeTransition.play();
         client.sendMessage("reation:"+User.getLoggedInUser().currentOponentName+":1.reaction");
     }
+
     public void getReaction(int i) {
         Rectangle rectangle = new Rectangle(150,40);
         rectangle.setLayoutY(200);
@@ -714,6 +684,7 @@ public class GameLauncher extends Application {
         double vx = cosTheta * 8; //I'm doing math here
         CardPlacementAnimation cardPlacementAnimation =new CardPlacementAnimation(pane, game, card, vx, vy, endY, endX);
         cardPlacementAnimation.play();
+        updateStatus();
     }
     private EnhancedHBox createHbox() {
         EnhancedHBox rootEnhancedHBox = new EnhancedHBox();
@@ -798,9 +769,7 @@ public class GameLauncher extends Application {
             playerRow.setMinHeight(minHeight);
             playerRow.setMinWidth(670.0);
             row.getChildren().add(playerRow);
-
         }
-
         parent.getChildren().add(row);
     }
 
@@ -827,12 +796,13 @@ public class GameLauncher extends Application {
         return selected.getRows().contains(selectedRow);
     }
 
-    private void setSize (Pane pane,double height,double width) {
-        pane.setMinHeight(height);
-        pane.setMaxHeight(height);
-        pane.setMinWidth(width);
-        pane.setMaxWidth(width);
+    private void setSize (Pane pane) {
+        pane.setMinHeight(HEIGHT);
+        pane.setMaxHeight(HEIGHT);
+        pane.setMinWidth(WIDTH);
+        pane.setMaxWidth(WIDTH);
     }
+
     private BackgroundImage createBackgroundImage () {
         Image image = new Image(Game.class.getResource("/Images/board.jpg").toExternalForm(), WIDTH ,HEIGHT, false, false);
         ImageView imageView = new ImageView(image);
@@ -848,6 +818,7 @@ public class GameLauncher extends Application {
 
         return backgroundImage;
     }
+
     public static int enemyPosition(int i){
         if(i==0)return 5 ;
         if(i==1)return 4;
@@ -864,45 +835,11 @@ public class GameLauncher extends Application {
         if(i==12)return 12;
         return 0;
     }
-    public void setCardsInGraveYard(){
-        int count=0;
-        graveYardGridPane.getChildren().clear();
-        for (Card card : graveyardCard) {
-            Pane pane1 = new Pane();
-            Rectangle rectangle1 = new Rectangle();
-            rectangle1.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource(card.getLgPath()).toExternalForm()))));
-            rectangle1.setHeight(200);
-            rectangle1.setWidth(120);
-            rectangle1.setArcHeight(20);
-            rectangle1.setArcWidth(20);
-            pane.getChildren().add(rectangle1);
-//            System.out.println("hand's card");
-//            for(Card card2: deck.hand){
-//                System.out.println(card2+" : "+card2.getCardName());
-//            }
-//            System.out.println("00000000000000000000000");
-//            System.out.println("update card");
-//            for(Card card2:update) System.out.println(card2+" : "+card2.getCardName());
-//            System.out.println("00000000000000000000000");
-//            pane.setOnMouseClicked(event -> {
-//                update.remove(card); // Use iterator to remove the card
-//                if (First) {
-//                    update.add(substitue2);
-//                    First = false;
-//                }
-//                else {
-//                    update.add(substitue1);
-//                }
-//                deck.hand.clear();
-//                deck.hand.addAll(update);
-//                for (Card card1:update) System.out.println(card+" : "+card1.getCardName());
-//                System.out.println("---------------------");
-////                deck.hand.clear();
-////                deck.hand.addAll(update);
-//                setCards();
-//            });
-            graveYardGridPane.add(pane1, count % 5, count / 5);
-            count++;
-        }
+
+    public void updateStatus(){
+        labelForNumberOfCards.setText(String.valueOf(playerHand.getChildren().size()));
+        numberOfRemainingCardsInDeck.setText(String.valueOf(reservedCards.size()));
+        System.out.println("updated");;
     }
+
 }

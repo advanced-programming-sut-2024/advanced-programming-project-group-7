@@ -12,7 +12,7 @@
         <VBox alignment="CENTER" maxWidth="300" spacing="5.0">
             <children>
                 <HBox fillHeight="40">
-                    <Button text="save deck"/>
+                    <Button text="save deck" onMouseClicked="#saveDeckFunc"/>
                     <Button text="upload deck"/>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="75.0" prefWidth="294.0" spacing="10">
