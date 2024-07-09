@@ -8,10 +8,8 @@ import java.util.ArrayList;
 public class OngoingGame {
     private final Boolean isPublic;
     private final String type;
-    public Socket socket1;
     public String player1;
     public String player2;
-    public Socket socket2;
     public ArrayList<Socket> watchers = new ArrayList<>();
     public ArrayList<String> moves = new ArrayList<>();
 
@@ -25,6 +23,7 @@ public class OngoingGame {
     public void saveMove(String move){
         sendNewMoveToAll(move);
         moves.add(move);
+        System.out.println("new move added: "+move);
     }
 
     public void addNewWatcher(Socket socket) throws IOException {

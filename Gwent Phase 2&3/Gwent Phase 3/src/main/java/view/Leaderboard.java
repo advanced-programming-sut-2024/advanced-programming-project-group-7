@@ -9,6 +9,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -28,68 +30,50 @@ public class Leaderboard extends Application {
             .collect(Collectors.toList());
     private final ObservableList<User> data =
             FXCollections.observableArrayList(sortedUsers);
+    private Pane pane;
 
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(new Group());
-        stage.setMinWidth(1280);
-        stage.setMinHeight(768);
-        table.setRowFactory(tv -> new TableRow<User>() {
-            @Override
-            public void updateItem(User item, boolean empty) {
-                super.updateItem(item, empty);
-                if (getIndex() == 0 && item != null) {
-                    setStyle("-fx-background-color: #FFD700;");
-                } else if (getIndex() == 1 && item != null) {
-                    setStyle("-fx-background-color: #C0C0C0;");
-                } else if (getIndex() == 2 && item != null) {
-                    setStyle("-fx-background-color: #CD7F32;");
-                } else {
-                    setStyle("");
-                }
-            }
-        });
+        pane = new Pane();
+        Scene scene = new Scene(pane);
+        pane.setMinHeight(768);
+        pane.setMinWidth(1200);
+
 
         final Label label = new Label("Leaderboard");
-        label.setFont(new Font("Arial", 20));
+        label.setFont(new Font("Arial", 40));
 
         final Button button = new Button("Back");
         button.setOnMouseClicked(mouseEvent -> goToMainMenu());
 
-        table.setEditable(true);
-
-        TableColumn name = new TableColumn("name");
-        name.setMinWidth(150);
-        name.setCellValueFactory(
-                new PropertyValueFactory<User, String>("username"));
-
-        TableColumn score = new TableColumn("wins");
-        score.setMinWidth(60);
-        score.setCellValueFactory(
-                new PropertyValueFactory<User, Integer>("wonGame"));
-
-        TableColumn online = new TableColumn<>("is online ?");
-        online.setMinWidth(60);
-        online.setCellValueFactory(
-                new PropertyValueFactory<User, Boolean>("isOnline"));
-
-//        TableColumn lastGame = new TableColumn("lastGame");
-//        lastGame.setMinWidth(60);
-//        lastGame.setCellValueFactory(
-//                (Callback<TableColumn.CellDataFeatures, ObservableValue>) new Button("hi"));
-
-
-        table.setItems(data);
-        table.getColumns().addAll(name, score, online);
-
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table, button);
+        vbox.getChildren().add(label);
 
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
-
+        for (User user : sortedUsers) {
+            HBox hBox = new HBox(20);
+            Label name = new Label(user.getUsername());
+            name.setFont(new Font("Arial", 20));
+            Label wins = new Label(String.valueOf(user.getWonGame()));
+            wins.setFont(new Font("Arial", 20));
+            Label online = new Label(String.valueOf(user.isOnline));
+            online.setFont(new Font("Arial", 20));
+            Button watch = new Button("Watch");
+            watch.setOnMouseClicked(mouseEvent -> {});
+            hBox.getChildren().addAll(name, wins, online, watch);
+            vbox.getChildren().add(hBox);
+            if (sortedUsers.indexOf(user) == 0)
+                hBox.setStyle("-fx-background-color: #FFD700");
+            else if (sortedUsers.indexOf(user) == 1)
+                hBox.setStyle("-fx-background-color: #C0C0C0");
+            else if (sortedUsers.indexOf(user) == 2)
+                hBox.setStyle("-fx-background-color: #CD7F32");
+        }
+        vbox.getChildren().add(button);
+        pane.getChildren().add(vbox);
+        vbox.setLayoutX(300);
         stage.setScene(scene);
         stage.show();
     }

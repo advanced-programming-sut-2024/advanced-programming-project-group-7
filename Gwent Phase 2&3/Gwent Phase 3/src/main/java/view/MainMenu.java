@@ -379,6 +379,7 @@ public class MainMenu extends Application {
 
 
     public void refreshList(MouseEvent event) {
+        users.clear();
         User.getLoggedInUser().client.sendMessage("refresh:"+User.getLoggedInUser().getUsername());
     }
 

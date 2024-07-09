@@ -125,12 +125,13 @@ public class Client extends Thread {
                     throw new RuntimeException(e);
                 }
             });
-        } else if (response.startsWith("[{")) {
+        } else if (components[0].equals("refresh")) {
             System.out.println("reache ");
             Platform.runLater(()-> {
                 Gson gson = new Gson();
-                User[] users = gson.fromJson(components[1], User[].class);
-                MainMenu.users = new ArrayList<>(Arrays.asList(users)); // todo can use list.of as well
+                User user = gson.fromJson(components[1], User.class);
+                System.out.println(user.isOnline);
+                MainMenu.users.add(user);
                 System.out.println(MainMenu.users);
             });
 
