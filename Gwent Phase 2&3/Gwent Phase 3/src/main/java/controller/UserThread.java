@@ -121,7 +121,7 @@ public class UserThread extends Thread {
                     try {
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         Gson gson = new Gson();
-                        User[] users = GameServer.allUsers.toArray(new User[GameServer.allUsers.size()]);
+                        for
                         String json = gson.toJson(users, User[].class);
                         targetUser.writeUTF(json);
                         targetUser.flush();
