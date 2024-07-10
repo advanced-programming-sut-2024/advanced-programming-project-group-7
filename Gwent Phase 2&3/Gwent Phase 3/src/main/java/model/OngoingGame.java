@@ -1,5 +1,7 @@
 package model;
 
+import controller.GameServer;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -8,10 +10,8 @@ import java.util.ArrayList;
 public class OngoingGame {
     private final Boolean isPublic;
     private final String type;
-    public Socket socket1;
     public String player1;
     public String player2;
-    public Socket socket2;
     public ArrayList<Socket> watchers = new ArrayList<>();
     public ArrayList<String> moves = new ArrayList<>();
 
@@ -25,6 +25,7 @@ public class OngoingGame {
     public void saveMove(String move){
         sendNewMoveToAll(move);
         moves.add(move);
+        System.out.println("new move added: "+move);
     }
 
     public void addNewWatcher(Socket socket) throws IOException {
@@ -47,6 +48,15 @@ public class OngoingGame {
                 targetUser.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void finish() {
+        FinishedGame finishedGame = new FinishedGame(player1, player2, moves);
+        for (User user : GameServer.allUsers) {
+            if (user.getUsername().equals(player1) || user.getUsername().equals(player2)) {
+                user.finishedGames.add(finishedGame);
             }
         }
     }

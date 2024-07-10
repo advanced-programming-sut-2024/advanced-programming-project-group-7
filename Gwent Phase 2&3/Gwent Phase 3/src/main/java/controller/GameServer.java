@@ -27,6 +27,15 @@ public class GameServer extends Thread {
         gameServer.start();
     }
 
+    public static User getUserByName(String s) {
+        for (User user : allUsers) {
+            if (user.getUsername().equals(s)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(34800)) {
@@ -45,6 +54,15 @@ public class GameServer extends Thread {
             }
         } catch (IOException e) {
         }
+    }
+    public static OngoingGame getGameByName(String player) {
+        for (String gamers :ongoingGames.keySet()){
+            String [] players = gamers.split("-");
+            if (players[0].equals(player) || players[1].equals(player)){
+                return ongoingGames.get(gamers);
+            }
+        }
+        return null;
     }
     public static void saveUsers(ArrayList<User> users) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/T.moobile/Desktop/GwentDataBase.db")) {

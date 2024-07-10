@@ -1,6 +1,7 @@
 package model;
 
 
+import com.google.gson.annotations.SerializedName;
 import controller.Client;
 import javafx.scene.control.Button;
 import view.CupMenu;
@@ -14,9 +15,11 @@ import java.util.HashMap;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
+    public transient ArrayList<FinishedGame> finishedGames = new ArrayList<>();
     public transient Client client;
     public transient String currentOponentName;
     public transient boolean isInCup = false;
+    @SerializedName("isOnline")
     public  Boolean isOnline = false;
     public transient CupMenu cupMenu;
     private transient ArrayList<String> requests = new ArrayList<>();
@@ -26,9 +29,13 @@ public class User {
     private transient ArrayList<BattleInfo> battleLog =new ArrayList<>();
     private transient Leader currentLeader;
     private static User loggedInUser;
+    @SerializedName("username")
     public String username;
+    @SerializedName("password")
     private String password;
+    @SerializedName("nickname")
     private String nickname;
+    @SerializedName("emailAddress")
     private String emailAddress;
     private transient int highestScore=0;
     private transient int rank=1000;//todo init

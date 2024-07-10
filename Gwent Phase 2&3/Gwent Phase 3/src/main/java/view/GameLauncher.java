@@ -453,12 +453,11 @@ public class GameLauncher extends Application {
         buttonPass.setLayoutX(320);
         buttonPass.setLayoutY(750);
         buttonPass.setOnMouseClicked(event -> {
-//            System.out.println("playes: "+hasPlayed);
-//            System.out.println("isDone: "+ isDone);
-//            System.out.println("enemy: "+enemyIsDone);
-//            System.out.println("has passed: " +hasPassed);
-            if (!hasPlayed)
+            if (!hasPlayed) {
                 isDone = true;
+                client.sendMessage("pass:" //todo onlination
+                        + User.getLoggedInUser().currentOponentName + ":" + User.getLoggedInUser().getUsername() + ".done");
+            }
             if (enemyIsDone && isDone) { //todo circle
                 game.newRound(game);
                 client.sendMessage("pass:" //todo onlination
@@ -466,8 +465,10 @@ public class GameLauncher extends Application {
             } else if (hasPlayed && enemyIsDone) {
                 hasPlayed = false;
             } else if (isDone) {
+
+            } else if (hasPlayed) {
                 client.sendMessage("pass:" //todo onlination
-                        + User.getLoggedInUser().currentOponentName + ":" + User.getLoggedInUser().getUsername() + ".done");
+                        + User.getLoggedInUser().currentOponentName + ":" + User.getLoggedInUser().getUsername() + ".passed");
             } else {
                 System.out.println("playes: "+hasPlayed);
                 System.out.println("isDone: "+ isDone);

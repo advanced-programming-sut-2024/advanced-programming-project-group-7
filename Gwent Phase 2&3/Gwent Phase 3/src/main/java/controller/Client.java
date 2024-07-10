@@ -125,15 +125,23 @@ public class Client extends Thread {
                     throw new RuntimeException(e);
                 }
             });
-        } else if (response.startsWith("[{")) {
-            System.out.println("reache ");
+        } else if (components[0].equals("refresh")) {
             Platform.runLater(()-> {
                 Gson gson = new Gson();
-                User[] users = gson.fromJson(components[1], User[].class);
-                MainMenu.users = new ArrayList<>(Arrays.asList(users)); // todo can use list.of as well
+                User user = gson.fromJson(components[1], User.class);
+                System.out.println(user.isOnline);
+                MainMenu.users.add(user);
                 System.out.println(MainMenu.users);
             });
 
+        } else if (components[0].equals("yourGame")) {
+            System.out.println("we gooood ");
+            Platform.runLater(()-> {
+                Gson gson = new Gson();
+                FinishedGame finishedGame = gson.fromJson(response.substring(9), FinishedGame.class);
+                MainMenu.myFinishedGames.add(finishedGame);
+                System.out.println(MainMenu.myFinishedGames);
+            });
         } else if (components[0].equals("rankTV")) {
             System.out.println(Arrays.toString(Arrays.stream(components).toArray()));
         } else if (components[0].equals("startCup")) {

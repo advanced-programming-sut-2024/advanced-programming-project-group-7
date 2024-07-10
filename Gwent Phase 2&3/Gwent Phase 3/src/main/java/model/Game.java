@@ -397,6 +397,9 @@ public class Game {
         roundsPoints[roundCount][0] = Integer.parseInt(totalPower.getText());
         roundsPoints[roundCount][1] = Integer.parseInt(totalPowerOpponent.getText());
         roundCount++;
+        gameLauncher.isDone = false;
+        gameLauncher.hasPlayed = false;
+        gameLauncher.enemyIsDone = false;
         if (Integer.parseInt(totalPower.getText()) < Integer.parseInt(totalPowerOpponent.getText())) {
             life2.setVisible(false);
             yourLives--;
@@ -452,6 +455,7 @@ public class Game {
             showResult("win");
             User.getLoggedInUser().getBattleLog().add(new BattleInfo(User.getLoggedInUser().currentOponentName,
                     LocalDate.now(), roundsPoints, finalPoints, User.getLoggedInUser().getUsername()));
+            client.sendMessage("IWon:"+User.getLoggedInUser().username);
             if (User.getLoggedInUser().isInCup) {
                 client.sendMessage("cupResult:"+"cupResult."+User.getLoggedInUser().getUsername()+"."+User.getLoggedInUser().currentOponentName+"."+ CupMenu.yourNode.nodeName);
             }

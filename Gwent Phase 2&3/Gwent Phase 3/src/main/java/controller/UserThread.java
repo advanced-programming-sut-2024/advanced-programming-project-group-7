@@ -2,6 +2,7 @@ package controller;
 
 import com.google.gson.Gson;
 import javafx.application.Platform;
+import model.FinishedGame;
 import model.OngoingGame;
 import model.User;
 import view.CupMenu;
@@ -16,7 +17,7 @@ public class UserThread extends Thread {
     public Socket socket;
     private DataInputStream dataInputStream1;
     private DataOutputStream dataOutputStream1;
-
+    private String username;
     public UserThread(Socket socket1) {
         this.socket =socket1;
     }
@@ -31,8 +32,9 @@ public class UserThread extends Thread {
             String initialConnection = dataInputStream1.readUTF();
             String[] splits = initialConnection.split(":");
             if (splits[0].equals("init")) {
-                boolean legit = splits[4].matches("\\S+@\\S+.com");
+                boolean legit = true;
                 if (legit) {
+                    username = splits[1];
                     User user = new User(splits[1], splits[2], splits[3], splits[4]);
                     user.isOnline = true;
                     GameServer.allUsers.add(user);
@@ -121,10 +123,11 @@ public class UserThread extends Thread {
                     try {
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         Gson gson = new Gson();
-                        for
-                        String json = gson.toJson(users, User[].class);
-                        targetUser.writeUTF(json);
-                        targetUser.flush();
+                        for (User user : GameServer.allUsers) {
+                            String json = gson.toJson(user, User.class);
+                            targetUser.writeUTF("refresh."+json);
+                            targetUser.flush();
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -147,6 +150,19 @@ public class UserThread extends Thread {
                         dataOutputStream1.writeUTF("unsuccessful." + parts1[1]);
                         dataOutputStream1.flush();
                     }
+                } else if (parts1[0].equals("IWon")) {
+                    for (String gamers :GameServer.ongoingGames.keySet()){
+                        String [] players = gamers.split("-");
+                        if (players[0].equals(parts1[1]) || players[1].equals(parts1[1])){
+                            GameServer.ongoingGames.get(gamers).finish();
+                            GameServer.ongoingGames.remove(gamers); //todo iterator
+                        }
+                    }
+                    for (User user : GameServer.allUsers) {
+                        if (user.username.equals(parts1[1])) {
+                            user.setWonGame(user.getWonGame()+1);
+                        }
+                    }
                 } else if (parts1[0].equals("request accepted")) {
                     for (User user : GameServer.allUsers) {
                         if (user.getUsername().equals(parts1[1])) {
@@ -156,7 +172,14 @@ public class UserThread extends Thread {
                         }
                     }
                 } else if (parts1[0].equals("invite")) {
-                    if (GameServer.onlineUsers.containsKey(parts1[1]) && GameServer.onlineUsers.get(parts1[1]).isConnected()){
+                    boolean isInGame = false;
+                    for (String st : GameServer.ongoingGames.keySet()) {
+                        String[] players = st.split("-");
+                        if (players[0].equals(parts1[1]) || players[1].equals(parts1[1]))
+                            isInGame = true;
+                    }
+                    if (!isInGame && GameServer.onlineUsers.containsKey(parts1[1])
+                            && GameServer.onlineUsers.get(parts1[1]).isConnected()){
                         try {
                             DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                             targetUser.writeUTF(parts1[2] + ".invite."+parts1[3]);
@@ -273,6 +296,7 @@ public class UserThread extends Thread {
                     }
                 } else if (parts1[0].equals("card")) {
                     try {
+                        Objects.requireNonNull(GameServer.getGameByName(parts1[1])).saveMove(parts1[2]);
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         targetUser.writeUTF(parts1[2]);
                         targetUser.flush();
@@ -309,8 +333,25 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("myGames")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        Gson gson = new Gson();
+                        for (FinishedGame finishedGame : GameServer.getUserByName(parts1[1]).finishedGames) {
+                            String json = gson.toJson(finishedGame, FinishedGame.class);
+                            targetUser.writeUTF("yourGame."+json);
+                            targetUser.flush();
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("pass")) {
                     try {
+                        if (parts1[2].endsWith("newRound")){
+                            OngoingGame og = GameServer.getGameByName(parts1[1]);
+                            if (og != null)
+                                GameServer.getGameByName(parts1[1]).saveMove(parts1[2]);
+                        }
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         targetUser.writeUTF(parts1[2]);
                         targetUser.flush();
@@ -321,6 +362,10 @@ public class UserThread extends Thread {
                 else
                     System.out.println("what was that mate?");
             } catch (IOException e) {
+                for (User user : GameServer.allUsers) {
+                    if (user.getUsername().equals(username))
+                        user.isOnline = false;
+                }
                 throw new RuntimeException(e);
             }
         }
