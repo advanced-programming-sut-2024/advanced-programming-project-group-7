@@ -38,6 +38,7 @@ public class Client extends Thread {
     Socket socket;
     DataOutputStream sendBuffer;
     DataInputStream receiveBuffer;
+    private int count = 0;
 
     public Client(Game game, User loggedInUser) {
         this.game = game;
@@ -96,10 +97,20 @@ public class Client extends Thread {
             card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
             Card finalCard = card;
             Platform.runLater(() -> {
-                if ( Integer.parseInt(components[5]) != 7)
-                    game.enemyPlaceCard(finalCard, game.hBoxes.get(Integer.parseInt(components[5])));
-                else
-                    game.enemyPlaceCard(finalCard, game.hBoxes.get(0));
+                if (game.gameLauncher.type.equals("normal")) {
+                    if (Integer.parseInt(components[5]) != 7)
+                        game.enemyPlaceCard(finalCard, game.hBoxes.get(Integer.parseInt(components[5])));
+                    else
+                        game.enemyPlaceCard(finalCard, game.hBoxes.get(0));
+                } else if (game.gameLauncher.type.equals("live")){
+                    count++;
+                    System.out.println(response);
+                    if (count%2 == 0) {
+                        game.enemyPlaceCard(finalCard, game.hBoxes.get(7-Integer.parseInt(components[5])));
+                    } else if (count % 2 == 1) {
+                        game.enemyPlaceCard(finalCard, game.hBoxes.get(Integer.parseInt(components[5])));
+                    }
+                }
             });
         } else if (components[0].equals("registered")) {
             Platform.runLater(()-> {

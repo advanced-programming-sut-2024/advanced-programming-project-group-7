@@ -603,9 +603,9 @@ public class GameLauncher extends Application {
                 int finalI = i;
                 Platform.runLater(() -> {
                     if (Integer.parseInt(components[5]) != 7 && finalI % 2 == 1)
-                        game.enemyPlaceCard(card, game.hBoxes.get(Integer.parseInt(components[5])));
+                        game.enemyPlaceCard(card, game.hBoxes.get(7-Integer.parseInt(components[5])));
                     else if (Integer.parseInt(components[5]) != 7 && finalI % 2 == 0)
-                        game.enemyPlaceCard(card, game.hBoxes.get(6 - Integer.parseInt(components[5])));
+                        game.enemyPlaceCard(card, game.hBoxes.get(Integer.parseInt(components[5])));
                     else
                         game.enemyPlaceCard(card, game.hBoxes.get(0));
                 });

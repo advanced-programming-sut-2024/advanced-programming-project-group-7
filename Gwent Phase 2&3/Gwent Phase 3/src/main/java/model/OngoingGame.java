@@ -54,12 +54,14 @@ public class OngoingGame {
     }
     public synchronized void sendNewMoveToAll(String move) {
         for (Socket watcher : watchers) {
-            try {
-                DataOutputStream targetUser = new DataOutputStream(watcher.getOutputStream());
-                targetUser.writeUTF(move+".newMove");
-                targetUser.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if (watcher.isConnected()) {
+                try {
+                    DataOutputStream targetUser = new DataOutputStream(watcher.getOutputStream());
+                    targetUser.writeUTF(move);
+                    targetUser.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
