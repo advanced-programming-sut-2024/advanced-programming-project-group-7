@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,7 +27,6 @@ import model.User;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainMenu extends Application {
 
@@ -180,7 +178,7 @@ public class MainMenu extends Application {
     }
 
     public void startNewGame(MouseEvent mouseEvent) {
-        soundPlayer("/Sounds/sword.mp3");
+        soundPlayer("/Sounds/paper.mp3");
 
         try {
             new PreGameMenu().start(LoginMenu.stage);
@@ -339,12 +337,22 @@ public class MainMenu extends Application {
         rankPlayerGames.setOnMouseClicked(event -> {
             televisionPane.getChildren().clear();
             televisionPane.getChildren().addAll(rankTelevisionPane);
-            for (OngoingGame og : MainMenu.ongoingGames) {
+            for (OngoingGame og1 : MainMenu.ongoingGames) {
                 HBox hBox = new HBox();
-                Label label = new Label(og.player1 + " --vs-- " + og.player2 );
+                Label label = new Label(og1.player1 + " --vs-- " + og1.player2 );
                 Button watch = new Button("watch");
                 watch.setOnMouseClicked(event1 -> {
-                    System.out.println("we are close to glory");
+                    televisionMenu.close();
+                    GameLauncher gameLauncher = new GameLauncher();
+                    User.getLoggedInUser().client.sendMessage("viewer:"+User.getLoggedInUser().getUsername()
+                            +":"+og1.player1);
+                    try {
+                        gameLauncher.type = "live";
+                        gameLauncher.ongoingGame = og1;
+                        gameLauncher.start(LoginMenu.stage);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 });
                 hBox.getChildren().addAll(label, watch);
                 rankTelevisionVBox.getChildren().addAll(hBox);

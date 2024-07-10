@@ -220,7 +220,7 @@ public class Client extends Thread {
                 fadeTransition.setAutoReverse(false);
                 fadeTransition.play();
             });
-        } else if (components.length == 3 && components[1].equals("vote")) {
+        } else if (components.length == 3 && (components[1].equals("vote") || components[1].equals("viewVote"))) {
             Platform.runLater(()-> {
                 for (Node messagePane : game.gameLauncher.chatsVBox.getChildren()) {
                     if (((MessagePane) messagePane).time.getText().replace(':',' ').equals(components[0])){

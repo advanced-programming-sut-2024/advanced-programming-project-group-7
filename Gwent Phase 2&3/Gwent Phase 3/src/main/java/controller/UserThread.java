@@ -1,11 +1,9 @@
 package controller;
 
 import com.google.gson.Gson;
-import javafx.application.Platform;
 import model.FinishedGame;
 import model.OngoingGame;
 import model.User;
-import view.CupMenu;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -232,8 +230,18 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("viewVote")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(parts1[2] +".vote."+parts1[3]);
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("vote")) {
                     try {
+                        OngoingGame og = GameServer.getGameByName(parts1[1]);
+                        og.sendChat(parts1[2] +".vote."+parts1[3]);
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         targetUser.writeUTF(parts1[2] +".vote."+parts1[3]);
                         targetUser.flush();
@@ -311,8 +319,21 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("viewer")) {
+                    OngoingGame og = GameServer.getGameByName(parts1[2]);
+                    og.watchers.add(GameServer.onlineUsers.get(parts1[1]));
+                } else if (parts1[0].equals("viewChat")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        targetUser.writeUTF(parts1[2]);
+                        targetUser.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("chat")) {
                     try {
+                        OngoingGame og = GameServer.getGameByName(parts1[1]);
+                        og.sendChat(parts1[2]);
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         targetUser.writeUTF(parts1[2]);
                         targetUser.flush();

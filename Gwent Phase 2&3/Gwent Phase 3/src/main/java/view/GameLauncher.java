@@ -55,6 +55,7 @@ public class GameLauncher extends Application {
     public EnhancedHBox playerFifthRow = new EnhancedHBox();
     public String type = "normal";
     public FinishedGame fin;
+    public OngoingGame ongoingGame;
     private Pane pane = new Pane();
     private Card selected;
     private double sceneX;
@@ -185,7 +186,14 @@ public class GameLauncher extends Application {
         cardx.setLayoutY(555);
         cardx.setLayoutX(178);
 
-        Label playerName=new Label(User.getLoggedInUser().getUsername()); // todo onlination
+        Label playerName;
+        if (type.equals("replay")) {
+            playerName= new Label(fin.p2);
+        } else if (type.equals("live")) {
+            playerName= new Label(ongoingGame.player2);
+        } else {
+            playerName = new Label(User.getLoggedInUser().getUsername()); // todo onlination
+        }
         playerName.setLayoutY(600);
         playerName.setLayoutX(200);
         playerName.setTextFill(Color.YELLOW);
@@ -295,6 +303,9 @@ public class GameLauncher extends Application {
         Label playerNameOpponent;
         if (type.equals("replay")) {
             playerNameOpponent=new Label(fin.p1);//  todo onlination
+
+        } else if (type.equals("live")) {
+            playerNameOpponent=new Label(ongoingGame.player1);//  todo onlination
 
         } else {
             playerNameOpponent = new Label(User.getLoggedInUser().currentOponentName);//  todo onlination
@@ -539,6 +550,14 @@ public class GameLauncher extends Application {
 
 
         if (type.equals("normal")) {
+//            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(20), event -> {
+//                WritableImage screenshot = scene.snapshot(null);
+//                Gson fxGson = FxGson.create();
+//                String json = fxGson.toJson(screenshot);
+//                client.sendMessage("update:"+User.getLoggedInUser().getUsername()+":"+json);
+//            }));
+//            timeline.setCycleCount(-1);
+//            timeline.play();
             for (Card card : Deck.currentDeck.hand) {
                 try {
                     playerHand.getChildren().add(card);
@@ -564,7 +583,7 @@ public class GameLauncher extends Application {
                                 if (Integer.parseInt(components[5]) != 7 && i % 2 == 1)
                                     game.enemyPlaceCard(card, game.hBoxes.get(Integer.parseInt(components[5])));
                                 else if (Integer.parseInt(components[5]) != 7 && i % 2 == 0)
-                                    game.enemyPlaceCard(card, game.hBoxes.get(7 - Integer.parseInt(components[5])));
+                                    game.enemyPlaceCard(card, game.hBoxes.get(6 - Integer.parseInt(components[5])));
                                 else
                                     game.enemyPlaceCard(card, game.hBoxes.get(0));
                             });
@@ -575,6 +594,22 @@ public class GameLauncher extends Application {
                     })
             );
             timeline.play();
+        } else if (type.equals("live")) {
+            for (int i = 0; i < ongoingGame.moves.size(); i++) {
+                String move = ongoingGame.moves.get(i);
+                String[] components = move.split("\\.");
+                Card card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2])
+                        , Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
+                int finalI = i;
+                Platform.runLater(() -> {
+                    if (Integer.parseInt(components[5]) != 7 && finalI % 2 == 1)
+                        game.enemyPlaceCard(card, game.hBoxes.get(Integer.parseInt(components[5])));
+                    else if (Integer.parseInt(components[5]) != 7 && finalI % 2 == 0)
+                        game.enemyPlaceCard(card, game.hBoxes.get(6 - Integer.parseInt(components[5])));
+                    else
+                        game.enemyPlaceCard(card, game.hBoxes.get(0));
+                });
+            }
         }
 
 
@@ -625,7 +660,12 @@ public class GameLauncher extends Application {
         });
         sendText.setOnMouseClicked(event -> {
             addMessageToGlobalChat( chatField.getText(), "null", User.getLoggedInUser().getUsername(), "null");
-            client.sendMessage("chat:"+User.getLoggedInUser().currentOponentName+":"+chatField.getText()+ ".null."+ User.getLoggedInUser().getUsername()+".null"); //todo onlination
+            if (type.equals("normal"))
+                client.sendMessage("chat:"+User.getLoggedInUser().currentOponentName+":"+chatField.getText()+ ".null."+ User.getLoggedInUser().getUsername()+".null"); //todo onlination
+            else if (type.equals("live")) {
+                client.sendMessage("viewChat:"+ongoingGame.player2+":"+chatField.getText()+ ".null."+ User.getLoggedInUser().getUsername()+".null"); //todo onlination
+                client.sendMessage("viewChat:"+ongoingGame.player1+":"+chatField.getText()+ ".null."+ User.getLoggedInUser().getUsername()+".null"); //todo onlination
+            }
             chatField.clear();
         });
         globalChat.getChildren().addAll(chatsVBox, chatField , sendText, close);
@@ -668,14 +708,29 @@ public class GameLauncher extends Application {
         message.dislike.setOnMouseClicked(event -> {
             message.votes--;
             message.vote.setText(String.valueOf(message.votes));
-            client.sendMessage("vote:"+User.getLoggedInUser().currentOponentName+":"
-                    + message.time.getText().replace(':', ' ')+":dislike");
+            if (type.equals("normal"))
+                client.sendMessage("vote:"+User.getLoggedInUser().currentOponentName+":"
+                        + message.time.getText().replace(':', ' ')+":dislike");
+            else if (type.equals("live")) {
+                client.sendMessage("viewVote:"+ongoingGame.player1+":"
+                        + message.time.getText().replace(':', ' ')+":dislike");
+                client.sendMessage("viewVote:"+ongoingGame.player2+":"
+                        + message.time.getText().replace(':', ' ')+":dislike");
+            }
+
         });
         message.like.setOnMouseClicked(event -> {
             message.votes++;
             message.vote.setText(String.valueOf(message.votes));
-            client.sendMessage("vote:"+User.getLoggedInUser().currentOponentName+":"
-                    + message.time.getText().replace(':', ' ')+":like");
+            if (type.equals("normal"))
+                client.sendMessage("vote:"+User.getLoggedInUser().currentOponentName+":"
+                        + message.time.getText().replace(':', ' ')+":like");
+            else if (type.equals("live")) {
+                client.sendMessage("viewVote:"+ongoingGame.player1+":"
+                        + message.time.getText().replace(':', ' ')+":like");
+                client.sendMessage("viewVote:"+ongoingGame.player2+":"
+                        + message.time.getText().replace(':', ' ')+":like");
+            }
         });
         chatsVBox.getChildren().add(message);
         handleScroll();

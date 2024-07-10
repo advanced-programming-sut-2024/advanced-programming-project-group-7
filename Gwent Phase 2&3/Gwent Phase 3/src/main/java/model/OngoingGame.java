@@ -22,6 +22,18 @@ public class OngoingGame {
         this.type = type;
     }
 
+    public void sendChat(String string) {
+        for (Socket socket : watchers) {
+            System.out.println("string for watchers: " + string);
+            try {
+                DataOutputStream targetUser = new DataOutputStream(socket.getOutputStream());
+                targetUser.writeUTF(string);
+                targetUser.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     public void saveMove(String move){
         sendNewMoveToAll(move);
         moves.add(move);
