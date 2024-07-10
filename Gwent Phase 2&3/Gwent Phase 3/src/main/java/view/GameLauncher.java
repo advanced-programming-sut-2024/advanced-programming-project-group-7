@@ -2,7 +2,10 @@ package view;
 
 import controller.Client;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -27,6 +30,7 @@ import model.leaders.NorthernRealmsLeaders;
 import view.animations.CardPlacementAnimation;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameLauncher extends Application {
 
@@ -49,6 +53,8 @@ public class GameLauncher extends Application {
     public EnhancedHBox playerSixthRow = new EnhancedHBox();
     public EnhancedHBox playerFifthRowHorn = new EnhancedHBox();
     public EnhancedHBox playerFifthRow = new EnhancedHBox();
+    public String type = "normal";
+    public FinishedGame fin;
     private Pane pane = new Pane();
     private Card selected;
     private double sceneX;
@@ -286,7 +292,13 @@ public class GameLauncher extends Application {
         cardxOpponent.setLayoutY(270);
         cardxOpponent.setLayoutX(178);
 
-        Label playerNameOpponent=new Label(User.getLoggedInUser().currentOponentName);//  todo onlination
+        Label playerNameOpponent;
+        if (type.equals("replay")) {
+            playerNameOpponent=new Label(fin.p1);//  todo onlination
+
+        } else {
+            playerNameOpponent = new Label(User.getLoggedInUser().currentOponentName);//  todo onlination
+        }
         playerNameOpponent.setLayoutY(315);
         playerNameOpponent.setLayoutX(200);
         playerNameOpponent.setTextFill(Color.YELLOW);
@@ -526,14 +538,45 @@ public class GameLauncher extends Application {
         createGlobalChat();
 
 
-        for (Card card : Deck.currentDeck.hand) {
-            try {
-                playerHand.getChildren().add(card);
-            } catch (Exception e) {
-                System.out.println("error");
-                throw new RuntimeException(e);
+        if (type.equals("normal")) {
+            for (Card card : Deck.currentDeck.hand) {
+                try {
+                    playerHand.getChildren().add(card);
+                } catch (Exception e) {
+                    System.out.println("error");
+                    throw new RuntimeException(e);
+                }
             }
+        } else if (type.equals("replay")) {
+            AtomicInteger j = new AtomicInteger();
+            Timeline timeline = new Timeline();
+            timeline.setCycleCount(fin.moves.size());
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.seconds(7), event -> {
+                        int i = j.get();
+                        String move = fin.moves.get(i);
+                        String[] components = move.split("\\.");
+
+                        if (components.length > 3) {
+                            Card card = new Card(components[0], Integer.parseInt(components[1]), Boolean.parseBoolean(components[2]), Integer.parseInt(components[3]), components[4], Integer.parseInt(components[5]), Boolean.parseBoolean(components[6]));
+
+                            Platform.runLater(() -> {
+                                if (Integer.parseInt(components[5]) != 7 && i % 2 == 1)
+                                    game.enemyPlaceCard(card, game.hBoxes.get(Integer.parseInt(components[5])));
+                                else if (Integer.parseInt(components[5]) != 7 && i % 2 == 0)
+                                    game.enemyPlaceCard(card, game.hBoxes.get(7 - Integer.parseInt(components[5])));
+                                else
+                                    game.enemyPlaceCard(card, game.hBoxes.get(0));
+                            });
+                        } else {
+                            game.newRound(game);
+                        }
+                        j.getAndIncrement();
+                    })
+            );
+            timeline.play();
         }
+
 
         stage.show();
         stage.setFullScreen(true);

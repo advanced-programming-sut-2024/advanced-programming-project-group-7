@@ -321,15 +321,13 @@ public class UserThread extends Thread {
                     }
                 } else if (parts1[0].equals("rankTV")) {
                     try {
-                        StringBuilder st = new StringBuilder();
-                        st.append(parts1[0]);
+                        Gson gson = new Gson();
                         for (String players : GameServer.ongoingGames.keySet()) {
-                            st.append(players).append(".");
+                            String json = gson.toJson(GameServer.ongoingGames.get(players), OngoingGame.class);
+                            DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                            targetUser.writeUTF("rankTV." + json);
+                            targetUser.flush();
                         }
-                        st.append("end");
-                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
-                        targetUser.writeUTF(st.toString());
-                        targetUser.flush();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -345,6 +343,14 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("hisGame")) {
+                    DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[2]).getOutputStream());
+                    Gson gson = new Gson();
+                    ArrayList<FinishedGame> games = GameServer.getUserByName(parts1[1]).finishedGames;
+                    FinishedGame finishedGame = games.get(games.size()-1);
+                    String json = gson.toJson(finishedGame, FinishedGame.class);
+                    targetUser.writeUTF("hisGame."+json);
+                    targetUser.flush();
                 } else if (parts1[0].equals("pass")) {
                     try {
                         if (parts1[2].endsWith("newRound")){

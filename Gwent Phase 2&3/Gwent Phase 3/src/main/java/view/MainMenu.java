@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.FinishedGame;
 import model.Game;
+import model.OngoingGame;
 import model.User;
 
 import java.net.URL;
@@ -34,6 +35,7 @@ public class MainMenu extends Application {
     public static Stage stage;
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<FinishedGame> myFinishedGames = new ArrayList<>();
+    public static ArrayList<OngoingGame> ongoingGames = new ArrayList<>();
     public Label Username;
     public Rectangle mail;
     public Pane indicator1;
@@ -337,6 +339,16 @@ public class MainMenu extends Application {
         rankPlayerGames.setOnMouseClicked(event -> {
             televisionPane.getChildren().clear();
             televisionPane.getChildren().addAll(rankTelevisionPane);
+            for (OngoingGame og : MainMenu.ongoingGames) {
+                HBox hBox = new HBox();
+                Label label = new Label(og.player1 + " --vs-- " + og.player2 );
+                Button watch = new Button("watch");
+                watch.setOnMouseClicked(event1 -> {
+                    System.out.println("we are close to glory");
+                });
+                hBox.getChildren().addAll(label, watch);
+                rankTelevisionVBox.getChildren().addAll(hBox);
+            }
         });
         Button myPreviousGame=new Button("my games");
         myPreviousGame.setOnMouseClicked(event -> {
@@ -346,6 +358,17 @@ public class MainMenu extends Application {
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.TOP_CENTER);
                 Button replay = new Button("replay");
+                replay.setOnMouseClicked(event1 -> {
+                    GameLauncher gameLauncher = new GameLauncher();
+                    gameLauncher.type = "replay";
+                    gameLauncher.fin = fin;
+                    try {
+                        televisionMenu.close();
+                        gameLauncher.start(LoginMenu.stage);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
                 Label players = new Label(fin.p1+" vs "+fin.p2);
                 hBox.getChildren().addAll(players, replay);
                 myBox.getChildren().add(hBox);
@@ -375,6 +398,8 @@ public class MainMenu extends Application {
         televisionPane.getChildren().add(televisionRec);
         televisionPane.setOnMouseClicked(event -> {
             User user =User.getLoggedInUser();
+            MainMenu.ongoingGames.clear();
+            MainMenu.myFinishedGames.clear();
             user.client.sendMessage("rankTV:"+user.getUsername());
             user.client.sendMessage("myGames:"+user.getUsername());
             showTelevisionMenu(event);

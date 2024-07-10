@@ -12,7 +12,7 @@ public class OngoingGame {
     private final String type;
     public String player1;
     public String player2;
-    public ArrayList<Socket> watchers = new ArrayList<>();
+    public transient ArrayList<Socket> watchers = new ArrayList<>();
     public ArrayList<String> moves = new ArrayList<>();
 
     public OngoingGame(String player1, String player2, Boolean isPublic, String type) {

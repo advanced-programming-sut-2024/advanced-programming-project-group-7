@@ -135,15 +135,23 @@ public class Client extends Thread {
             });
 
         } else if (components[0].equals("yourGame")) {
-            System.out.println("we gooood ");
             Platform.runLater(()-> {
                 Gson gson = new Gson();
                 FinishedGame finishedGame = gson.fromJson(response.substring(9), FinishedGame.class);
                 MainMenu.myFinishedGames.add(finishedGame);
                 System.out.println(MainMenu.myFinishedGames);
             });
+        } else if (components[0].equals("hisGame")) {
+            Platform.runLater(()-> {
+                Gson gson = new Gson();
+                FinishedGame finishedGame = gson.fromJson(response.substring(8), FinishedGame.class);
+                Leaderboard.hisGame = (finishedGame);
+            });
         } else if (components[0].equals("rankTV")) {
-            System.out.println(Arrays.toString(Arrays.stream(components).toArray()));
+            System.out.println("got rank : " + response);
+            Gson gson = new Gson();
+            OngoingGame og = gson.fromJson(response.substring(7), OngoingGame.class);
+            MainMenu.ongoingGames.add(og);
         } else if (components[0].equals("startCup")) {
             Platform.runLater(()-> {
                 try {

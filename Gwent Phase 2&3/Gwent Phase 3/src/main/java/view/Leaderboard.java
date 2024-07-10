@@ -15,15 +15,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.FinishedGame;
+import model.OngoingGame;
 import model.User;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Leaderboard extends Application {
-    private TableView<User> table = new TableView<User>();
+    public static ArrayList<OngoingGame> ongoingGames = new ArrayList<>();
 
+    public static FinishedGame hisGame;
     private List<User> sortedUsers = MainMenu.users.stream()
             .sorted(Comparator.comparing(User::getWonGame).reversed())
             .limit(10)
@@ -61,8 +65,22 @@ public class Leaderboard extends Application {
             Label online = new Label(String.valueOf(user.isOnline));
             online.setFont(new Font("Arial", 20));
             Button watch = new Button("Watch");
-            watch.setOnMouseClicked(mouseEvent -> {});
-            hBox.getChildren().addAll(name, wins, online, watch);
+            watch.setOnMouseClicked(mouseEvent -> {
+                GameLauncher gameLauncher = new GameLauncher();
+                gameLauncher.type = "replay";
+                gameLauncher.fin = hisGame;
+                try {
+                    gameLauncher.start(LoginMenu.stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            Button get = new Button("Get");
+            get.setOnMouseClicked(event -> {
+                User.getLoggedInUser().client.sendMessage("hisGame:" + user.getUsername()+":"+User.getLoggedInUser().getUsername());
+
+            });
+            hBox.getChildren().addAll(name, wins, online, watch, get);
             vbox.getChildren().add(hBox);
             if (sortedUsers.indexOf(user) == 0)
                 hBox.setStyle("-fx-background-color: #FFD700");
