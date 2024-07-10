@@ -20,17 +20,17 @@ public class Game {
     public int lifeOpponent =2;
     public boolean isCowTransformed=false;
     public boolean isKambiTransformed=false;
-    private final HBox playerThirdRowHorn;
-    private final HBox playerSecondRowHorn;
-    private final HBox playerFirstRowHorn;
-    private final HBox playerFifthRowHorn;
-    private final HBox playerFourthRowHorn;
-    private final HBox playerSixthRowHorn;
-    public Label totalPowerOpponent;
-    public Label totalRow1PowerOpponent;
-    public Label totalRow2PowerOpponent;
-    public Label totalRow3PowerOpponent;
-    public Rectangle highScoreOpponent;
+    private HBox playerThirdRowHorn;
+    private HBox playerSecondRowHorn=new HBox();
+    private HBox playerFirstRowHorn=new HBox();
+    private HBox playerFifthRowHorn=new HBox();
+    private HBox playerFourthRowHorn=new HBox();
+    private HBox playerSixthRowHorn=new HBox();
+    public Label totalPowerOpponent=new Label("0");
+    public Label totalRow1PowerOpponent=new Label("0");
+    public Label totalRow2PowerOpponent=new Label("0");
+    public Label totalRow3PowerOpponent=new Label("0");
+    public Rectangle highScoreOpponent=new Rectangle();
     public Rectangle life1;
     public Rectangle life2;
     public Rectangle life1Opponent;
@@ -42,12 +42,12 @@ public class Game {
 //    public EnhancedHBox remainingDeck;
     public EnhancedHBox graveyard = new EnhancedHBox(); //don't add hero
     public EnhancedHBox playerFirstRow;
-    public Label totalRow3Power;
-    public Label totalRow1Power;
+    public Label totalRow3Power=new Label("0");
+    public Label totalRow1Power=new Label("0");
     public EnhancedHBox playerThirdRow;
     public EnhancedHBox playerSecondRow;
-    public Label totalRow2Power;
-    public Label totalPower;
+    public Label totalRow2Power=new Label("0");
+    public Label totalPower=new Label("0");
     public Card selected;
     public EnhancedHBox playerFifthRow;
     public EnhancedHBox playerSixthRow;
@@ -74,6 +74,7 @@ public class Game {
         this.playerFifthRowHorn = gameLauncher.playerFifthRowHorn;
         this.playerSixthRowHorn = gameLauncher.playerSixthRowHorn;
         this.weatherBox = gameLauncher.weatherBox;
+        System.out.println("waa");
     }
     public Group cardGroup = new Group();
     private final LocalDate date= LocalDate.now();
@@ -109,7 +110,7 @@ public class Game {
         int max = 0;
         if(j==0) {
             for (int i = 0; i <= 6; i++) {
-                Iterator<Node> iterator = hBoxes.get(i).getChildren().iterator();
+                Iterator<Node> iterator = gameLauncher.hBoxes.get(i).getChildren().iterator();
                 while (iterator.hasNext()) {
                     Node card1 = iterator.next();
                     Card card2 = (Card) card1;
@@ -145,19 +146,22 @@ public class Game {
         }
         calculateLabels();
     }
+//    public void removeVillen(Card card){
+////        this.playerThirdRow.getChildren().remove(card);
+////    }
 
-    private void removeCard(Card card) {
+    public void removeCard(Card card) {
         EnhancedHBox box = (EnhancedHBox) card.getParent();
-//        box.getChildren().remove(card);
-        AnnihilationAnimation animation = new AnnihilationAnimation(box, card, this);
-        animation.play();
+        box.getChildren().remove(card);
+//        AnnihilationAnimation animation = new AnnihilationAnimation(box, card, this);
+//        animation.play();
         gameLauncher.graveyardCard.add(card);
     }
-    private void removeCardForEnemy(Card card) {
+    public void removeCardForEnemy(Card card) {
         EnhancedHBox box = (EnhancedHBox) card.getParent();
-//        box.getChildren().remove(card);
-        AnnihilationAnimation animation = new AnnihilationAnimation(box, card, this);
-        animation.play();
+        box.getChildren().remove(card);
+//        AnnihilationAnimation animation = new AnnihilationAnimation(box, card, this);
+//        animation.play();
         gameLauncher.enemyGraveyardCard.add(card);
     }
 
@@ -180,6 +184,7 @@ public class Game {
     }
 
     public void calculateLabels() {
+        hBoxes=gameLauncher.hBoxes;
         for (Node card : hBoxes.get(0).getChildren()) {
             System.out.println(((Card) card).getCardName());
             switch (((Card) card).getCardName()) {

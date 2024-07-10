@@ -22,7 +22,6 @@ public class AnnihilationAnimation extends Transition {
         this.setCycleCount(1);
         this.setCycleDuration(Duration.millis(1000));
     }
-
     @Override
     protected void interpolate(double v) {
 

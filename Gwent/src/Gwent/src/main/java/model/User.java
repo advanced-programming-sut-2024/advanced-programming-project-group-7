@@ -241,15 +241,15 @@ public class User {
     }
 
     static {
-        User userTest= null;
-//        try {
-            userTest = new User("","","Ebim","s.mohammad.e.1383@gmail.com");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-        userTest.setSecurityQuestionNumber(1);
-    userTest.setAnswerOfSecurityQuestion("red");
-        userTest.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
+//        User userTest= null;
+////        try {
+//            userTest = new User("","","Ebim","s.mohammad.e.1383@gmail.com");
+////        } catch (IOException e) {
+////            throw new RuntimeException(e);
+////        }
+//        userTest.setSecurityQuestionNumber(1);
+//    userTest.setAnswerOfSecurityQuestion("red");
+//        userTest.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
 
         User userTest1= null;
         try {
@@ -259,7 +259,7 @@ public class User {
         }
         userTest1.setSecurityQuestionNumber(1);
         userTest1.setAnswerOfSecurityQuestion("red");
-        userTest1.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
+        userTest1.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest1));
 
         User userTest2= null;
 //        try {
@@ -269,7 +269,7 @@ public class User {
 //        }
         userTest2.setSecurityQuestionNumber(1);
         userTest2.setAnswerOfSecurityQuestion("red");
-        userTest2.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
+        userTest2.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest1));
     }
 
     public ArrayList<BattleInfo> getBattleLog() {

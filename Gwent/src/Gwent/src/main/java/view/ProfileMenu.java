@@ -231,7 +231,7 @@ public class ProfileMenu extends Application {
 
 
     public void changeUsername(MouseEvent mouseEvent) {
-          Alert alert = ProfileMenuController.changeUsername(newName.getText());
+          Alert alert = convertToAlertChangeUsername(ProfileMenuController.changeUsername(newName.getText()));
         System.out.println(User.getLoggedInUser().getUsername());
         if (alert != null) {
             alert.show();
@@ -240,7 +240,7 @@ public class ProfileMenu extends Application {
 
 
     public void changePassword(MouseEvent mouseEvent) {
-        Alert alert= ProfileMenuController.changePassword(oldPassword.getText(),newPassword.getText());
+        Alert alert= convertToAlertChangePassword(ProfileMenuController.changePassword(oldPassword.getText(),newPassword.getText()));
         if (alert != null) {
             alert.show();
         }
@@ -258,7 +258,7 @@ public class ProfileMenu extends Application {
 
 
     public void changeNickname(MouseEvent mouseEvent) {
-        Alert alert = ProfileMenuController.changeNickname(newNickname.getText());
+        Alert alert = convertToAlertChangeNickname(ProfileMenuController.changeNickname(newNickname.getText()));
         if (alert != null) {
             alert.show();
         }
@@ -266,7 +266,7 @@ public class ProfileMenu extends Application {
 
 
     public void changeEmail(MouseEvent mouseEvent) {
-        Alert alert = ProfileMenuController.changeEmail(email.getText());
+        Alert alert = convertToAlertChangeEmail(ProfileMenuController.changeEmail(email.getText()));
         if (alert != null) {
             alert.show();
         }
@@ -463,4 +463,43 @@ public class ProfileMenu extends Application {
                 BackgroundSize.DEFAULT);
         return backgroundImage;
     }
+    public Alert convertToAlertChangeUsername(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username is not valid");return alert;
+        }
+        if(num==2){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username was taken");return alert;
+        }
+        return null;
+    }
+    public Alert convertToAlertChangeNickname(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid nickname");return alert;
+        }
+
+        return null;
+    }
+    public Alert convertToAlertChangeEmail(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid email");return alert;
+        }
+        return null;
+    }
+    public Alert convertToAlertChangePassword(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("enter previous password");return alert;
+        }
+        if(num==2){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("previous password is wrong");return alert;
+        }
+        if(num==3){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this password is not valid");return alert;
+
+        }
+        if(num==4){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this password is weak");return alert;
+        }
+        return null;
+    }
+
 }

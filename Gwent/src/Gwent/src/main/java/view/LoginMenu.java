@@ -3,15 +3,12 @@ package view;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import controller.GameServer;
 import controller.LoginMenuController;
 import controller.GmailSender;
-import controller.LoginMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -38,12 +35,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class LoginMenu extends Application {
     public static Stage stage;
     public static MediaPlayer mediaPlayer;
     public TextField nameField;
+    public String whoForgot=null;
     public boolean hasMusic = false;
     public TextField password;
     public Label nicknameLabel;
@@ -213,6 +210,63 @@ public class LoginMenu extends Application {
             }
         }
     }
+    private Alert convertToAlertRegister(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("duplicate username");return alert;
+        }
+        if(num==2){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid username");return alert;
+        }
+        if (num==3){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid email");return alert;
+        }
+        if(num==4){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;
+        }
+        if(num==5){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid nickname");return alert;        }
+        if(num==6){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("weakPass");return alert;        }
+        if(num==7){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("password is not confirmed correctly");return alert;        }
+        return null;
+    }
+    private Alert convertToAlertLogin(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("you haven't registered");return alert;}
+        if(num==2){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong password");return alert;  }
+        return null;
+    }
+    private Alert convertToAlertSetNewPass(int num) {
+        if(num==1){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
+        if(num==2){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("weak pass");return alert;}
+        if(num==3){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("please check your confirmPass");return alert;}
+
+        return null;
+    }
+    private Alert convertToAlertSetQ(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("answer one question at least");return alert;
+        }
+        if(num==2){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("answer only one question");return alert;
+        }
+        return null;
+    }
+    private Alert convertToAlertAnswerQ(int num) {
+        if(num==1){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username doesn't exist");return alert;
+        }
+        if(num==2){
+            Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong answer");return alert;
+        }
+        return null;
+    }
+
+
+
+
 
 
     public void signUp(MouseEvent mouseEvent) {
@@ -222,8 +276,8 @@ public class LoginMenu extends Application {
             if (!isLoggingIN && verified) {
                 try {
                     System.out.println("its good");
-                    alert = LoginMenuController.userRegister(nameField.getText()
-                            , password.getText(), confirmPWD.getText(), nicknameText.getText(), emailText.getText());
+                    alert = convertToAlertRegister(LoginMenuController.userRegister(nameField.getText()
+                            , password.getText(), confirmPWD.getText(), nicknameText.getText(), emailText.getText()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -259,8 +313,8 @@ public class LoginMenu extends Application {
                     Button confirmButton = new Button("Confirm");
                     Button backButton = new Button("Back");
                     confirmButton.setOnMouseClicked(event -> {
-                       Alert alert1= LoginMenuController.setSecurityQ(nameField.getText(),
-                                securityAnswerFields[0].getText(), securityAnswerFields[1].getText(), securityAnswerFields[2].getText());
+                       Alert alert1=  convertToAlertSetQ(LoginMenuController.setSecurityQ(nameField.getText(),
+                                securityAnswerFields[0].getText(), securityAnswerFields[1].getText(), securityAnswerFields[2].getText()));
                        if (alert1==null){
                            goToMainMenu();
                        }
@@ -299,7 +353,7 @@ public class LoginMenu extends Application {
             }
         } else {
 
-        alert = LoginMenuController.userLogin(nameField.getText(), password.getText());
+        alert = convertToAlertLogin(LoginMenuController.userLogin(nameField.getText(), password.getText()));
             if (alert == null) {
 //                Stage twoFAStage=new Stage();
                 twoFA();
@@ -391,9 +445,10 @@ public class LoginMenu extends Application {
 //            stage.setScene(scene1);
 //            scene1.setFill(Color.BLACK);
             confirmLabel.setOnMouseClicked(event ->{
-                    Alert alert = LoginMenuController.hasAnsweredCorrectly(usernameTextField.getText(), securityAnswerField.getText());
+                    Alert alert = convertToAlertAnswerQ(LoginMenuController.hasAnsweredCorrectly(usernameTextField.getText(), securityAnswerField.getText()));
                     if (alert == null) {
-                        User.setLoggedInUser(user);
+                        whoForgot=usernameTextField.getText();
+//                        User.setLoggedInUser(user);
 //                        Stage newPass = new Stage();
 //                        newPass.setTitle("Reset Password");
                         setNewPassword();
@@ -567,9 +622,9 @@ public class LoginMenu extends Application {
             confirmLabel.setTextFill(Color.WHITE);
         });
         confirmLabel.setOnMouseClicked(event1 -> {
-            Alert alert1= LoginMenuController.setNewPassword(newPassTextField.getText(), confirmNewPassTextField.getText());
+            Alert alert1= convertToAlertSetNewPass(LoginMenuController.setNewPassword(whoForgot,newPassTextField.getText(), confirmNewPassTextField.getText()));
             if(alert1==null){
-                User.setLoggedInUser(null);
+//                User.setLoggedInUser(null);
                 goToMainMenu();
             }else alert1.show();
         });

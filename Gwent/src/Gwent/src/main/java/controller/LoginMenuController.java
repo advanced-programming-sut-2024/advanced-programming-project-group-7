@@ -12,31 +12,31 @@ public class LoginMenuController {
     private static StringBuilder additionalInformation=new StringBuilder();
 
 
-    public static Alert userLogin( String username,String password) {
-        if (!isUsernameDuplicate(username)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("you haven't registered");return alert;}
+    public static int userLogin( String username,String password) {
+        if (!isUsernameDuplicate(username))return 1;
         else {
             User user=User.getUserByUsername(username);
             System.out.println(user.getUsername());
-            if (!isPasswordCorrect(user,password)) {Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong password");return alert;}
+            if (!isPasswordCorrect(user,password)) {return 2;}
             else {
                 User.setLoggedInUser(user);
-                return null;
+                return 0;
             }
         }
     }
 
-    public static Alert userRegister( String username,String password,String passwordConfirm,String nickname,String email) throws IOException {
-        if(isUsernameDuplicate(username)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username is taken");return alert;}
-        else if(! isUsernameValid(username)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid username");return alert;}
-        else if(! isEmailAddressValid(email)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid email");return alert;}
-        else if(! isPasswordValid(password)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
-        else if(! isNicknameValid(nickname)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid nickname");return alert;}
-        else if(isPasswordWeak(password)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation.toString());return alert;}
-        else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)){ Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("password is not confirmed correctly");return alert;}
+    public static int userRegister(String username, String password, String passwordConfirm, String nickname, String email) throws IOException {
+        if(isUsernameDuplicate(username)) return 1;
+        else if(! isUsernameValid(username)){ return 2;}
+        else if(! isEmailAddressValid(email))return 3;
+        else if(! isPasswordValid(password)) return 4;
+        else if(! isNicknameValid(nickname)) return 5;
+        else if(isPasswordWeak(password))  return 6;
+        else if(! LoginMenuController.isPasswordConfirmed(password,passwordConfirm)) return 7;
         else{
             User user=new User(username,password,nickname,email);
-           User.setLoggedInUser(user);
-            return null;
+            User.setLoggedInUser(user);
+            return 0;
         }
     }
 
@@ -105,36 +105,38 @@ public class LoginMenuController {
 //        return false;
 //    }
 
-    public static Alert setNewPassword(String username, String pass){
+    public static int setNewPassword(String username, String pass,String confirmPass){
         User user=User.getUserByUsername(username);
-        if(isPasswordValid(pass)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
-        if(isPasswordWeak(pass)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation.toString());return alert;}
+        if(!isPasswordValid(pass))return 1;
+        if(isPasswordWeak(pass)) return 2;
+        if(!pass.equals(confirmPass))return 3;
         user.setPassword(pass);
-        return null;
+        User.setLoggedInUser(user);
+        return 0;
     }
 
-    public static Alert setSecurityQ(String username, String text1, String text2, String text3) {
+    public static int setSecurityQ(String username, String text1, String text2, String text3){
         User user=User.getUserByUsername(username);
         int i=0;
         if (! text1.isEmpty())i++;
         if (! text2.isEmpty())i++;
         if (! text3.isEmpty())i++;
-        if(i==0){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("answer one question at least");return alert;}
-        if (i>=2){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("answer only one question");return alert;}
+        if(i==0)return 1;
+        if (i>=2)return 2;
         else {
             if (! text1.isEmpty()){user.setSecurityQuestionNumber(1);user.setAnswerOfSecurityQuestion(text1);}
             if (! text2.isEmpty()){user.setSecurityQuestionNumber(2);user.setAnswerOfSecurityQuestion(text1);}
             if (! text3.isEmpty()){user.setSecurityQuestionNumber(3);user.setAnswerOfSecurityQuestion(text1);}
-            return null;
+            return 0;
         }
     }
 
-    public static Alert hasAnsweredCorrectly(String username, String answer) {
-        if(! isUsernameDuplicate(username)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("this username doesn't exist");return alert;}
+    public static int hasAnsweredCorrectly(String username, String answer) {
+        if(! isUsernameDuplicate(username))return 1;
         User user=User.getUserByUsername(username);
-        if(! answer.equals(user.getAnswerOfSecurityQuestion())){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("wrong answer");return alert;}
+        if(! answer.equals(user.getAnswerOfSecurityQuestion()))return 2;
         User.setLoggedInUser(user);
-        return null;
+        return 0;
     }
 
     public static String generatePassword() {
