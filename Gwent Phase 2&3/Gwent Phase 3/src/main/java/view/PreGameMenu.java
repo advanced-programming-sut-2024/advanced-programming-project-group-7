@@ -126,7 +126,6 @@ public class PreGameMenu extends Application {
             pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
-//                System.out.println(card+" : "+card.getCardName());
                 int cardLeft = Integer.parseInt(label.getText());
                 if (cardLeft > 0) {
                     label.setText(String.valueOf(cardLeft - 1));
@@ -134,7 +133,6 @@ public class PreGameMenu extends Application {
                     setCardsInDeck();
                     calculateLabels();
                 }
-//                for(Card card1:currentDeck.getCardsInDeck().keySet()) System.out.println(card1.getCardName()+" "+currentDeck.getCardsInDeck().get(card1));
             });
             count++;
         }
@@ -167,7 +165,6 @@ public class PreGameMenu extends Application {
                             setCardsAndCommander();
                             setCardsInDeck();
                             calculateLabels();
-//                            for(Card card1:currentDeck.getCardsInDeck().keySet()) System.out.println(card1+" : "+card1.getCardName());
                         }
                     });
                     rightGrid.add(pane, count % 3, count / 3);

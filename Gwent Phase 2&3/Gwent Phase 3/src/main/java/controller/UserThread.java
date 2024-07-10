@@ -2,6 +2,7 @@ package controller;
 
 import com.google.gson.Gson;
 import javafx.application.Platform;
+import model.FinishedGame;
 import model.OngoingGame;
 import model.User;
 import view.CupMenu;
@@ -150,6 +151,13 @@ public class UserThread extends Thread {
                         dataOutputStream1.flush();
                     }
                 } else if (parts1[0].equals("IWon")) {
+                    for (String gamers :GameServer.ongoingGames.keySet()){
+                        String [] players = gamers.split("-");
+                        if (players[0].equals(parts1[1]) || players[1].equals(parts1[1])){
+                            GameServer.ongoingGames.get(gamers).finish();
+                            GameServer.ongoingGames.remove(gamers); //todo iterator
+                        }
+                    }
                     for (User user : GameServer.allUsers) {
                         if (user.username.equals(parts1[1])) {
                             user.setWonGame(user.getWonGame()+1);
@@ -325,10 +333,24 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("myGames")) {
+                    try {
+                        DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                        Gson gson = new Gson();
+                        for (FinishedGame finishedGame : GameServer.getUserByName(parts1[1]).finishedGames) {
+                            String json = gson.toJson(finishedGame, FinishedGame.class);
+                            targetUser.writeUTF("yourGame."+json);
+                            targetUser.flush();
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("pass")) {
                     try {
                         if (parts1[2].endsWith("newRound")){
-                            Objects.requireNonNull(GameServer.getGameByName(parts1[1])).saveMove(parts1[2]);
+                            OngoingGame og = GameServer.getGameByName(parts1[1]);
+                            if (og != null)
+                                GameServer.getGameByName(parts1[1]).saveMove(parts1[2]);
                         }
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
                         targetUser.writeUTF(parts1[2]);

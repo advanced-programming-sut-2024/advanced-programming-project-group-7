@@ -21,6 +21,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.FinishedGame;
 import model.Game;
 import model.User;
 
@@ -32,6 +33,7 @@ public class MainMenu extends Application {
 
     public static Stage stage;
     public static ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<FinishedGame> myFinishedGames = new ArrayList<>();
     public Label Username;
     public Rectangle mail;
     public Pane indicator1;
@@ -327,9 +329,10 @@ public class MainMenu extends Application {
         rankTelevisionVBox.setLayoutX(300);
         televisionPane.getChildren().addAll(rankTelevisionPane);
         Pane myPreviousGameTelevisionPane=new Pane();
-        Rectangle myPreviousGameTelevisionRec=new Rectangle(600,400);
-        myPreviousGameTelevisionRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/indicator.png")))));
-        myPreviousGameTelevisionPane.getChildren().addAll(myPreviousGameTelevisionRec);
+        VBox myBox = new VBox(10);
+        myBox.setLayoutX(300);
+
+        myPreviousGameTelevisionPane.getChildren().addAll(myBox);
         Button rankPlayerGames=new Button("rank");
         rankPlayerGames.setOnMouseClicked(event -> {
             televisionPane.getChildren().clear();
@@ -339,6 +342,14 @@ public class MainMenu extends Application {
         myPreviousGame.setOnMouseClicked(event -> {
             televisionPane.getChildren().clear();
             televisionPane.getChildren().addAll(myPreviousGameTelevisionPane);
+            for (FinishedGame fin : MainMenu.myFinishedGames){
+                HBox hBox = new HBox();
+                hBox.setAlignment(Pos.TOP_CENTER);
+                Button replay = new Button("replay");
+                Label players = new Label(fin.p1+" vs "+fin.p2);
+                hBox.getChildren().addAll(players, replay);
+                myBox.getChildren().add(hBox);
+            }
         });
         buttonPane.getChildren().addAll(rankPlayerGames,myPreviousGame);
         buttonPane.setMaxHeight(30);
@@ -365,6 +376,7 @@ public class MainMenu extends Application {
         televisionPane.setOnMouseClicked(event -> {
             User user =User.getLoggedInUser();
             user.client.sendMessage("rankTV:"+user.getUsername());
+            user.client.sendMessage("myGames:"+user.getUsername());
             showTelevisionMenu(event);
         });
         televisionRec.setOnMouseEntered(event -> {

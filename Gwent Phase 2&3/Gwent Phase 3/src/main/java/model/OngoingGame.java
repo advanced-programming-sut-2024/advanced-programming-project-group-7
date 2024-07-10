@@ -1,5 +1,7 @@
 package model;
 
+import controller.GameServer;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -46,6 +48,15 @@ public class OngoingGame {
                 targetUser.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void finish() {
+        FinishedGame finishedGame = new FinishedGame(player1, player2, moves);
+        for (User user : GameServer.allUsers) {
+            if (user.getUsername().equals(player1) || user.getUsername().equals(player2)) {
+                user.finishedGames.add(finishedGame);
             }
         }
     }

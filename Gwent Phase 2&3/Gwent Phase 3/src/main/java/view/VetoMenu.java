@@ -44,21 +44,11 @@ public class VetoMenu extends Application {
         stage.setResizable(false);
         deck = Deck.currentDeck;
         update.addAll(deck.hand);//todo update is new hand
-
-        for(Card card: deck.hand){
-            System.out.println(card+" : "+card.getCardName());
-        }
-        System.out.println("---------");
-        for(Card card: deck.reservedCards){
-            System.out.println(card+" : "+card.getCardName());
-        }
-//        substitue1 = deck.reservedCards.get(0);
-//        substitue2 = deck.reservedCards.get(1);
+;
         stage.centerOnScreen();
         stage.show();
         stage.setFullScreen(true);
         showVetoMenu();
-//        System.out.println(substitue1+"\n"+substitue2);
         this.stage = stage;
     }
     public void showVetoMenu() {

@@ -126,7 +126,6 @@ public class Client extends Thread {
                 }
             });
         } else if (components[0].equals("refresh")) {
-            System.out.println("reache ");
             Platform.runLater(()-> {
                 Gson gson = new Gson();
                 User user = gson.fromJson(components[1], User.class);
@@ -135,6 +134,14 @@ public class Client extends Thread {
                 System.out.println(MainMenu.users);
             });
 
+        } else if (components[0].equals("yourGame")) {
+            System.out.println("we gooood ");
+            Platform.runLater(()-> {
+                Gson gson = new Gson();
+                FinishedGame finishedGame = gson.fromJson(response.substring(9), FinishedGame.class);
+                MainMenu.myFinishedGames.add(finishedGame);
+                System.out.println(MainMenu.myFinishedGames);
+            });
         } else if (components[0].equals("rankTV")) {
             System.out.println(Arrays.toString(Arrays.stream(components).toArray()));
         } else if (components[0].equals("startCup")) {

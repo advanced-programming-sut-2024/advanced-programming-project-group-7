@@ -27,6 +27,15 @@ public class GameServer extends Thread {
         gameServer.start();
     }
 
+    public static User getUserByName(String s) {
+        for (User user : allUsers) {
+            if (user.getUsername().equals(s)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(34800)) {

@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
+    public transient ArrayList<FinishedGame> finishedGames = new ArrayList<>();
     public transient Client client;
     public transient String currentOponentName;
     public transient boolean isInCup = false;
