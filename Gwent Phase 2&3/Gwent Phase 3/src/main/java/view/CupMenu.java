@@ -1,12 +1,12 @@
 package view;
 
 import controller.Client;
+import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
@@ -17,21 +17,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Game;
 import model.User;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CupMenu extends Application {
 
-    public Circle tournament1;
-    public Circle tournament0;
     public Button watch;
     public TextField searchBar;
     public Button isPlaying;
@@ -81,7 +76,240 @@ public class CupMenu extends Application {
     public static Client client = User.getLoggedInUser().client;
     private Pane root;
 
-    {
+
+
+
+    public void setReady(String player, String nodeName) {
+        System.out.println("we doin this "+ player +"  "+ nodeName );
+
+        switch (nodeName) {
+            case "m0" -> M0.setReady(player, false);
+            case "m1" -> M1.setReady(player, false);
+            case "m2" -> M2.setReady(player, false);
+            case "m3" -> M3.setReady(player, false);
+            case "m4" -> M4.setReady(player, false);
+            case "m5" -> M5.setReady(player, false);
+            case "m6" -> M6.setReady(player, false);
+            case "m7" -> M7.setReady(player, false);
+            case "m8" -> M8.setReady(player, false);
+            case "m9" -> M9.setReady(player, false);
+            case "m10" -> M10.setReady(player, false);
+            case "m11" -> M11.setReady(player, false);
+            case "m12" -> M12.setReady(player, false);
+        }
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        root = new Pane();
+        LoginMenu.stage.close();
+
+        stage.setTitle(you);
+        root.setMinHeight(900);
+        root.setMinWidth(1280);
+        root.setBackground(new Background(createBackgroundImage("/Images/bracket.png")));
+
+        P0 = new Label("Cup Menu");
+        P0.setLayoutX(1160);
+        P0.setLayoutY(55);
+        P0.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P0);
+
+        P1 = new Label("Cup Menu");
+        P1.setLayoutX(1160);
+        P1.setLayoutY(130);
+        P1.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P1);
+
+        P2 = new Label("Cup Menu");
+        P2.setLayoutX(1160);
+        P2.setLayoutY(205);
+        P2.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P2);
+
+        P3 = new Label("Cup Menu");
+        P3.setLayoutX(1160);
+        P3.setLayoutY(280);
+        P3.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P3);
+
+        P4 = new Label("Cup Menu");
+        P4.setLayoutX(1160);
+        P4.setLayoutY(355);
+        P4.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P4);
+
+        P5 = new Label("Cup Menu");
+        P5.setLayoutX(1160);
+        P5.setLayoutY(430);
+        P5.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P5);
+
+        P6 = new Label("Cup Menu");
+        P6.setLayoutX(1160);
+        P6.setLayoutY(505);
+        P6.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P6);
+
+        P7 = new Label("Cup Menu");
+        P7.setLayoutX(1160);
+        P7.setLayoutY(580);
+        P7.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P7);
+
+        P8 = new Label("Cup Menu");
+        P8.setLayoutX(970);
+        P8.setLayoutY(95);
+        P8.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P8);
+
+        P9 = new Label("Cup Menu");
+        P9.setLayoutX(970);
+        P9.setLayoutY(245);
+        P9.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P9);
+
+        P10 = new Label("Cup Menu");
+        P10.setLayoutX(970);
+        P10.setLayoutY(385);
+        P10.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P10);
+
+        P11 = new Label("Cup Menu");
+        P11.setLayoutX(970);
+        P11.setLayoutY(535);
+        P11.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P11);
+
+        P12 = new Label("Cup Menu");
+        P12.setLayoutX(780);
+        P12.setLayoutY(165);
+        P12.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P12);
+
+        P13 = new Label("Cup Menu");
+        P13.setLayoutX(780);
+        P13.setLayoutY(465);
+        P13.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P13);
+
+        P14 = new Label("Cup Menu");
+        P14.setLayoutX(589);
+        P14.setLayoutY(309);
+        P14.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P14);
+
+        P15 = new Label("Cup Menu");
+        P15.setLayoutX(50);
+        P15.setLayoutY(245);
+        P15.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P15);
+
+        P16 = new Label("Cup Menu");
+        P16.setLayoutX(50);
+        P16.setLayoutY(395);
+        P16.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P16);
+
+        P17 = new Label("Cup Menu");
+        P17.setLayoutX(50);
+        P17.setLayoutY(545);
+        P17.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P17);
+
+        P18 = new Label("Cup Menu");
+        P18.setLayoutX(50);
+        P18.setLayoutY(685);
+        P18.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P18);
+
+        P19 = new Label("Cup Menu");
+        P19.setLayoutX(240);
+        P19.setLayoutY(320);
+        P19.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P19);
+
+        P20 = new Label("Cup Menu");
+        P20.setLayoutX(240);
+        P20.setLayoutY(470);
+        P20.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P20);
+
+        P21 = new Label("Cup Menu");
+        P21.setLayoutX(240);
+        P21.setLayoutY(620);
+        P21.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P21);
+
+        P22 = new Label("Cup Menu");
+        P22.setLayoutX(240);
+        P22.setLayoutY(760);
+        P22.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P22);
+
+        P23 = new Label("Cup Menu");
+        P23.setLayoutX(410);
+        P23.setLayoutY(395);
+        P23.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P23);
+
+        P24 = new Label("Cup Menu");
+        P24.setLayoutX(410);
+        P24.setLayoutY(695);
+        P24.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P24);
+
+        P25 = new Label("Cup Menu");
+        P25.setLayoutX(590);
+        P25.setLayoutY(545);
+        P25.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P25);
+
+        watch = new Button();
+        watch.setText("watch");
+        watch.setLayoutX(615);
+        watch.setLayoutY(731);
+
+        searchBar = new TextField();
+        searchBar.setLayoutX(589);
+        searchBar.setLayoutY(695);
+        searchBar.prefWidth(56);
+
+        ready = new Rectangle(130,130);
+        ready.setLayoutX(567);
+        ready.setLayoutY(139);
+
+        isPlaying = new Button("?");
+        isPlaying.setLayoutX(675);
+        isPlaying.setLayoutY(695);
+        isPlaying.setOnMouseClicked(event -> {
+
+        });
+
+        root.getChildren().addAll(watch, searchBar, isPlaying, ready);
+        watch.setVisible(false);
+        ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
+        ready.setOnMouseClicked(event -> {
+
+            RotateTransition rotate = new RotateTransition(Duration.seconds(3), ready);
+            rotate.setCycleCount(1);
+            rotate.setByAngle(360);
+            rotate.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/green-ready.png")))));
+                    yourNode.setReady(you, yourNode.ready == null);
+                    Timeline t = new Timeline(new KeyFrame(Duration.seconds(10)));
+                    t.setCycleCount(1);
+                    t.setOnFinished(event1 -> {
+                        ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
+                    });
+                    t.play();
+                }
+            });
+            rotate.play();
+        });
+
         M0 = new MatchNode("m0", P0, P1);
         M1 = new MatchNode("m1", P2, P3);
         M2 = new MatchNode("m2", P4, P5);
@@ -109,216 +337,12 @@ public class CupMenu extends Application {
         CupMenu.nodes.add(M6);
         CupMenu.nodes.add(M8);
         CupMenu.nodes.add(M7);
-    }
 
-
-    public static void setReady(String player, String nodeName) {
-        switch (nodeName) {
-            case "m0" -> M0.setReady(player);
-            case "m1" -> M1.setReady(player);
-            case "m2" -> M2.setReady(player);
-            case "m3" -> M3.setReady(player);
-            case "m4" -> M4.setReady(player);
-            case "m5" -> M5.setReady(player);
-            case "m6" -> M6.setReady(player);
-            case "m7" -> M7.setReady(player);
-            case "m8" -> M8.setReady(player);
-            case "m9" -> M9.setReady(player);
-            case "m10" -> M10.setReady(player);
-            case "m11" -> M11.setReady(player);
-            case "m12" -> M12.setReady(player);
-        }
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        root = new Pane();
-
-        root.setBackground(new Background(createBackgroundImage("/Images/bracket.png")));
-        P0 = new Label("Cup Menu");
-        P0.setLayoutX(1160);
-        P0.setLayoutY(115);
-        P0.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P0);
-
-        P1 = new Label("Cup Menu");
-        P1.setLayoutX(1160);
-        P1.setLayoutY(115);
-        P1.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P1);
-
-        P2 = new Label("Cup Menu");
-        P2.setLayoutX(1160);
-        P2.setLayoutY(115);
-        P2.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P2);
-
-        P3 = new Label("Cup Menu");
-        P3.setLayoutX(1160);
-        P3.setLayoutY(115);
-        P3.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P3);
-
-        P4 = new Label("Cup Menu");
-        P4.setLayoutX(1160);
-        P4.setLayoutY(115);
-        P4.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P4);
-
-        P5 = new Label("Cup Menu");
-        P5.setLayoutX(1160);
-        P5.setLayoutY(115);
-        P5.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P5);
-
-        P6 = new Label("Cup Menu");
-        P6.setLayoutX(1160);
-        P6.setLayoutY(115);
-        P6.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P6);
-
-        P7 = new Label("Cup Menu");
-        P7.setLayoutX(1160);
-        P7.setLayoutY(115);
-        P7.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P7);
-
-        P8 = new Label("Cup Menu");
-        P8.setLayoutX(1160);
-        P8.setLayoutY(115);
-        P8.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P8);
-
-        P9 = new Label("Cup Menu");
-        P9.setLayoutX(1160);
-        P9.setLayoutY(115);
-        P9.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P9);
-
-        P10 = new Label("Cup Menu");
-        P10.setLayoutX(1160);
-        P10.setLayoutY(115);
-        P10.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P10);
-
-        P11 = new Label("Cup Menu");
-        P11.setLayoutX(1160);
-        P11.setLayoutY(115);
-        P11.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P11);
-
-        P12 = new Label("Cup Menu");
-        P12.setLayoutX(1160);
-        P12.setLayoutY(115);
-        P12.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P12);
-
-        P13 = new Label("Cup Menu");
-        P13.setLayoutX(1160);
-        P13.setLayoutY(115);
-        P13.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P13);
-
-        P14 = new Label("Cup Menu");
-        P14.setLayoutX(1160);
-        P14.setLayoutY(115);
-        P14.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P14);
-
-        P15 = new Label("Cup Menu");
-        P15.setLayoutX(1160);
-        P15.setLayoutY(115);
-        P15.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P15);
-
-        P16 = new Label("Cup Menu");
-        P16.setLayoutX(1160);
-        P16.setLayoutY(115);
-        P16.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P16);
-
-        P17 = new Label("Cup Menu");
-        P17.setLayoutX(1160);
-        P17.setLayoutY(115);
-        P17.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P17);
-
-        P18 = new Label("Cup Menu");
-        P18.setLayoutX(1160);
-        P18.setLayoutY(115);
-        P18.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P18);
-
-        P19 = new Label("Cup Menu");
-        P19.setLayoutX(1160);
-        P19.setLayoutY(115);
-        P19.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P19);
-
-        P20 = new Label("Cup Menu");
-        P20.setLayoutX(1160);
-        P20.setLayoutY(115);
-        P20.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P20);
-
-        P21 = new Label("Cup Menu");
-        P21.setLayoutX(1160);
-        P21.setLayoutY(115);
-        P21.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P21);
-
-        P22 = new Label("Cup Menu");
-        P22.setLayoutX(1160);
-        P22.setLayoutY(115);
-        P22.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P22);
-
-        P23 = new Label("Cup Menu");
-        P23.setLayoutX(1160);
-        P23.setLayoutY(115);
-        P23.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P23);
-
-        P24 = new Label("Cup Menu");
-        P24.setLayoutX(1160);
-        P24.setLayoutY(115);
-        P24.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P24);
-
-        P25 = new Label("Cup Menu");
-        P25.setLayoutX(1160);
-        P25.setLayoutY(115);
-        P25.setStyle("-fx-font-size: 20px");
-        root.getChildren().add(P25);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    @FXML
-    public void initialize() {
-        tournament0.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/tournament.png")))));
-        tournament1.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/tournament.png")))));
-        watch.setVisible(false);
-        ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
-        ready.setOnMouseClicked(event -> {
-            yourNode.setReady(you);
-            RotateTransition rotate = new RotateTransition(Duration.seconds(3), ready);
-            rotate.setCycleCount(1);
-            rotate.setByAngle(360);
-            rotate.setOnFinished(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/green-ready.png")))));
-                    yourNode.setReady(you);
-                }
-            });
-            rotate.play();
-        });
-        ready.setOnMouseClicked(event -> {
-            yourNode.setReady(you);
-        });
-    }
     private BackgroundImage createBackgroundImage (String address) {
         Image image = new Image(Game.class.getResource(address).toExternalForm(), 1280 ,900, false, false);
         ImageView imageView = new ImageView(image);
@@ -333,7 +357,6 @@ public class CupMenu extends Application {
         return backgroundImage;
     }
     public void init(String p0, String p1, String p2, String p3, String p4, String p5, String p6, String p7, String seed) {
-        System.out.println("im here doing my thing " + P0);
         P0.setText(p0);
         P1.setText(p1);
         P2.setText(p2);
@@ -344,7 +367,7 @@ public class CupMenu extends Application {
         P7.setText(p7);
         yourNode = nodes.get(Integer.parseInt(seed) / 2);
     }
-    public static void result(String winner, String loser, String node) {
+    public void result(String winner, String loser, String node) {
         switch (node) {
             case "m0" -> {
                 M4.upperPlayer.setText(winner);
@@ -377,9 +400,33 @@ public class CupMenu extends Application {
             case "m11" -> M12.lowerPlayer.setText(winner);
             case "m12" -> M7.lowerPlayer.setText(winner);
         }
-        for (MatchNode matchNode : nodes) {
-            if (matchNode.upperPlayer.getText().equals(you) || matchNode.upperPlayer.getText().equals(you))
-                yourNode = matchNode;
+        if (M4.upperPlayer.getText().equals(you) || M4.lowerPlayer.getText().equals(you)){
+            yourNode = M4;
         }
+        else if (M5.upperPlayer.getText().equals(you) || M5.lowerPlayer.getText().equals(you)){
+            yourNode = M5;
+        }
+        else if (M6.upperPlayer.getText().equals(you) || M6.lowerPlayer.getText().equals(you)){
+            yourNode = M6;
+        }
+        else if (M7.upperPlayer.getText().equals(you) || M7.lowerPlayer.getText().equals(you)){
+            yourNode = M7;
+        }
+        else if (M8.upperPlayer.getText().equals(you) || M8.lowerPlayer.getText().equals(you)){
+            yourNode = M8;
+        }
+        else if (M9.upperPlayer.getText().equals(you) || M9.lowerPlayer.getText().equals(you)){
+            yourNode = M9;
+        }
+        else if (M10.upperPlayer.getText().equals(you) || M10.lowerPlayer.getText().equals(you)){
+            yourNode = M10;
+        }
+        else if (M11.upperPlayer.getText().equals(you) || M11.lowerPlayer.getText().equals(you)){
+            yourNode = M11;
+        }
+        else if (M12.upperPlayer.getText().equals(you) || M12.lowerPlayer.getText().equals(you)){
+            yourNode = M12;
+        }
+
     }
 }

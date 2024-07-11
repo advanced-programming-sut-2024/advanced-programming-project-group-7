@@ -352,6 +352,7 @@ public class PreGameMenu extends Application {
             });
             Button cup = new Button("Join Cup");
             cup.setOnMouseClicked(event -> {
+                inviteMenu.close();
                 client.sendMessage("cup:" + User.getLoggedInUser().getUsername());
             });
             VBox vBox = new VBox();

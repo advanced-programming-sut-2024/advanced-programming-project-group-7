@@ -185,8 +185,8 @@ public class Client extends Thread {
                     User user = User.getLoggedInUser();
                     CupMenu cupMenu = new CupMenu();
                     user.cupMenu = cupMenu;
-                    cupMenu.start(LoginMenu.stage);
-                    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10)));
+                    cupMenu.start(new Stage());
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3)));
                     timeline.setCycleCount(1);
                     timeline.setOnFinished(event -> {
                         Platform.runLater(()->{
@@ -202,10 +202,12 @@ public class Client extends Thread {
             });
         } else if (components[0].equals("ready")) {
             Platform.runLater(()-> {
-                CupMenu.setReady(components[1],components[2]);
+                User.getLoggedInUser().cupMenu.setReady(components[1],components[2]);
             });
         } else if (components[0].equals("cupResult")) {
-            CupMenu.result(components[1], components[2], components[3]);
+            Platform.runLater(()->{
+                User.getLoggedInUser().cupMenu.result(components[1], components[2], components[3]);
+            });
         } else if (components.length == 2 && components[1].equals("accepted")) {
             Platform.runLater(()-> {
                 User.getLoggedInUser().addFriend(components[0]);

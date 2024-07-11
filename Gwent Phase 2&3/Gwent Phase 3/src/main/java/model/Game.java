@@ -455,7 +455,6 @@ public class Game {
             showResult("win");
             User.getLoggedInUser().getBattleLog().add(new BattleInfo(User.getLoggedInUser().currentOponentName,
                     LocalDate.now(), roundsPoints, finalPoints, User.getLoggedInUser().getUsername()));
-            client.sendMessage("IWon:"+User.getLoggedInUser().username);
             if (User.getLoggedInUser().isInCup) {
                 client.sendMessage("cupResult:"+"cupResult."+User.getLoggedInUser().getUsername()+"."+User.getLoggedInUser().currentOponentName+"."+ CupMenu.yourNode.nodeName);
             }
@@ -476,10 +475,10 @@ public class Game {
         invite.setOnMouseClicked(event -> {
             resultPop.close();
             MainMenu mainMenu = new MainMenu();
+            User.getLoggedInUser().currentOponentName = null;
             try {
-                User.getLoggedInUser().currentOponentName = null;
                 if (User.getLoggedInUser().isInCup){
-                    User.getLoggedInUser().cupMenu.start(LoginMenu.stage);
+                    LoginMenu.stage.close();
                 } else
                     mainMenu.start(LoginMenu.stage);
             } catch (Exception e) {
