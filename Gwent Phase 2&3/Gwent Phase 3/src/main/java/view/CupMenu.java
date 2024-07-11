@@ -21,12 +21,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Game;
+import model.OngoingGame;
 import model.User;
 
 import java.util.ArrayList;
 
 public class CupMenu extends Application {
 
+    public static OngoingGame ongoingGames;
     public Button watch;
     public TextField searchBar;
     public Button isPlaying;
@@ -269,11 +271,23 @@ public class CupMenu extends Application {
         watch.setText("watch");
         watch.setLayoutX(615);
         watch.setLayoutY(731);
+        watch.setOnMouseClicked(event -> {
+            GameLauncher gameLauncher = new GameLauncher();
+            User.getLoggedInUser().client.sendMessage("viewer:" + User.getLoggedInUser().getUsername()
+                    + ":" + ongoingGames.player1);
+            try {
+                gameLauncher.type = "live";
+                gameLauncher.ongoingGame = ongoingGames;
+                gameLauncher.start(LoginMenu.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         searchBar = new TextField();
         searchBar.setLayoutX(589);
         searchBar.setLayoutY(695);
-        searchBar.prefWidth(56);
+        searchBar.maxWidth(86);
 
         ready = new Rectangle(130,130);
         ready.setLayoutX(567);
@@ -283,11 +297,10 @@ public class CupMenu extends Application {
         isPlaying.setLayoutX(675);
         isPlaying.setLayoutY(695);
         isPlaying.setOnMouseClicked(event -> {
-
+            User.getLoggedInUser().client.sendMessage("cupTV:"+User.getLoggedInUser().getUsername()+":"+searchBar.getText());
         });
 
         root.getChildren().addAll(watch, searchBar, isPlaying, ready);
-        watch.setVisible(false);
         ready.setFill(new ImagePattern(new Image(String.valueOf(CupMenu.class.getResource("/Images/icons/red-ready.png")))));
         ready.setOnMouseClicked(event -> {
 

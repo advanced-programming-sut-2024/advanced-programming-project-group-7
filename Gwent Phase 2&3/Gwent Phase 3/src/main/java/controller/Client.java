@@ -179,6 +179,10 @@ public class Client extends Thread {
             Gson gson = new Gson();
             OngoingGame og = gson.fromJson(response.substring(7), OngoingGame.class);
             MainMenu.ongoingGames.add(og);
+        } else if (components[0].equals("cupTV")) {
+            Gson gson = new Gson();
+            OngoingGame og = gson.fromJson(response.substring(6), OngoingGame.class);
+            CupMenu.ongoingGames = og;
         } else if (components[0].equals("startCup")) {
             Platform.runLater(()-> {
                 try {

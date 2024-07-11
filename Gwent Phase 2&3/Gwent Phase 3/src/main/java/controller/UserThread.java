@@ -352,6 +352,21 @@ public class UserThread extends Thread {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (parts1[0].equals("cupTV")) {
+                    try {
+                        Gson gson = new Gson();
+                        for (String players : GameServer.ongoingGames.keySet()) {
+                            String [] res = players.split("-");
+                            if (res[0].equals(parts1[2]) || res[1].equals(parts1[2])) {
+                                String json = gson.toJson(GameServer.ongoingGames.get(players), OngoingGame.class);
+                                DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
+                                targetUser.writeUTF("cupTV." + json);
+                                targetUser.flush();
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (parts1[0].equals("myGames")) {
                     try {
                         DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(parts1[1]).getOutputStream());
