@@ -116,10 +116,12 @@ public class LoginMenuController {
         return false;
     }
 
-    public static Alert setNewPassword(String username, String pass){
+    public static Alert setNewPassword(String username, String pass,String confirmPass){
         User user=User.getUserByUsername(username);
-        if(isPasswordValid(pass)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
+        if(!isPasswordValid(pass)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("invalid password");return alert;}
         if(isPasswordWeak(pass)) { Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText(additionalInformation.toString());return alert;}
+        if(!pass.equals(confirmPass)){Alert alert=new Alert(Alert.AlertType.WARNING);alert.setHeaderText("please confirm password correctly!");return alert;}
+        User.setLoggedInUser(user);
         user.setPassword(pass);
         return null;
     }
@@ -153,10 +155,10 @@ public class LoginMenuController {
         StringBuilder password=new StringBuilder();
         int passwordLength=random.nextInt(8,16);
         String validLetters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-+=";
-        password.append(validLetters.charAt(random.nextInt(0,23)));
-        password.append(validLetters.charAt(random.nextInt(23,46)));
-        password.append(validLetters.charAt(random.nextInt(46,56)));
-        password.append(validLetters.charAt(random.nextInt(56,69)));
+        password.append(validLetters.charAt(random.nextInt(0,26)));
+        password.append(validLetters.charAt(random.nextInt(26,52)));
+        password.append(validLetters.charAt(random.nextInt(52,62)));
+        password.append(validLetters.charAt(random.nextInt(62,76)));
         for(int i=0;i<passwordLength-4;i++)password.append(validLetters.charAt(random.nextInt(0,validLetters.length())));
         return password.toString();
     }

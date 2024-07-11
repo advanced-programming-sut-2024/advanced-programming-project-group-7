@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -26,16 +23,23 @@ import javafx.stage.StageStyle;
 import model.*;
 import model.cards.Medic;
 import model.factions.*;
+import model.leaders.*;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 public class PreGameMenu extends Application {
 
     public Label factionName;
     public ScrollPane leftGridScrollPane;
     public ScrollPane rightGridScrollPane;
+    public Label lobyMenuPlayerInfo;
+    public TextField fileName;
     private int factionIndex;
     public Rectangle LeaderImage;
     public ArrayList<Leader> leaders;
@@ -79,6 +83,7 @@ public class PreGameMenu extends Application {
         LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentLeader.getLgPath()).toString())));
         leftGridScrollPane.setFitToWidth(true);
         rightGridScrollPane.setFitToWidth(true);
+        lobyMenuPlayerInfo.setText("Welcome "+User.getLoggedInUser().getUsername());
         setCurrentFactionInfo();
         setCardsAndCommander();
         setCardsInDeck();
@@ -134,10 +139,22 @@ public class PreGameMenu extends Application {
             pane.getChildren().addAll(rectangle, label);
             leftGrid.add(pane,count % 3,count / 3);
             pane.setOnMouseClicked(event -> {
-
+//                ObjectMapper mapper=new ObjectMapper();
+//                try {
+//                    String cardName= mapper.writeValueAsString(card);
+//                    System.out.println(cardName);
+//                } catch (JsonProcessingException e) {
+//                    throw new RuntimeException(e);
+//                }
 //                Gson gson = new Gson();
 //                currentDeck.deckAsArrayList.add(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
-//                String jsonString = gson.toJson(currentDeck.deckAsArrayList);
+//                try {
+//                    String jsonString = mapper.writeValueAsString(new Medic("yennefer", 1 , false, 7, "neutral",2,true));
+//                    System.out.println(jsonString);
+//                } catch (JsonProcessingException e) {
+//                    throw new RuntimeException(e);
+//                }
+
 //                System.out.println(jsonString);
 //                System.out.println(card+" : "+card.getCardName());
                 int cardLeft = Integer.parseInt(label.getText());
@@ -364,6 +381,7 @@ public class PreGameMenu extends Application {
         inviteMenu.setScene(scene);
         inviteMenu.show();
     }
+
     public void showInvitation(String opponent) {
         challengeLabel.setVisible(true);
         challengeLabel.setText(opponent + " challenged you");
@@ -383,17 +401,32 @@ public class PreGameMenu extends Application {
             }
         });
     }
+
     public void goToVetoMenu() {
-        VetoCard vetoCard = new VetoCard();
-        try {
-            Deck.currentDeck = currentDeck;
-            Deck.currentDeck.shuffleDeck();
+        Alert alert = null;
+        if(currentDeck.totalUnitCard<22){
+            alert=new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("please choose 22 unit card at least");
+            alert.show();
+        }
+        else if(currentDeck.totalSpecialCardInDeck>10){
+            alert=new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("please choose 10 special card at most");
+            alert.show();
+        }
+        if(alert==null) {
+            VetoCard vetoCard = new VetoCard();
+            try {
+                Deck.currentDeck = currentDeck;
+                Deck.currentDeck.shuffleDeck();
 //            inviteMenu.close();
-            vetoCard.start(LoginMenu.stage);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                vetoCard.start(LoginMenu.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+
     public void saveDeck(Deck deck, String filename) {
         try (FileOutputStream fileOut = new FileOutputStream(filename);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
@@ -402,6 +435,7 @@ public class PreGameMenu extends Application {
             i.printStackTrace();
         }
     }
+
     public Deck loadDeck(String filename) {
         Deck deck = null;
         try (FileInputStream fileIn = new FileInputStream(filename);
@@ -413,8 +447,118 @@ public class PreGameMenu extends Application {
         return deck;
     }
 
-    public void saveDeckFunc(MouseEvent mouseEvent) {
-        saveDeck(currentDeck, "deck.ser");
+    public void saveDeckFunc(MouseEvent mouseEvent) throws IOException {
+        StringBuilder deckAsString=new StringBuilder();
+        deckAsString.append(currentDeck.getDeckFaction().getFactionName()).append("-").append(currentDeck.getDeckLeader().getLeaderName()).append("-");
+        for(Card card:currentDeck.getCardsInDeck().keySet())
+            deckAsString.append(card.getCardName()).append(":").append(currentDeck.getCardsInDeck().get(card)).append("-");
+//        PrintWriter out = new PrintWriter("filename.txt");
+//        out.println(deckAsString.toString());
+//        out.close();
+        File file=new File("/users/wishuwerehere/Desktop/"+fileName.getText()+".json");
+        Files.writeString(file.toPath(),deckAsString.toString());
+//        System.out.println(deckAsString.toString());
+    }
+
+    public void loadDeckFunc() throws IOException {
+        Path path=Path.of("/users/wishuwerehere/Desktop/"+fileName.getText()+".json");
+        String deckAsString=Files.readString(path);
+        String[] splitDec=deckAsString.split("-");
+        switch (splitDec[0]) {
+            case "Northern Realms":
+                NorthernRealms northernRealms=new NorthernRealms("draw a card from your deck whenever you win a round.");
+                currentFaction=northernRealms;
+                currentDeck.setDeckFaction(northernRealms);
+                if(splitDec[1].equals("foltest silver"))currentDeck.setDeckLeader(new NorthernRealmsLeaders("foltest silver","pick an impenetrable fog card from your deck and play it instantly","realms"));
+                else if(splitDec[1].equals("foltest gold"))currentDeck.setDeckLeader(new NorthernRealmsLeaders("foltest gold","clear any weather effects(resulting from biting frost, torrential rain or impenetrable fog cards) in play","realms"));
+                else if(splitDec[1].equals("foltest copper"))currentDeck.setDeckLeader(new NorthernRealmsLeaders("foltest copper","doubles the strength of all your siege units (unless a commander's horn is also present on that row).","realms"));
+                else if(splitDec[1].equals("foltest bronze"))currentDeck.setDeckLeader(new NorthernRealmsLeaders("foltest bronze","destroy your enemy's strongest siege unit(s) if the combined strength of all his or her siege units is 10 or more.","realms"));
+                else if(splitDec[1].equals("foltest son of medell"))currentDeck.setDeckLeader(new NorthernRealmsLeaders("foltest son of medell","distroy your enemy's strongest ranged combat unit(s) if the combined strength of all his or her ranged combat units is 10 or more.","realms"));
+                currentDeck.getCardsInDeck().clear();
+                for(Card card:NorthernRealms.getNorthernRealmsCards())
+                    for(int i=0;i< Arrays.stream(splitDec).count()-2;i++){
+                        String[] cardInfo=splitDec[i].split(":");
+                        if(cardInfo[0].equals(card.getCardName())){
+                            currentDeck.getCardsInDeck().put(card,Integer.parseInt(cardInfo[1]));
+                        }
+                    }
+                break;
+            case "Skellige":
+                Skellige skellige=new Skellige("two random cards from the graveyard are placed on the battlefield at the start of the third round");
+                currentFaction=skellige;
+                currentDeck.setDeckFaction(skellige);
+                if(splitDec[1].equals("crach an craite"))currentDeck.setDeckLeader(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks","skellige"));
+                else if(splitDec[1].equals("king bran"))currentDeck.setDeckLeader(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions","skellige"));
+                currentDeck.getCardsInDeck().clear();
+                for(Card card:Skellige.getSkelligeCards())
+                    for(int i=0;i< Arrays.stream(splitDec).count()-2;i++) {
+                        String[] cardInfo = splitDec[i].split(":");
+                        if (cardInfo[0].equals(card.getCardName())) {
+                            currentDeck.getCardsInDeck().put(card, Integer.parseInt(cardInfo[1]));
+                        }
+                    }
+                break;
+            case "Scoiatael":
+                Scoiatael scoiatael=new Scoiatael("decides who takes first turn");
+                currentFaction=scoiatael;
+                currentDeck.setDeckFaction(scoiatael);
+                if(splitDec[1].equals("francesca silver"))currentDeck.setDeckLeader(new ScoiataelLeaders("francesca silver","destroy your enemy's strongest close combat unit(s) if the combined strength of all his or her close combat units is 10 or more.","scoiatael"));
+                else if(splitDec[1].equals("francesca gold"))currentDeck.setDeckLeader(new ScoiataelLeaders("francesca gold","doubles the strength of all your ranged combat units (unless a commander's horn is also present on that row).","scoiatael"));
+                else if(splitDec[1].equals("francesca copper"))currentDeck.setDeckLeader(new ScoiataelLeaders("francesca copper","draw an extra card at the beginning of the battle.","scoiatael"));
+                else if(splitDec[1].equals("francesca bronze"))currentDeck.setDeckLeader(new ScoiataelLeaders("francesca bronze","pick a biting frost card from your deck and play it instantly.","scoiatael"));
+                else if(splitDec[1].equals("francesca hope of the aen seidhe"))currentDeck.setDeckLeader(new ScoiataelLeaders("francesca hope of the aen seidhe","move agile units to whichever valid row maximizes their strength(don't move units in optimal row).","scoiatael"));
+                currentDeck.getCardsInDeck().clear();
+                for(Card card:Scoiatael.getScoiataelCards())
+                    for(int i=0;i< Arrays.stream(splitDec).count()-2;i++) {
+                        String[] cardInfo = splitDec[i].split(":");
+                        if (cardInfo[0].equals(card.getCardName())) {
+                            currentDeck.getCardsInDeck().put(card, Integer.parseInt(cardInfo[1]));
+                        }
+                    }
+                break;
+            case "Monsters":
+                Monsters monsters=new Monsters("keeps a random unit card after each round");
+                currentFaction=monsters;
+                currentDeck.setDeckFaction(monsters);
+                if(splitDec[1].equals("eredin silver"))currentDeck.setDeckLeader(new MonstersLeaders("eredin silver","double the strength of all your ","monsters"));
+                else if(splitDec[1].equals("eredin bronze"))currentDeck.setDeckLeader(new MonstersLeaders("eredin bronze","restore a card from your discard pile to your hand","monsters"));
+                else if(splitDec[1].equals("eredin gold"))currentDeck.setDeckLeader(new MonstersLeaders("eredin gold","discard 2 card amd draw 1 card of your choise from your deck","monsters"));
+                else if(splitDec[1].equals("eredin copper"))currentDeck.setDeckLeader(new MonstersLeaders("eredin copper","pick any weather card from your deck and play it instantly","monsters"));
+                else if(splitDec[1].equals("eredin the treacherous"))currentDeck.setDeckLeader(new MonstersLeaders("eredin the treacherous","doubles the strength of all spy cards(affects both players)","monsters"));
+                currentDeck.getCardsInDeck().clear();
+                for(Card card:Monsters.getMonsterCards())
+                    for(int i=0;i< Arrays.stream(splitDec).count()-2;i++) {
+                        String[] cardInfo = splitDec[i].split(":");
+                        if (cardInfo[0].equals(card.getCardName())) {
+                            currentDeck.getCardsInDeck().put(card, Integer.parseInt(cardInfo[1]));
+                        }
+                    }
+                break;
+            case "EmpireNilfgaardian":
+                EmpireNilfgaardian empireNilfgaardian=new EmpireNilfgaardian("wins any round that ends in draw");
+                currentFaction=empireNilfgaardian;
+                currentDeck.setDeckFaction(empireNilfgaardian);
+                if(splitDec[1].equals("emhyr silver"))currentDeck.setDeckLeader(new EmpireNilfgaardiansLeaders("emhyr silver","pick a torrential rain card from your deck and play it instantly","nilfgaard"));
+                else if(splitDec[1].equals("emhyr copper"))currentDeck.setDeckLeader(new EmpireNilfgaardiansLeaders("emhyr copper","look at 3 random cards from your opponent's hand","nilfgaard"));
+                else if(splitDec[1].equals("emhyr bronze"))currentDeck.setDeckLeader(new EmpireNilfgaardiansLeaders("emhyr bronze","cansel your opponent's Leader ability","nilfgaard"));
+                else if(splitDec[1].equals("emhyr gold"))currentDeck.setDeckLeader(new EmpireNilfgaardiansLeaders("emhyr gold","draw a card from your opponent's discard pile","nilfgaard"));
+                else if(splitDec[1].equals("emhyr invader of the north"))currentDeck.setDeckLeader(new EmpireNilfgaardiansLeaders("emhyr invader of the north","abilities that restore a unit to the battlefield restore a randomly-chosen unit.affects both players.","nilfgaard"));
+                currentDeck.getCardsInDeck().clear();
+                for(Card card:EmpireNilfgaardian.getEmpireNilfgaardianCards())
+                    for(int i=0;i< Arrays.stream(splitDec).count()-2;i++) {
+                        String[] cardInfo = splitDec[i].split(":");
+                        if (cardInfo[0].equals(card.getCardName())) {
+                            currentDeck.getCardsInDeck().put(card, Integer.parseInt(cardInfo[1]));
+                        }
+                    }
+                break;
+        }
+        setCardsAndCommander();
+        setCardsInDeck();
+        calculateLabels();
+        LeaderImage.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentDeck.getDeckLeader().getLgPath()).toString())));
+        factionLogo.setFill(new ImagePattern(new Image(PreGameMenu.class.getResource(currentDeck.getDeckFaction().getShieldPic()).toString())));
+        factionName.setText(currentDeck.getDeckFaction().getFactionName());
     }
 }
 //try {

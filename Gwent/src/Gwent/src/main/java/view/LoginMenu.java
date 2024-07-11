@@ -66,6 +66,7 @@ public class LoginMenu extends Application {
     public Pane sendEmail;
     public Rectangle sendEmailRec=new Rectangle(50,50);
     public Pane helpRec;
+    public String whoForgot;
 
     public static void main(String[] args) {
         launch(args);
@@ -192,7 +193,7 @@ public class LoginMenu extends Application {
             server.createContext("/command", new CommandHandler());
             server.setExecutor(null);
             server.start();
-            String link = "<a href='http://localhost:8000'/a>";//todo or " instead of'
+            String link = "<a href=\"http://localhost:8000/\"a>";//todo or " instead of'
             String body = "Please verify your email address by clicking on this link: " + link;
             GmailSender gmailSender=new GmailSender(email,body);
             gmailSender.send();
@@ -240,7 +241,6 @@ public class LoginMenu extends Application {
             if (alert == null) {
                 System.out.println("yo");
                 try {
-
                     Stage recoveryStage = new Stage();
                     recoveryStage.setTitle("Password Recovery");
                     Label usernameLabel = new Label("Answer one the questions below");
@@ -303,7 +303,8 @@ public class LoginMenu extends Application {
         alert = LoginMenuController.userLogin(nameField.getText(), password.getText());
             if (alert == null) {
 //                Stage twoFAStage=new Stage();
-                twoFA();
+//                twoFA();
+                goToMainMenu();
             } else {
                 alert.show();
             }
@@ -395,7 +396,7 @@ public class LoginMenu extends Application {
             confirmLabel.setOnMouseClicked(event ->{
                     Alert alert = LoginMenuController.hasAnsweredCorrectly(usernameTextField.getText(), securityAnswerField.getText());
                     if (alert == null) {
-                        User.setLoggedInUser(user);
+                        whoForgot=usernameTextField.getText();
 //                        Stage newPass = new Stage();
 //                        newPass.setTitle("Reset Password");
                         setNewPassword();
@@ -569,9 +570,8 @@ public class LoginMenu extends Application {
             confirmLabel.setTextFill(Color.WHITE);
         });
         confirmLabel.setOnMouseClicked(event1 -> {
-            Alert alert1= LoginMenuController.setNewPassword(newPassTextField.getText(), confirmNewPassTextField.getText());
+            Alert alert1= LoginMenuController.setNewPassword(whoForgot,newPassTextField.getText(), confirmNewPassTextField.getText());
             if(alert1==null){
-                User.setLoggedInUser(null);
                 goToMainMenu();
             }else alert1.show();
         });
@@ -672,22 +672,22 @@ public class LoginMenu extends Application {
             confirmRec.setVisible(false);
             confirmLabel.setTextFill(Color.WHITE);
         });
-//                String randomEmailedNumber=LoginMenuController.generateRandomNumber();
-//                try {
-//                    GmailSender gmailSender=new GmailSender(user.getEmailAddress(),randomEmailedNumber);
-//                    gmailSender.send();
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
+                String randomEmailedNumber=LoginMenuController.generateRandomNumber();
+                try {
+                    GmailSender gmailSender=new GmailSender(user.getEmailAddress(),randomEmailedNumber);
+                    gmailSender.send();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
         confirmLabel.setOnMouseClicked(event -> {
-//                    if(randomNumber.getText().equals(randomEmailedNumber)){
+            if(randomNumber.getText().equals(randomEmailedNumber)){
             goToMainMenu();
-//                    }
-//                    else{
-//            Alert alert2FA=new Alert(Alert.AlertType.WARNING);
-//            alert2FA.setHeaderText("this username is taken");
-//            alert2FA.show();
-//                    }
+            }
+            else{
+                Alert alert2FA=new Alert(Alert.AlertType.WARNING);
+                alert2FA.setHeaderText("this username is taken");
+                alert2FA.show();
+            }
         });
         backButtonRec.setOnMouseClicked(event -> {
             try {

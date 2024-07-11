@@ -76,13 +76,13 @@ public class CardPlacementAnimation extends Transition {
                 Iterator<Node> iterator = game.playerHand.getChildren().iterator();
                 while (iterator.hasNext()) {
                     Node card1 = iterator.next();
-                    if (card1 instanceof Muster || card.getCardName().equals(((Card) card1).getCardName())) {
+                    if (card1 instanceof Muster && card.getCardName().equals(((Card) card1).getCardName())) {
                         iterator.remove();
                         game.placeCard((Card) card1, game.selectedBox);
                     }
                 }if (game.gameLauncher.reservedCards.size()!=0) {
                      for(Card card2:game.gameLauncher.reservedCards){
-                         if (card2 instanceof Muster || card.getCardName().equals(card2.getCardName())){
+                         if (card2 instanceof Muster && card.getCardName().equals(card2.getCardName())){
                              game.placeCard(card2, game.selectedBox);
                              staged.add(card2);
                          }

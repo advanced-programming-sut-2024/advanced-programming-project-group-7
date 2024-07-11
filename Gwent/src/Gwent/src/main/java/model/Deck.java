@@ -22,6 +22,7 @@ public class Deck implements Serializable {
     public Deck(Faction deckFaction, Leader deckLeader) {
         this.deckFaction = deckFaction;
         this.deckLeader = deckLeader;
+//        String a=deckLeader.toString();
     }
     public Deck(){}
 

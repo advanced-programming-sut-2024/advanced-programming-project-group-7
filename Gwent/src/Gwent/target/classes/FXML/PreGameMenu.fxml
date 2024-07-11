@@ -16,14 +16,23 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PreGameMenu">
     <center>
         <VBox alignment="CENTER" maxWidth="300" spacing="5.0">
             <children>
-                <HBox fillHeight="40">
+                <Label fx:id="lobyMenuPlayerInfo" textFill="white" alignment="CENTER">
+                    <font>
+                        <Font name="Baskerville Old Face" size="25.0" />
+                    </font>
+                </Label>
+                <HBox fillHeight="40" alignment="CENTER" spacing="20">
                     <Button onMouseClicked="#saveDeckFunc" text="save deck" />
-                    <Button text="upload deck" />
+                    <Button onMouseClicked="#loadDeckFunc" text="upload deck" />
                 </HBox>
+                <TextField fx:id="fileName" alignment="CENTER">
+
+                </TextField>
                 <HBox alignment="CENTER" prefHeight="75.0" prefWidth="294.0" spacing="10">
                     <Rectangle fx:id="factionLogo" height="75.0" width="75.0" />
                     <Label fx:id="factionName" text="Northern Realms" textFill="WHITE">

@@ -100,4 +100,7 @@ public class Skellige extends Faction {
     public static LinkedHashMap<Card,Integer> getSkelligeDefaultDeck(){
         return skelligeDefaultDeck;
     }
+    public static ArrayList<Leader> getSkelligeLeaders(){
+        return skelligeLeaders;
+    }
 }

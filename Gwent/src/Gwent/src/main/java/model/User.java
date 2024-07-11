@@ -240,7 +240,7 @@ public class User {
     static {
         User userTest= null;
 //        try {
-            userTest = new User("","","Ebim","s.mohammad.e.1383@gmail.com");
+            userTest = new User("mohammad","","Ebim","s.mohammad.e.1383@gmail.com");
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }

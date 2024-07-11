@@ -60,7 +60,7 @@ public class VetoCard  extends Application {
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
             Deck.currentDeck=deck;
-            stage.close();
+//            stage.close();
             vetoMenu.close();
             GameLauncher gameLauncher = new GameLauncher();
             try {

@@ -12,6 +12,7 @@ import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -30,18 +31,16 @@ import java.util.Iterator;
 
 public class GameLauncher extends Application {
 
-
-    public ArrayList<Card> graveyardCard=new ArrayList<>();
-    public ArrayList<Card> enemyGraveyardCard=new ArrayList<>();
-
-    public ArrayList<Card> enemyHand=new ArrayList<>();
-    public ArrayList<Card> enemyDiscardPile =new ArrayList<>();
+    public EnhancedHBox playerHand = new EnhancedHBox();
     public ArrayList<Card> reservedCards = new ArrayList<>();
-    public ArrayList<Card> discardPile=new ArrayList<>();
+    public ArrayList<Card> graveyardCard=new ArrayList<>();
+
+    public ArrayList<Card> enemyGraveyardCard=new ArrayList<>();
+    public ArrayList<Card> enemyHand=new ArrayList<>();
+
     public  ArrayList<EnhancedHBox> hBoxes=new ArrayList<EnhancedHBox>();
     private static final double HEIGHT = 900;
     private static final double WIDTH = 1600;
-    public EnhancedHBox playerHand = new EnhancedHBox();
     public EnhancedHBox playerFirstRowHorn = new EnhancedHBox();
     public EnhancedHBox playerFirstRow = new EnhancedHBox();
     public EnhancedHBox playerThirdRowHorn = new EnhancedHBox();
@@ -71,12 +70,16 @@ public class GameLauncher extends Application {
     public Label labelForNumberOfCards = new Label();
     public Label numberOfRemainingCardsInDeck=new Label();
     public Label labelForNumberOfCardsOpponent = new Label(String.valueOf(10));
+    public Card handLastCard;
+    public Pane endRoundPane=new Pane();
+    public Rectangle endRoundRec=new Rectangle(300,200);
+
 
 
 
 
     @Override
-    public void start(Stage stage1) throws Exception {
+    public void start(Stage stage1) throws Exception{
         game = new Game(this);
         stage = new Stage();
 //        game.client = User.getLoggedInUser().client; todo onlination
@@ -86,6 +89,7 @@ public class GameLauncher extends Application {
         for(Card card:Deck.currentDeck.hand){
             playerHand.getChildren().add(card);
         }
+        reservedCards=Deck.getCurrentDeck().getReservedCards();
         pane = new Pane();
         setSize(pane);
         pane.setBackground(new Background(createBackgroundImage()));
@@ -194,8 +198,8 @@ public class GameLauncher extends Application {
 //        playerHand.getChildren().add(new Cow("cow",1,false,0,"neutral",2,false));
 
 
-        discardPile.add(new TightBond("catapult 1", 2, false, 8, "realms", 1, false));
-        enemyDiscardPile.add(new Scorch("schirru", 1, false, 8, "scoiatael", 1, false));
+//        discardPile.add(new TightBond("catapult 1", 2, false, 8, "realms", 1, false));
+//        enemyDiscardPile.add(new Scorch("schirru", 1, false, 8, "scoiatael", 1, false));
         reservedCards.add(new Muster("gaunter odimm darkness", 3 , false, 4, "neutral",2,false));
         reservedCards.add(new Card("ciri", 1, false, 15, "neutral", 3, true));
         reservedCards.add((new Card("rain", 2, true, 0, "weather", 7, false)));
@@ -478,6 +482,10 @@ public class GameLauncher extends Application {
         numberOfRemainingCardsInDeckOpponent.setTextFill(Color.WHITE);
         numberOfRemainingCardsInDeckOpponent.setFont(new Font(30));
 
+
+        endRoundPane.setVisible(false);
+        endRoundPane.setLayoutX(200);
+        endRoundPane.setLayoutY(200);
 //        Leader leader=new MonstersLeaders("eredin silver","double the strength of all your ","monsters");
 //        Leader leader=(new NorthernRealmsLeaders("foltest gold","clear any weather effects(resulting from biting frost, torrential rain or impenetrable fog cards) in play","realms"));
 //        Leader leader=(new NorthernRealmsLeaders("foltest copper","doubles the strength of all your siege units (unless a commander's horn is also present on that row).","realms"));
@@ -501,7 +509,8 @@ public class GameLauncher extends Application {
 //        Leader leader=(new ScoiataelLeaders("francesca hope of the aen seidhe","move agile units to whichever valid row maximizes their strength(don't move units in optimal row).","scoiatael"));
 //        Leader leader=(new SkelligeLeaders("crach an craite","shuffle all cards from each player's graveyard back into their decks","skellige"));
 //        Leader leader=(new SkelligeLeaders("king bran","units only lose half their strength in bad weather conditions","skellige"));
-
+        graveyardCard.add(new Card("holger", 1, false, 4, "skellige",1,false));
+        graveyardCard.add(new Card("donar", 1, false, 4, "skellige",3,false));
 
         leader.setLayoutX(120);
         leader.setLayoutY(700);
@@ -539,7 +548,11 @@ public class GameLauncher extends Application {
         buttonPassOpponent.setLayoutY(110);
         buttonPassOpponent.setOnMouseClicked(event -> {
             yourTurn = true;
-            game.endRound(game);
+            try {
+                game.endRound(game);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         frostedRow.setVisible(false);
@@ -556,7 +569,7 @@ public class GameLauncher extends Application {
                 playerNameOpponent, avatarOpponent, game.life1Opponent, game.life2Opponent, cardxOpponent, labelForNumberOfCardsOpponent, game.totalPowerOpponent, game.highScoreOpponent, game.highScorePlayer, realmForAvatarOpponent,
                 frostedRow, frostedRowOpponent, foggedRow, foggedRowOpponent, rainedRow, rainedRowOpponent
                 , game.totalRow1Power, game.totalRow2Power, game.totalRow3Power, game.totalRow1PowerOpponent, game.totalRow2PowerOpponent, game.totalRow3PowerOpponent, cardInDeckBack, cardInDeckBackOpponent
-                , numberOfRemainingCardsInDeck, numberOfRemainingCardsInDeckOpponent, leader, leaderOpponent, buttonPass, buttonPassOpponent, chatBoxPane, leaderRec);
+                , numberOfRemainingCardsInDeck, numberOfRemainingCardsInDeckOpponent, leader, leaderOpponent, buttonPass, buttonPassOpponent, chatBoxPane, leaderRec,endRoundPane);
 
 
         Scene scene = new Scene(pane);
@@ -579,11 +592,14 @@ public class GameLauncher extends Application {
         playerFirstRow.hornBox = playerFirstRowHorn;
 
         game.hBoxes = hBoxes;
-        pane.setOnKeyTyped(w -> {
-//           game.undoCardCheat(lastCardPlayed);
-//            game.addHerosToGraveyardCheat();
-//            game.addHornToHandCheat();
-              game.removeAllCloseKombatsCheat();
+        pane.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode()== KeyCode.Q)game.undoCardCheat(lastCardPlayed);
+            else if(keyEvent.getCode()==KeyCode.W)game.addCardToHandcheat();
+            else if(keyEvent.getCode()==KeyCode.E)game.addHerosToGraveyardCheat();
+            else if(keyEvent.getCode()==KeyCode.R)game.addClearWeatherCheat();
+            else if(keyEvent.getCode()==KeyCode.T)game.addHornToHandCheat();
+            else if(keyEvent.getCode()==KeyCode.Y)game.removeAllCloseKombatsCheat();//todo
+            else if(keyEvent.getCode()==KeyCode.U)game.addLifeCheat();
         });
 
 
@@ -822,20 +838,13 @@ public class GameLauncher extends Application {
         return backgroundImage;
     }
 
-    public static int enemyPosition(int i){
-        if(i==0)return 5 ;
-        if(i==1)return 4;
-        if(i==2)return 3;
-        if(i==3)return 2;
-        if(i==4)return 1;
-        if(i==5)return 0;
-        if(i==6)return 11;
-        if(i==7)return 10;
-        if(i==8)return 9;
-        if(i==9)return 8;
-        if(i==10)return 7;
-        if(i==11)return 6;
-        if(i==12)return 12;
+    public static int placeTransformer(int i){
+        if(i==1)return 5;
+        if(i==2)return 6;
+        if(i==3)return 4;
+        if(i==4)return 3;
+        if(i==5)return 2;
+        if(i==6)return 1;
         return 0;
     }
 
