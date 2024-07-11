@@ -112,4 +112,7 @@ public class EmpireNilfgaardian extends Faction {
     public static LinkedHashMap<Card,Integer> getEmpireNilfgaardianDefaultDeck(){
         return empireNilfgaardianDefaultDeck;
     }
+    public static ArrayList<Leader> getEmpireNilfgaardiansLeader(){
+        return empireNilfgaardiansLeader;
+    }
 }

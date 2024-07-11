@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,7 +59,8 @@ public class VetoCard  extends Application {
         vBox.setMaxWidth(200);
         Button confirm = new Button("confirm");
         confirm.setOnMouseClicked(event -> {
-            stage.close();
+            Deck.currentDeck=deck;
+//            stage.close();
             vetoMenu.close();
             GameLauncher gameLauncher = new GameLauncher();
             try {
@@ -107,21 +109,31 @@ public class VetoCard  extends Application {
 //            for(Card card2:update) System.out.println(card2+" : "+card2.getCardName());
 //            System.out.println("00000000000000000000000");
             pane.setOnMouseClicked(event -> {
-                update.remove(card); // Use iterator to remove the card
-                if (First) {
-                    update.add(substitue2);
-                    First = false;
-                }
-                else {
-                    update.add(substitue1);
-                }
-                deck.hand.clear();
-                deck.hand.addAll(update);
-                for (Card card1:update) System.out.println(card+" : "+card1.getCardName());
-                System.out.println("---------------------");
+                if(totalClick<2) {
+                    update.remove(card); // Use iterator to remove the card
+                    update.add(deck.reservedCards.get(0));
+                    deck.reservedCards.remove(0);
+//                if (First) {
+//                    update.add(substitue2);
+//                    First = false;
+//                }
+//                else {
+//                    update.add(substitue1);
+//                }
+                    deck.hand.clear();
+                    deck.hand.addAll(update);
+                    for (Card card1 : update) System.out.println(card1 + " : " + card1.getCardName());
+                    System.out.println("---------------------");
 //                deck.hand.clear();
 //                deck.hand.addAll(update);
-                setCards();
+                    setCards();
+                    totalClick++;
+                }
+                else{
+                    Alert alert=new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("please veto two card maximum");
+                    alert.show();
+                }
             });
             gridpane.add(pane, count % 5, count / 5);
             count++;
@@ -160,14 +172,14 @@ public class VetoCard  extends Application {
 //        Deck.currentDeck.shuffleDeck(); // todo 2 don't need it.we already shuffled it.
         deck = Deck.currentDeck;
         update.addAll(deck.hand);//todo update is new hand
-        System.out.println("hand's card");
-        for(Card card: deck.hand){
-            System.out.println(card+" : "+card.getCardName());
-        }
-        System.out.println("00000000000000000000000");
-        System.out.println("update card");
-        for(Card card:update) System.out.println(card+" : "+card.getCardName());
-        System.out.println("00000000000000000000000");//todo we get correct hand here
+//        System.out.println("hand's card");
+//        for(Card card: deck.hand){
+//            System.out.println(card+" : "+card.getCardName());
+//        }
+//        System.out.println("00000000000000000000000");
+//        System.out.println("update card");
+//        for(Card card:update) System.out.println(card+" : "+card.getCardName());
+//        System.out.println("00000000000000000000000");//todo we get correct hand here
 //        substitue1 = deck.reservedCards.get(0);
 //        substitue2 = deck.reservedCards.get(1);
         stage.centerOnScreen();

@@ -34,6 +34,7 @@ import java.net.URL;
 public class MainMenu extends Application {
 
     public static Stage stage;
+    public static Stage rankAndTelevisionstage=new Stage();
     public Label Username;
     public Rectangle mail;
     public Pane indicator1;
@@ -57,6 +58,8 @@ public class MainMenu extends Application {
     public Label logOutRLabel;
     public Label exitGameLabel;
     public Pane televisionPane;
+    public boolean hasMusic=false;
+    public static MediaPlayer mediaPlayer;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -70,6 +73,13 @@ public class MainMenu extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         root.setBackground(new Background(createBackgroundImage("/Images/mainmenubackground.jpg")));
+        if(!hasMusic) {
+            Media media = new Media(String.valueOf(LoginMenu.class.getResource("/Sounds/aen seidhe.mp3")));
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setVolume(0.05);
+            mediaPlayer.play();
+        }
         stage.show();
 //        User.getLoggedInUser().client.sendMessage(User.getLoggedInUser().getNickname());
     }
@@ -165,7 +175,7 @@ public class MainMenu extends Application {
         televisionRec.setLayoutY(20);
         televisionRec.setLayoutX(10);
         televisionPane.getChildren().add(televisionRec);
-        televisionPane.setOnMouseClicked(this::showTelevisionMenu);
+        televisionRec.setOnMouseClicked(this::showTelevisionMenu);
         televisionRec.setOnMouseEntered(event -> {
             televisionRec.setWidth(100);
             televisionRec.setHeight(100);
@@ -174,12 +184,42 @@ public class MainMenu extends Application {
             televisionRec.setWidth(80);
             televisionRec.setHeight(80);
         });
+        Rectangle rankingRec=new Rectangle(80,80);
+        rankingRec.setFill(new ImagePattern(new Image(String.valueOf(LoginMenu.class.getResource("/Images/icons/ranking.png")))));
+        rankingRec.setOnMouseEntered(event -> {
+            rankingRec.setWidth(100);
+            rankingRec.setHeight(100);
+        });
+        rankingRec.setOnMouseExited(event -> {
+            rankingRec.setWidth(80);
+            rankingRec.setHeight(80);
+        });
+        rankingRec.setLayoutY(120);
+        rankingRec.setLayoutX(10);
+        televisionPane.getChildren().add(rankingRec);
+        rankingRec.setOnMouseClicked(this::showRanking);
     }
 
+    private void showRanking(MouseEvent mouseEvent){
+        Pane rankingPane=new Pane();
+        VBox vbox=new VBox(20);
+        vbox.getChildren().clear();
+        Label rankingLabel=new Label("       Ranking");
+        rankingLabel.setFont(new Font("Baloo Bhai 2 Bold",20));
+        vbox.getChildren().add(rankingLabel);
+        setSize(rankingPane,400,300);
+        Scene scene=new Scene(rankingPane);
+        for(User user:User.userRanking()){
+            Label usernameLabel=new Label(user.getUsername());
+            vbox.getChildren().add(usernameLabel);
+        }
+        rankingPane.getChildren().addAll(vbox);
+        vbox.setLayoutX(80);
+        rankAndTelevisionstage.setScene(scene);
+        rankAndTelevisionstage.show();
+    }
 
     private void showTelevisionMenu(MouseEvent mouseEvent) {
-        Stage televisionMenu=new Stage();
-        televisionMenu.setTitle("Television");
         Pane pane=new Pane();
         setSize(pane,400,600);
         Scene scene=new Scene(pane);
@@ -212,8 +252,8 @@ public class MainMenu extends Application {
         vBox.getChildren().addAll(buttonPane,televisionPane);
         vBox.setAlignment(Pos.CENTER);
         pane.getChildren().addAll(vBox);
-        televisionMenu.setScene(scene);
-        televisionMenu.show();
+        rankAndTelevisionstage.setScene(scene);
+        rankAndTelevisionstage.show();
     }
 
 
@@ -226,6 +266,7 @@ public class MainMenu extends Application {
         soundPlayer("/Sounds/paper.mp3");
         ProfileMenu profileMenu = new ProfileMenu();
         try {
+            mediaPlayer.stop();
             profileMenu.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -247,9 +288,9 @@ public class MainMenu extends Application {
     public void Logout(MouseEvent mouseEvent) {
         soundPlayer("/Sounds/paper.mp3");
         MainMenuController.logout();
-        LoginMenu.mediaPlayer.stop();
         LoginMenu loginMenu = new LoginMenu();
         try {
+            mediaPlayer.stop();
             loginMenu.start(LoginMenu.stage);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -11,9 +11,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Card extends Pane {
+public class Card extends Pane implements Serializable {
     private String cardName;
     private int countOfCard;
     private boolean isSpecial;
@@ -179,6 +180,10 @@ public class Card extends Pane {
         this.rows = rows;
     }
 
+    public int getrows1(){
+        return this.rows;
+    }
+
     public boolean isHero() {
         return isHero;
     }
@@ -313,4 +318,5 @@ public class Card extends Pane {
         this.bondLevel = bondLevel;
         this.boostLevel = boostLevel;
     }
+
 }

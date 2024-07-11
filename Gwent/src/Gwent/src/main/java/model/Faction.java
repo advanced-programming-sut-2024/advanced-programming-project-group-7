@@ -31,7 +31,7 @@ public class Faction {
         return "/Images/lg/" +"faction_" + this.factionName + ".jpg";
     }
     public String getShieldPic() {return "/Images/icons/deck_shield_" + this.factionName + ".png";}
-
+    public String getFactionCardBackPic(){return "/Images/icons/deck_back_"+this.factionName+".jpg";}
     public String getFactionName() {
         if(factionName.equals("realms"))
             return "Northern Realms";

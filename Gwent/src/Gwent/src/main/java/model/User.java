@@ -9,10 +9,7 @@ import controller.Client;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class User {
     private static final ArrayList<User> users=new ArrayList<>();
@@ -241,16 +238,16 @@ public class User {
     }
 
     static {
-//        User userTest= null;
-////        try {
-//            userTest = new User("","","Ebim","s.mohammad.e.1383@gmail.com");
-////        } catch (IOException e) {
-////            throw new RuntimeException(e);
-////        }
-//        userTest.setSecurityQuestionNumber(1);
-//    userTest.setAnswerOfSecurityQuestion("red");
-//        userTest.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
-
+        User userTest= null;
+//        try {
+            userTest = new User("mohammad","","Ebim","s.mohammad.e.1383@gmail.com");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+        userTest.setSecurityQuestionNumber(1);
+    userTest.setAnswerOfSecurityQuestion("red");
+        userTest.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
+        userTest.setWonGame(10);
         User userTest1= null;
         try {
             userTest1 = new User("a","a","mr a","amir2023@gmail.com");
@@ -259,7 +256,8 @@ public class User {
         }
         userTest1.setSecurityQuestionNumber(1);
         userTest1.setAnswerOfSecurityQuestion("red");
-        userTest1.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest1));
+        userTest1.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
+        userTest1.setWonGame(5);
 
         User userTest2= null;
 //        try {
@@ -269,7 +267,8 @@ public class User {
 //        }
         userTest2.setSecurityQuestionNumber(1);
         userTest2.setAnswerOfSecurityQuestion("red");
-        userTest2.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest1));
+        userTest2.battleLog.add(new BattleInfo("ebil", LocalDate.now(),new int[][]{{20,10},{10,20},{20,10}}, new int[]{50, 40},userTest));
+        userTest2.setWonGame(2);
     }
 
     public ArrayList<BattleInfo> getBattleLog() {
@@ -346,5 +345,16 @@ public class User {
 
     public void setUserCurrentMenu(String userCurrentMenu) {
         this.userCurrentMenu = userCurrentMenu;
+    }
+
+    public static ArrayList<User> userRanking(){
+        ArrayList<User> sortedUser = new ArrayList<>(users);
+        Collections.sort(sortedUser, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return Integer.compare(o2.getWonGame(),o1.getWonGame());
+            }
+        });
+        return sortedUser;
     }
 }
