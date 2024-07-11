@@ -332,13 +332,13 @@ public class PreGameMenu extends Application {
             TextField opponentName = new TextField();
             Button invite = new Button("invite");
             invite.setOnMouseClicked(event -> {
-                if (User.getLoggedInUser().getFriends().contains(opponentName.getText())) {
+
                     if (!hasActiveInvitation) {
                         client.sendMessage("invite:" + opponentName.getText()
                                 + ":" + User.getLoggedInUser().getUsername() + ":" + isPublic.isSelected());
                         hasActiveInvitation = true;
                     }
-                }
+
                 else
                     User.getLoggedInUser().addFriend(opponentName.getText());
             });

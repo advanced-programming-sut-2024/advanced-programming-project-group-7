@@ -231,6 +231,7 @@ public class MainMenu extends Application {
                 User user = User.getLoggedInUser();
                 user.client.sendMessage("request accepted:"+reqParts[0]+":"+user.getUsername());
                 user.addFriend(reqParts[0]);
+                reqs.getChildren().remove(hBox);
                 reqMenu.close();
             });
             Button reject = new Button("Reject");
@@ -338,23 +339,26 @@ public class MainMenu extends Application {
             televisionPane.getChildren().clear();
             televisionPane.getChildren().addAll(rankTelevisionPane);
             for (OngoingGame og1 : MainMenu.ongoingGames) {
-                HBox hBox = new HBox();
+                HBox hBox = new HBox(10);
                 Label label = new Label(og1.player1 + " --vs-- " + og1.player2 );
+                Label pub = new Label(String.valueOf(og1.isPublic));
                 Button watch = new Button("watch");
                 watch.setOnMouseClicked(event1 -> {
-                    televisionMenu.close();
-                    GameLauncher gameLauncher = new GameLauncher();
-                    User.getLoggedInUser().client.sendMessage("viewer:"+User.getLoggedInUser().getUsername()
-                            +":"+og1.player1);
-                    try {
-                        gameLauncher.type = "live";
-                        gameLauncher.ongoingGame = og1;
-                        gameLauncher.start(LoginMenu.stage);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+                    if (User.getLoggedInUser().getFriends().contains(og1.player1) && User.getLoggedInUser().getFriends().contains(og1.player2)) {
+                        televisionMenu.close();
+                        GameLauncher gameLauncher = new GameLauncher();
+                        User.getLoggedInUser().client.sendMessage("viewer:" + User.getLoggedInUser().getUsername()
+                                + ":" + og1.player1);
+                        try {
+                            gameLauncher.type = "live";
+                            gameLauncher.ongoingGame = og1;
+                            gameLauncher.start(LoginMenu.stage);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
-                hBox.getChildren().addAll(label, watch);
+                hBox.getChildren().addAll(label, pub, watch);
                 rankTelevisionVBox.getChildren().addAll(hBox);
             }
         });

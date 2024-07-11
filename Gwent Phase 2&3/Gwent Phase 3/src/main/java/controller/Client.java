@@ -148,10 +148,10 @@ public class Client extends Thread {
                 System.out.println("reached timeline");
                 timeline.setOnFinished(event -> {
                     game.showResult("win");
-                    sendMessage("IWon:"+user.getUsername());
                 });
                 timeline.play();
             });
+            sendMessage("IWon:"+User.getLoggedInUser().getUsername());
         } else if (components[0].equals("refresh")) {
             Platform.runLater(()-> {
                 Gson gson = new Gson();
@@ -182,11 +182,19 @@ public class Client extends Thread {
         } else if (components[0].equals("startCup")) {
             Platform.runLater(()-> {
                 try {
+                    User user = User.getLoggedInUser();
                     CupMenu cupMenu = new CupMenu();
                     user.cupMenu = cupMenu;
                     cupMenu.start(LoginMenu.stage);
-                    cupMenu.init(components[1], components[2], components[3], components[4],
-                            components[5], components[6], components[7], components[8], components[9]);
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10)));
+                    timeline.setCycleCount(1);
+                    timeline.setOnFinished(event -> {
+                        Platform.runLater(()->{
+                            cupMenu.init(components[1], components[2], components[3], components[4],
+                                    components[5], components[6], components[7], components[8], components[9]);
+                        });
+                    });
+                    timeline.play();
                     user.isInCup = true;
                 } catch (Exception e) {
                     throw new RuntimeException(e);

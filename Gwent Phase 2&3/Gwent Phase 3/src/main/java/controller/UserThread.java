@@ -252,7 +252,9 @@ public class UserThread extends Thread {
                     if (GameServer.cupPlayers.size() < 8)
                         GameServer.cupPlayers.add(parts1[1]);
                     else {
+                        GameServer.cupPlayers.add(parts1[1]);
                         ArrayList<String> list = GameServer.cupPlayers;
+
                         for (String cupPlayer : list){
                             try {
                                 DataOutputStream targetUser = new DataOutputStream(GameServer.onlineUsers.get(cupPlayer).getOutputStream());
@@ -264,6 +266,7 @@ public class UserThread extends Thread {
                                 throw new RuntimeException(e);
                             }
                         }
+                        GameServer.cupPlayers.clear();
                     }
                 } else if (parts1[0].equals("ready")) {
                     ArrayList<String> list = GameServer.cupPlayers;

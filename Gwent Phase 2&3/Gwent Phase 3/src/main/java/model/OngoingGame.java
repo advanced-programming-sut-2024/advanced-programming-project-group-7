@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class OngoingGame {
-    private final Boolean isPublic;
+    public final Boolean isPublic;
     private final String type;
     public String player1;
     public String player2;

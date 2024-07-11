@@ -79,6 +79,7 @@ public class CupMenu extends Application {
     private static ArrayList<MatchNode> nodes = new ArrayList<>();
     public static String  you = User.getLoggedInUser().getUsername();
     public static Client client = User.getLoggedInUser().client;
+    private Pane root;
 
     {
         M0 = new MatchNode("m0", P0, P1);
@@ -110,8 +111,6 @@ public class CupMenu extends Application {
         CupMenu.nodes.add(M7);
     }
 
-    public CupMenu() {
-    }
 
     public static void setReady(String player, String nodeName) {
         switch (nodeName) {
@@ -133,12 +132,166 @@ public class CupMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("reached here: " + nodes.size() );
-        URL url = LoginMenu.class.getResource("/FXML/CupMenu.fxml");
-        AnchorPane root = FXMLLoader.load(url);
+        root = new Pane();
+
+        root.setBackground(new Background(createBackgroundImage("/Images/bracket.png")));
+        P0 = new Label("Cup Menu");
+        P0.setLayoutX(1160);
+        P0.setLayoutY(115);
+        P0.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P0);
+
+        P1 = new Label("Cup Menu");
+        P1.setLayoutX(1160);
+        P1.setLayoutY(115);
+        P1.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P1);
+
+        P2 = new Label("Cup Menu");
+        P2.setLayoutX(1160);
+        P2.setLayoutY(115);
+        P2.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P2);
+
+        P3 = new Label("Cup Menu");
+        P3.setLayoutX(1160);
+        P3.setLayoutY(115);
+        P3.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P3);
+
+        P4 = new Label("Cup Menu");
+        P4.setLayoutX(1160);
+        P4.setLayoutY(115);
+        P4.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P4);
+
+        P5 = new Label("Cup Menu");
+        P5.setLayoutX(1160);
+        P5.setLayoutY(115);
+        P5.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P5);
+
+        P6 = new Label("Cup Menu");
+        P6.setLayoutX(1160);
+        P6.setLayoutY(115);
+        P6.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P6);
+
+        P7 = new Label("Cup Menu");
+        P7.setLayoutX(1160);
+        P7.setLayoutY(115);
+        P7.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P7);
+
+        P8 = new Label("Cup Menu");
+        P8.setLayoutX(1160);
+        P8.setLayoutY(115);
+        P8.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P8);
+
+        P9 = new Label("Cup Menu");
+        P9.setLayoutX(1160);
+        P9.setLayoutY(115);
+        P9.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P9);
+
+        P10 = new Label("Cup Menu");
+        P10.setLayoutX(1160);
+        P10.setLayoutY(115);
+        P10.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P10);
+
+        P11 = new Label("Cup Menu");
+        P11.setLayoutX(1160);
+        P11.setLayoutY(115);
+        P11.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P11);
+
+        P12 = new Label("Cup Menu");
+        P12.setLayoutX(1160);
+        P12.setLayoutY(115);
+        P12.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P12);
+
+        P13 = new Label("Cup Menu");
+        P13.setLayoutX(1160);
+        P13.setLayoutY(115);
+        P13.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P13);
+
+        P14 = new Label("Cup Menu");
+        P14.setLayoutX(1160);
+        P14.setLayoutY(115);
+        P14.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P14);
+
+        P15 = new Label("Cup Menu");
+        P15.setLayoutX(1160);
+        P15.setLayoutY(115);
+        P15.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P15);
+
+        P16 = new Label("Cup Menu");
+        P16.setLayoutX(1160);
+        P16.setLayoutY(115);
+        P16.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P16);
+
+        P17 = new Label("Cup Menu");
+        P17.setLayoutX(1160);
+        P17.setLayoutY(115);
+        P17.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P17);
+
+        P18 = new Label("Cup Menu");
+        P18.setLayoutX(1160);
+        P18.setLayoutY(115);
+        P18.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P18);
+
+        P19 = new Label("Cup Menu");
+        P19.setLayoutX(1160);
+        P19.setLayoutY(115);
+        P19.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P19);
+
+        P20 = new Label("Cup Menu");
+        P20.setLayoutX(1160);
+        P20.setLayoutY(115);
+        P20.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P20);
+
+        P21 = new Label("Cup Menu");
+        P21.setLayoutX(1160);
+        P21.setLayoutY(115);
+        P21.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P21);
+
+        P22 = new Label("Cup Menu");
+        P22.setLayoutX(1160);
+        P22.setLayoutY(115);
+        P22.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P22);
+
+        P23 = new Label("Cup Menu");
+        P23.setLayoutX(1160);
+        P23.setLayoutY(115);
+        P23.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P23);
+
+        P24 = new Label("Cup Menu");
+        P24.setLayoutX(1160);
+        P24.setLayoutY(115);
+        P24.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P24);
+
+        P25 = new Label("Cup Menu");
+        P25.setLayoutX(1160);
+        P25.setLayoutY(115);
+        P25.setStyle("-fx-font-size: 20px");
+        root.getChildren().add(P25);
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        root.setBackground(new Background(createBackgroundImage("/Images/bracket.png")));
         stage.show();
     }
 
@@ -180,6 +333,7 @@ public class CupMenu extends Application {
         return backgroundImage;
     }
     public void init(String p0, String p1, String p2, String p3, String p4, String p5, String p6, String p7, String seed) {
+        System.out.println("im here doing my thing " + P0);
         P0.setText(p0);
         P1.setText(p1);
         P2.setText(p2);

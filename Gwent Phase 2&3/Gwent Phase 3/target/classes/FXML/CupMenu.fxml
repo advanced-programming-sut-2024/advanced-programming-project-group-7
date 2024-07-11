@@ -11,10 +11,7 @@
          <font>
             <Font name="Arabic Typesetting" size="77.0" />
          </font></Label>
-      <Label layoutX="1160.0" layoutY="55.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P0" textAlignment="JUSTIFY">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
+
       <Label layoutX="1160.0" layoutY="130.0" prefHeight="59.0" prefWidth="115.0" text="player 0" fx:id="P1" textAlignment="JUSTIFY">
          <font>
             <Font size="29.0" />

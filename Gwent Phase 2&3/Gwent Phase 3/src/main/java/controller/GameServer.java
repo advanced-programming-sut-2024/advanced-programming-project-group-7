@@ -20,6 +20,13 @@ public class GameServer extends Thread {
     public static ArrayList<User> allUsers = new ArrayList<>();
     public static HashMap<String, OngoingGame> ongoingGames = new HashMap<>();
     public static ArrayList<String> sample = new ArrayList<>();
+    static {
+        allUsers.add(new User("a","a","a","a"));
+        allUsers.add(new User("e","e","e","e"));
+        allUsers.add(new User("b","b","b","b"));
+        allUsers.add(new User("c","c","c","c"));
+        allUsers.add(new User("d","d","d","d"));
+    }
 
     public static void main(String[] args) {
 //        loadUsers();
