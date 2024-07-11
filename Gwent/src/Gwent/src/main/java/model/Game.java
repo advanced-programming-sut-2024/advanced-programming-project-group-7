@@ -26,7 +26,7 @@ public class Game {
     private HBox playerFifthRowHorn=new HBox();
     private HBox playerFourthRowHorn=new HBox();
     private HBox playerSixthRowHorn=new HBox();
-    public Label totalPowerOpponent=new Label("0");
+    public Label totalPowerOpponent;
     public Label totalRow1PowerOpponent=new Label("0");
     public Label totalRow2PowerOpponent=new Label("0");
     public Label totalRow3PowerOpponent=new Label("0");
@@ -303,6 +303,7 @@ public class Game {
 //        System.out.println(st);
 //        client.sendMessage(st); todo onlination
     }
+
     public void enemyPlaceCard(Card finalCard, EnhancedHBox hBox) {
         hBox.getChildren().add(finalCard);
         calculateLabels();
@@ -316,7 +317,7 @@ public class Game {
             gameLauncher.handLastCard=card;
         }
     }
-    public int getCurrentPower(Card card){
+    public int getCurrentPower(Card card) {
         EnhancedHBox hBox = (EnhancedHBox) card.getParent();
         for (Node card1 : hBox.getChildren()) {
             if (card1 instanceof Horn)
@@ -824,7 +825,7 @@ public class Game {
         calculateLabels();
     }
 
-    public void transformBerserker(Card card) {
+    public void transformBerserker(Card card){
         EnhancedHBox box = (EnhancedHBox) card.getParent();
         if (card.getCardName().equals("young berserker")) {
             box.getChildren().add(new Card("young vildkaarl", 3, false, 8, "skellige", 2, false));
