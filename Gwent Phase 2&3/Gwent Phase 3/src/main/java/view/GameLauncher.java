@@ -75,6 +75,7 @@ public class GameLauncher extends Application {
     private String replyReciver;
     private TextField chatField;
     private Button buttonPass;
+    public Label enemyLeft;
 
 
     @Override
@@ -190,7 +191,7 @@ public class GameLauncher extends Application {
         if (type.equals("replay")) {
             playerName= new Label(fin.p2);
         } else if (type.equals("live")) {
-            playerName= new Label(ongoingGame.player2);
+            playerName= new Label(ongoingGame.player1);
         } else {
             playerName = new Label(User.getLoggedInUser().getUsername()); // todo onlination
         }
@@ -371,6 +372,12 @@ public class GameLauncher extends Application {
 
 
 
+        enemyLeft = new Label("enemy left the game");
+        enemyLeft.setLayoutX(800);
+        enemyLeft.setLayoutY(450);
+        enemyLeft.setVisible(false);
+        enemyLeft.setStyle("-fx-text-fill: red; -fx-font-size: 40px;");
+
         Rectangle realmForAvatarOpponent=new Rectangle();//todo needs 5 else if for player's faction
         realmForAvatarOpponent.setFill(new ImagePattern(new Image(String.valueOf(PreGameMenu.class.getResource("/Images/icons/deck_shield_monsters.png").toExternalForm()))));
         realmForAvatarOpponent.setHeight(50);
@@ -521,7 +528,7 @@ public class GameLauncher extends Application {
                 playerNameOpponent,avatarOpponent,game.life1Opponent,game.life2Opponent,cardxOpponent,labelForNumberOfCardsOpponent,game.totalPowerOpponent,game.highScoreOpponent,realmForAvatarOpponent,
                 frostedRow,frostedRowOpponent,foggedRow,foggedRowOpponent,rainedRow,rainedRowOpponent, chat
                 ,game.totalRow1Power,game.totalRow2Power,game.totalRow3Power,game.totalRow1PowerOpponent,game.totalRow2PowerOpponent,game.totalRow3PowerOpponent,cardInDeckBack,cardInDeckBackOpponent
-                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent, buttonPass, chatBoxPane);
+                ,numberOfRemainingCardsInDeck,numberOfRemainingCardsInDeckOpponent,leader,leaderOpponent, buttonPass, chatBoxPane, enemyLeft);
 
 
         Scene scene = new Scene(pane);
@@ -571,7 +578,7 @@ public class GameLauncher extends Application {
             Timeline timeline = new Timeline();
             timeline.setCycleCount(fin.moves.size());
             timeline.getKeyFrames().add(
-                    new KeyFrame(Duration.seconds(7), event -> {
+                    new KeyFrame(Duration.seconds(5), event -> {
                         int i = j.get();
                         String move = fin.moves.get(i);
                         String[] components = move.split("\\.");
@@ -581,9 +588,9 @@ public class GameLauncher extends Application {
 
                             Platform.runLater(() -> {
                                 if (Integer.parseInt(components[5]) != 7 && i % 2 == 1)
-                                    game.enemyPlaceCard(card, game.hBoxes.get(Integer.parseInt(components[5])));
+                                    game.enemyPlaceCard(card, game.hBoxes.get(7-Integer.parseInt(components[5])));
                                 else if (Integer.parseInt(components[5]) != 7 && i % 2 == 0)
-                                    game.enemyPlaceCard(card, game.hBoxes.get(6 - Integer.parseInt(components[5])));
+                                    game.enemyPlaceCard(card, game.hBoxes.get( Integer.parseInt(components[5])));
                                 else
                                     game.enemyPlaceCard(card, game.hBoxes.get(0));
                             });

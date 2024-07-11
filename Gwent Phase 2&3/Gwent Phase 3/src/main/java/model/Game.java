@@ -462,7 +462,7 @@ public class Game {
         }
     }
 
-    private void showResult(String result) {
+    public void showResult(String result) {
         Stage resultPop = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root);

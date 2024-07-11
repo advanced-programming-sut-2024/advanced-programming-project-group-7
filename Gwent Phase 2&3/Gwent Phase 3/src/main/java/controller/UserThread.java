@@ -393,6 +393,15 @@ public class UserThread extends Thread {
                     if (user.getUsername().equals(username))
                         user.isOnline = false;
                 }
+                OngoingGame og = GameServer.getGameByName(username);
+                String dude = og.player1.equals(username)? og.player2 : og.player1;
+                try {
+                    DataOutputStream dataOutputStream = new DataOutputStream(GameServer.onlineUsers.get(dude).getOutputStream());
+                    dataOutputStream.writeUTF("disconnected."+username);
+                    dataOutputStream.flush();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 throw new RuntimeException(e);
             }
         }

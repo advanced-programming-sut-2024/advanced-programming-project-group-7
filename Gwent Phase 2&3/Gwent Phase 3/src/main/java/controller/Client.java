@@ -3,6 +3,8 @@ package controller;
 
 import com.google.gson.Gson;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -107,8 +109,10 @@ public class Client extends Thread {
                     System.out.println(response);
                     if (count%2 == 0) {
                         game.enemyPlaceCard(finalCard, game.hBoxes.get(7-Integer.parseInt(components[5])));
+                        System.out.println("the place was0: " + components[5]);
                     } else if (count % 2 == 1) {
                         game.enemyPlaceCard(finalCard, game.hBoxes.get(Integer.parseInt(components[5])));
+                        System.out.println("the place was1: " + components[5]);
                     }
                 }
             });
@@ -135,6 +139,18 @@ public class Client extends Thread {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+            });
+        } else if (components[0].equals("disconnected")) {
+            Platform.runLater(()-> {
+               game.gameLauncher.enemyLeft.setVisible(true);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.minutes(1)));
+                timeline.setCycleCount(1);
+                System.out.println("reached timeline");
+                timeline.setOnFinished(event -> {
+                    game.showResult("win");
+                    sendMessage("IWon:"+user.getUsername());
+                });
+                timeline.play();
             });
         } else if (components[0].equals("refresh")) {
             Platform.runLater(()-> {
